@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "90728571327",
+    "firebase_url": "https://hik-demis.firebaseio.com",
+    "project_id": "hik-demis",
+    "storage_bucket": "hik-demis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90728571327:android:05a8a04797edfeb996810a",
+        "android_client_info": {
+          "package_name": "com.hikdemis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90728571327-mkcid0uuo3l56ps3buk6af2dj4pdlm3j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hikdemis",
+            "certificate_hash": "4f90a86d348318beaebaed0d28a69b8f2dd6b192"
+          }
+        },
+        {
+          "client_id": "90728571327-sbqg29u6didvt0kbjemkrt4t44sd6i9n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hikdemis",
+            "certificate_hash": "2bb279f06fd6772e21b40d2f0d0a97d874ae849a"
+          }
+        },
+        {
+          "client_id": "90728571327-hqgcfctl61a58thg662bc2j23f3vsmiq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5mWQwEhkIjr-WOAXL6M6RO2G7Y7usUgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90728571327-hqgcfctl61a58thg662bc2j23f3vsmiq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "90728571327-qafk36c38kdpdmkp633rtf5otludunrg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.appfab.hikdemis",
+                "app_store_id": "962194608"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

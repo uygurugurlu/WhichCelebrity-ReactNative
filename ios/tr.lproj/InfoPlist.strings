@@ -1,0 +1,13 @@
+/* 
+  InfoPlist.strings
+  AwesomeProject
+
+  Created by macbook on 24.07.2020.
+  
+*/
+
+"CFBundleDisplayName" = "Hangi Ünlüye Benziyorum?";
+
+"NSCameraUsageDescription" = "\"Hangi Ünlüye Benziyorum?\" fotoğraflarınızı kullanarak benzerlik oranını hesaplayabilmek için kameranıza erişmek istiyor.";
+
+"NSPhotoLibraryUsageDescription" = "\"Hangi Ünlüye Benziyorum?\" fotoğraflarınızı kullanarak benzerlik oranını hesaplayabilmek için fotoğraf galerinize erişmek istiyor.";

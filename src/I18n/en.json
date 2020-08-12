@@ -1,0 +1,94 @@
+{
+  "continue": "Continue",
+  "app_name": "Hık Demiş",
+  "slide1": {
+    "line1": "Take any photo of anyone with your camera or get it from your photo gallery.",
+    "line2": "Immediately find out what the mood and,",
+    "line3": "How old he/she look like in your chosen photo."
+  },
+  "slide2": {
+    "line1": "Select any two photos of two people with your Camera or from Gallery.",
+    "line2": "And find out immediately how similar these two people are."
+  },
+  "slide3": {
+    "line1": "Select any three photos of anyone three people with your Camera or from Gallery.",
+    "line2": "Compare one of them with the other two,",
+    "line3": "And find out right away which one of these two people is more similar with the one."
+  },
+  "slide4": {
+    "line1": "Select any photo of anyone with your Camera or from Gallery.",
+    "line2": "And find out right away to which celebrity is this person looks like."
+  },
+  "tab_bar": {
+    "mono_compare": "Single Compare",
+    "dual_compare": "Dual Compare",
+    "trio_compare": "Trio Compare",
+    "savings": "Savings"
+  },
+  "image_picker": {
+    "title": "Select Photo",
+    "cancel": "Cancel",
+    "choose": "Choose",
+    "use_camera": "Use Camera",
+    "photo_library": "Photo Library",
+    "share_app": "Share App",
+    "save_result": "Save Result",
+    "share_result": "Share Result"
+  },
+  "famous_compare": {
+    "compare_header": "Find out immediately to which celebrity do you look like",
+    "result_label": "You look very similar to ",
+    "validity_alert": "Please make sure you select an image."
+  },
+  "mono_compare": {
+    "compare_header": "Find out immediately,\n\nHow old do you look?\n\nWhat is your emotional mood?",
+    "validity_alert": "Please make sure you select an image."
+  },
+  "dual_compare": {
+    "compare_header": "How similar are these two people to each other?",
+    "first_user": "Person 1",
+    "second_user": "Person 2",
+    "similarity_ratio": "Similarity Rate",
+    "validity_alert": "Please select an image for Person 1 and Person 2."
+  },
+  "trio_compare": {
+    "compare_header": "How much do Person3 looks like to Person1 and Person2?",
+    "first_user": "Person 1",
+    "second_user": "Person 2",
+    "third_user": "Person 3",
+    "validity_alert": "Please select an image for all 3 people."
+  },
+  "home": {
+    "main_header": "Hık Demiş",
+    "to_whom_looks_like": "Looks like Who",
+    "get_result": "Get Result",
+    "mother": "Mother",
+    "father": "Father",
+    "child": "Child",
+    "validity_alert": "Please select an image for mother, father and the child."
+  },
+  "result": {
+    "like_p2_p3_50_50": "Looks like equal to both",
+    "like_p2_51_65": "Looks like Person 1",
+    "like_p3_51_65": "Looks like Person 2",
+    "like_p2_65_80": "Looks very similar to Person 1",
+    "like_p3_65_80": "Looks very similar to Person 2",
+    "like_p2_80_100": "Like the Person 1's twin",
+    "like_p3_80_100": "Like the Person 2's twin",
+    "share": "Share",
+    "try_again": "Try Again",
+    "okay": "Okay",
+    "result_saved": "Result saved successfully!"
+  },
+  "starter": {
+    "label1": "Communication between Hık Demiş mobile applications and servers is secure.",
+    "label2": "The similarity is provided by the artificial intelligence algorithm powered by TURK AI.",
+    "kvkk_text": "I have read and accept the Protection of Personal Data Disclosure Text.",
+    "privacy_policy_text": "I have read and accept the Privacy Policy Text.",
+    "web_view_alert_text": "Be sure to read and accept the Protection of Personal Data Disclosure Text and the Privacy Policy Text."
+  },
+  "display": {
+    "cancel": "Cancel",
+    "share": "Share"
+  }
+}

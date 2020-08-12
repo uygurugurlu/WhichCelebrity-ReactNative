@@ -1,0 +1,13 @@
+/* 
+  InfoPlist.strings
+  AwesomeProject
+
+  Created by macbook on 24.07.2020.
+  
+*/
+
+"CFBundleDisplayName" = "Look Like Celebrity";
+
+"NSCameraUsageDescription" = "\"Look Like Celebrity\" wants to use your camera to get photos and calculate the similarity percentage.";
+
+"NSPhotoLibraryUsageDescription" = "\"Look Like Celebrity\" wants to use your photo library to get photos and calculate the similarity percentage.";

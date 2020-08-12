@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>90728571327-qafk36c38kdpdmkp633rtf5otludunrg.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.90728571327-qafk36c38kdpdmkp633rtf5otludunrg</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>90728571327-rjtvfv30anafs2nqta6ar04f45oq7uhp.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBw71gLteZpPIgDGt7UApMm-lh6Pzlp3gg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>90728571327</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.appfab.hikdemis</string>
+	<key>PROJECT_ID</key>
+	<string>hik-demis</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hik-demis.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:90728571327:ios:aa2e18a673b2b26a96810a</string>
+	<key>DATABASE_URL</key>
+	<string>https://hik-demis.firebaseio.com</string>
+</dict>
+</plist>
