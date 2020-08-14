@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Avatar, {Sizes} from "rn-avatar";
 import {GENERIC_USER} from "../IconIndex";
-import {shadow} from "../CommonlyUsedConstants";
+import {DEVICE_WIDTH, shadow} from "../CommonlyUsedConstants";
 
 class AvatarComponent extends Component {
     render() {
@@ -10,7 +10,7 @@ class AvatarComponent extends Component {
             <Avatar
                 rounded
                 showEditButton={ImageSource === ''}
-                size={Sizes.EXTRA_LARGE}
+                size={DEVICE_WIDTH / 2}
                 source={ImageSource === '' ? GENERIC_USER : ImageSource}
                 title='Grace'
                 containerStyle={[{backgroundColor: '#fff'}, shadow]}

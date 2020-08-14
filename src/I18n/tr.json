@@ -31,7 +31,7 @@
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
   "home": {
-    "main_header": "Hık Demiş",
+    "main_header": "To Which Celebrity Do I Look",
     "to_whom_looks_like": "Kimin Burnundan Düşmüş",
     "get_result": "Sonucu Gör",
     "mother": "Anne",
@@ -40,20 +40,13 @@
     "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz."
   },
   "result": {
-    "like_p2_p3_50_50": "İkisine de Benziyor",
-    "like_p2_51_65": "Birinci Kişiye Benziyor",
-    "like_p3_51_65": "İkinci Kişiye Benziyor",
-    "like_p2_65_80": "Birinci Kişiye Çok Benziyor",
-    "like_p3_65_80": "İkinci Kişiye Çok Benziyor",
-    "like_p2_80_100": "Birinci Kişinin İkizi Gibi",
-    "like_p3_80_100": "İkinci Kişinin İkizi Gibi",
     "share": "Paylaş",
     "try_again": "Tekrar Dene",
     "okay": "Okay",
     "result_saved": "Sonuç Başarıyla Kaydedildi!"
   },
   "starter": {
-    "label1": "Hık demiş mobil uygulamaları ve sunucuları arasındaki iletişim güvenlidir.",
+    "label1": "'Hangi Ünlüye Benziyorum' mobil uygulamaları ve sunucuları arasındaki iletişim güvenlidir.",
     "label2": "Benzerlik yapay zeka algoritması TURK AI tarafından sağlanmaktadır.",
     "kvkk_text": "Kişisel Verilerin Korunması Aydınlatma Metni'ni okudum, kabul ediyorum.",
     "privacy_policy_text": "Gizlilik Politikası Metnini okudum, kabul ediyorum.",

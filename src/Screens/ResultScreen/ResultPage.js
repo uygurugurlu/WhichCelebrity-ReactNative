@@ -14,7 +14,7 @@ import ViewShot from "react-native-view-shot";
 import Share from "react-native-share";
 import SharedImageBottomComponent from "../../CommonlyUsed/Components/SharedImageBottomComponent";
 import {CONFETTI_ICON, RIGHT_HEADER_ICON} from "../../CommonlyUsed/IconIndex";
-import {ALBUM_NAME} from "../../CommonlyUsed/CommonlyUsedConstants";
+import {ALBUM_NAME, shadow} from "../../CommonlyUsed/CommonlyUsedConstants";
 import LottieView from "lottie-react-native";
 
 const CAGATAY = require('../../assets/icons/cagatay.png');
@@ -227,7 +227,7 @@ class ResultPage extends Component {
                             <Text style={styles.celebrityTextStyle}>{'Çağatay Ulusoy'}</Text>
                         </View>
 
-                        <View style={styles.iconContainerStyle}>
+                        <View style={[styles.iconContainerStyle,shadow]}>
                             <Image source={userAvatarSource} style={styles.iconStyle}/>
 
                             <Image source={CAGATAY} style={styles.iconStyle}/>

@@ -1,6 +1,6 @@
 {
   "continue": "Continue",
-  "app_name": "Hangi Ünlüye Benziyorum?",
+  "app_name": "To Which Celebrity Do I Look?",
   "slide4": {
     "line1": "Select any photo of anyone with your Camera or from Gallery.",
     "line2": "And find out right away to which celebrity is this person looks like."
@@ -31,7 +31,7 @@
     "validity_alert": "Please make sure you select an image."
   },
   "home": {
-    "main_header": "Hık Demiş",
+    "main_header": "To Which Celebrity Do I Look",
     "to_whom_looks_like": "Looks like Who",
     "get_result": "Get Result",
     "mother": "Mother",
@@ -40,20 +40,13 @@
     "validity_alert": "Please select an image for mother, father and the child."
   },
   "result": {
-    "like_p2_p3_50_50": "Looks like equal to both",
-    "like_p2_51_65": "Looks like Person 1",
-    "like_p3_51_65": "Looks like Person 2",
-    "like_p2_65_80": "Looks very similar to Person 1",
-    "like_p3_65_80": "Looks very similar to Person 2",
-    "like_p2_80_100": "Like the Person 1's twin",
-    "like_p3_80_100": "Like the Person 2's twin",
     "share": "Share",
     "try_again": "Try Again",
     "okay": "Okay",
     "result_saved": "Result saved successfully!"
   },
   "starter": {
-    "label1": "Communication between Hık Demiş mobile applications and servers is secure.",
+    "label1": "Communication between 'To Which Celebrity Do I Look' mobile applications and servers is secure.",
     "label2": "The similarity is provided by the artificial intelligence algorithm powered by TURK AI.",
     "kvkk_text": "I have read and accept the Protection of Personal Data Disclosure Text.",
     "privacy_policy_text": "I have read and accept the Privacy Policy Text.",
