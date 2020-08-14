@@ -1,59 +1,35 @@
 {
   "project_info": {
-    "project_number": "90728571327",
-    "firebase_url": "https://hik-demis.firebaseio.com",
-    "project_id": "hik-demis",
-    "storage_bucket": "hik-demis.appspot.com"
+    "project_number": "93591380261",
+    "firebase_url": "https://look-like-celebrity.firebaseio.com",
+    "project_id": "look-like-celebrity",
+    "storage_bucket": "look-like-celebrity.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:90728571327:android:05a8a04797edfeb996810a",
+        "mobilesdk_app_id": "1:93591380261:android:baed2811bd2acbab8afacc",
         "android_client_info": {
-          "package_name": "com.hikdemis"
+          "package_name": "com.looklikecelebrity"
         }
       },
       "oauth_client": [
         {
-          "client_id": "90728571327-mkcid0uuo3l56ps3buk6af2dj4pdlm3j.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hikdemis",
-            "certificate_hash": "4f90a86d348318beaebaed0d28a69b8f2dd6b192"
-          }
-        },
-        {
-          "client_id": "90728571327-sbqg29u6didvt0kbjemkrt4t44sd6i9n.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hikdemis",
-            "certificate_hash": "2bb279f06fd6772e21b40d2f0d0a97d874ae849a"
-          }
-        },
-        {
-          "client_id": "90728571327-hqgcfctl61a58thg662bc2j23f3vsmiq.apps.googleusercontent.com",
+          "client_id": "93591380261-076oe651jsdnrr01kol349k11s8eh0hq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5mWQwEhkIjr-WOAXL6M6RO2G7Y7usUgU"
+          "current_key": "AIzaSyBBqxHDtMwvIR5yKuBdgjaXPXaek7Skl6s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "90728571327-hqgcfctl61a58thg662bc2j23f3vsmiq.apps.googleusercontent.com",
+              "client_id": "93591380261-076oe651jsdnrr01kol349k11s8eh0hq.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "90728571327-qafk36c38kdpdmkp633rtf5otludunrg.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "org.reactjs.native.appfab.hikdemis",
-                "app_store_id": "962194608"
-              }
             }
           ]
         }

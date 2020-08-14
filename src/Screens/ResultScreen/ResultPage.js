@@ -73,20 +73,20 @@ class ResultPage extends Component {
     Share = async (index) => {
         /** This functions share an image passed using the url param */
         const shareOptions1 = Platform.OS === "ios" ? {
-            title: "Hık Demiş",
-            url: this.props.captured_image_uri_mono,
-            subject: "Hık Demiş", // for email,
+            title: translate("app_name"),
+            url: this.props.captured_image_uri,
+            subject: translate("app_name"), // for email,
             failOnCancel: false,
         } : {
-            title: "Hık Demiş",
-            url: this.props.captured_image_uri_mono,
+            title: translate("app_name"),
+            url: this.props.captured_image_uri,
             message: 'https://appfabhikdemis.page.link/H3Ed',
-            subject: "Hık Demiş", // for email,
+            subject: translate("app_name"), // for email,
             failOnCancel: false,
         };
 
         const shareOptions2 = {
-            title: 'Hık Demiş',
+            title: translate("app_name"),
             message: 'https://appfabhikdemis.page.link/H3Ed',
             failOnCancel: false,
         };

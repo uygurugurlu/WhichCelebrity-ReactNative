@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, View, Text, SafeAreaView, TouchableOpacity} from "react-native";
+import {Image, View, Text, SafeAreaView} from "react-native";
 import {styles} from "./Slide2Styles";
 import {connect} from "react-redux";
 import {translate} from "../../../I18n";
@@ -18,7 +18,6 @@ class Slide2 extends Component {
         this.props.navigation.navigate("AgreementsPage");
     };
 
-
     render() {
         return (
             <SafeAreaView style={styles.mainContainerStyle}>
@@ -30,20 +29,20 @@ class Slide2 extends Component {
                     <Image source={require('../../../assets/icons/compare_icon.png')} style={styles.compareIconStyle}/>
 
                     <View style={styles.iconWrapperStyle}>
-                        <Image source={GENERIC_USER} style={styles.iconStyle}/>
+                        <Image source={require('../../../assets/icons/celebrity_icon.jpg')}
+                               style={styles.celebrityIconStyle}/>
                     </View>
                 </View>
 
                 <View style={styles.containerStyle}>
-
                     <View style={styles.rowContainerStyle}>
                         <Image source={DOT_ICON} style={styles.dotImageStyle}/>
-                        <Text style={styles.textStyle}>{translate("slide2.line1")}</Text>
+                        <Text style={styles.textStyle}>{translate("slide4.line1")}</Text>
                     </View>
 
                     <View style={styles.rowContainerStyle}>
                         <Image source={DOT_ICON} style={styles.dotImageStyle}/>
-                        <Text style={styles.textStyle}>{translate("slide2.line2")}</Text>
+                        <Text style={styles.textStyle}>{translate("slide4.line2")}</Text>
                     </View>
                 </View>
 

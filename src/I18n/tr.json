@@ -1,20 +1,6 @@
 {
   "continue": "Devam Et",
-  "app_name": "Hık Demiş",
-  "slide1": {
-    "line1": "Kameranızla ile veya Galeriden, dilediğiniz birinin fotoğrafını seçin.",
-    "line2": "Seçtiğiniz fotoğraftaki kişinin duygu durumunun ne olduğunu,",
-    "line3": "Kaç yaşında gösterdiğini hemen öğrenin."
-  },
-  "slide2": {
-    "line1": "Kameranızla veya Galeriden, dilediğiniz iki kişinin fotoğrafını seçin.",
-    "line2": "Ve bu iki kişinin birbirine ne kadar benzediğini hemen öğrenin."
-  },
-  "slide3": {
-    "line1": "Kameranızla veya Galeriden, dilediğiniz üç kişinin fotoğrafını seçin.",
-    "line2": "Üç kişiden birini diğer iki kişi ile karşılatırın,",
-    "line3": "Ve bu kişinin diğer iki kişiden hangisine daha çok benzediğini hemen öğrenin."
-  },
+  "app_name": "Hangi Ünlüye Benziyorum?",
   "slide4": {
     "line1": "Kameranızla veya Galeriden, dilediğiniz birinin fotoğrafını seçin.",
     "line2": "Ve bu kişinin hangi ünlüye benzediğini hemen öğrenin."
@@ -44,20 +30,6 @@
     "compare_header": "Kaç yaşında göründüğünü,\n\n Nasıl bir ruh halinde göründüğünü,\n\n hemen öğren.",
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
-  "dual_compare": {
-    "compare_header": "Bu iki kişi birbirine ne kadar benziyor?",
-    "first_user": "1. Kişi",
-    "second_user": "2. Kişi",
-    "similarity_ratio": "Benzerlik Oranı",
-    "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz."
-  },
-  "trio_compare": {
-    "compare_header": "3. Kişi,  1. ve 2. kişiden hangisine daha çok benziyor?",
-    "first_user": "1. Kişi",
-    "second_user": "2. Kişi",
-    "third_user": "3. Kişi",
-    "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz."
-  },
   "home": {
     "main_header": "Hık Demiş",
     "to_whom_looks_like": "Kimin Burnundan Düşmüş",
@@ -78,7 +50,7 @@
     "share": "Paylaş",
     "try_again": "Tekrar Dene",
     "okay": "Okay",
-    "result_saved": "Result saved successfully!"
+    "result_saved": "Sonuç Başarıyla Kaydedildi!"
   },
   "starter": {
     "label1": "Hık demiş mobil uygulamaları ve sunucuları arasındaki iletişim güvenlidir.",

@@ -17,12 +17,12 @@ export const styles = StyleSheet.create({
         marginTop: DEVICE_HEIGHT * 0.1
     },
     turkaiLogoStyle: {
-        height: DEVICE_WIDTH * 0.4 / 3.80962343096,
-        width: DEVICE_WIDTH * 0.4
+        height: DEVICE_WIDTH * 0.25 / 3.80962343096,
+        width: DEVICE_WIDTH * 0.25
     },
     storeImageStyle: {
-        height: DEVICE_WIDTH * 0.2 / 3.80962343096,
-        width: DEVICE_WIDTH * 0.2
+        height: DEVICE_WIDTH * 0.25 / 3.80962343096,
+        width: DEVICE_WIDTH * 0.25
     },
     turkaiTextStyle: {
         fontSize: 14,
@@ -30,13 +30,19 @@ export const styles = StyleSheet.create({
         color: 'rgba(37,37,229,0.77)',
     },
     hikdemisTextStyle: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '500',
         color: 'rgba(47,47,49,0.72)',
         marginLeft: 5
     },
-    hikdemisImageStyle: {
-        height: 45,
-        width: 45
+    appLogoImageStyle: {
+        height: 55,
+        width: 55
+    },
+    appLogoContainerStyles: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginVertical: 10
     }
 });

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Swiper from 'react-native-swiper'
 import {View, StyleSheet, SafeAreaView} from "react-native";
-import Slide1 from "./Slide1/Slide1";
 import AgreementsPage from "./AgreementsPage/AgreementsPage";
 import Slide2 from "./Slide2/Slide2";
 
@@ -16,12 +15,8 @@ class LandingSlides extends Component {
                     activeDotColor={'#1490E3'}
                     dotColor={'#2a2a2a'}
                     loop={false}>
-                
-                <SafeAreaView style={styles.slide1}>
-                    <Slide1/>
-                </SafeAreaView>
 
-                <SafeAreaView style={styles.slide2}>
+                <SafeAreaView style={styles.slide1}>
                     <Slide2/>
                 </SafeAreaView>
 

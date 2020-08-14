@@ -16,16 +16,15 @@ class SharedImageBottomComponent extends Component {
         return (
             <View display={shareActive ? 'flex' : 'none'} style={styles.turkaiContainerStyle}>
                 <View style={styles.turkaiRowContainerStyle}>
-                    <View
-                        style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-                        <Image source={HIK_DEMIS} style={styles.hikdemisImageStyle}/>
-                        <Text style={styles.hikdemisTextStyle}>{translate("app_name")}</Text>
-                    </View>
+                    <Image source={TURK_AI} style={styles.turkaiLogoStyle}/>
                     <Image source={APP_STORE_ICON} style={styles.storeImageStyle}/>
                     <Image source={PLAY_STORE_ICON} style={styles.storeImageStyle}/>
                 </View>
 
-                <Image source={TURK_AI} style={styles.turkaiLogoStyle}/>
+                <View style={styles.appLogoContainerStyles}>
+                    <Image source={HIK_DEMIS} style={styles.appLogoImageStyle}/>
+                    <Text style={styles.hikdemisTextStyle}>{translate("app_name")}</Text>
+                </View>
             </View>
         );
     }

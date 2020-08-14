@@ -122,6 +122,10 @@ export const styles = StyleSheet.create({
         width: MOTHER_ICON_SIZE,
         height: MOTHER_ICON_SIZE,
     },
+    celebrityIconStyle: {
+        width: MOTHER_ICON_SIZE * 0.9 * 1.33888888889,
+        height: MOTHER_ICON_SIZE * 0.9,
+    },
     compareIconStyle: {
         width: 40,
         height: 40,

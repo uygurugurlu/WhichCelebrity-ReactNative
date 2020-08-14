@@ -1,4 +1,4 @@
-package com.hikdemis;
+package com.looklikecelebrity;
 
 import com.facebook.react.ReactActivity;
 
