@@ -1,15 +1,9 @@
 {
   "continue": "Continue",
-  "app_name": "To Which Celebrity Do I Look?",
+  "app_name": "To Which Celebrity Do I Look",
   "slide4": {
     "line1": "Select any photo of anyone with your Camera or from Gallery.",
     "line2": "And find out right away to which celebrity is this person looks like."
-  },
-  "tab_bar": {
-    "mono_compare": "Single Compare",
-    "dual_compare": "Dual Compare",
-    "trio_compare": "Trio Compare",
-    "savings": "Savings"
   },
   "image_picker": {
     "title": "Select Photo",
@@ -32,11 +26,7 @@
   },
   "home": {
     "main_header": "To Which Celebrity Do I Look",
-    "to_whom_looks_like": "Looks like Who",
     "get_result": "Get Result",
-    "mother": "Mother",
-    "father": "Father",
-    "child": "Child",
     "validity_alert": "Please select an image for mother, father and the child."
   },
   "result": {
@@ -44,6 +34,11 @@
     "try_again": "Try Again",
     "okay": "Okay",
     "result_saved": "Result saved successfully!"
+  },
+  "saved": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "select": "Select the photos you want to delete"
   },
   "starter": {
     "label1": "Communication between 'To Which Celebrity Do I Look' mobile applications and servers is secure.",

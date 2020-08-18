@@ -4,7 +4,11 @@ import {
     GET_USER_AGENT,
     TRIGGER_SAVINGS_PAGE,
     GET_USER_AVATAR_SOURCE,
-    GET_CAPTURED_IMAGE_URI
+    GET_CAPTURED_IMAGE_URI,
+    ADD_TO_DELETE_LIST,
+    REMOVE_FROM_DELETE_LIST,
+    CLEAR_DELETE_LIST,
+    CHANGE_SELECTED_TO_DELETE_COUNT, CLEAR_SELECTED_TO_DELETE_COUNT
 } from '../Actions/ActionTypes';
 
 import update from 'react-addons-update';
@@ -25,6 +29,10 @@ const initialState = {
 
     userAvatarSource: '',
     userAvatarB64: '',
+
+    selected_to_delete_count: 0,
+
+    delete_list: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -60,6 +68,41 @@ const reducer = (state = initialState, action) => {
             return state = update(state, {
                 captured_image_uri: {$set: action.image_uri},
             });
+
+        case ADD_TO_DELETE_LIST:
+            return state = update(state, {
+                delete_list: {$push: [action.uri]},
+            });
+
+        case REMOVE_FROM_DELETE_LIST:
+            const newList = state.delete_list.filter((item) => {
+                return item !== action.uri;
+            });
+            return state = update(state, {
+                delete_list: {$set: newList},
+            });
+
+        case CLEAR_DELETE_LIST:
+            return state = update(state, {
+                delete_list: {$set: []},
+            });
+
+        case CHANGE_SELECTED_TO_DELETE_COUNT:
+            if (action.bool)
+                state = update(state, {
+                    selected_to_delete_count: {$set: state.selected_to_delete_count + 1},
+                });
+            else
+                state = update(state, {
+                    selected_to_delete_count: {$set: state.selected_to_delete_count - 1},
+                });
+            return state;
+
+        case CLEAR_SELECTED_TO_DELETE_COUNT:
+            return state = update(state, {
+                selected_to_delete_count: {$set: 0},
+            });
+
 
         default:
             return state;

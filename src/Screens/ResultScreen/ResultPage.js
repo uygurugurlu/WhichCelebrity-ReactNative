@@ -80,14 +80,14 @@ class ResultPage extends Component {
         } : {
             title: translate("app_name"),
             url: this.props.captured_image_uri,
-            message: 'https://appfabhikdemis.page.link/H3Ed',
+            message: 'https://looklikecelebrity.page.link/naxz',
             subject: translate("app_name"), // for email,
             failOnCancel: false,
         };
 
         const shareOptions2 = {
             title: translate("app_name"),
-            message: 'https://appfabhikdemis.page.link/H3Ed',
+            message: 'https://looklikecelebrity.page.link/naxz',
             failOnCancel: false,
         };
 
@@ -142,7 +142,7 @@ class ResultPage extends Component {
 
         const saveToCameraRollOptions = {
             type: 'photo',
-            album: ALBUM_NAME
+            album: translate('app_name')
         };
 
         CameraRoll.save(uri, saveToCameraRollOptions)
@@ -227,7 +227,7 @@ class ResultPage extends Component {
                             <Text style={styles.celebrityTextStyle}>{'Çağatay Ulusoy'}</Text>
                         </View>
 
-                        <View style={[styles.iconContainerStyle,shadow]}>
+                        <View style={[styles.iconContainerStyle, shadow]}>
                             <Image source={userAvatarSource} style={styles.iconStyle}/>
 
                             <Image source={CAGATAY} style={styles.iconStyle}/>

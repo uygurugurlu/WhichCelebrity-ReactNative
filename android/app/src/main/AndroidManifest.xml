@@ -36,7 +36,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                        android:host="appfabhikdemis.page.link"
+                        android:host="looklikecelebrity.page.link"
                         android:scheme="https"/>
             </intent-filter>
             <!-- [END link_intent_filter] -->

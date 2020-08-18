@@ -1,15 +1,9 @@
 {
   "continue": "Devam Et",
-  "app_name": "Hangi Ünlüye Benziyorum?",
+  "app_name": "Hangi Ünlüye Benziyorum",
   "slide4": {
     "line1": "Kameranızla veya Galeriden, dilediğiniz birinin fotoğrafını seçin.",
     "line2": "Ve bu kişinin hangi ünlüye benzediğini hemen öğrenin."
-  },
-  "tab_bar": {
-    "single_compare": "Tekli Karşılaştırma",
-    "dual_compare": "İkili Karşılaştırma",
-    "trio_compare": "Üçlü Karşılaştırma",
-    "savings": "Kayıt Edilenler"
   },
   "image_picker": {
     "title": "Fotoğraf Seç",
@@ -31,19 +25,20 @@
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
   "home": {
-    "main_header": "To Which Celebrity Do I Look",
-    "to_whom_looks_like": "Kimin Burnundan Düşmüş",
+    "main_header": "Hangi Ünlüye Benziyorum?",
     "get_result": "Sonucu Gör",
-    "mother": "Anne",
-    "father": "Baba",
-    "child": "Çocuk",
     "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz."
   },
   "result": {
     "share": "Paylaş",
     "try_again": "Tekrar Dene",
-    "okay": "Okay",
+    "okay": "Tamam",
     "result_saved": "Sonuç Başarıyla Kaydedildi!"
+  },
+  "saved": {
+    "cancel": "Vazgeç",
+    "delete": "Sil",
+    "select": "Silmek istediğin fotoğrafları seç"
   },
   "starter": {
     "label1": "'Hangi Ünlüye Benziyorum' mobil uygulamaları ve sunucuları arasındaki iletişim güvenlidir.",

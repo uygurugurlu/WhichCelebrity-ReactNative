@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {styles} from './SavingsPageStyles';
 import CameraRoll from "@react-native-community/cameraroll";
-import {FlatList, View} from "react-native";
+import {FlatList, Text, View} from "react-native";
 import ImageComponent from './ImageComponent';
-import {DEVICE_WIDTH,
-    ALBUM_NAME,
-} from "../../CommonlyUsed/CommonlyUsedConstants";
+import {DEVICE_WIDTH} from "../../CommonlyUsed/CommonlyUsedConstants";
 import {connect} from "react-redux";
 import {translate} from "../../I18n";
+import Icon from "react-native-fontawesome-pro";
+import {Button} from "react-native-elements";
+import {clear_delete_list, clear_selected_to_delete_count} from "../../Store/Actions";
 
 class SavingsPage extends Component {
     constructor(props) {
@@ -15,33 +16,56 @@ class SavingsPage extends Component {
         this.state = {
             refreshing: false,
             photos: [],
+            delete_mode: false,
         }
+    }
+
+    DeleteSelected = () => {
+        this.setState({delete_mode: !this.state.delete_mode});
+    }
+
+    Delete = () => {
+        const {delete_list} = this.props;
+        CameraRoll.deletePhotos(delete_list).then((res) => {
+            console.log("res: ", res);
+            this.ChangeDeleteMode(false);
+            this.getPhotos();
+        });
+        this.props.clear_selected_to_delete_count();
+        this.setState({delete_mode: false});
+    };
+
+    CancelDelete = () => {
+        this.setState({delete_mode: false});
+        this.props.clear_selected_to_delete_count();
+        this.props.clear_delete_list();
     }
 
     componentWillMount() {
         this.props.navigation.setOptions({
-            headerTitle: translate('app_name')
+            headerTitle: translate('app_name'),
+            headerRight: () => (
+                <Icon name={"trash-alt"}
+                      color={'white'}
+                      iconStyle={{marginRight: DEVICE_WIDTH * 0.05}}
+                      size={24}
+                      type={'regular'}
+                      onPress={() => this.DeleteSelected()}/>
+            ),
         });
     }
 
     getPhotos() {
-        const {tab_index} = this.props.route.params;
-
-        let photoOptions = {};
-        switch (tab_index) {
-            case 0:
-                photoOptions = {
-                    first: 28,
-                    assetType: "Photos",
-                    groupName: ALBUM_NAME,
-                    groupTypes: "Album"
-                };
-                break;
-        }
+        let photoOptions = {
+            first: 28,
+            assetType: "Photos",
+            groupName: translate('app_name'),
+            groupTypes: "Album"
+        };
 
         CameraRoll.getPhotos(photoOptions).then((results) => {
-            console.log(results);
-            this.setState({photos: results.edges})
+            console.log("getPhotos: ", results.edges);
+            this.setState({photos: results.edges});
         });
     }
 
@@ -55,12 +79,21 @@ class SavingsPage extends Component {
     };
 
     shouldComponentUpdate = async (nextProps, nextState) => {
-        if (nextProps.savings_page_refresh_trigger !== this.props.savings_page_refresh_trigger) {
+        const {savings_page_refresh_trigger} = this.props;
+
+        if (nextProps.savings_page_refresh_trigger !== savings_page_refresh_trigger) {
             this.getPhotos();
         }
     };
 
+    ChangeDeleteMode = (mode) => {
+        this.setState({delete_mode: mode});
+    }
+
     render() {
+        const {delete_mode} = this.state;
+        const {selected_to_delete_count} = this.props;
+
         return (
             <View style={styles.mainContainer}>
                 <FlatList
@@ -73,12 +106,39 @@ class SavingsPage extends Component {
                     refreshing={this.state.refreshing}
                     onEndReachedThreshold={0.35}
                     renderItem={({item}) => (
-                        <ImageComponent image={item.node.image}/>
+                        <ImageComponent image={item.node.image} deleteMode={delete_mode}
+                                        changeDeleteMode={(mode) => this.ChangeDeleteMode(mode)}/>
                     )}
                     keyExtractor={item => item.node.timestamp}
                     style={{flex: 1}}
                     contentContainerStyle={{width: DEVICE_WIDTH * 0.98}}
                 />
+
+                <View style={styles.buttonsRowStyle}
+                      display={selected_to_delete_count !== 0 && delete_mode ? 'flex' : 'none'}>
+                    <Button
+                        title={translate("saved.cancel")}
+                        titleStyle={styles.buttonTitleStyle}
+                        buttonStyle={styles.buttonStyle}
+                        color={'#123456'}
+                        containerStyle={styles.buttonContainerStyle}
+                        onPress={this.CancelDelete}
+                    />
+                    <Button
+                        title={translate("saved.delete")}
+                        titleStyle={styles.buttonTitleStyle}
+                        buttonStyle={styles.buttonStyle}
+                        color={'#123456'}
+                        containerStyle={styles.buttonContainerStyle}
+                        onPress={this.Delete}
+                    />
+                </View>
+
+                <View style={styles.buttonsRowStyle}
+                      display={selected_to_delete_count === 0 && delete_mode ? 'flex' : 'none'}>
+                    <Text style={{color: 'white', fontSize: 17, fontWeight: '500'}}>{translate("saved.select")}</Text>
+                </View>
+
             </View>
         );
     }
@@ -91,11 +151,17 @@ class SavingsPage extends Component {
 const mapStateToProps = state => {
     return {
         language: state.mainReducer.language,
-        savings_page_refresh_trigger: state.mainReducer.savings_page_refresh_trigger
+        savings_page_refresh_trigger: state.mainReducer.savings_page_refresh_trigger,
+        selected_to_delete_count: state.mainReducer.selected_to_delete_count,
+        delete_list: state.mainReducer.delete_list
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+        clear_selected_to_delete_count: (bool) => dispatch(clear_selected_to_delete_count(bool)),
+        clear_delete_list: () => dispatch(clear_delete_list()),
+    };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(SavingsPage);

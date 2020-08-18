@@ -2,9 +2,47 @@ import {
     FIRST_TIME_LOGIN,
     SET_LANGUAGE,
     GET_USER_AGENT,
-    TRIGGER_SAVINGS_PAGE, GET_USER_AVATAR_SOURCE, GET_CAPTURED_IMAGE_URI
+    TRIGGER_SAVINGS_PAGE,
+    GET_USER_AVATAR_SOURCE,
+    GET_CAPTURED_IMAGE_URI,
+    CLEAR_DELETE_LIST,
+    ADD_TO_DELETE_LIST,
+    REMOVE_FROM_DELETE_LIST, CHANGE_SELECTED_TO_DELETE_COUNT, CLEAR_SELECTED_TO_DELETE_COUNT
 } from './ActionTypes';
 
+
+export const clear_delete_list = () => {
+    return {
+        type: CLEAR_DELETE_LIST,
+    };
+};
+
+export const add_to_delete_list = (uri) => {
+    return {
+        type: ADD_TO_DELETE_LIST,
+        uri: uri,
+    };
+};
+
+export const remove_from_delete_list = (uri) => {
+    return {
+        type: REMOVE_FROM_DELETE_LIST,
+        uri: uri,
+    };
+};
+
+export const change_selected_to_delete_count = (bool) => {
+    return {
+        type: CHANGE_SELECTED_TO_DELETE_COUNT,
+        bool: bool,
+    };
+};
+
+export const clear_selected_to_delete_count = () => {
+    return {
+        type: CLEAR_SELECTED_TO_DELETE_COUNT,
+    };
+};
 
 export const first_time_login = (is_first) => {
     return {

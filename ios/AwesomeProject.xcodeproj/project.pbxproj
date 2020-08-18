@@ -20,7 +20,7 @@
 		C2B0E39C14BCF7ADDFE9AE41 /* libPods-AwesomeProject-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74A916D4E42A804392E0C724 /* libPods-AwesomeProject-tvOSTests.a */; };
 		D6126A90E420028D13239FEB /* libPods-AwesomeProject-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C7AE9CDC58A8905A2E638B0 /* libPods-AwesomeProject-tvOS.a */; };
 		EF560FB108E1800C291C23E6 /* libPods-AwesomeProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8C877961672D6B88C1456F7 /* libPods-AwesomeProject.a */; };
-		FA33A8B324BCBB29001B5E3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA33A8B224BCBB29001B5E3E /* GoogleService-Info.plist */; };
+		FA2E515924E6C67D00DA5EB8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2E515824E6C67D00DA5EB8 /* GoogleService-Info.plist */; };
 		FACE22B624B5D8E600E1752E /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FACE22A624B5D8E600E1752E /* Foundation.ttf */; };
 		FACE22B724B5D8E600E1752E /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FACE22A724B5D8E600E1752E /* Feather.ttf */; };
 		FACE22B824B5D8E600E1752E /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FACE22A824B5D8E600E1752E /* FontAwesome5_Brands.ttf */; };
@@ -101,7 +101,7 @@
 		E70C6D2009C54673B7EAB49D /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		FA33A8B224BCBB29001B5E3E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FA2E515824E6C67D00DA5EB8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FACE22A624B5D8E600E1752E /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
 		FACE22A724B5D8E600E1752E /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
 		FACE22A824B5D8E600E1752E /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 		13B07FAE1A68108700A75B9A /* AwesomeProject */ = {
 			isa = PBXGroup;
 			children = (
-				FA33A8B224BCBB29001B5E3E /* GoogleService-Info.plist */,
+				FA2E515824E6C67D00DA5EB8 /* GoogleService-Info.plist */,
 				FAFB8FE324BC894000D548E6 /* Hık Demiş.entitlements */,
 				FACE22A524B5D81F00E1752E /* Fonts */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -463,12 +463,12 @@
 				FAE8F30724CB15A9009145CB /* InfoPlist.strings in Resources */,
 				FACE22B724B5D8E600E1752E /* Feather.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				FA33A8B324BCBB29001B5E3E /* GoogleService-Info.plist in Resources */,
 				FACE22C324B5D8E600E1752E /* Ionicons.ttf in Resources */,
 				FACE22BC24B5D8E600E1752E /* FontAwesome5_Regular.ttf in Resources */,
 				FACE22BD24B5D8E600E1752E /* SimpleLineIcons.ttf in Resources */,
 				FACE22BB24B5D8E600E1752E /* AntDesign.ttf in Resources */,
 				FACE22C524B5D8E600E1752E /* FontAwesome5_Solid.ttf in Resources */,
+				FA2E515924E6C67D00DA5EB8 /* GoogleService-Info.plist in Resources */,
 				FACE22B824B5D8E600E1752E /* FontAwesome5_Brands.ttf in Resources */,
 				FACE22BF24B5D8E600E1752E /* FontAwesome.ttf in Resources */,
 			);
