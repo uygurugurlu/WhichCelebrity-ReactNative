@@ -208,8 +208,7 @@ class ResultPage extends Component {
             />
         );
     }
-
-
+    
     render() {
         const {userAvatarSource} = this.props;
         const {share_active, progress} = this.state;

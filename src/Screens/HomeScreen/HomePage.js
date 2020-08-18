@@ -34,6 +34,7 @@ class HomePage extends Component {
 
     componentWillMount() {
         this.props.navigation.setOptions({
+            title: translate("app_name"),
             headerRight: () => (
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('SavingsPage', {tab_index: 0})}>
                     <Image source={RIGHT_HEADER_ICON} style={{height: 35, width: 35, marginRight: 15}}/>

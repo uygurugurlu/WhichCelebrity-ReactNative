@@ -6,13 +6,27 @@ import {translate} from "../I18n";
 import {header_background_color, header_label_color} from "../CommonlyUsed/ColorIndex";
 import ResultPage from "../Screens/ResultScreen/ResultPage";
 import SavingsPage from "../Screens/Savings/SavingsPage";
+import Dashboard from "../Screens/Dashboard/Dashboard";
 
 const MainStack = createStackNavigator();
 
 export default function MainPagesStack() {
     return (
         <MainStack.Navigator>
-            <MainStack.Screen name={translate('app_name')}
+            <MainStack.Screen name={"Dashboard"}
+                              component={Dashboard}
+                              options={({navigation, route}) => ({
+                                  headerShown: false,
+                                  headerBackTitleVisible: false,
+                                  headerStyle: {
+                                      backgroundColor: header_background_color
+                                  },
+                                  headerTintColor: header_label_color,
+                                  headerTitleStyle: {
+                                      fontWeight: 'bold',
+                                  },
+                              })}/>
+            <MainStack.Screen name={"HomePage"}
                               component={HomePage}
                               options={({navigation, route}) => ({
                                   headerShown: true,
