@@ -35,7 +35,7 @@
     "try_again": "Tekrar Dene",
     "okay": "Tamam",
     "result_saved": "Sonuç Başarıyla Kaydedildi!",
-    "very_similar": "ile birbirinize çok benziyorsunuz!"
+    "very_similar": " ile birbirinize çok benziyorsunuz!"
   },
   "saved": {
     "cancel": "Vazgeç",
@@ -52,5 +52,9 @@
   "display": {
     "cancel": "Vazgeç",
     "share": "Paylaş"
+  },
+  "dashboard": {
+    "first_label": "Hangi ünlüye benzediğini öğren.",
+    "second_label": "Bir ünlü seç ve sana ne kadar benzediğinizi öğren."
   }
 }

@@ -52,5 +52,9 @@
   "display": {
     "cancel": "Cancel",
     "share": "Share"
+  },
+  "dashboard": {
+    "first_label": "Find out which celebrity you look like.",
+    "second_label": "Pick a celebrity and find out how similar you are."
   }
 }
