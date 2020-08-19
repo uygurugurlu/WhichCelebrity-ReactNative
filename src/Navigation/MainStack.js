@@ -7,6 +7,8 @@ import {header_background_color, header_label_color} from "../CommonlyUsed/Color
 import ResultPage from "../Screens/ResultScreen/ResultPage";
 import SavingsPage from "../Screens/Savings/SavingsPage";
 import Dashboard from "../Screens/Dashboard/Dashboard";
+import ResultPage2 from "../Screens/ResultScreen2/ResultPage2";
+import HomePage2 from "../Screens/HomeScreen2/HomePage2";
 
 const MainStack = createStackNavigator();
 
@@ -39,8 +41,35 @@ export default function MainPagesStack() {
                                       fontWeight: 'bold',
                                   },
                               })}/>
+            <MainStack.Screen name={"HomePage2"}
+                              component={HomePage2}
+                              options={({navigation, route}) => ({
+                                  headerShown: true,
+                                  headerBackTitleVisible: false,
+                                  headerStyle: {
+                                      backgroundColor: header_background_color
+                                  },
+                                  headerTintColor: header_label_color,
+                                  headerTitleStyle: {
+                                      fontWeight: 'bold',
+                                  },
+                              })}/>
             <MainStack.Screen name="ResultPage"
                               component={ResultPage}
+                              options={({navigation, route}) => ({
+                                  headerShown: true,
+                                  title: translate('app_name'),
+                                  headerBackTitleVisible: false,
+                                  headerStyle: {
+                                      backgroundColor: header_background_color
+                                  },
+                                  headerTintColor: header_label_color,
+                                  headerTitleStyle: {
+                                      fontWeight: 'bold',
+                                  },
+                              })}/>
+            <MainStack.Screen name="ResultPage2"
+                              component={ResultPage2}
                               options={({navigation, route}) => ({
                                   headerShown: true,
                                   title: translate('app_name'),

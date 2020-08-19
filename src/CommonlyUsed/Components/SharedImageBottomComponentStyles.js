@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         width: DEVICE_WIDTH * 0.95,
-        paddingBottom: 20
+        height: 150
     },
     turkaiRowContainerStyle: {
         flexDirection: 'row',

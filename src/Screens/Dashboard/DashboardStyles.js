@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         width: DEVICE_WIDTH * 0.8,
         height: DEVICE_HEIGHT * 0.4,
-        marginVertical: DEVICE_HEIGHT * 0.05,
+        marginTop: DEVICE_HEIGHT * 0.05,
         marginHorizontal: DEVICE_WIDTH * 0.05,
         backgroundColor: 'pink'
     },
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         width: DEVICE_WIDTH * 0.8,
         height: DEVICE_HEIGHT * 0.4,
-        marginVertical: DEVICE_HEIGHT * 0.05,
+        marginTop: DEVICE_HEIGHT * 0.05,
         backgroundColor: 'pink',
     },
     textStyle: {

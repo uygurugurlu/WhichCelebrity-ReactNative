@@ -3,7 +3,7 @@ import {
     Image, View, Text, TouchableOpacity, Platform, Easing,
     PermissionsAndroid, Alert, SafeAreaView, Animated
 } from "react-native";
-import {styles} from './ResultPageStyles';
+import {styles} from './ResultPage2Styles';
 import {connect} from "react-redux";
 import {Button} from "react-native-elements";
 import {translate} from "../../I18n";
@@ -17,7 +17,7 @@ import {CONFETTI_ICON, RIGHT_HEADER_ICON, CAGATAY} from "../../CommonlyUsed/Icon
 import {shadow} from "../../CommonlyUsed/CommonlyUsedConstants";
 import LottieView from "lottie-react-native";
 
-class ResultPage extends Component {
+class ResultPage2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -259,10 +259,8 @@ class ResultPage extends Component {
 const mapStateToProps = state => {
     return {
         language: state.mainReducer.language,
-
         userAvatarSource: state.mainReducer.userAvatarSource,
         userAvatarSourceB64: state.mainReducer.userAvatarSourceB64,
-
         captured_image_uri: state.mainReducer.captured_image_uri
     };
 };
@@ -273,4 +271,4 @@ const mapDispatchToProps = dispatch => {
         trigger_savings_page: () => dispatch(trigger_savings_page()),
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(ResultPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ResultPage2);

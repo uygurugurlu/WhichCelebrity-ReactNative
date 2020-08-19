@@ -1,31 +1,40 @@
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity, SafeAreaView, Alert} from "react-native";
+import {View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView} from "react-native";
 import {connect} from "react-redux";
 import {translate} from "../../I18n";
 import {Button} from "react-native-elements";
-import {styles} from "./HomePageStyles";
+import {styles} from "./HomePage2Styles";
 import {InterstitialAd, AdEventType, TestIds} from '@react-native-firebase/admob';
 import {get_user_avatar_source} from "../../Store/Actions";
 import {GetUserPhotoFromImageLibrary} from "../../CommonlyUsed/Functions/GetUserPhotoFromImageLibrary";
 import {GetUserPhotoFromCamera} from "../../CommonlyUsed/Functions/GetUserPhotoFromCamera";
 import {RIGHT_HEADER_ICON} from "../../CommonlyUsed/IconIndex";
+import AvatarComponent from "../../CommonlyUsed/Components/AvatarComponent";
+import {GetResult} from "../../CommonlyUsed/Functions/GetResult";
+import ActionSheetComponent from "../../CommonlyUsed/Components/ActionSheetComponent";
+import SearchBarComponent from "../../CommonlyUsed/Components/SearchBarComponent";
+import {DEVICE_HEIGHT} from "../../CommonlyUsed/CommonlyUsedConstants";
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
     requestNonPersonalizedAdsOnly: false,
 });
-import AvatarComponent from "../../CommonlyUsed/Components/AvatarComponent";
-import {GetResult} from "../../CommonlyUsed/Functions/GetResult";
-import ActionSheetComponent from "../../CommonlyUsed/Components/ActionSheetComponent";
 
-class HomePage extends Component {
+class HomePage2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
             selected: '',
             loaded: false,
             setLoaded: false,
-            result_loading: false
+            result_loading: false,
+            search: "",
+            celebrities: ["İbrahim", "Ömer", "Ahmet", "Çağatay", "Ayşe", "Berna", "Tolga", "Emine", "Veli", "Abdullah", "Muzaffer", "Aşkım"
+                , "Alperen", "Taha", "Arzum", "Orhan", "Ceylan", "Fatma", "Kazım", "Tarkan", "Cem Yılmaz", "Cem KAraca", "Ahmet Kaya", "Ece Ronay", "Ece Mummay"
+                , "Sagopa", "Ezhel", "Ben Fero", "Rihanna", "İsmail YK", "Serdar Ortaç", "Erdoğan", "Arda", "Selçuk", "Devlet", "Nazım Hikmet",
+                "Ercüment", "Behzat", "Namık Kemal", "Beren Saat", "Bahar Candan", "Acun Ilıcalı", "Zeynep Bastık", "Naim Süleymanoğlu", "Bold Pilot"],
+            scroll_items: [],
+            selected_celebrity: ""
         }
     }
 
@@ -33,7 +42,7 @@ class HomePage extends Component {
         this.props.navigation.setOptions({
             title: translate("app_name"),
             headerRight: () => (
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('SavingsPage', {tab_index: 0})}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('SavingsPage')}>
                     <Image source={RIGHT_HEADER_ICON} style={{height: 35, width: 35, marginRight: 15}}/>
                 </TouchableOpacity>
             ),
@@ -51,11 +60,13 @@ class HomePage extends Component {
         interstitial.load();
     }
 
-    showActionSheet = () => this.actionSheet.show();
+    updateSearch = (search) => this.setState({search: search});
 
-    getActionSheetRef = ref => (this.actionSheet = ref);
+    showActionSheet = () => this.actionSheet.show()
 
-    handlePress = (index) => this.setState({selected: index});
+    getActionSheetRef = ref => (this.actionSheet = ref)
+
+    handlePress = (index) => this.setState({selected: index})
 
     WhenTheLanguageChanged = () => this.forceUpdate();
 
@@ -67,6 +78,8 @@ class HomePage extends Component {
 
     shouldComponentUpdate = async (nextProps, nextState) => {
         const {userAvatarSource, language} = this.props;
+        const {search} = this.state;
+
         if (nextProps.language.languageTag !== language.languageTag) {
             await this.WhenTheLanguageChanged();
         }
@@ -75,8 +88,11 @@ class HomePage extends Component {
             interstitial.load();
             this.actionSheet.hide();
         }
-    };
 
+        if (search !== nextState.search) {
+            this.fillScroll(nextState.search);
+        }
+    };
 
     GetActionSheet = () => {
         return (
@@ -122,30 +138,69 @@ class HomePage extends Component {
         }
     }
 
+    fillScroll = async (search) => {
+        const {celebrities} = this.state;
+
+        if (search.length > 1) {
+            const items = celebrities.map((item) => {
+                if (item.includes(search))
+                    return (
+                        <TouchableOpacity style={styles.scrollTextContainer}
+                                          onPress={() => this.CelebritySelected(item)}>
+                            <Text style={styles.scrollTextStyle}>{item}</Text>
+                        </TouchableOpacity>
+                    );
+            });
+            this.setState({scroll_items: items});
+        } else {
+            this.setState({scroll_items: []});
+        }
+    };
+
+    CelebritySelected = (celebrity) => {
+        this.setState({search: "", scroll_items: [], selected_celebrity: celebrity});
+        console.log("celebrity: ", celebrity);
+    };
+
     render() {
         const {userAvatarSource} = this.props;
+        const {search, scroll_items, selected_celebrity} = this.state;
+        const selection = "Seçtiğiniz Ünlü: " + selected_celebrity;
+        const header_text = selected_celebrity === "" ? translate("famous_compare.compare_header") : selection;
 
         return (
             <View style={styles.backgroundImageStyle}>
                 <SafeAreaView style={styles.mainContainer}>
                     <View style={styles.labelsContainerStyle}>
-                        <View display={'flex'} style={styles.topLabel2ContainerStyle}>
-                            <Text style={styles.topLabel2Style}>{translate("famous_compare.compare_header")}</Text>
+
+                        <SearchBarComponent search={search} updateSearch={this.updateSearch}/>
+
+                        <View display={search !== "" ? 'flex' : "none"}>
+                            <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.45}}>
+                                <View style={styles.scrollViewStyle}>
+                                    {scroll_items}
+                                </View>
+                            </ScrollView>
+                        </View>
+
+                        <View display={search === "" ? 'flex' : "none"} style={styles.topLabel2ContainerStyle}>
+                            <Text style={styles.topLabel2Style}>{header_text}</Text>
                         </View>
                     </View>
 
-                    <View style={styles.iconsMainContainerStyle}>
-                        <AvatarComponent ImageSource={userAvatarSource}
-                                         SelectAvatar={() => this.SelectAvatar()}/>
+                    <View display={search === "" ? 'flex' : "none"} style={styles.iconsMainContainerStyle}>
+                        <AvatarComponent ImageSource={userAvatarSource} SelectAvatar={() => this.SelectAvatar()}/>
                     </View>
 
-                    <Button
-                        title={translate("home.get_result")}
-                        buttonStyle={styles.resultButtonStyle}
-                        titleStyle={{fontSize: 18, fontWeight: '600'}}
-                        onPress={() => this.GetResult()}
-                        loading={this.state.result_loading}
-                    />
+                    <View display={search === "" ? 'flex' : "none"}>
+                        <Button
+                            title={translate("home.get_result")}
+                            buttonStyle={styles.resultButtonStyle}
+                            titleStyle={{fontSize: 18, fontWeight: '600'}}
+                            onPress={() => this.GetResult()}
+                            loading={this.state.result_loading}
+                        />
+                    </View>
                     {this.GetActionSheet()}
                 </SafeAreaView>
             </View>
@@ -166,4 +221,4 @@ const mapDispatchToProps = dispatch => {
         get_user_avatar_source: (source, base64_data) => dispatch(get_user_avatar_source(source, base64_data)),
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage2);
