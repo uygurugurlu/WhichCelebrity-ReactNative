@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
     },
     topLabel2ContainerStyle: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         width: DEVICE_WIDTH * 0.9,
@@ -46,7 +46,14 @@ export const styles = StyleSheet.create({
         color: '#123456',
         fontSize: 19,
         fontWeight: '600',
-        marginTop: 10,
+        marginTop: 7.5,
+        textAlign: 'center'
+    },
+    selectedCelebrityTextStyle: {
+        color: 'red',
+        fontSize: 19,
+        fontWeight: '600',
+        marginTop: 7.5,
         textAlign: 'center'
     },
     resultButtonStyle: {

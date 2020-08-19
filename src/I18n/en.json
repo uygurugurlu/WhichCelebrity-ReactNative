@@ -20,20 +20,22 @@
     "result_label": "You look very similar to ",
     "validity_alert": "Please make sure you select an image."
   },
-  "mono_compare": {
-    "compare_header": "Find out immediately,\n\nHow old do you look?\n\nWhat is your emotional mood?",
-    "validity_alert": "Please make sure you select an image."
-  },
   "home": {
     "main_header": "To Which Celebrity Do I Look",
     "get_result": "Get Result",
-    "validity_alert": "Please select an image for mother, father and the child."
+    "validity_alert": "Please select an image for mother, father and the child.",
+    "selected_celebrity": "The Celebrity you choose: ",
+    "select_celebrity": "Select a celebrity ...",
+    "select_another_celebrity": "Select another celebrity ... ",
+    "select_warning": "Please select a celebrity by typing its name.",
+    "avatar_warning": "Please be sure you select an image.!"
   },
   "result": {
     "share": "Share",
     "try_again": "Try Again",
     "okay": "Okay",
-    "result_saved": "Result saved successfully!"
+    "result_saved": "Result saved successfully!",
+    "very_similar": " and you are very similar to each other!"
   },
   "saved": {
     "cancel": "Cancel",

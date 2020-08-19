@@ -16,6 +16,7 @@ import SharedImageBottomComponent from "../../CommonlyUsed/Components/SharedImag
 import {CONFETTI_ICON, RIGHT_HEADER_ICON, CAGATAY} from "../../CommonlyUsed/IconIndex";
 import {shadow} from "../../CommonlyUsed/CommonlyUsedConstants";
 import LottieView from "lottie-react-native";
+import AnimatedProgressComponent from "../../CommonlyUsed/Components/AnimatedProgressComponent";
 
 class ResultPage2 extends Component {
     constructor(props) {
@@ -219,16 +220,18 @@ class ResultPage2 extends Component {
                     <SafeAreaView style={styles.mainContainer}>
                         <LottieView source={CONFETTI_ICON} progress={progress}/>
 
-                        <View style={styles.labelContainerStyle}>
-                            <Text style={styles.resultLabelStyle}>{translate('famous_compare.result_label')}</Text>
-                            <Text style={styles.celebrityTextStyle}>{'Çağatay Ulusoy'}</Text>
-                        </View>
-
                         <View style={[styles.iconContainerStyle, shadow]}>
                             <Image source={userAvatarSource} style={styles.iconStyle}/>
 
                             <Image source={CAGATAY} style={styles.iconStyle}/>
                         </View>
+
+                        <View style={styles.labelContainerStyle}>
+                            <Text
+                                style={styles.celebrityTextStyle}>{'Çağatay Ulusoy' + translate('result.very_similar')}</Text>
+                        </View>
+
+                        <AnimatedProgressComponent fill={75}/>
 
                         <View style={styles.buttonsRowContainerStyle} display={!share_active ? 'flex' : 'none'}>
                             <Button

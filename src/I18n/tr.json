@@ -20,20 +20,22 @@
     "result_label": "Seni en çok benzettiğimiz ünlü: ",
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
-  "mono_compare": {
-    "compare_header": "Kaç yaşında göründüğünü,\n\n Nasıl bir ruh halinde göründüğünü,\n\n hemen öğren.",
-    "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
-  },
   "home": {
     "main_header": "Hangi Ünlüye Benziyorum?",
     "get_result": "Sonucu Gör",
-    "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz."
+    "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz.",
+    "selected_celebrity": "Seçtiğiniz ünlü: ",
+    "select_celebrity": "Bir ünlü seç ... ",
+    "select_another_celebrity": "Başka bir ünlü seç ... ",
+    "select_warning": "Lütfen ismini yazarak bir ünlü seçiniz.",
+    "avatar_warning": "Lütfen fotoğraf eklediğinizden emin olun!"
   },
   "result": {
     "share": "Paylaş",
     "try_again": "Tekrar Dene",
     "okay": "Tamam",
-    "result_saved": "Sonuç Başarıyla Kaydedildi!"
+    "result_saved": "Sonuç Başarıyla Kaydedildi!",
+    "very_similar": "ile birbirinize çok benziyorsunuz!"
   },
   "saved": {
     "cancel": "Vazgeç",

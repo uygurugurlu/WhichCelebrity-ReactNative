@@ -105,9 +105,13 @@ class HomePage2 extends Component {
 
     CheckValidity = () => {
         const {userAvatarSource} = this.props;
+        const {selected_celebrity} = this.state;
 
         if (userAvatarSource === '') {
-            Alert.alert("", translate("mono_compare.validity_alert"));
+            Alert.alert("", translate("home.avatar_warning"));
+            return false;
+        } else if (selected_celebrity === "") {
+            Alert.alert("", translate("home.select_warning"));
             return false;
         }
 
@@ -129,7 +133,7 @@ class HomePage2 extends Component {
                 console.log("res: ", res);
                 try {
                     interstitial.show();
-                    this.props.navigation.navigate("ResultPage");
+                    this.props.navigation.navigate("ResultPage2");
                     this.setState({result_loading: false});
                 } catch (e) {
                     console.log("error on response: ", e);
@@ -159,21 +163,19 @@ class HomePage2 extends Component {
 
     CelebritySelected = (celebrity) => {
         this.setState({search: "", scroll_items: [], selected_celebrity: celebrity});
-        console.log("celebrity: ", celebrity);
     };
 
     render() {
         const {userAvatarSource} = this.props;
         const {search, scroll_items, selected_celebrity} = this.state;
-        const selection = "Seçtiğiniz Ünlü: " + selected_celebrity;
-        const header_text = selected_celebrity === "" ? translate("famous_compare.compare_header") : selection;
 
         return (
             <View style={styles.backgroundImageStyle}>
                 <SafeAreaView style={styles.mainContainer}>
                     <View style={styles.labelsContainerStyle}>
 
-                        <SearchBarComponent search={search} updateSearch={this.updateSearch}/>
+                        <SearchBarComponent search={search} updateSearch={this.updateSearch}
+                                            selectedCelebrity={selected_celebrity}/>
 
                         <View display={search !== "" ? 'flex' : "none"}>
                             <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.45}}>
@@ -183,8 +185,15 @@ class HomePage2 extends Component {
                             </ScrollView>
                         </View>
 
-                        <View display={search === "" ? 'flex' : "none"} style={styles.topLabel2ContainerStyle}>
-                            <Text style={styles.topLabel2Style}>{header_text}</Text>
+                        <View display={search === "" && selected_celebrity === "" ? 'flex' : "none"}
+                              style={styles.topLabel2ContainerStyle}>
+                            <Text style={styles.topLabel2Style}>{translate("famous_compare.compare_header")}</Text>
+                        </View>
+
+                        <View display={selected_celebrity !== "" ? 'flex' : "none"}
+                              style={styles.topLabel2ContainerStyle}>
+                            <Text style={styles.topLabel2Style}>{translate("home.selected_celebrity")}</Text>
+                            <Text style={styles.selectedCelebrityTextStyle}>{selected_celebrity}</Text>
                         </View>
                     </View>
 

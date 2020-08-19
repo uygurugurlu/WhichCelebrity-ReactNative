@@ -43,9 +43,9 @@ export const styles = StyleSheet.create({
     },
     celebrityTextStyle: {
         fontSize: 18,
-        fontWeight: '600',
-        color: 'orange',
-        marginTop: 5
+        fontWeight: '700',
+        color: 'brown',
+        textAlign: 'center'
     },
     iconStyle: {
         width: USER_ICON_SIZE,
