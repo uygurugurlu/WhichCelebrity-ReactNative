@@ -214,7 +214,8 @@ class ResultPage2 extends Component {
 
         return (
             <View style={styles.scrollViewStyle}>
-                <ViewShot ref={ref => (this.viewShot = ref)} options={{format: "jpg", quality: 0.9}}
+                <ViewShot ref={ref => (this.viewShot = ref)}
+                          options={{format: "jpg", quality: 0.9}}
                           style={styles.viewShotImageStyle}>
 
                     <SafeAreaView style={styles.mainContainer}>
@@ -222,7 +223,6 @@ class ResultPage2 extends Component {
 
                         <View style={[styles.iconContainerStyle, shadow]}>
                             <Image source={userAvatarSource} style={styles.iconStyle}/>
-
                             <Image source={CAGATAY} style={styles.iconStyle}/>
                         </View>
 
@@ -234,19 +234,15 @@ class ResultPage2 extends Component {
                         <AnimatedProgressComponent fill={75}/>
 
                         <View style={styles.buttonsRowContainerStyle} display={!share_active ? 'flex' : 'none'}>
-                            <Button
-                                title={translate("result.try_again")}
-                                buttonStyle={styles.resultButtonStyle}
-                                titleStyle={{fontSize: 18, fontWeight: '600'}}
-                                onPress={() => this.GoBack()}
-                            />
+                            <Button title={translate("result.try_again")}
+                                    buttonStyle={styles.resultButtonStyle}
+                                    titleStyle={{fontSize: 18, fontWeight: '600'}}
+                                    onPress={() => this.GoBack()}/>
 
-                            <Button
-                                title={translate("result.share")}
-                                buttonStyle={styles.shareButtonStyle}
-                                titleStyle={{fontSize: 18, fontWeight: '600'}}
-                                onPress={() => this.showActionSheet()}
-                            />
+                            <Button title={translate("result.share")}
+                                    buttonStyle={styles.shareButtonStyle}
+                                    titleStyle={{fontSize: 18, fontWeight: '600'}}
+                                    onPress={() => this.showActionSheet()}/>
                         </View>
 
                         <SharedImageBottomComponent shareActive={share_active}/>

@@ -45,7 +45,14 @@ export const styles = StyleSheet.create({
     topLabel2Style: {
         color: '#123456',
         fontSize: 19,
-        fontWeight: '600',
+        fontWeight: '500',
+        marginTop: 7.5,
+        textAlign: 'center'
+    },
+    selectedLabelTextStyle: {
+        color: '#123456',
+        fontSize: 17,
+        fontWeight: '500',
         marginTop: 7.5,
         textAlign: 'center'
     },

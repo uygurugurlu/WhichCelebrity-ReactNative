@@ -192,7 +192,7 @@ class HomePage2 extends Component {
 
                         <View display={selected_celebrity !== "" ? 'flex' : "none"}
                               style={styles.topLabel2ContainerStyle}>
-                            <Text style={styles.topLabel2Style}>{translate("home.selected_celebrity")}</Text>
+                            <Text style={styles.selectedLabelTextStyle}>{translate("home.selected_celebrity")}</Text>
                             <Text style={styles.selectedCelebrityTextStyle}>{selected_celebrity}</Text>
                         </View>
                     </View>
