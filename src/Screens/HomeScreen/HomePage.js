@@ -33,6 +33,8 @@ import ActionSheetComponent from '../../CommonlyUsed/Components/ActionSheetCompo
 import {GetCelebrities} from "../../CommonlyUsed/Functions/GetCelebrities";
 import {SearchCelebrities} from "../../CommonlyUsed/Functions/SearchCelebrities";
 import {GetCategories} from "../../CommonlyUsed/Functions/GetCategories";
+import {shadow} from "../../CommonlyUsed/CommonlyUsedConstants";
+import Config from "react-native-config";
 
 class HomePage extends Component {
   constructor(props) {
@@ -163,9 +165,9 @@ class HomePage extends Component {
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
             <View display={'flex'} style={styles.topLabel2ContainerStyle}>
-              <Text style={styles.topLabel2Style}>
-                {translate('famous_compare.compare_header')}
-              </Text>
+              <TouchableOpacity style={[styles.categoryContainerStyle, shadow]}>
+                <Text style={styles.topLabel2Style}>Kategori Seç</Text>
+              </TouchableOpacity>
             </View>
           </View>
 

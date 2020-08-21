@@ -53,8 +53,17 @@ export const styles = StyleSheet.create({
     color: '#123456',
     fontSize: 19,
     fontWeight: '600',
-    marginTop: 10,
     textAlign: 'center',
+  },
+  categoryContainerStyle: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: DEVICE_WIDTH * 0.75,
+    paddingVertical: 7.5,
+    borderRadius: 2.5,
+
+    backgroundColor: '#d1d1d1',
   },
   resultButtonStyle: {
     width: DEVICE_WIDTH * 0.8,

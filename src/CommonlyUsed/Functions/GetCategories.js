@@ -1,10 +1,11 @@
-import axios from 'axios';
 import {ResponseHandler} from '../CommunlyUsedFunctions';
 import Config from 'react-native-config';
+import {api} from "./AxiosCacheAdapter";
 
 export const GetCategories = async (user_agent) => {
   try {
-    const {data} = await axios.get(`${Config.API}/api/categories`, {
+    console.log("Config.API: ", Config.API)
+    const {data} = await api.get(`${Config.API}/api/categories`, {
       headers: {
         'Authorization': `Bearer ${Config.TOKEN}`,
         'User-Agent': user_agent,
