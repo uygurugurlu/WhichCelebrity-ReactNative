@@ -1,11 +1,12 @@
 import axios from 'axios';
 import {ResponseHandler} from '../CommunlyUsedFunctions';
+import Config from 'react-native-config';
 
 export const GetResult = async (userAvatarB64) => {
   try {
     const {data} = await axios({
       method: 'post',
-      url: 'https://myface.io/compare',
+      url: `${Config.API_URL}/compare`,
       data: {
         query: userAvatarB64,
         source: [userAvatarB64, userAvatarB64],

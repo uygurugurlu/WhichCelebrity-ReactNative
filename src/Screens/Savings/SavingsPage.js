@@ -12,6 +12,7 @@ import {
   clear_delete_list,
   clear_selected_to_delete_count,
 } from '../../Store/Actions';
+import SavedImageNotFoundComponent from '../../CommonlyUsed/Components/SavedImageNotFoundComponent';
 
 class SavingsPage extends Component {
   constructor(props) {
@@ -97,6 +98,14 @@ class SavingsPage extends Component {
     this.setState({delete_mode: mode});
   };
 
+  renderHeader = () => {
+    if (this.state.photos.length === 0) {
+      return <SavedImageNotFoundComponent />;
+    } else {
+      return <View />;
+    }
+  };
+
   render() {
     const {delete_mode} = this.state;
     const {selected_to_delete_count} = this.props;
@@ -108,6 +117,7 @@ class SavingsPage extends Component {
           numColumns={3}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          ListHeaderComponent={this.renderHeader}
           onRefresh={() => this.handleRefresh()}
           onEndReached={() => this.OnEndReached()}
           refreshing={this.state.refreshing}

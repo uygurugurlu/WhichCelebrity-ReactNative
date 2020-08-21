@@ -16,6 +16,8 @@ import DeviceInfo from 'react-native-device-info';
 import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
 import {page_body_background_color} from '../CommonlyUsed/ColorIndex';
 import MainPagesStack from './MainStack';
+import {Config} from 'react-native-config';
+import UserAgent from 'react-native-user-agent';
 
 class SwitchNavigation extends React.Component {
   constructor(props) {
@@ -56,6 +58,14 @@ class SwitchNavigation extends React.Component {
     const data = await this.performTimeConsumingTask(1000);
     await this.GetVersion();
 
+    await UserAgent.getWebViewUserAgent() //asynchronous
+      .then(ua => {
+        this.props.get_user_agent(ua);
+      })
+      .catch(e => {
+        console.log('user agent error: ', e);
+      });
+
     if (data !== null) {
       await this.getData('LOGGED_IN_FIRST_TIME');
     }
@@ -94,7 +104,7 @@ class SwitchNavigation extends React.Component {
   GetVersion = async () => {
     await axios({
       method: 'get',
-      url: 'https://myface.io/version',
+      url: `${Config.API_URL}/version`,
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Content-Type': 'application/json',
@@ -138,17 +148,17 @@ class SwitchNavigation extends React.Component {
     const {update_needed} = this.state;
 
     if (update_needed) {
-      return <UpdateApp />;
+      return <UpdateApp/>;
     } else if (is_the_login_first_time === null) {
       return (
         <View style={styles.indicatorContainer}>
-          <ActivityIndicator size="large" color={'#000'} />
+          <ActivityIndicator size="large" color={'#000'}/>
         </View>
       );
     } else {
       return (
         <NavigationContainer>
-          {is_the_login_first_time ? <StarterPagesStack /> : <MainPagesStack />}
+          {is_the_login_first_time ? <StarterPagesStack/> : <MainPagesStack/>}
         </NavigationContainer>
       );
     }
@@ -177,6 +187,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     first_time_login: (is_first) => dispatch(first_time_login(is_first)),
+    get_user_agent: (agent) => dispatch(get_user_agent(agent)),
   };
 };
 

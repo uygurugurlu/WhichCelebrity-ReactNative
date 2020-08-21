@@ -30,6 +30,9 @@ const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
 import AvatarComponent from '../../CommonlyUsed/Components/AvatarComponent';
 import {GetResult} from '../../CommonlyUsed/Functions/GetResult';
 import ActionSheetComponent from '../../CommonlyUsed/Components/ActionSheetComponent';
+import {GetCelebrities} from "../../CommonlyUsed/Functions/GetCelebrities";
+import {SearchCelebrities} from "../../CommonlyUsed/Functions/SearchCelebrities";
+import {GetCategories} from "../../CommonlyUsed/Functions/GetCategories";
 
 class HomePage extends Component {
   constructor(props) {
@@ -43,6 +46,18 @@ class HomePage extends Component {
   }
 
   componentWillMount() {
+    GetCategories(this.props.user_agent).then((res) => {
+      console.log("Categories: ", res);
+    });
+
+    SearchCelebrities(this.props.user_agent, "Cem").then((res) => {
+      console.log("SearchCelebrities: ", res);
+    });
+
+    GetCelebrities(this.props.user_agent).then((res) => {
+      console.log("Celebrities: ", res);
+    });
+
     this.props.navigation.setOptions({
       title: translate('app_name'),
       headerRight: () => (
@@ -50,10 +65,8 @@ class HomePage extends Component {
           onPress={() =>
             this.props.navigation.navigate('SavingsPage', {tab_index: 0})
           }>
-          <Image
-            source={RIGHT_HEADER_ICON}
-            style={{height: 35, width: 35, marginRight: 15}}
-          />
+          <Image source={RIGHT_HEADER_ICON}
+                 style={{height: 35, width: 35, marginRight: 15}}/>
         </TouchableOpacity>
       ),
     });
@@ -100,12 +113,10 @@ class HomePage extends Component {
 
   GetActionSheet = () => {
     return (
-      <ActionSheetComponent
-        launchImageLibrary={this.LaunchImageLibrary}
-        launchCamera={this.LaunchCamera}
-        handlePress={this.handlePress}
-        getActionSheetRef={this.getActionSheetRef}
-      />
+      <ActionSheetComponent launchImageLibrary={this.LaunchImageLibrary}
+                            launchCamera={this.LaunchCamera}
+                            handlePress={this.handlePress}
+                            getActionSheetRef={this.getActionSheetRef}/>
     );
   };
 
@@ -184,6 +195,7 @@ const mapStateToProps = (state) => {
     language: state.mainReducer.language,
     userAvatarSource: state.mainReducer.userAvatarSource,
     userAvatarB64: state.mainReducer.userAvatarB64,
+    user_agent: state.mainReducer.user_agent,
   };
 };
 
