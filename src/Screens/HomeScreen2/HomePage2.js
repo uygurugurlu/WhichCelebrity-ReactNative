@@ -18,12 +18,9 @@ import {GetResult} from '../../CommonlyUsed/Functions/GetResult';
 import ActionSheetComponent from '../../CommonlyUsed/Components/ActionSheetComponent';
 import SearchBarComponent from '../../CommonlyUsed/Components/SearchBarComponent';
 import {DEVICE_HEIGHT} from '../../CommonlyUsed/CommonlyUsedConstants';
-import {GetCelebrities} from "../../CommonlyUsed/Functions/GetCelebrities";
 import {SearchCelebrities} from "../../CommonlyUsed/Functions/SearchCelebrities";
 
-const adUnitId = __DEV__
-  ? TestIds.INTERSTITIAL
-  : 'ca-app-pub-9113500705436853/7410126783';
+const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   requestNonPersonalizedAdsOnly: false,
 });
@@ -37,10 +34,6 @@ class HomePage2 extends Component {
       setLoaded: false,
       result_loading: false,
       search: '',
-      celebrities: [
-        'İbrahim',
-        'Ömer',
-      ],
       scroll_items: [],
       selected_celebrity: '',
     };
@@ -52,10 +45,8 @@ class HomePage2 extends Component {
       headerRight: () => (
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('SavingsPage')}>
-          <Image
-            source={RIGHT_HEADER_ICON}
-            style={{height: 35, width: 35, marginRight: 15}}
-          />
+          <Image source={RIGHT_HEADER_ICON}
+                 style={{height: 35, width: 35, marginRight: 15}}/>
         </TouchableOpacity>
       ),
     });
@@ -82,11 +73,9 @@ class HomePage2 extends Component {
 
   WhenTheLanguageChanged = () => this.forceUpdate();
 
-  LaunchCamera = async () =>
-    await GetUserPhotoFromCamera(this.props.get_user_avatar_source);
+  LaunchCamera = async () => await GetUserPhotoFromCamera(this.props.get_user_avatar_source);
 
-  LaunchImageLibrary = async () =>
-    await GetUserPhotoFromImageLibrary(this.props.get_user_avatar_source);
+  LaunchImageLibrary = async () => await GetUserPhotoFromImageLibrary(this.props.get_user_avatar_source);
 
   SelectAvatar = () => this.showActionSheet();
 
@@ -104,18 +93,16 @@ class HomePage2 extends Component {
     }
 
     if (search !== nextState.search) {
-      this.fillScroll(nextState.search);
+      await this.fillScroll(nextState.search);
     }
   };
 
   GetActionSheet = () => {
     return (
-      <ActionSheetComponent
-        launchImageLibrary={this.LaunchImageLibrary}
-        launchCamera={this.LaunchCamera}
-        handlePress={this.handlePress}
-        getActionSheetRef={this.getActionSheetRef}
-      />
+      <ActionSheetComponent launchImageLibrary={this.LaunchImageLibrary}
+                            launchCamera={this.LaunchCamera}
+                            handlePress={this.handlePress}
+                            getActionSheetRef={this.getActionSheetRef}/>
     );
   };
 
@@ -163,16 +150,14 @@ class HomePage2 extends Component {
   };
 
   fillScroll = async (search) => {
-    const {celebrities} = this.state;
 
     if (search.length > 1) {
       SearchCelebrities(this.props.user_agent, search).then((res) => {
-        console.log("Celebrities: ", res.data);
+        console.log("Celebrities after search: ", res.data);
 
         const items = res.data.map((item) => {
           return (
-            <TouchableOpacity style={styles.scrollTextContainer}
-                              onPress={() => this.CelebritySelected(item)}>
+            <TouchableOpacity style={styles.scrollTextContainer} onPress={() => this.CelebritySelected(item)}>
               <Text style={styles.scrollTextStyle}>{item.name}</Text>
             </TouchableOpacity>
           );
@@ -201,11 +186,9 @@ class HomePage2 extends Component {
       <View style={styles.backgroundImageStyle}>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
-            <SearchBarComponent
-              search={search}
-              updateSearch={this.updateSearch}
-              selectedCelebrity={selected_celebrity}
-            />
+            <SearchBarComponent search={search}
+                                updateSearch={this.updateSearch}
+                                selectedCelebrity={selected_celebrity}/>
 
             <View display={search !== '' ? 'flex' : 'none'}>
               <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.45}}>
@@ -231,10 +214,8 @@ class HomePage2 extends Component {
           </View>
 
           <View display={search === '' ? 'flex' : 'none'} style={styles.iconsMainContainerStyle}>
-            <AvatarComponent
-              ImageSource={userAvatarSource}
-              SelectAvatar={() => this.SelectAvatar()}
-            />
+            <AvatarComponent ImageSource={userAvatarSource}
+                             SelectAvatar={() => this.SelectAvatar()}/>
           </View>
 
           <View display={search === '' ? 'flex' : 'none'}>

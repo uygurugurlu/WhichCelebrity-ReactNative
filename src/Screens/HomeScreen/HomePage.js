@@ -29,6 +29,7 @@ import {GetCelebrities} from "../../CommonlyUsed/Functions/GetCelebrities";
 import {SearchCelebrities} from "../../CommonlyUsed/Functions/SearchCelebrities";
 import {GetCategories} from "../../CommonlyUsed/Functions/GetCategories";
 import {DEVICE_HEIGHT, shadow} from "../../CommonlyUsed/CommonlyUsedConstants";
+import {UserPhotoAnalyze} from "../../CommonlyUsed/Functions/UserPhotoAnalyze";
 
 class HomePage extends Component {
   constructor(props) {
@@ -52,10 +53,6 @@ class HomePage extends Component {
       this.setState({categories: res.data})
 
       this.fillScroll(res.data);
-    });
-
-    SearchCelebrities(this.props.user_agent, "Cem").then((res) => {
-      console.log("SearchCelebrities: ", res);
     });
 
     GetCelebrities(this.props.user_agent).then((res) => {
@@ -134,7 +131,7 @@ class HomePage extends Component {
   };
 
   GetResult = async () => {
-    const {userAvatarB64} = this.props;
+    const {userAvatarB64, user_agent} = this.props;
 
     if (this.CheckValidity()) {
       this.setState({result_loading: true});
@@ -143,6 +140,8 @@ class HomePage extends Component {
           interstitial.load();
         }
       });
+
+      await UserPhotoAnalyze(user_agent, userAvatarB64);
 
       GetResult(userAvatarB64).then((res) => {
         console.log('res: ', res);
