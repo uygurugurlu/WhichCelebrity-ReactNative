@@ -1,36 +1,24 @@
 import React, {Component} from 'react';
 import {
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
-  Platform,
-  Easing,
-  PermissionsAndroid,
-  Alert,
-  SafeAreaView,
-  Animated,
+  Image, View, Text, TouchableOpacity, Platform, Easing,
+  PermissionsAndroid, Alert, SafeAreaView, Animated,
 } from 'react-native';
 import {styles} from './ResultPageStyles';
 import {connect} from 'react-redux';
-import {Button} from 'react-native-elements';
 import {translate} from '../../I18n';
 import {ActionSheetCustom as ActionSheet} from 'react-native-custom-actionsheet';
 import CameraRoll from '@react-native-community/cameraroll';
-import {
-  get_captured_image_uri,
-  trigger_savings_page,
-} from '../../Store/Actions';
+import {get_captured_image_uri, trigger_savings_page,} from '../../Store/Actions';
 import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../CommonlyUsed/Components/SharedImageBottomComponent';
-import {
-  CONFETTI_ICON,
-  RIGHT_HEADER_ICON,
-  CAGATAY,
-} from '../../CommonlyUsed/IconIndex';
+import {CONFETTI_ICON, RIGHT_HEADER_ICON, CAGATAY,} from '../../CommonlyUsed/IconIndex';
 import {shadow} from '../../CommonlyUsed/CommonlyUsedConstants';
 import LottieView from 'lottie-react-native';
+import * as Animatable from 'react-native-animatable';
+import ResultButtonsRow from "../../CommonlyUsed/Components/ResultButtonsRow";
+
+const ANIMATION_DURATION = 1200;
 
 class ResultPage extends Component {
   constructor(props) {
@@ -45,14 +33,11 @@ class ResultPage extends Component {
   componentWillMount() {
     this.props.navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.navigate('SavingsPage', {tab_index: 0})
-          }>
-          <Image
-            source={RIGHT_HEADER_ICON}
-            style={{height: 35, width: 35, marginRight: 15}}
-          />
+        <TouchableOpacity onPress={() =>
+          this.props.navigation.navigate('SavingsPage', {tab_index: 0})
+        }>
+          <Image source={RIGHT_HEADER_ICON}
+                 style={{height: 35, width: 35, marginRight: 15}}/>
         </TouchableOpacity>
       ),
     });
@@ -69,6 +54,7 @@ class ResultPage extends Component {
     }).start();
 
     await this.setState({share_active: true});
+
     if (data !== null) {
       await this.GetScreenShot();
     }
@@ -91,18 +77,18 @@ class ResultPage extends Component {
     const shareOptions1 =
       Platform.OS === 'ios'
         ? {
-            title: translate('app_name'),
-            url: this.props.captured_image_uri,
-            subject: translate('app_name'), // for email,
-            failOnCancel: false,
-          }
+          title: translate('app_name'),
+          url: this.props.captured_image_uri,
+          subject: translate('app_name'), // for email,
+          failOnCancel: false,
+        }
         : {
-            title: translate('app_name'),
-            url: this.props.captured_image_uri,
-            message: 'https://looklikecelebrity.page.link/naxz',
-            subject: translate('app_name'), // for email,
-            failOnCancel: false,
-          };
+          title: translate('app_name'),
+          url: this.props.captured_image_uri,
+          message: 'https://looklikecelebrity.page.link/naxz',
+          subject: translate('app_name'), // for email,
+          failOnCancel: false,
+        };
 
     const shareOptions2 = {
       title: translate('app_name'),
@@ -122,11 +108,13 @@ class ResultPage extends Component {
         .then(async (res) => {
           console.log('share response: ', res);
           await this.setState({share_active: false});
+          this.ref2.zoomInUp(ANIMATION_DURATION);
           await this.actionSheet.hide();
         })
         .catch((err) => {
           err && console.log(err);
           this.setState({share_active: false});
+          this.ref2.zoomInUp(ANIMATION_DURATION);
           this.actionSheet.hide();
         });
     }
@@ -152,10 +140,12 @@ class ResultPage extends Component {
         .capture()
         .then(async (uri) => {
           this.setState({share_active: false});
+          this.ref2.zoomInUp(ANIMATION_DURATION);
           this.props.get_captured_image_uri(uri);
         })
         .catch(() => {
           this.setState({share_active: false});
+          this.ref2.zoomInUp(ANIMATION_DURATION);
         });
     }
   };
@@ -259,12 +249,11 @@ class ResultPage extends Component {
 
     return (
       <View style={styles.scrollViewStyle}>
-        <ViewShot
-          ref={(ref) => (this.viewShot = ref)}
-          options={{format: 'jpg', quality: 0.9}}
-          style={styles.viewShotImageStyle}>
+        <ViewShot ref={(ref) => (this.viewShot = ref)}
+                  options={{format: 'jpg', quality: 0.9}}
+                  style={styles.viewShotImageStyle}>
           <SafeAreaView style={styles.mainContainer}>
-            <LottieView source={CONFETTI_ICON} progress={progress} />
+            <LottieView source={CONFETTI_ICON} progress={progress}/>
 
             <View style={styles.labelContainerStyle}>
               <Text style={styles.resultLabelStyle}>
@@ -274,32 +263,18 @@ class ResultPage extends Component {
             </View>
 
             <View style={[styles.iconContainerStyle, shadow]}>
-              <Image source={userAvatarSource} style={styles.iconStyle} />
+              <Image source={userAvatarSource} style={styles.iconStyle}/>
 
-              <Image source={CAGATAY} style={styles.iconStyle} />
+              <Image source={CAGATAY} style={styles.iconStyle}/>
             </View>
 
-            <View
-              style={styles.buttonsRowContainerStyle}
-              display={!share_active ? 'flex' : 'none'}>
-              <Button
-                title={translate('result.try_again')}
-                buttonStyle={styles.resultButtonStyle}
-                titleStyle={{fontSize: 18, fontWeight: '600'}}
-                onPress={() => this.GoBack()}
-              />
+            <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
+              <ResultButtonsRow share_active={share_active}
+                                showActionSheet={this.showActionSheet}
+                                goBack={this.GoBack}/>
+            </Animatable.View>
 
-
-
-              <Button
-                title={translate('result.share')}
-                buttonStyle={styles.shareButtonStyle}
-                titleStyle={{fontSize: 18, fontWeight: '600'}}
-                onPress={() => this.showActionSheet()}
-              />
-            </View>
-
-            <SharedImageBottomComponent shareActive={share_active} />
+            <SharedImageBottomComponent shareActive={share_active}/>
           </SafeAreaView>
         </ViewShot>
 

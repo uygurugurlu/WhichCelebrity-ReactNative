@@ -1,37 +1,25 @@
 import React, {Component} from 'react';
 import {
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
-  Platform,
-  Easing,
-  PermissionsAndroid,
-  Alert,
-  SafeAreaView,
-  Animated,
+  Image, View, Text, TouchableOpacity, Platform, Easing,
+  PermissionsAndroid, Alert, SafeAreaView, Animated,
 } from 'react-native';
 import {styles} from './ResultPage2Styles';
 import {connect} from 'react-redux';
-import {Button} from 'react-native-elements';
 import {translate} from '../../I18n';
 import {ActionSheetCustom as ActionSheet} from 'react-native-custom-actionsheet';
 import CameraRoll from '@react-native-community/cameraroll';
-import {
-  get_captured_image_uri,
-  trigger_savings_page,
-} from '../../Store/Actions';
+import {get_captured_image_uri, trigger_savings_page} from '../../Store/Actions';
 import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../CommonlyUsed/Components/SharedImageBottomComponent';
-import {
-  CONFETTI_ICON,
-  RIGHT_HEADER_ICON,
-  CAGATAY,
-} from '../../CommonlyUsed/IconIndex';
+import {CONFETTI_ICON, RIGHT_HEADER_ICON, CAGATAY,} from '../../CommonlyUsed/IconIndex';
 import {shadow} from '../../CommonlyUsed/CommonlyUsedConstants';
 import LottieView from 'lottie-react-native';
 import AnimatedProgressComponent from '../../CommonlyUsed/Components/AnimatedProgressComponent';
+import * as Animatable from "react-native-animatable";
+import ResultButtonsRow from "../../CommonlyUsed/Components/ResultButtonsRow";
+
+const ANIMATION_DURATION = 1200;
 
 class ResultPage2 extends Component {
   constructor(props) {
@@ -95,18 +83,18 @@ class ResultPage2 extends Component {
     const shareOptions1 =
       Platform.OS === 'ios'
         ? {
-            title: translate('app_name'),
-            url: this.props.captured_image_uri,
-            subject: translate('app_name'), // for email,
-            failOnCancel: false,
-          }
+          title: translate('app_name'),
+          url: this.props.captured_image_uri,
+          subject: translate('app_name'), // for email,
+          failOnCancel: false,
+        }
         : {
-            title: translate('app_name'),
-            url: this.props.captured_image_uri,
-            message: 'https://looklikecelebrity.page.link/naxz',
-            subject: translate('app_name'), // for email,
-            failOnCancel: false,
-          };
+          title: translate('app_name'),
+          url: this.props.captured_image_uri,
+          message: 'https://looklikecelebrity.page.link/naxz',
+          subject: translate('app_name'), // for email,
+          failOnCancel: false,
+        };
 
     const shareOptions2 = {
       title: translate('app_name'),
@@ -126,11 +114,13 @@ class ResultPage2 extends Component {
         .then(async (res) => {
           console.log('share response: ', res);
           await this.setState({share_active: false});
+          this.ref2.zoomInUp(ANIMATION_DURATION);
           await this.actionSheet.hide();
         })
         .catch((err) => {
           err && console.log(err);
           this.setState({share_active: false});
+          this.ref2.zoomInUp(ANIMATION_DURATION);
           this.actionSheet.hide();
         });
     }
@@ -156,10 +146,12 @@ class ResultPage2 extends Component {
         .capture()
         .then(async (uri) => {
           this.setState({share_active: false});
+          this.ref2.zoomInUp(ANIMATION_DURATION);
           this.props.get_captured_image_uri(uri);
         })
         .catch(() => {
           this.setState({share_active: false});
+          this.ref2.zoomInUp(ANIMATION_DURATION);
         });
     }
   };
@@ -268,11 +260,11 @@ class ResultPage2 extends Component {
           options={{format: 'jpg', quality: 0.9}}
           style={styles.viewShotImageStyle}>
           <SafeAreaView style={styles.mainContainer}>
-            <LottieView source={CONFETTI_ICON} progress={progress} />
+            <LottieView source={CONFETTI_ICON} progress={progress}/>
 
             <View style={[styles.iconContainerStyle, shadow]}>
-              <Image source={userAvatarSource} style={styles.iconStyle} />
-              <Image source={CAGATAY} style={styles.iconStyle} />
+              <Image source={userAvatarSource} style={styles.iconStyle}/>
+              <Image source={CAGATAY} style={styles.iconStyle}/>
             </View>
 
             <View style={styles.labelContainerStyle}>
@@ -284,27 +276,16 @@ class ResultPage2 extends Component {
               </Text>
             </View>
 
-            <AnimatedProgressComponent fill={75} />
+            <AnimatedProgressComponent fill={75}/>
 
-            <View
-              style={styles.buttonsRowContainerStyle}
-              display={!share_active ? 'flex' : 'none'}>
-              <Button
-                title={translate('result.try_again')}
-                buttonStyle={styles.resultButtonStyle}
-                titleStyle={{fontSize: 18, fontWeight: '600'}}
-                onPress={() => this.GoBack()}
-              />
+            <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'} >
+              <ResultButtonsRow share_active={share_active}
+                                showActionSheet={this.showActionSheet}
+                                goBack={this.GoBack}/>
+            </Animatable.View>
 
-              <Button
-                title={translate('result.share')}
-                buttonStyle={styles.shareButtonStyle}
-                titleStyle={{fontSize: 18, fontWeight: '600'}}
-                onPress={() => this.showActionSheet()}
-              />
-            </View>
 
-            <SharedImageBottomComponent shareActive={share_active} />
+            <SharedImageBottomComponent shareActive={share_active}/>
           </SafeAreaView>
         </ViewShot>
 

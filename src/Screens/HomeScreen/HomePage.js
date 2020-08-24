@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
-  Alert,
+  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
@@ -33,8 +28,7 @@ import ActionSheetComponent from '../../CommonlyUsed/Components/ActionSheetCompo
 import {GetCelebrities} from "../../CommonlyUsed/Functions/GetCelebrities";
 import {SearchCelebrities} from "../../CommonlyUsed/Functions/SearchCelebrities";
 import {GetCategories} from "../../CommonlyUsed/Functions/GetCategories";
-import {shadow} from "../../CommonlyUsed/CommonlyUsedConstants";
-import Config from "react-native-config";
+import {DEVICE_HEIGHT, shadow} from "../../CommonlyUsed/CommonlyUsedConstants";
 
 class HomePage extends Component {
   constructor(props) {
@@ -44,12 +38,20 @@ class HomePage extends Component {
       loaded: false,
       setLoaded: false,
       result_loading: false,
+      categories_visibility: false,
+      categories: [],
+      selected_category_name: "Kategori Seç",
+      selected_category_id: -1,
+      scroll_items: []
     };
   }
 
   componentWillMount() {
     GetCategories(this.props.user_agent).then((res) => {
-      console.log("Categories: ", res);
+      console.log("Categories: ", res.data);
+      this.setState({categories: res.data})
+
+      this.fillScroll(res.data);
     });
 
     SearchCelebrities(this.props.user_agent, "Cem").then((res) => {
@@ -93,11 +95,9 @@ class HomePage extends Component {
 
   WhenTheLanguageChanged = () => this.forceUpdate();
 
-  LaunchCamera = async () =>
-    await GetUserPhotoFromCamera(this.props.get_user_avatar_source);
+  LaunchCamera = async () => await GetUserPhotoFromCamera(this.props.get_user_avatar_source);
 
-  LaunchImageLibrary = async () =>
-    await GetUserPhotoFromImageLibrary(this.props.get_user_avatar_source);
+  LaunchImageLibrary = async () => await GetUserPhotoFromImageLibrary(this.props.get_user_avatar_source);
 
   SelectAvatar = () => this.showActionSheet();
 
@@ -157,34 +157,78 @@ class HomePage extends Component {
     }
   };
 
+  fillScroll = (categories) => {
+    const items = categories.map((item) => {
+      return (
+        <TouchableOpacity style={styles.scrollTextContainer}
+                          onPress={() => this.CategorySelected(item.name, item.id)}>
+          <Text style={styles.scrollTextStyle}>{item.name}</Text>
+        </TouchableOpacity>
+      );
+
+    });
+    this.setState({scroll_items: items});
+  };
+
+  CategorySelected = (category_name, category_id) => {
+    this.setState({
+      categories_visibility: false,
+      selected_category_name: category_name,
+      selected_category_id: category_id
+    });
+  }
+
+  HandleCategoriesVisibility = () => {
+    this.setState({categories_visibility: !this.state.categories_visibility});
+  }
+
+  CancelCategory = () => {
+    this.setState({categories_visibility: false, selected_category_name: "Kategori Seç"});
+  }
+
   render() {
     const {userAvatarSource} = this.props;
+    const {categories_visibility, scroll_items, selected_category_name} = this.state;
 
     return (
       <View style={styles.backgroundImageStyle}>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
             <View display={'flex'} style={styles.topLabel2ContainerStyle}>
-              <TouchableOpacity style={[styles.categoryContainerStyle, shadow]}>
-                <Text style={styles.topLabel2Style}>Kategori Seç</Text>
+              <TouchableOpacity style={[styles.categoryContainerStyle, shadow]}
+                                onPress={() => this.HandleCategoriesVisibility()}>
+                <Text style={styles.topLabel2Style}>{selected_category_name}</Text>
               </TouchableOpacity>
+            </View>
+
+            <View display={categories_visibility ? 'flex' : 'none'} style={{marginTop: 25, alignItems: 'center'}}>
+              <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.6}}>
+                <View style={styles.scrollViewStyle}>{scroll_items}</View>
+              </ScrollView>
+              <View display={selected_category_name !== "Kategori Seç" ? 'flex' : 'none'}>
+                <Button title={"Temizle"}
+                        buttonStyle={styles.cancelButtonStyle}
+                        titleStyle={{fontSize: 18, fontWeight: '600'}}
+                        onPress={() => this.CancelCategory()}
+                        loading={this.state.result_loading}/>
+              </View>
+
             </View>
           </View>
 
-          <View style={styles.iconsMainContainerStyle}>
-            <AvatarComponent
-              ImageSource={userAvatarSource}
-              SelectAvatar={() => this.SelectAvatar()}
-            />
+          <View display={!categories_visibility ? 'flex' : 'none'} style={styles.iconsMainContainerStyle}>
+            <AvatarComponent ImageSource={userAvatarSource}
+                             SelectAvatar={() => this.SelectAvatar()}/>
           </View>
 
-          <Button
-            title={translate('home.get_result')}
-            buttonStyle={styles.resultButtonStyle}
-            titleStyle={{fontSize: 18, fontWeight: '600'}}
-            onPress={() => this.GetResult()}
-            loading={this.state.result_loading}
-          />
+          <View display={!categories_visibility ? 'flex' : 'none'}>
+            <Button title={translate('home.get_result')}
+                    buttonStyle={styles.resultButtonStyle}
+                    titleStyle={{fontSize: 18, fontWeight: '600'}}
+                    onPress={() => this.GetResult()}
+                    loading={this.state.result_loading}/>
+          </View>
+
           {this.GetActionSheet()}
         </SafeAreaView>
       </View>

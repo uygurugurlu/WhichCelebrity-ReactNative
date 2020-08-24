@@ -6,10 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {setI18nConfig} from '../I18n';
 import {first_time_login, get_user_agent} from '../Store/Actions';
 import StarterPagesStack from './Starter/StarterPagesStack';
-import {
-  DEVICE_HEIGHT,
-  DEVICE_WIDTH,
-} from '../CommonlyUsed/CommonlyUsedConstants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../CommonlyUsed/CommonlyUsedConstants';
 import axios from 'axios';
 import {ResponseHandler} from '../CommonlyUsed/CommunlyUsedFunctions';
 import DeviceInfo from 'react-native-device-info';
@@ -102,6 +99,7 @@ class SwitchNavigation extends React.Component {
   };
 
   GetVersion = async () => {
+    console.log("Config.API_URL: ", Config.API_URL);
     await axios({
       method: 'get',
       url: `${Config.API_URL}/version`,

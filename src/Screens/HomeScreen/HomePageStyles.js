@@ -73,6 +73,14 @@ export const styles = StyleSheet.create({
     backgroundColor: button_colors,
     marginBottom: 25,
   },
+  cancelButtonStyle: {
+    width: DEVICE_WIDTH * 0.8,
+    height: buttons_height,
+    borderRadius: 5,
+    fontWeight: '600',
+    backgroundColor: button_colors,
+    marginVertical: 20,
+  },
   modalTextStyle: {
     fontSize: 18,
     fontWeight: '500',
@@ -133,5 +141,26 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#f5bc1a',
+  },
+  scrollViewStyle: {
+    width: DEVICE_WIDTH * 0.9 + 15,
+    backgroundColor: page_body_background_color,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  scrollTextStyle: {
+    fontSize: 17,
+    fontWeight: '500',
+  },
+  scrollTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'orange',
+    width: DEVICE_WIDTH * 0.8,
+    paddingVertical: 10,
+    marginVertical: 5,
+    borderRadius: 5,
   },
 });

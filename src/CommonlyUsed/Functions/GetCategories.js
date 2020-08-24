@@ -4,7 +4,6 @@ import {api} from "./AxiosCacheAdapter";
 
 export const GetCategories = async (user_agent) => {
   try {
-    console.log("Config.API: ", Config.API)
     const {data} = await api.get(`${Config.API}/api/categories`, {
       headers: {
         'Authorization': `Bearer ${Config.TOKEN}`,
