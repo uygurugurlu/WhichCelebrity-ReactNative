@@ -4,7 +4,7 @@ import {api} from "./AxiosCacheAdapter";
 
 export const SearchCelebrities = async (user_agent, search) => {
   try {
-    const {data} = await api.get(`${Config.API}/api/celebrities/${search}`, {
+    const {data} = await api.get(`${Config.API}/api/celebrities/search/${search}`, {
       headers: {
         'Authorization': `Bearer ${Config.TOKEN}`,
         'User-Agent': user_agent,

@@ -10,8 +10,8 @@ export const GetCategories = async (user_agent) => {
         'User-Agent': user_agent,
       }
     });
-    return data;
 
+    return data;
   } catch (error) {
     ResponseHandler('GetCategories Response: ', error.response);
     console.group('GetCategories Error ...');

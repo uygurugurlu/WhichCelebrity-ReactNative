@@ -10,8 +10,8 @@ export const GetCelebrities = async (user_agent) => {
         'User-Agent': user_agent,
       }
     });
-    return data;
 
+    return data;
   } catch (error) {
     ResponseHandler('GetCelebrities Response: ', error.response);
     console.group('GetCelebrities Error ...');

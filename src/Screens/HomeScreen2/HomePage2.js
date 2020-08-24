@@ -1,21 +1,13 @@
 import React, {Component} from 'react';
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
-  Alert,
-  ScrollView,
+  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
 import {Button} from 'react-native-elements';
 import {styles} from './HomePage2Styles';
 import {
-  InterstitialAd,
-  AdEventType,
-  TestIds,
+  InterstitialAd, AdEventType, TestIds,
 } from '@react-native-firebase/admob';
 import {get_user_avatar_source} from '../../Store/Actions';
 import {GetUserPhotoFromImageLibrary} from '../../CommonlyUsed/Functions/GetUserPhotoFromImageLibrary';
@@ -26,6 +18,8 @@ import {GetResult} from '../../CommonlyUsed/Functions/GetResult';
 import ActionSheetComponent from '../../CommonlyUsed/Components/ActionSheetComponent';
 import SearchBarComponent from '../../CommonlyUsed/Components/SearchBarComponent';
 import {DEVICE_HEIGHT} from '../../CommonlyUsed/CommonlyUsedConstants';
+import {GetCelebrities} from "../../CommonlyUsed/Functions/GetCelebrities";
+import {SearchCelebrities} from "../../CommonlyUsed/Functions/SearchCelebrities";
 
 const adUnitId = __DEV__
   ? TestIds.INTERSTITIAL
@@ -46,49 +40,6 @@ class HomePage2 extends Component {
       celebrities: [
         'İbrahim',
         'Ömer',
-        'Ahmet',
-        'Çağatay',
-        'Ayşe',
-        'Berna',
-        'Tolga',
-        'Emine',
-        'Veli',
-        'Abdullah',
-        'Muzaffer',
-        'Aşkım',
-        'Alperen',
-        'Taha',
-        'Arzum',
-        'Orhan',
-        'Ceylan',
-        'Fatma',
-        'Kazım',
-        'Tarkan',
-        'Cem Yılmaz',
-        'Cem KAraca',
-        'Ahmet Kaya',
-        'Ece Ronay',
-        'Ece Mummay',
-        'Sagopa',
-        'Ezhel',
-        'Ben Fero',
-        'Rihanna',
-        'İsmail YK',
-        'Serdar Ortaç',
-        'Erdoğan',
-        'Arda',
-        'Selçuk',
-        'Devlet',
-        'Nazım Hikmet',
-        'Ercüment',
-        'Behzat',
-        'Namık Kemal',
-        'Beren Saat',
-        'Bahar Candan',
-        'Acun Ilıcalı',
-        'Zeynep Bastık',
-        'Naim Süleymanoğlu',
-        'Bold Pilot',
       ],
       scroll_items: [],
       selected_celebrity: '',
@@ -215,18 +166,20 @@ class HomePage2 extends Component {
     const {celebrities} = this.state;
 
     if (search.length > 1) {
-      const items = celebrities.map((item) => {
-        if (item.includes(search)) {
+      SearchCelebrities(this.props.user_agent, search).then((res) => {
+        console.log("Celebrities: ", res.data);
+
+        const items = res.data.map((item) => {
           return (
-            <TouchableOpacity
-              style={styles.scrollTextContainer}
-              onPress={() => this.CelebritySelected(item)}>
-              <Text style={styles.scrollTextStyle}>{item}</Text>
+            <TouchableOpacity style={styles.scrollTextContainer}
+                              onPress={() => this.CelebritySelected(item)}>
+              <Text style={styles.scrollTextStyle}>{item.name}</Text>
             </TouchableOpacity>
           );
-        }
+        });
+
+        this.setState({scroll_items: items});
       });
-      this.setState({scroll_items: items});
     } else {
       this.setState({scroll_items: []});
     }
@@ -236,7 +189,7 @@ class HomePage2 extends Component {
     this.setState({
       search: '',
       scroll_items: [],
-      selected_celebrity: celebrity,
+      selected_celebrity: celebrity.name,
     });
   };
 
@@ -260,19 +213,14 @@ class HomePage2 extends Component {
               </ScrollView>
             </View>
 
-            <View
-              display={
-                search === '' && selected_celebrity === '' ? 'flex' : 'none'
-              }
-              style={styles.topLabel2ContainerStyle}>
+            <View display={search === '' && selected_celebrity === '' ? 'flex' : 'none'}
+                  style={styles.topLabel2ContainerStyle}>
               <Text style={styles.topLabel2Style}>
                 {translate('famous_compare.compare_header')}
               </Text>
             </View>
 
-            <View
-              display={selected_celebrity !== '' ? 'flex' : 'none'}
-              style={styles.topLabel2ContainerStyle}>
+            <View display={selected_celebrity !== '' ? 'flex' : 'none'} style={styles.topLabel2ContainerStyle}>
               <Text style={styles.selectedLabelTextStyle}>
                 {translate('home.selected_celebrity')}
               </Text>
@@ -282,9 +230,7 @@ class HomePage2 extends Component {
             </View>
           </View>
 
-          <View
-            display={search === '' ? 'flex' : 'none'}
-            style={styles.iconsMainContainerStyle}>
+          <View display={search === '' ? 'flex' : 'none'} style={styles.iconsMainContainerStyle}>
             <AvatarComponent
               ImageSource={userAvatarSource}
               SelectAvatar={() => this.SelectAvatar()}
@@ -292,13 +238,11 @@ class HomePage2 extends Component {
           </View>
 
           <View display={search === '' ? 'flex' : 'none'}>
-            <Button
-              title={translate('home.get_result')}
-              buttonStyle={styles.resultButtonStyle}
-              titleStyle={{fontSize: 18, fontWeight: '600'}}
-              onPress={() => this.GetResult()}
-              loading={this.state.result_loading}
-            />
+            <Button title={translate('home.get_result')}
+                    buttonStyle={styles.resultButtonStyle}
+                    titleStyle={{fontSize: 18, fontWeight: '600'}}
+                    onPress={() => this.GetResult()}
+                    loading={this.state.result_loading}/>
           </View>
           {this.GetActionSheet()}
         </SafeAreaView>
@@ -312,6 +256,7 @@ const mapStateToProps = (state) => {
     language: state.mainReducer.language,
     userAvatarSource: state.mainReducer.userAvatarSource,
     userAvatarB64: state.mainReducer.userAvatarB64,
+    user_agent: state.mainReducer.user_agent,
   };
 };
 
