@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
-} from '../../../CommonlyUsed/CommonlyUsedConstants';
+} from '../../../CommonlyUsed/Constants';
 
 const MOTHER_ICON_SIZE = DEVICE_WIDTH * 0.275;
 const FATHER_ICON_SIZE = DEVICE_WIDTH * 0.275;

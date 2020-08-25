@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../CommonlyUsedConstants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../Constants';
 
 export const styles = StyleSheet.create({
   turkaiContainerStyle: {
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.95,
-    marginTop: DEVICE_HEIGHT * 0.1,
+   // marginTop: DEVICE_HEIGHT * 0.1,
   },
   turkaiLogoStyle: {
     height: (DEVICE_WIDTH * 0.25) / 3.80962343096,
@@ -43,6 +43,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginVertical: 10,
+    marginTop: 10,
   },
 });

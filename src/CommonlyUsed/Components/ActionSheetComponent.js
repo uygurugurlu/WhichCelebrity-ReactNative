@@ -3,7 +3,7 @@ import {translate} from '../../I18n';
 import {Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {CAMERA_ICON, PICTURE_ICON} from '../IconIndex';
 import {ActionSheetCustom as ActionSheet} from 'react-native-custom-actionsheet';
-import {DEVICE_WIDTH} from '../CommonlyUsedConstants';
+import {DEVICE_WIDTH} from '../Constants';
 
 const ICON_SIZE = 33;
 

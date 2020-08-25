@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View} from "react-native";
 import {Button} from "react-native-elements";
 import {translate} from "../../I18n";
-import {DEVICE_WIDTH} from "../CommonlyUsedConstants";
+import {DEVICE_WIDTH} from "../Constants";
 import {buttons_height} from "../ColorIndex";
 
 class ResultButtonsRow extends Component {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 220,
+    height: 150,
   },
   resultButtonStyle: {
     width: DEVICE_WIDTH * 0.38,

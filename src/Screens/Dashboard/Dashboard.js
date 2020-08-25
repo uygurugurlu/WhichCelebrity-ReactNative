@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
-import {shadow} from '../../CommonlyUsed/CommonlyUsedConstants';
+import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {shadow} from '../../CommonlyUsed/Constants';
 import {styles} from './DashboardStyles';
 import {translate} from '../../I18n';
 
@@ -20,7 +20,7 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <View style={styles.mainContainer}>
+      <SafeAreaView style={styles.mainContainer}>
         <TouchableOpacity
           style={[styles.topContainer, shadow]}
           onPress={() => this.Navigate(1)}>
@@ -36,7 +36,7 @@ class Dashboard extends Component {
             {translate('dashboard.second_label')}
           </Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     );
   }
 }

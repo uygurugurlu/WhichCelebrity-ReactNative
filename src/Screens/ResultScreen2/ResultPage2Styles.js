@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {DEVICE_WIDTH} from '../../CommonlyUsed/CommonlyUsedConstants';
+import {DEVICE_WIDTH} from '../../CommonlyUsed/Constants';
 import {
   buttons_height,
   page_body_background_color,

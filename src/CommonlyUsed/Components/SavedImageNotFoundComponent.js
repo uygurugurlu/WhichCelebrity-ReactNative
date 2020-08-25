@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../CommonlyUsedConstants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../Constants';
 import {translate} from '../../I18n';
 
 class SavedImageNotFoundComponent extends Component {

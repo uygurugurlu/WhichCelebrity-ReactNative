@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Avatar, {Sizes} from 'rn-avatar';
 import {GENERIC_USER} from '../IconIndex';
-import {DEVICE_WIDTH, shadow} from '../CommonlyUsedConstants';
+import {DEVICE_WIDTH, shadow} from '../Constants';
 
 class AvatarComponent extends Component {
   render() {

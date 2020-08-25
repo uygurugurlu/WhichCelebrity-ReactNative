@@ -13,11 +13,12 @@ import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../CommonlyUsed/Components/SharedImageBottomComponent';
 import {CONFETTI_ICON, RIGHT_HEADER_ICON, CAGATAY,} from '../../CommonlyUsed/IconIndex';
-import {shadow} from '../../CommonlyUsed/CommonlyUsedConstants';
+import {shadow} from '../../CommonlyUsed/Constants';
 import LottieView from 'lottie-react-native';
 import AnimatedProgressComponent from '../../CommonlyUsed/Components/AnimatedProgressComponent';
 import * as Animatable from "react-native-animatable";
 import ResultButtonsRow from "../../CommonlyUsed/Components/ResultButtonsRow";
+import AnimatedProgressBar from "../../CommonlyUsed/Components/AnimatedProgressBar";
 
 const ANIMATION_DURATION = 1200;
 
@@ -29,6 +30,7 @@ class ResultPage2 extends Component {
       share_active: false,
       progress: new Animated.Value(0),
       selected_celebrity: '',
+      celebrity_meta: this.props.route.params.celebrity_meta
     };
   }
 
@@ -49,7 +51,7 @@ class ResultPage2 extends Component {
   }
 
   componentDidMount = async () => {
-    const {selected_celebrity} = this.props.route.params;
+    const {selected_celebrity, celebrity_meta} = this.props.route.params;
     this.setState({selected_celebrity: selected_celebrity});
     const data = await this.performTimeConsumingTask(2000);
 
@@ -208,9 +210,8 @@ class ResultPage2 extends Component {
           translate('image_picker.cancel'),
           {
             component: (
-              <TouchableOpacity
-                style={styles.line_container_style}
-                onPress={() => this.Share(0)}>
+              <TouchableOpacity style={styles.line_container_style}
+                                onPress={() => this.Share(0)}>
                 <Text style={styles.modal_text_style}>
                   {translate('image_picker.save_result')}
                 </Text>
@@ -220,9 +221,8 @@ class ResultPage2 extends Component {
           },
           {
             component: (
-              <TouchableOpacity
-                style={styles.line_container_style}
-                onPress={() => this.Share(1)}>
+              <TouchableOpacity style={styles.line_container_style}
+                                onPress={() => this.Share(1)}>
                 <Text style={styles.modal_text_style}>
                   {translate('image_picker.share_result')}
                 </Text>
@@ -232,9 +232,8 @@ class ResultPage2 extends Component {
           },
           {
             component: (
-              <TouchableOpacity
-                style={styles.line_container_style}
-                onPress={() => this.Share(2)}>
+              <TouchableOpacity style={styles.line_container_style}
+                                onPress={() => this.Share(2)}>
                 <Text style={styles.modal_text_style}>
                   {translate('image_picker.share_app')}
                 </Text>
@@ -251,22 +250,25 @@ class ResultPage2 extends Component {
 
   render() {
     const {userAvatarSource} = this.props;
-    const {share_active, progress, selected_celebrity} = this.state;
+    const {share_active, progress, selected_celebrity, celebrity_meta} = this.state;
 
     return (
       <View style={styles.scrollViewStyle}>
-        <ViewShot
-          ref={(ref) => (this.viewShot = ref)}
-          options={{format: 'jpg', quality: 0.9}}
-          style={styles.viewShotImageStyle}>
+        <ViewShot ref={(ref) => (this.viewShot = ref)}
+                  options={{format: 'jpg', quality: 0.9}}
+                  style={styles.viewShotImageStyle}>
           <SafeAreaView style={styles.mainContainer}>
             <LottieView source={CONFETTI_ICON} progress={progress}/>
 
             <View style={[styles.iconContainerStyle, shadow]}>
               <Image source={userAvatarSource} style={styles.iconStyle}/>
-              <Image source={CAGATAY} style={styles.iconStyle}/>
+              <Image source={{uri: celebrity_meta.photo}} style={styles.iconStyle}/>
             </View>
 
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <AnimatedProgressBar fill={75}/>
+              <AnimatedProgressComponent fill={75}/>
+            </View>
             <View style={styles.labelContainerStyle}>
               <Text style={styles.celebrityTextStyle}>
                 {selected_celebrity}
@@ -276,16 +278,17 @@ class ResultPage2 extends Component {
               </Text>
             </View>
 
-            <AnimatedProgressComponent fill={75}/>
-
-            <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'} >
+            <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
               <ResultButtonsRow share_active={share_active}
                                 showActionSheet={this.showActionSheet}
                                 goBack={this.GoBack}/>
             </Animatable.View>
 
 
-            <SharedImageBottomComponent shareActive={share_active}/>
+            <Animatable.View ref={ref => (this.ref1 = ref)} easing={'linear'}>
+              <SharedImageBottomComponent shareActive={share_active}/>
+            </Animatable.View>
+
           </SafeAreaView>
         </ViewShot>
 

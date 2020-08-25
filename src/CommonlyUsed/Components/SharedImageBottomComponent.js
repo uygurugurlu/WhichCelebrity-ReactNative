@@ -13,8 +13,7 @@ class SharedImageBottomComponent extends Component {
     const {shareActive} = this.props;
 
     return (
-      <View display={shareActive ? 'flex' : 'none'}
-            style={styles.turkaiContainerStyle}>
+      <View display={shareActive ? 'flex' : 'none'} style={styles.turkaiContainerStyle}>
         <View style={styles.turkaiRowContainerStyle}>
           <Image source={TURK_AI} style={styles.turkaiLogoStyle}/>
           <Image source={APP_STORE_ICON} style={styles.storeImageStyle}/>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {SearchBar} from 'react-native-elements';
-import {DEVICE_WIDTH} from '../CommonlyUsedConstants';
+import {DEVICE_WIDTH} from '../Constants';
 import {page_body_background_color} from '../ColorIndex';
 import {StyleSheet} from 'react-native';
 import {translate} from '../../I18n';

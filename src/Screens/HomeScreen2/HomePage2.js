@@ -17,8 +17,9 @@ import AvatarComponent from '../../CommonlyUsed/Components/AvatarComponent';
 import {GetResult} from '../../CommonlyUsed/Functions/GetResult';
 import ActionSheetComponent from '../../CommonlyUsed/Components/ActionSheetComponent';
 import SearchBarComponent from '../../CommonlyUsed/Components/SearchBarComponent';
-import {DEVICE_HEIGHT} from '../../CommonlyUsed/CommonlyUsedConstants';
+import {DEVICE_HEIGHT} from '../../CommonlyUsed/Constants';
 import {SearchCelebrities} from "../../CommonlyUsed/Functions/SearchCelebrities";
+import {GetCelebrity} from "../../CommonlyUsed/Functions/GetCelebrity";
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
@@ -36,6 +37,7 @@ class HomePage2 extends Component {
       search: '',
       scroll_items: [],
       selected_celebrity: '',
+      celebrity_meta: {}
     };
   }
 
@@ -140,6 +142,7 @@ class HomePage2 extends Component {
           interstitial.show();
           this.props.navigation.navigate('ResultPage2', {
             selected_celebrity: selected_celebrity,
+            celebrity_meta: this.state.celebrity_meta
           });
           this.setState({result_loading: false});
         } catch (e) {
@@ -171,16 +174,22 @@ class HomePage2 extends Component {
   };
 
   CelebritySelected = (celebrity) => {
+    const {user_agent} = this.props;
     this.setState({
       search: '',
       scroll_items: [],
       selected_celebrity: celebrity.name,
     });
+
+    GetCelebrity(user_agent, celebrity.id).then((res) => {
+      console.log("GetCelebrity res: ", res);
+      this.setState({celebrity_meta: res.data});
+    });
   };
 
   render() {
     const {userAvatarSource} = this.props;
-    const {search, scroll_items, selected_celebrity} = this.state;
+    const {search, scroll_items, selected_celebrity, celebrity_meta} = this.state;
 
     return (
       <View style={styles.backgroundImageStyle}>
@@ -198,9 +207,7 @@ class HomePage2 extends Component {
 
             <View display={search === '' && selected_celebrity === '' ? 'flex' : 'none'}
                   style={styles.topLabel2ContainerStyle}>
-              <Text style={styles.topLabel2Style}>
-                {translate('famous_compare.compare_header')}
-              </Text>
+              <Text style={styles.topLabel2Style}>{translate('famous_compare.compare_header')}</Text>
             </View>
 
             <View display={selected_celebrity !== '' ? 'flex' : 'none'} style={styles.topLabel2ContainerStyle}>
@@ -210,6 +217,8 @@ class HomePage2 extends Component {
               <Text style={styles.selectedCelebrityTextStyle}>
                 {selected_celebrity}
               </Text>
+              <Image source={{uri: celebrity_meta.photo,}}
+                     style={{height: 70, width: 70, borderRadius: 1, marginVertical: 10}}/>
             </View>
           </View>
 

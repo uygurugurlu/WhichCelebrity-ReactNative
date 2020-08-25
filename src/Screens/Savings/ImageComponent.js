@@ -10,7 +10,7 @@ import {
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
-} from '../../CommonlyUsed/CommonlyUsedConstants';
+} from '../../CommonlyUsed/Constants';
 import DisplaySavedImage from './DisplayImageComponent/DisplaySavedImage';
 import {connect} from 'react-redux';
 import {CHECKMARK} from '../../CommonlyUsed/IconIndex';

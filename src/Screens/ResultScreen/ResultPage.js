@@ -13,7 +13,7 @@ import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../CommonlyUsed/Components/SharedImageBottomComponent';
 import {CONFETTI_ICON, RIGHT_HEADER_ICON, CAGATAY,} from '../../CommonlyUsed/IconIndex';
-import {shadow} from '../../CommonlyUsed/CommonlyUsedConstants';
+import {shadow} from '../../CommonlyUsed/Constants';
 import LottieView from 'lottie-react-native';
 import * as Animatable from 'react-native-animatable';
 import ResultButtonsRow from "../../CommonlyUsed/Components/ResultButtonsRow";
@@ -268,13 +268,16 @@ class ResultPage extends Component {
               <Image source={CAGATAY} style={styles.iconStyle}/>
             </View>
 
-            <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
+            <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'} >
               <ResultButtonsRow share_active={share_active}
                                 showActionSheet={this.showActionSheet}
                                 goBack={this.GoBack}/>
             </Animatable.View>
 
+            <Animatable.View ref={ref => (this.ref1 = ref)} easing={'linear'} >
             <SharedImageBottomComponent shareActive={share_active}/>
+            </Animatable.View>
+
           </SafeAreaView>
         </ViewShot>
 

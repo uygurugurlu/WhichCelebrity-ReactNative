@@ -3,7 +3,7 @@ import {styles} from './SavingsPageStyles';
 import CameraRoll from '@react-native-community/cameraroll';
 import {FlatList, Text, View} from 'react-native';
 import ImageComponent from './ImageComponent';
-import {DEVICE_WIDTH} from '../../CommonlyUsed/CommonlyUsedConstants';
+import {DEVICE_WIDTH} from '../../CommonlyUsed/Constants';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
 import Icon from 'react-native-fontawesome-pro';

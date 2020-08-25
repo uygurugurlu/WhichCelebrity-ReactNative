@@ -10,18 +10,11 @@ export const ResponseHandler = (response) => {
   Object.entries(response.data).forEach((entry) => {
     response_data = response_data + '\n' + JSON.stringify(entry);
   });
-  console.log(
-    'response: ',
-    response,
-    '\nURL: ',
-    url,
-    '\nBody: ',
-    params,
-    '\nHeaders:',
-    headers,
-    '\nStatus Code: :',
-    status_code,
-    '\nResponse :',
-    response_data,
+  console.log('response: ', response,
+    '\nURL: ', url,
+    '\nBody: ', params,
+    '\nHeaders:', headers,
+    '\nStatus Code: :', status_code,
+    '\nResponse :', response_data,
   );
 };

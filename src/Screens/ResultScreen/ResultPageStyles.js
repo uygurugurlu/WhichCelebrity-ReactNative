@@ -1,9 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {DEVICE_WIDTH} from '../../CommonlyUsed/CommonlyUsedConstants';
-import {
-  buttons_height,
-  page_body_background_color,
-} from '../../CommonlyUsed/ColorIndex';
+import {DEVICE_WIDTH} from '../../CommonlyUsed/Constants';
+import {buttons_height, page_body_background_color} from '../../CommonlyUsed/ColorIndex';
 
 const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.95;
 const USER_ICON_SIZE = DEVICE_WIDTH * 0.45;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ResponseHandler} from '../CommunlyUsedFunctions';
+import {ResponseHandler} from './ResponseHandler';
 import Config from 'react-native-config';
 
 export const GetResult = async (userAvatarB64) => {

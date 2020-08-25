@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {WebView} from 'react-native-webview';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import {DEVICE_WIDTH} from '../../CommonlyUsed/CommonlyUsedConstants';
+import {DEVICE_WIDTH} from '../../CommonlyUsed/Constants';
 
 class WebViewPage extends Component {
   render() {

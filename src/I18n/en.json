@@ -40,7 +40,8 @@
   "saved": {
     "cancel": "Cancel",
     "delete": "Delete",
-    "select": "Select the photos you want to delete"
+    "select": "Select the photos you want to delete",
+    "not_found": "There is no any photo saved"
   },
   "starter": {
     "label1": "Communication between 'To Which Celebrity Do I Look' mobile applications and servers is secure.",

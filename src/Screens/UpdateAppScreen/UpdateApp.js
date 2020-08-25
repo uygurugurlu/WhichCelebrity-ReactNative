@@ -3,7 +3,7 @@ import {Alert, StyleSheet, Linking, View, Platform} from 'react-native';
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
-} from '../../CommonlyUsed/CommonlyUsedConstants';
+} from '../../CommonlyUsed/Constants';
 
 class UpdateApp extends Component {
   componentWillMount() {

@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
-} from '../../CommonlyUsed/CommonlyUsedConstants';
+} from '../../CommonlyUsed/Constants';
 import {
   buttons_height,
   button_colors,

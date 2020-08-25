@@ -40,7 +40,8 @@
   "saved": {
     "cancel": "Vazgeç",
     "delete": "Sil",
-    "select": "Silmek istediğin fotoğrafları seç"
+    "select": "Silmek istediğin fotoğrafları seç",
+    "not_found": "Hiç Kayıtlı fotoğraf bulunamadı"
   },
   "starter": {
     "label1": "'Hangi Ünlüye Benziyorum' mobil uygulamaları ve sunucuları arasındaki iletişim güvenlidir.",

@@ -1,7 +1,7 @@
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
-} from '../../CommonlyUsed/CommonlyUsedConstants';
+} from '../../CommonlyUsed/Constants';
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({

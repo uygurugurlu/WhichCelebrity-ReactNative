@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
-} from '../../../CommonlyUsed/CommonlyUsedConstants';
+} from '../../../CommonlyUsed/Constants';
 import {buttons_height} from '../../../CommonlyUsed/ColorIndex';
 
 export const styles = StyleSheet.create({
@@ -52,6 +52,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 10,
+    bottom: 25,
   },
 });

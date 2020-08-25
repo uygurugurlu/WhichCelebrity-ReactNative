@@ -1,12 +1,13 @@
-import {ResponseHandler} from '../CommunlyUsedFunctions';
+import {ResponseHandler} from './ResponseHandler';
 import Config from 'react-native-config';
 import {api} from "./AxiosCacheAdapter";
+import {TOKEN} from "../Constants";
 
-export const GetCelebrities = async (user_agent) => {
+export const GetCelebrity = async (user_agent, id) => {
   try {
-    const {data} = await api.get(`${Config.API}/api/celebrities`, {
+    const {data} = await api.get(`${Config.API}/api/celebrities/${id}`, {
       headers: {
-        'Authorization': `Bearer ${Config.TOKEN}`,
+        'Authorization': `Bearer ${TOKEN}`,
         'User-Agent': user_agent,
       }
     });

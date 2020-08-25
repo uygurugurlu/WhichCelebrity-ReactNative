@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Image, Platform, SafeAreaView, ScrollView, View} from 'react-native';
-import {DEVICE_WIDTH} from '../../../CommonlyUsed/CommonlyUsedConstants';
+import {DEVICE_WIDTH} from '../../../CommonlyUsed/Constants';
 import {Button} from 'react-native-elements';
 import {translate} from '../../../I18n';
 import {styles} from './DisplaySavedImageStyles';
