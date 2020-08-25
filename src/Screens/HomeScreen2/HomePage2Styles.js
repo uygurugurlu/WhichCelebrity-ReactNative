@@ -160,4 +160,10 @@ export const styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 5,
   },
+  celebrityPhotoStyle: {
+    height: 70,
+    width: 70,
+    borderRadius: 1,
+    marginVertical: 10
+  }
 });

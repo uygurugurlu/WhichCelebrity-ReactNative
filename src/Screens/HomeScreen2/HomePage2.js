@@ -14,12 +14,12 @@ import {GetUserPhotoFromImageLibrary} from '../../CommonlyUsed/Functions/GetUser
 import {GetUserPhotoFromCamera} from '../../CommonlyUsed/Functions/GetUserPhotoFromCamera';
 import {RIGHT_HEADER_ICON} from '../../CommonlyUsed/IconIndex';
 import AvatarComponent from '../../CommonlyUsed/Components/AvatarComponent';
-import {GetResult} from '../../CommonlyUsed/Functions/GetResult';
 import ActionSheetComponent from '../../CommonlyUsed/Components/ActionSheetComponent';
 import SearchBarComponent from '../../CommonlyUsed/Components/SearchBarComponent';
 import {DEVICE_HEIGHT} from '../../CommonlyUsed/Constants';
 import {SearchCelebrities} from "../../CommonlyUsed/Functions/SearchCelebrities";
 import {GetCelebrity} from "../../CommonlyUsed/Functions/GetCelebrity";
+import {UserPhotoAnalyze} from "../../CommonlyUsed/Functions/UserPhotoAnalyze";
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
@@ -36,8 +36,9 @@ class HomePage2 extends Component {
       result_loading: false,
       search: '',
       scroll_items: [],
-      selected_celebrity: '',
-      celebrity_meta: {}
+      celebrity_name: "",
+      celebrity_photo: "",
+      celebrity_id: 0
     };
   }
 
@@ -110,12 +111,12 @@ class HomePage2 extends Component {
 
   CheckValidity = () => {
     const {userAvatarSource} = this.props;
-    const {selected_celebrity} = this.state;
+    const {selected_name} = this.state;
 
     if (userAvatarSource === '') {
       Alert.alert('', translate('home.avatar_warning'));
       return false;
-    } else if (selected_celebrity === '') {
+    } else if (selected_name === '') {
       Alert.alert('', translate('home.select_warning'));
       return false;
     }
@@ -123,8 +124,9 @@ class HomePage2 extends Component {
     return true;
   };
 
-  GetResult = async () => {
-    const {userAvatarB64} = this.props;
+  GetResult = () => {
+    const {userAvatarB64, user_agent} = this.props;
+    const {celebrity_id, celebrity_photo, celebrity_name} = this.state;
 
     if (this.CheckValidity()) {
       this.setState({result_loading: true});
@@ -134,26 +136,27 @@ class HomePage2 extends Component {
         }
       });
 
-      GetResult(userAvatarB64).then((res) => {
-        console.log('res: ', res);
-        const {selected_celebrity} = this.state;
+      UserPhotoAnalyze(user_agent, userAvatarB64, celebrity_id).then((res) => {
+        console.log("UserPhotoAnalyze res: ", res);
 
         try {
           interstitial.show();
           this.props.navigation.navigate('ResultPage2', {
-            selected_celebrity: selected_celebrity,
-            celebrity_meta: this.state.celebrity_meta
+            celebrity_photo: celebrity_photo,
+            celebrity_name: celebrity_name,
+            data: JSON.parse(res).data
           });
           this.setState({result_loading: false});
         } catch (e) {
           console.log('error on response: ', e);
         }
+      }).catch((err) => {
+        console.log("UserPhotoAnalyze res: ", err);
       });
     }
   };
 
   fillScroll = async (search) => {
-
     if (search.length > 1) {
       SearchCelebrities(this.props.user_agent, search).then((res) => {
         console.log("Celebrities after search: ", res.data);
@@ -178,26 +181,25 @@ class HomePage2 extends Component {
     this.setState({
       search: '',
       scroll_items: [],
-      selected_celebrity: celebrity.name,
+      celebrity_name: celebrity.name,
+      celebrity_id: celebrity.id
     });
 
     GetCelebrity(user_agent, celebrity.id).then((res) => {
       console.log("GetCelebrity res: ", res);
-      this.setState({celebrity_meta: res.data});
+      this.setState({celebrity_photo: res.data.photo});
     });
   };
 
   render() {
     const {userAvatarSource} = this.props;
-    const {search, scroll_items, selected_celebrity, celebrity_meta} = this.state;
+    const {search, scroll_items, celebrity_name, celebrity_photo} = this.state;
 
     return (
       <View style={styles.backgroundImageStyle}>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
-            <SearchBarComponent search={search}
-                                updateSearch={this.updateSearch}
-                                selectedCelebrity={selected_celebrity}/>
+            <SearchBarComponent search={search} updateSearch={this.updateSearch} selectedCelebrity={celebrity_name}/>
 
             <View display={search !== '' ? 'flex' : 'none'}>
               <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.45}}>
@@ -205,26 +207,21 @@ class HomePage2 extends Component {
               </ScrollView>
             </View>
 
-            <View display={search === '' && selected_celebrity === '' ? 'flex' : 'none'}
+            <View display={search === '' && celebrity_name === '' ? 'flex' : 'none'}
                   style={styles.topLabel2ContainerStyle}>
               <Text style={styles.topLabel2Style}>{translate('famous_compare.compare_header')}</Text>
             </View>
 
-            <View display={selected_celebrity !== '' ? 'flex' : 'none'} style={styles.topLabel2ContainerStyle}>
-              <Text style={styles.selectedLabelTextStyle}>
-                {translate('home.selected_celebrity')}
-              </Text>
-              <Text style={styles.selectedCelebrityTextStyle}>
-                {selected_celebrity}
-              </Text>
-              <Image source={{uri: celebrity_meta.photo,}}
-                     style={{height: 70, width: 70, borderRadius: 1, marginVertical: 10}}/>
+            <View display={search === '' && celebrity_name !== '' ? 'flex' : 'none'}
+                  style={styles.topLabel2ContainerStyle}>
+              <Text style={styles.selectedLabelTextStyle}>{translate('home.selected_celebrity')}</Text>
+              <Text style={styles.selectedCelebrityTextStyle}>{celebrity_name}</Text>
+              <Image source={{uri: celebrity_photo,}} style={styles.celebrityPhotoStyle}/>
             </View>
           </View>
 
           <View display={search === '' ? 'flex' : 'none'} style={styles.iconsMainContainerStyle}>
-            <AvatarComponent ImageSource={userAvatarSource}
-                             SelectAvatar={() => this.SelectAvatar()}/>
+            <AvatarComponent ImageSource={userAvatarSource} SelectAvatar={() => this.SelectAvatar()}/>
           </View>
 
           <View display={search === '' ? 'flex' : 'none'}>

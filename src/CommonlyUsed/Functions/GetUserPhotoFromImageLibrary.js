@@ -12,6 +12,7 @@ export const GetUserPhotoFromImageLibrary = async (
     cropperChooseText: translate('image_picker.choose'),
     cropperCancelText: translate('image_picker.cancel'),
   }).then((image) => {
+    console.log("image path: ", image.path);
     get_mono_user_avatar_source({uri: image.path}, image.data);
   });
 };

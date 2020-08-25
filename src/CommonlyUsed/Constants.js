@@ -11,4 +11,4 @@ export const shadow = {
   elevation: 12,
 };
 
-export const TOKEN = "2|DFbxwG1zfS6tOnyHkei42QOkt2mbrJg9gnNL3PBpkSutNumJhBerUAADCtxDJdTkTjb2fZFyeUkb2mxy";
+export const TOKEN = "2|bmQanw9vG95ivo42wUOJkp9ZkV14BDG5H2Z28zSutyPsBAjICbdzj4BBJ6o0afmIHSNFqXdW2Ot3JHYf";

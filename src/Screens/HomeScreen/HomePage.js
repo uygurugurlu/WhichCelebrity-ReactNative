@@ -123,7 +123,7 @@ class HomePage extends Component {
     const {userAvatarSource} = this.props;
 
     if (userAvatarSource === '') {
-      Alert.alert('', translate('mono_compare.validity_alert'));
+      Alert.alert('', translate('famous_compare.validity_alert'));
       return false;
     }
 

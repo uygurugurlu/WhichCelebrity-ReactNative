@@ -29,8 +29,9 @@ class ResultPage2 extends Component {
       ready_to_share: false,
       share_active: false,
       progress: new Animated.Value(0),
-      selected_celebrity: '',
-      celebrity_meta: this.props.route.params.celebrity_meta
+      celebrity_photo: this.props.route.params.celebrity_photo,
+      celebrity_name: this.props.route.params.celebrity_name,
+      data: this.props.route.params.data,
     };
   }
 
@@ -51,8 +52,8 @@ class ResultPage2 extends Component {
   }
 
   componentDidMount = async () => {
-    const {selected_celebrity, celebrity_meta} = this.props.route.params;
-    this.setState({selected_celebrity: selected_celebrity});
+    const {celebrity_photo, celebrity_name} = this.props.route.params;
+    this.setState({celebrity_photo: celebrity_photo, celebrity_name: celebrity_name})
     const data = await this.performTimeConsumingTask(2000);
 
     await Animated.timing(this.state.progress, {
@@ -250,7 +251,8 @@ class ResultPage2 extends Component {
 
   render() {
     const {userAvatarSource} = this.props;
-    const {share_active, progress, selected_celebrity, celebrity_meta} = this.state;
+    const {share_active, progress, celebrity_name, celebrity_photo, data} = this.state;
+    console.log("data: ", data);
 
     return (
       <View style={styles.scrollViewStyle}>
@@ -262,20 +264,31 @@ class ResultPage2 extends Component {
 
             <View style={[styles.iconContainerStyle, shadow]}>
               <Image source={userAvatarSource} style={styles.iconStyle}/>
-              <Image source={{uri: celebrity_meta.photo}} style={styles.iconStyle}/>
+              <Image source={{uri: celebrity_photo}} style={styles.iconStyle}/>
             </View>
 
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <AnimatedProgressBar fill={75}/>
-              <AnimatedProgressComponent fill={75}/>
+              <AnimatedProgressBar fill={data.percentage}/>
+              <AnimatedProgressComponent fill={data.percentage}/>
             </View>
+
             <View style={styles.labelContainerStyle}>
-              <Text style={styles.celebrityTextStyle}>
-                {selected_celebrity}
-              </Text>
-              <Text style={styles.celebrityTextStyle}>
-                {translate('result.very_similar')}
-              </Text>
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={styles.resultLeftTextStyle}>{"Ünlü: "}</Text>
+                <Text style={styles.resultRightTextStyle}>{celebrity_name}</Text>
+              </View>
+
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={styles.resultLeftTextStyle}>{"Yaş: "}</Text>
+                <Text style={styles.resultRightTextStyle}>{data.age}</Text>
+              </View>
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={styles.resultLeftTextStyle}>{"Meslek: "}</Text>
+                <Text style={styles.resultRightTextStyle}>{data.celebrity.profession}</Text>
+              </View>
+
+              <Text style={styles.celebrityTextStyle}>{translate('result.very_similar')}</Text>
+
             </View>
 
             <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
@@ -285,7 +298,7 @@ class ResultPage2 extends Component {
             </Animatable.View>
 
 
-            <Animatable.View ref={ref => (this.ref1 = ref)} easing={'linear'}>
+            <Animatable.View>
               <SharedImageBottomComponent shareActive={share_active}/>
             </Animatable.View>
 

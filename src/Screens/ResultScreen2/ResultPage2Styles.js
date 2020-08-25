@@ -34,6 +34,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   labelContainerStyle: {
+    flexDirection: 'column',
     justifyContent: 'flex-start',
     width: DEVICE_WIDTH * 0.9,
   },
@@ -42,11 +43,26 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
     fontStyle: 'italic',
   },
-  celebrityTextStyle: {
+  resultLeftTextStyle: {
+    width: DEVICE_WIDTH * 0.3,
     fontSize: 18,
     fontWeight: '700',
     color: 'brown',
-    textAlign: 'center',
+    textAlign: 'right',
+    marginLeft: 7.5
+  },
+  resultRightTextStyle: {
+    width: DEVICE_WIDTH * 0.6,
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#123456',
+    textAlign: 'left',
+    marginLeft: 7.5
+  },
+  celebrityTextStyle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#123456',
   },
   iconStyle: {
     width: USER_ICON_SIZE,
