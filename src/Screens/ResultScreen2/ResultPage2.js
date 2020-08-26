@@ -19,6 +19,8 @@ import AnimatedProgressComponent from '../../CommonlyUsed/Components/AnimatedPro
 import * as Animatable from "react-native-animatable";
 import ResultButtonsRow from "../../CommonlyUsed/Components/ResultButtonsRow";
 import AnimatedProgressBar from "../../CommonlyUsed/Components/AnimatedProgressBar";
+import ActionSheetComponent from "../../CommonlyUsed/Components/ActionSheetComponent";
+import ActionSheetComponent2 from "../../CommonlyUsed/Components/ActionSheetComponent2";
 
 const ANIMATION_DURATION = 1200;
 
@@ -205,53 +207,17 @@ class ResultPage2 extends Component {
 
   GetActionSheet = () => {
     return (
-      <ActionSheet
-        ref={this.getActionSheetRef}
-        options={[
-          translate('image_picker.cancel'),
-          {
-            component: (
-              <TouchableOpacity style={styles.line_container_style}
-                                onPress={() => this.Share(0)}>
-                <Text style={styles.modal_text_style}>
-                  {translate('image_picker.save_result')}
-                </Text>
-              </TouchableOpacity>
-            ),
-            height: 65,
-          },
-          {
-            component: (
-              <TouchableOpacity style={styles.line_container_style}
-                                onPress={() => this.Share(1)}>
-                <Text style={styles.modal_text_style}>
-                  {translate('image_picker.share_result')}
-                </Text>
-              </TouchableOpacity>
-            ),
-            height: 65,
-          },
-          {
-            component: (
-              <TouchableOpacity style={styles.line_container_style}
-                                onPress={() => this.Share(2)}>
-                <Text style={styles.modal_text_style}>
-                  {translate('image_picker.share_app')}
-                </Text>
-              </TouchableOpacity>
-            ),
-            height: 65,
-          },
-        ]}
-        cancelButtonIndex={0}
-        onPress={this.handlePress}
-      />
+      <ActionSheetComponent2 launchImageLibrary={this.LaunchImageLibrary}
+                             launchCamera={this.LaunchCamera}
+                             handlePress={this.handlePress}
+                             Share={(index) => this.Share(index)}
+                             getActionSheetRef={this.getActionSheetRef}/>
     );
   };
 
   render() {
     const {userAvatarSource} = this.props;
-    const {share_active, progress, celebrity_name, celebrity_photo, data} = this.state;
+    const {share_active, celebrity_name, celebrity_photo, data} = this.state;
     console.log("data: ", data);
 
     return (
@@ -260,7 +226,6 @@ class ResultPage2 extends Component {
                   options={{format: 'jpg', quality: 0.9}}
                   style={styles.viewShotImageStyle}>
           <SafeAreaView style={styles.mainContainer}>
-            <LottieView source={CONFETTI_ICON} progress={progress}/>
 
             <View style={[styles.iconContainerStyle, shadow]}>
               <Image source={userAvatarSource} style={styles.iconStyle}/>

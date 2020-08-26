@@ -42,6 +42,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: DEVICE_HEIGHT * 0.025,
   },
+  headerTextStyle: {
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 15,
+    color: "#123456"
+  },
   topLabelStyle: {
     color: '#fff',
     fontSize: 18,

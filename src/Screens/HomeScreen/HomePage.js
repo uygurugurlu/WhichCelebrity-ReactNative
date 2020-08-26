@@ -43,7 +43,8 @@ class HomePage extends Component {
       categories: [],
       selected_category_name: "Kategori Seç",
       selected_category_id: -1,
-      scroll_items: []
+      scroll_items: [],
+      celebrity: {}
     };
   }
 
@@ -55,7 +56,7 @@ class HomePage extends Component {
       this.fillScroll(res.data);
     });
 
-   /* GetToken(this.props.user_agent).then((res) => {
+    /*GetToken(this.props.user_agent).then((res) => {
       console.log("Token: ", res);
     });*/
 
@@ -141,13 +142,12 @@ class HomePage extends Component {
         }
       });
 
-      await UserPhotoAnalyze(user_agent, userAvatarB64);
-
-      GetResult(userAvatarB64).then((res) => {
-        console.log('res: ', res);
+      await UserPhotoAnalyze(user_agent, userAvatarB64, null).then((res) => {
+        console.log('UserPhotoAnalyze res: ', res);
+        this.setState({celebrity: JSON.parse(res)});
         try {
           interstitial.show();
-          this.props.navigation.navigate('ResultPage');
+          this.props.navigation.navigate('ResultPage', {data: JSON.parse(res).data});
           this.setState({result_loading: false});
         } catch (e) {
           console.log('error on response: ', e);
@@ -193,6 +193,7 @@ class HomePage extends Component {
       <View style={styles.backgroundImageStyle}>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
+            <Text style={styles.headerTextStyle}>Hangi Ünlüye benzediğini öğren</Text>
             <View display={'flex'} style={styles.topLabel2ContainerStyle}>
               <TouchableOpacity style={[styles.categoryContainerStyle, shadow]}
                                 onPress={() => this.HandleCategoriesVisibility()}>

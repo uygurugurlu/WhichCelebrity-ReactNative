@@ -88,4 +88,20 @@ export const styles = StyleSheet.create({
     marginRight: 25,
     color: '#393636',
   },
+  resultLeftTextStyle: {
+    width: DEVICE_WIDTH * 0.3,
+    fontSize: 18,
+    fontWeight: '700',
+    color: 'brown',
+    textAlign: 'right',
+    marginLeft: 7.5
+  },
+  resultRightTextStyle: {
+    width: DEVICE_WIDTH * 0.6,
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#123456',
+    textAlign: 'left',
+    marginLeft: 7.5
+  },
 });

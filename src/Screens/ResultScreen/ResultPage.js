@@ -17,6 +17,8 @@ import {shadow} from '../../CommonlyUsed/Constants';
 import LottieView from 'lottie-react-native';
 import * as Animatable from 'react-native-animatable';
 import ResultButtonsRow from "../../CommonlyUsed/Components/ResultButtonsRow";
+import AnimatedProgressBar from "../../CommonlyUsed/Components/AnimatedProgressBar";
+import AnimatedProgressComponent from "../../CommonlyUsed/Components/AnimatedProgressComponent";
 
 const ANIMATION_DURATION = 1200;
 
@@ -27,6 +29,7 @@ class ResultPage extends Component {
       ready_to_share: false,
       share_active: false,
       progress: new Animated.Value(0),
+      data: this.props.route.params.data
     };
   }
 
@@ -245,7 +248,8 @@ class ResultPage extends Component {
 
   render() {
     const {userAvatarSource} = this.props;
-    const {share_active, progress} = this.state;
+    const {share_active, progress, data} = this.state;
+    console.log("ResultPage data: ", data);
 
     return (
       <View style={styles.scrollViewStyle}>
@@ -253,29 +257,49 @@ class ResultPage extends Component {
                   options={{format: 'jpg', quality: 0.9}}
                   style={styles.viewShotImageStyle}>
           <SafeAreaView style={styles.mainContainer}>
-            <LottieView source={CONFETTI_ICON} progress={progress}/>
 
             <View style={styles.labelContainerStyle}>
               <Text style={styles.resultLabelStyle}>
                 {translate('famous_compare.result_label')}
               </Text>
-              <Text style={styles.celebrityTextStyle}>{'Çağatay Ulusoy'}</Text>
+              <Text style={styles.celebrityTextStyle}>{data.celebrity.name}</Text>
             </View>
 
             <View style={[styles.iconContainerStyle, shadow]}>
               <Image source={userAvatarSource} style={styles.iconStyle}/>
 
-              <Image source={CAGATAY} style={styles.iconStyle}/>
+              <Image source={{uri: data.celebrity.photo}} style={styles.iconStyle}/>
             </View>
 
-            <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'} >
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <AnimatedProgressBar fill={data.percentage}/>
+              <AnimatedProgressComponent fill={data.percentage}/>
+            </View>
+
+            <View style={styles.labelContainerStyle}>
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={styles.resultLeftTextStyle}>{"Ünlü: "}</Text>
+                <Text style={styles.resultRightTextStyle}>{data.celebrity.name}</Text>
+              </View>
+
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={styles.resultLeftTextStyle}>{"Yaş: "}</Text>
+                <Text style={styles.resultRightTextStyle}>{data.age}</Text>
+              </View>
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={styles.resultLeftTextStyle}>{"Meslek: "}</Text>
+                <Text style={styles.resultRightTextStyle}>{data.celebrity.profession}</Text>
+              </View>
+            </View>
+
+            <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
               <ResultButtonsRow share_active={share_active}
                                 showActionSheet={this.showActionSheet}
                                 goBack={this.GoBack}/>
             </Animatable.View>
 
-            <Animatable.View ref={ref => (this.ref1 = ref)} easing={'linear'} >
-            <SharedImageBottomComponent shareActive={share_active}/>
+            <Animatable.View ref={ref => (this.ref1 = ref)} easing={'linear'}>
+              <SharedImageBottomComponent shareActive={share_active}/>
             </Animatable.View>
 
           </SafeAreaView>

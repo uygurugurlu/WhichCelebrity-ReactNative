@@ -5,7 +5,7 @@ import {TOKEN} from "../Constants";
 
 export const GetCategories = async (user_agent) => {
   try {
-    console.log("GetCategories TOKEN: ", Config.TOKEN);
+    console.log("GetCategories TOKEN: ", TOKEN);
 
     const {data} = await api.get(`${Config.API}/api/categories`, {
       headers: {
