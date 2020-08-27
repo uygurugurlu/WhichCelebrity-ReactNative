@@ -222,8 +222,9 @@ class ResultPage2 extends Component {
               </View>
 
               <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={styles.resultLeftTextStyle}>{"Yaş: "}</Text>
-                <Text style={styles.resultRightTextStyle}>{data.age}</Text>
+
+                <Text style={styles.resultLeftTextStyle}>{"Doğum tarihi: "}</Text>
+                <Text style={styles.resultRightTextStyle}>{data.celebrity.birthday}</Text>
               </View>
 
               <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
