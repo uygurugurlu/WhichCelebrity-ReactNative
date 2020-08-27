@@ -107,12 +107,12 @@ class HomePage2 extends Component {
 
   CheckValidity = () => {
     const {userAvatarSource} = this.props;
-    const {selected_name} = this.state;
+    const {celebrity_name} = this.state;
 
     if (userAvatarSource === '') {
       Alert.alert('', translate('home.avatar_warning'));
       return false;
-    } else if (selected_name === '') {
+    } else if (celebrity_name === '') {
       Alert.alert('', translate('home.select_warning'));
       return false;
     }
@@ -142,7 +142,7 @@ class HomePage2 extends Component {
             celebrity_name: celebrity_name,
             data: JSON.parse(res).data
           });
-          this.setState({result_loading: false});
+          this.setState({result_loading: false, celebrity_name: ""});
         } catch (e) {
           console.log('error on response: ', e);
         }

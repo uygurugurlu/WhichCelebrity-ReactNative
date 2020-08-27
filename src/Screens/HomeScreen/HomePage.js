@@ -23,13 +23,12 @@ const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   requestNonPersonalizedAdsOnly: false,
 });
 import AvatarComponent from '../../CommonlyUsed/Components/AvatarComponent';
-import {GetResult} from '../../CommonlyUsed/Functions/GetResult';
 import ActionSheetComponent from '../../CommonlyUsed/Components/ActionSheetComponent';
-import {GetCelebrities} from "../../CommonlyUsed/Functions/GetCelebrity";
 import {GetCategories} from "../../CommonlyUsed/Functions/GetCategories";
 import {DEVICE_HEIGHT, shadow} from "../../CommonlyUsed/Constants";
 import {UserPhotoAnalyze} from "../../CommonlyUsed/Functions/UserPhotoAnalyze";
 import {GetToken} from "../../CommonlyUsed/Functions/GetToken";
+import Config from "react-native-config";
 
 class HomePage extends Component {
   constructor(props) {
@@ -49,6 +48,8 @@ class HomePage extends Component {
   }
 
   componentWillMount() {
+    console.log("GetCategories TOKEN: ", Config.TOKEN);
+
     GetCategories(this.props.user_agent).then((res) => {
       console.log("Categories: ", res.data);
       this.setState({categories: res.data})
@@ -56,9 +57,9 @@ class HomePage extends Component {
       this.fillScroll(res.data);
     });
 
-    /*GetToken(this.props.user_agent).then((res) => {
+    GetToken(this.props.user_agent).then((res) => {
       console.log("Token: ", res);
-    });*/
+    });
 
     this.props.navigation.setOptions({
       title: translate('app_name'),
@@ -247,8 +248,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    get_user_avatar_source: (source, base64_data) =>
-      dispatch(get_user_avatar_source(source, base64_data)),
+    get_user_avatar_source: (source, base64_data) => dispatch(get_user_avatar_source(source, base64_data)),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

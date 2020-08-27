@@ -1,19 +1,21 @@
 import {ResponseHandler} from './ResponseHandler';
-import Config from 'react-native-config';
+import {AUTH_TOKEN, API_HOST} from '../../config/index';
 import {api} from "./AxiosCacheAdapter";
-import {TOKEN} from "../Constants";
 
 export const GetCategories = async (user_agent) => {
-  try {
-    console.log("GetCategories TOKEN: ", TOKEN);
 
-    const {data} = await api.get(`${Config.API}/api/categories`, {
+  console.log("AUTH_TOKEN: ", AUTH_TOKEN);
+  console.log("API_HOST: ", API_HOST);
+
+  try {
+    const {data, headers} = await api.get(`${API_HOST}/api/categories`, {
       headers: {
-        'Authorization': `Bearer ${TOKEN}`,
+        'Authorization': `Bearer ${AUTH_TOKEN}`,
         'User-Agent': user_agent,
       }
     });
 
+    console.log("headers: ", headers);
     return data;
   } catch (error) {
     ResponseHandler('GetCategories Response: ', error.response);

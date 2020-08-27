@@ -99,10 +99,9 @@ class SwitchNavigation extends React.Component {
   };
 
   GetVersion = async () => {
-    console.log("Config.API_URL: ", Config.API_URL);
     await axios({
       method: 'get',
-      url: `${Config.API_URL}/version`,
+      url: `https://myface.io/version`,
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Content-Type': 'application/json',

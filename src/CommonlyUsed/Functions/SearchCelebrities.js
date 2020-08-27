@@ -1,14 +1,12 @@
 import {ResponseHandler} from './ResponseHandler';
-import Config from 'react-native-config';
+import {AUTH_TOKEN, API_HOST} from '../../config/index';
 import {api} from "./AxiosCacheAdapter";
-import {TOKEN} from "../Constants";
 
 export const SearchCelebrities = async (user_agent, search) => {
   try {
-
-    const {data} = await api.get(`${Config.API}/api/celebrities/search/${search}`, {
+    const {data} = await api.get(`${API_HOST}/api/celebrities/search/${search}`, {
       headers: {
-        'Authorization': `Bearer ${TOKEN}`,
+        'Authorization': `Bearer ${AUTH_TOKEN}`,
         'User-Agent': user_agent,
       }
     });

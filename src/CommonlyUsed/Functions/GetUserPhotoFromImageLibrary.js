@@ -11,6 +11,7 @@ export const GetUserPhotoFromImageLibrary = async (
     includeBase64: true,
     cropperChooseText: translate('image_picker.choose'),
     cropperCancelText: translate('image_picker.cancel'),
+    compressImageQuality: 0.8
   }).then((image) => {
     console.log("image path: ", image.path);
     get_mono_user_avatar_source({uri: image.path}, image.data);

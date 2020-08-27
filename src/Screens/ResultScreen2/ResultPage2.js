@@ -17,6 +17,7 @@ import ResultButtonsRow from "../../CommonlyUsed/Components/ResultButtonsRow";
 import AnimatedProgressBar from "../../CommonlyUsed/Components/AnimatedProgressBar";
 import ActionSheetComponent2 from "../../CommonlyUsed/Components/ActionSheetComponent2";
 import {SavePicture} from "../../CommonlyUsed/Functions/SavePicture";
+import SwipeableImageModal from "../../CommonlyUsed/Components/SwipeableImageModal";
 
 const ANIMATION_DURATION = 1200;
 
@@ -30,6 +31,8 @@ class ResultPage2 extends Component {
       celebrity_photo: this.props.route.params.celebrity_photo,
       celebrity_name: this.props.route.params.celebrity_name,
       data: this.props.route.params.data,
+      isVisible: false,
+      modal_uri:""
     };
   }
 
@@ -172,9 +175,22 @@ class ResultPage2 extends Component {
     );
   };
 
+  handleModalVisibility = (index) => {
+    const {isVisible, celebrity_photo} = this.state;
+    const {userAvatarSource} = this.props;
+
+    if (index === 0) {
+      this.setState({isVisible: !isVisible, modal_uri: userAvatarSource, index: index});
+    }
+
+    if (index === 1) {
+      this.setState({isVisible: !isVisible, modal_uri: celebrity_photo, index: index});
+    }
+  }
+
   render() {
     const {userAvatarSource} = this.props;
-    const {share_active, celebrity_name, celebrity_photo, data} = this.state;
+    const {share_active, celebrity_name, celebrity_photo, data, isVisible, modal_uri, index} = this.state;
 
     return (
       <View style={styles.scrollViewStyle}>
@@ -184,8 +200,14 @@ class ResultPage2 extends Component {
           <SafeAreaView style={styles.mainContainer}>
 
             <View style={[styles.iconContainerStyle, shadow]}>
-              <Image source={userAvatarSource} style={styles.iconStyle}/>
-              <Image source={{uri: celebrity_photo}} style={styles.iconStyle}/>
+              <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
+                <Image source={userAvatarSource} style={styles.iconStyle}/>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.handleModalVisibility(1)}>
+                <Image source={{uri: celebrity_photo}} style={styles.iconStyle}/>
+              </TouchableOpacity>
+
             </View>
 
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -223,6 +245,10 @@ class ResultPage2 extends Component {
           </SafeAreaView>
         </ViewShot>
 
+        <SwipeableImageModal uri={modal_uri}
+                             index={index}
+                             isVisible={isVisible}
+                             handleVisibility={() => this.handleModalVisibility(index)}/>
         {this.GetActionSheet()}
       </View>
     );

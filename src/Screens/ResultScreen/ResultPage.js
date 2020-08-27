@@ -5,7 +5,7 @@ import {
 import {styles} from './ResultPageStyles';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
-import {get_captured_image_uri, trigger_savings_page} from '../../Store/Actions';
+import {get_captured_image_uri, get_user_avatar_source, trigger_savings_page} from '../../Store/Actions';
 import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../CommonlyUsed/Components/SharedImageBottomComponent';
@@ -17,6 +17,7 @@ import AnimatedProgressBar from "../../CommonlyUsed/Components/AnimatedProgressB
 import AnimatedProgressComponent from "../../CommonlyUsed/Components/AnimatedProgressComponent";
 import ActionSheetComponent2 from "../../CommonlyUsed/Components/ActionSheetComponent2";
 import {SavePicture} from "../../CommonlyUsed/Functions/SavePicture";
+import SwipeableImageModal from "../../CommonlyUsed/Components/SwipeableImageModal";
 
 const ANIMATION_DURATION = 1200;
 
@@ -27,7 +28,9 @@ class ResultPage extends Component {
       ready_to_share: false,
       share_active: false,
       progress: new Animated.Value(0),
-      data: this.props.route.params.data
+      data: this.props.route.params.data,
+      isVisible: false,
+      modal_uri: ""
     };
   }
 
@@ -154,7 +157,10 @@ class ResultPage extends Component {
 
   getActionSheetRef = (ref) => (this.actionSheet = ref);
 
-  GoBack = async () => await this.props.navigation.pop();
+  GoBack = async () => {
+    await this.props.get_user_avatar_source("", null);
+    await this.props.navigation.pop();
+  }
 
   GetActionSheet = () => {
     return (
@@ -166,9 +172,22 @@ class ResultPage extends Component {
     );
   };
 
+  handleModalVisibility = (index) => {
+    const {isVisible, data} = this.state;
+    const {userAvatarSource} = this.props;
+
+    if (index === 0) {
+      this.setState({isVisible: !isVisible, modal_uri: userAvatarSource, index: index});
+    }
+
+    if (index === 1) {
+      this.setState({isVisible: !isVisible, modal_uri: data.celebrity.photo, index: index});
+    }
+  }
+
   render() {
     const {userAvatarSource} = this.props;
-    const {share_active, data} = this.state;
+    const {share_active, data, isVisible, modal_uri, index} = this.state;
 
     return (
       <View style={styles.scrollViewStyle}>
@@ -184,8 +203,13 @@ class ResultPage extends Component {
             </View>
 
             <View style={[styles.iconContainerStyle, shadow]}>
-              <Image source={userAvatarSource} style={styles.iconStyle}/>
-              <Image source={{uri: data.celebrity.photo}} style={styles.iconStyle}/>
+              <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
+                <Image source={userAvatarSource} style={styles.iconStyle}/>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.handleModalVisibility(1)}>
+                <Image source={{uri: data.celebrity.photo}} style={styles.iconStyle}/>
+              </TouchableOpacity>
             </View>
 
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -223,6 +247,10 @@ class ResultPage extends Component {
           </SafeAreaView>
         </ViewShot>
 
+        <SwipeableImageModal uri={modal_uri}
+                             index={index}
+                             isVisible={isVisible}
+                             handleVisibility={() => this.handleModalVisibility(index)}/>
         {this.GetActionSheet()}
       </View>
     );
@@ -240,6 +268,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    get_user_avatar_source: (source, base64_data) => dispatch(get_user_avatar_source(source, base64_data)),
     get_captured_image_uri: (image_uri) => dispatch(get_captured_image_uri(image_uri)),
     trigger_savings_page: () => dispatch(trigger_savings_page()),
   };

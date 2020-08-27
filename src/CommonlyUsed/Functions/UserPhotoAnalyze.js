@@ -1,9 +1,12 @@
 import {ResponseHandler} from './ResponseHandler';
-import Config from 'react-native-config';
+import {AUTH_TOKEN, API_HOST} from '../../config/index';
 import RNFetchBlob from "rn-fetch-blob";
-import {TOKEN} from "../Constants";
 
 export const UserPhotoAnalyze = async (user_agent, image_data, celebrity_id) => {
+
+  console.log("UserPhotoAnalyze AUTH_TOKEN: ", AUTH_TOKEN);
+  console.log("UserPhotoAnalyze API_HOST: ", API_HOST);
+
   const body = celebrity_id === null ?
     [
       // element with property `filename` will be transformed into `file` in form data
@@ -17,9 +20,9 @@ export const UserPhotoAnalyze = async (user_agent, image_data, celebrity_id) => 
     ];
 
   try {
-    const {data} = await RNFetchBlob.fetch('POST', `${Config.API}/api/analyze`, {
+    const {data} = await RNFetchBlob.fetch('POST', `${API_HOST}/api/analyze`, {
       'Content-Type': 'multipart/form-data',
-      'Authorization': `Bearer ${TOKEN}`,
+      'Authorization': `Bearer ${AUTH_TOKEN}`,
     }, body);
 
     return data;
