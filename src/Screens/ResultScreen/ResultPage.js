@@ -10,7 +10,7 @@ import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../CommonlyUsed/Components/SharedImageBottomComponent';
 import {RIGHT_HEADER_ICON,} from '../../CommonlyUsed/IconIndex';
-import {shadow} from '../../CommonlyUsed/Constants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH, shadow} from '../../CommonlyUsed/Constants';
 import * as Animatable from 'react-native-animatable';
 import ResultButtonsRow from "../../CommonlyUsed/Components/ResultButtonsRow";
 import AnimatedProgressBar from "../../CommonlyUsed/Components/AnimatedProgressBar";
@@ -212,9 +212,12 @@ class ResultPage extends Component {
               </TouchableOpacity>
             </View>
 
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <AnimatedProgressBar fill={data.percentage}/>
-              <AnimatedProgressComponent fill={data.percentage}/>
+            <View style={{alignItems: 'center'}}>
+              <Text style={{fontWeight: '500', fontSize: 17}}>Benzerlik Oranınız</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <AnimatedProgressBar fill={data.percentage}/>
+                <AnimatedProgressComponent fill={data.percentage}/>
+              </View>
             </View>
 
             <View style={styles.labelContainerStyle}>
@@ -223,9 +226,9 @@ class ResultPage extends Component {
                 <Text style={styles.resultRightTextStyle}>{data.celebrity.name}</Text>
               </View>
 
-              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={styles.resultLeftTextStyle}>{"Yaş: "}</Text>
-                <Text style={styles.resultRightTextStyle}>{data.age}</Text>
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginVertical: 5}}>
+                <Text style={styles.resultLeftTextStyle}>{"Doğum tarihi: "}</Text>
+                <Text style={styles.resultRightTextStyle}>{data.celebrity.birthday}</Text>
               </View>
 
               <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>

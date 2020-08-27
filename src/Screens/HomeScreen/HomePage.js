@@ -96,7 +96,7 @@ class HomePage extends Component {
 
   LaunchCamera = async () => await GetUserPhotoFromCamera(this.props.get_user_avatar_source);
 
-  LaunchImageLibrary = async () => await GetUserPhotoFromImageLibrary(this.props.get_user_avatar_source);
+  LaunchImageLibrary = () => GetUserPhotoFromImageLibrary(this.props.get_user_avatar_source);
 
   SelectAvatar = () => this.showActionSheet();
 

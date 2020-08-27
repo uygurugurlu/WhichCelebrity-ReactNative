@@ -1,9 +1,7 @@
 import ImagePicker from 'react-native-image-crop-picker';
 import {translate} from '../../I18n';
 
-export const GetUserPhotoFromImageLibrary = async (
-  get_mono_user_avatar_source,
-) => {
+export const GetUserPhotoFromImageLibrary = (get_mono_user_avatar_source) => {
   ImagePicker.openPicker({
     width: 300,
     height: 300,
