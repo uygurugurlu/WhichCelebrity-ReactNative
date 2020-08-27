@@ -1,26 +1,22 @@
 import React, {Component} from 'react';
 import {
-  Image, View, Text, TouchableOpacity, Platform, Easing,
-  PermissionsAndroid, Alert, SafeAreaView, Animated,
+  Image, View, Text, TouchableOpacity, Platform, Easing, PermissionsAndroid, SafeAreaView, Animated,
 } from 'react-native';
 import {styles} from './ResultPage2Styles';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
-import {ActionSheetCustom as ActionSheet} from 'react-native-custom-actionsheet';
-import CameraRoll from '@react-native-community/cameraroll';
 import {get_captured_image_uri, trigger_savings_page} from '../../Store/Actions';
 import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../CommonlyUsed/Components/SharedImageBottomComponent';
-import {CONFETTI_ICON, RIGHT_HEADER_ICON, CAGATAY,} from '../../CommonlyUsed/IconIndex';
+import {RIGHT_HEADER_ICON} from '../../CommonlyUsed/IconIndex';
 import {shadow} from '../../CommonlyUsed/Constants';
-import LottieView from 'lottie-react-native';
 import AnimatedProgressComponent from '../../CommonlyUsed/Components/AnimatedProgressComponent';
 import * as Animatable from "react-native-animatable";
 import ResultButtonsRow from "../../CommonlyUsed/Components/ResultButtonsRow";
 import AnimatedProgressBar from "../../CommonlyUsed/Components/AnimatedProgressBar";
-import ActionSheetComponent from "../../CommonlyUsed/Components/ActionSheetComponent";
 import ActionSheetComponent2 from "../../CommonlyUsed/Components/ActionSheetComponent2";
+import {SavePicture} from "../../CommonlyUsed/Functions/SavePicture";
 
 const ANIMATION_DURATION = 1200;
 
@@ -40,14 +36,8 @@ class ResultPage2 extends Component {
   componentWillMount() {
     this.props.navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.navigate('SavingsPage', {tab_index: 0})
-          }>
-          <Image
-            source={RIGHT_HEADER_ICON}
-            style={{height: 35, width: 35, marginRight: 15}}
-          />
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('SavingsPage', {tab_index: 0})}>
+          <Image source={RIGHT_HEADER_ICON} style={{height: 35, width: 35, marginRight: 15}}/>
         </TouchableOpacity>
       ),
     });
@@ -79,9 +69,13 @@ class ResultPage2 extends Component {
     );
   };
 
-  GoBack = async () => {
-    await this.props.navigation.pop();
-  };
+  GoBack = async () => await this.props.navigation.pop();
+
+  WhenTheLanguageChanged = () => this.forceUpdate();
+
+  showActionSheet = () => this.actionSheet.show();
+
+  getActionSheetRef = (ref) => (this.actionSheet = ref);
 
   Share = async (index) => {
     /** This functions share an image passed using the url param */
@@ -113,7 +107,7 @@ class ResultPage2 extends Component {
           return !res;
         });
       }
-      await this.SavePicture(this.props.captured_image_uri);
+      await SavePicture(this.props.captured_image_uri, () => this.HasAndroidPermission(), () => this.props.trigger_savings_page(), () => this.actionSheet.hide());
     } else {
       await Share.open(index === 1 ? shareOptions1 : shareOptions2)
         .then(async (res) => {
@@ -161,49 +155,12 @@ class ResultPage2 extends Component {
     }
   };
 
-  SavePicture = async (uri) => {
-    await this.HasAndroidPermission();
-
-    const saveToCameraRollOptions = {
-      type: 'photo',
-      album: translate('app_name'),
-    };
-
-    CameraRoll.save(uri, saveToCameraRollOptions)
-      .then(async (res) => {
-        this.props.trigger_savings_page();
-        Alert.alert(
-          translate('result.result_saved'),
-          '',
-          [
-            {
-              text: translate('result.okay'),
-              onPress: () => this.actionSheet.hide(),
-              style: 'cancel',
-            },
-          ],
-          {cancelable: false},
-        );
-      })
-      .catch((err) => {
-        console.log('err: ', err);
-        this.actionSheet.hide();
-      });
-  };
-
   shouldComponentUpdate = async (nextProps, nextState) => {
     if (nextProps.language.languageTag !== this.props.language.languageTag) {
       await this.WhenTheLanguageChanged();
     }
   };
 
-  WhenTheLanguageChanged = () => {
-    this.forceUpdate();
-  };
-
-  showActionSheet = () => this.actionSheet.show();
-
-  getActionSheetRef = (ref) => (this.actionSheet = ref);
 
   GetActionSheet = () => {
     return (
@@ -218,7 +175,6 @@ class ResultPage2 extends Component {
   render() {
     const {userAvatarSource} = this.props;
     const {share_active, celebrity_name, celebrity_photo, data} = this.state;
-    console.log("data: ", data);
 
     return (
       <View style={styles.scrollViewStyle}>
@@ -247,13 +203,11 @@ class ResultPage2 extends Component {
                 <Text style={styles.resultLeftTextStyle}>{"Yaş: "}</Text>
                 <Text style={styles.resultRightTextStyle}>{data.age}</Text>
               </View>
+
               <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={styles.resultLeftTextStyle}>{"Meslek: "}</Text>
                 <Text style={styles.resultRightTextStyle}>{data.celebrity.profession}</Text>
               </View>
-
-              <Text style={styles.celebrityTextStyle}>{translate('result.very_similar')}</Text>
-
             </View>
 
             <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
@@ -261,7 +215,6 @@ class ResultPage2 extends Component {
                                 showActionSheet={this.showActionSheet}
                                 goBack={this.GoBack}/>
             </Animatable.View>
-
 
             <Animatable.View>
               <SharedImageBottomComponent shareActive={share_active}/>
@@ -287,8 +240,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    get_captured_image_uri: (image_uri) =>
-      dispatch(get_captured_image_uri(image_uri)),
+    get_captured_image_uri: (image_uri) => dispatch(get_captured_image_uri(image_uri)),
     trigger_savings_page: () => dispatch(trigger_savings_page()),
   };
 };

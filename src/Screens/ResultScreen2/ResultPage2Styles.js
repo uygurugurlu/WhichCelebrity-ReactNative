@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   resultLeftTextStyle: {
-    width: DEVICE_WIDTH * 0.3,
+    width: DEVICE_WIDTH * 0.55,
     fontSize: 18,
     fontWeight: '700',
     color: 'brown',
@@ -67,6 +67,7 @@ export const styles = StyleSheet.create({
   iconStyle: {
     width: USER_ICON_SIZE,
     height: USER_ICON_SIZE,
+    resizeMode: 'contain'
   },
   buttonsRowContainerStyle: {
     flexDirection: 'row',

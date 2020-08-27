@@ -164,6 +164,7 @@ export const styles = StyleSheet.create({
     height: 70,
     width: 70,
     borderRadius: 1,
-    marginVertical: 10
+    marginVertical: 10,
+    resizeMode: 'contain'
   }
 });

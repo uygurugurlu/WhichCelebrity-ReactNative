@@ -46,10 +46,8 @@ class HomePage2 extends Component {
     this.props.navigation.setOptions({
       title: translate('app_name'),
       headerRight: () => (
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('SavingsPage')}>
-          <Image source={RIGHT_HEADER_ICON}
-                 style={{height: 35, width: 35, marginRight: 15}}/>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('SavingsPage')}>
+          <Image source={RIGHT_HEADER_ICON} style={{height: 35, width: 35, marginRight: 15}}/>
         </TouchableOpacity>
       ),
     });
@@ -57,9 +55,7 @@ class HomePage2 extends Component {
 
   componentDidMount() {
     interstitial.onAdEvent((type) => {
-      if (type === AdEventType.LOADED) {
-        this.setState({loaded: true});
-      }
+      if (type === AdEventType.LOADED) this.setState({loaded: true});
     });
 
     // Start loading the interstitial straight away

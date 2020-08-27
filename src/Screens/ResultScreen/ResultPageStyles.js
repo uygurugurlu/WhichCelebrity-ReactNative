@@ -50,6 +50,7 @@ export const styles = StyleSheet.create({
   iconStyle: {
     width: USER_ICON_SIZE,
     height: USER_ICON_SIZE,
+    resizeMode: 'contain'
   },
   buttonsRowContainerStyle: {
     flexDirection: 'row',
