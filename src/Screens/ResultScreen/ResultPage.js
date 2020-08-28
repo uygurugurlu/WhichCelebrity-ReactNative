@@ -159,7 +159,6 @@ class ResultPage extends Component {
   getActionSheetRef = (ref) => (this.actionSheet = ref);
 
   GoBack = async () => {
-    await this.props.get_user_avatar_source("", null);
     await this.props.navigation.pop();
   }
 

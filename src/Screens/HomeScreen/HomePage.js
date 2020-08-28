@@ -28,7 +28,6 @@ import {GetCategories} from "../../common/Functions/GetCategories";
 import {DEVICE_HEIGHT, shadow} from "../../common/Constants";
 import {UserPhotoAnalyze} from "../../common/Functions/UserPhotoAnalyze";
 import {GetToken} from "../../common/Functions/GetToken";
-import Config from "react-native-config";
 
 class HomePage extends Component {
   constructor(props) {
@@ -48,8 +47,6 @@ class HomePage extends Component {
   }
 
   componentWillMount() {
-    console.log("GetCategories TOKEN: ", Config.TOKEN);
-
     GetCategories(this.props.user_agent).then((res) => {
       console.log("Categories: ", res.data);
       this.setState({categories: res.data})
@@ -134,6 +131,7 @@ class HomePage extends Component {
 
   GetResult = async () => {
     const {userAvatarB64, user_agent} = this.props;
+    const {selected_category_id} = this.state;
 
     if (this.CheckValidity()) {
       this.setState({result_loading: true});
@@ -143,13 +141,17 @@ class HomePage extends Component {
         }
       });
 
-      await UserPhotoAnalyze(user_agent, userAvatarB64, null).then((res) => {
+      await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id).then((res) => {
         console.log('UserPhotoAnalyze res: ', res);
         this.setState({celebrity: JSON.parse(res)});
         try {
           interstitial.show();
           this.props.navigation.navigate('ResultPage', {data: JSON.parse(res).data});
-          this.setState({result_loading: false});
+          this.setState({
+            result_loading: false,
+            selected_category_id: -1,
+            selected_category_name: translate("home.select_category")
+          });
         } catch (e) {
           console.log('error on response: ', e);
         }

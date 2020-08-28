@@ -19,8 +19,8 @@ import SearchBarComponent from '../../common/Components/SearchBarComponent';
 import {DEVICE_HEIGHT} from '../../common/Constants';
 import {SearchCelebrities} from "../../common/Functions/SearchCelebrities";
 import {GetCelebrity} from "../../common/Functions/GetCelebrity";
-import {UserPhotoAnalyze} from "../../common/Functions/UserPhotoAnalyze";
 import SelectedCelebrityLine from "../../common/Components/SelectedCelebrityLine";
+import {UserPhotoAnalyze2} from "../../common/Functions/UserPhotoAnalyze2";
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
@@ -136,7 +136,7 @@ class HomePage2 extends Component {
         }
       });
 
-      UserPhotoAnalyze(user_agent, userAvatarB64, celebrity_id).then((res) => {
+      UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id).then((res) => {
         console.log("UserPhotoAnalyze res: ", res);
 
         try {
