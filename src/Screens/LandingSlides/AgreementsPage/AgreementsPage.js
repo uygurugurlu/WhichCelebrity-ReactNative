@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import {
-  Image,
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  Alert,
+  Image, View, Text, SafeAreaView, TouchableOpacity, Alert,
 } from 'react-native';
 import {styles} from './AgreementsPageStyles';
 import {Button} from 'react-native-elements';

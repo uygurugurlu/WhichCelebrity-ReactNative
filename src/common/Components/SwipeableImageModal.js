@@ -13,9 +13,6 @@ class SwipeableImageModal extends Component {
     }
   }
 
-  componentWillMount = async () => {
-  }
-
   render() {
     const {uri, isVisible, handleVisibility, index} = this.props;
     return (
