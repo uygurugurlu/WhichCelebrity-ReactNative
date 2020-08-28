@@ -10,16 +10,17 @@ import {
   InterstitialAd, AdEventType, TestIds,
 } from '@react-native-firebase/admob';
 import {get_user_avatar_source} from '../../Store/Actions';
-import {GetUserPhotoFromImageLibrary} from '../../CommonlyUsed/Functions/GetUserPhotoFromImageLibrary';
-import {GetUserPhotoFromCamera} from '../../CommonlyUsed/Functions/GetUserPhotoFromCamera';
-import {RIGHT_HEADER_ICON} from '../../CommonlyUsed/IconIndex';
-import AvatarComponent from '../../CommonlyUsed/Components/AvatarComponent';
-import ActionSheetComponent from '../../CommonlyUsed/Components/ActionSheetComponent';
-import SearchBarComponent from '../../CommonlyUsed/Components/SearchBarComponent';
-import {DEVICE_HEIGHT} from '../../CommonlyUsed/Constants';
-import {SearchCelebrities} from "../../CommonlyUsed/Functions/SearchCelebrities";
-import {GetCelebrity} from "../../CommonlyUsed/Functions/GetCelebrity";
-import {UserPhotoAnalyze} from "../../CommonlyUsed/Functions/UserPhotoAnalyze";
+import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoFromImageLibrary';
+import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
+import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
+import AvatarComponent from '../../common/Components/AvatarComponent';
+import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
+import SearchBarComponent from '../../common/Components/SearchBarComponent';
+import {DEVICE_HEIGHT} from '../../common/Constants';
+import {SearchCelebrities} from "../../common/Functions/SearchCelebrities";
+import {GetCelebrity} from "../../common/Functions/GetCelebrity";
+import {UserPhotoAnalyze} from "../../common/Functions/UserPhotoAnalyze";
+import SelectedCelebrityLine from "../../common/Components/SelectedCelebrityLine";
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
@@ -38,7 +39,8 @@ class HomePage2 extends Component {
       scroll_items: [],
       celebrity_name: "",
       celebrity_photo: "",
-      celebrity_id: 0
+      celebrity_id: 0,
+      search_visible: true
     };
   }
 
@@ -62,7 +64,9 @@ class HomePage2 extends Component {
     interstitial.load();
   }
 
-  updateSearch = (search) => this.setState({search: search});
+  updateSearch = (search) => {
+    this.setState({search: search, profile_visible: search === ""});
+  }
 
   showActionSheet = () => this.actionSheet.show();
 
@@ -178,7 +182,8 @@ class HomePage2 extends Component {
       search: '',
       scroll_items: [],
       celebrity_name: celebrity.name,
-      celebrity_id: celebrity.id
+      celebrity_id: celebrity.id,
+      search_visible: false
     });
 
     GetCelebrity(user_agent, celebrity.id).then((res) => {
@@ -187,15 +192,23 @@ class HomePage2 extends Component {
     });
   };
 
+  HideProfile = () => {
+    this.setState({search_visible: true});
+    console.log("Hide çalıştı");
+  }
+
   render() {
     const {userAvatarSource} = this.props;
-    const {search, scroll_items, celebrity_name, celebrity_photo} = this.state;
+    const {search, scroll_items, celebrity_name, celebrity_photo, search_visible} = this.state;
 
     return (
       <View style={styles.backgroundImageStyle}>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
-            <SearchBarComponent search={search} updateSearch={this.updateSearch} selectedCelebrity={celebrity_name}/>
+
+            <View display={search_visible ? 'flex' : 'none'}>
+              <SearchBarComponent search={search} updateSearch={this.updateSearch} selectedCelebrity={celebrity_name}/>
+            </View>
 
             <View display={search !== '' ? 'flex' : 'none'}>
               <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.45}}>
@@ -203,17 +216,17 @@ class HomePage2 extends Component {
               </ScrollView>
             </View>
 
-            <View display={search === '' && celebrity_name === '' ? 'flex' : 'none'}
+            <View display={search === '' && search_visible ? 'flex' : 'none'}
                   style={styles.topLabel2ContainerStyle}>
               <Text style={styles.topLabel2Style}>{translate('famous_compare.compare_header')}</Text>
             </View>
 
-            <View display={search === '' && celebrity_name !== '' ? 'flex' : 'none'}
-                  style={styles.topLabel2ContainerStyle}>
-              <Text style={styles.selectedLabelTextStyle}>{translate('home.selected_celebrity')}</Text>
-              <Text style={styles.selectedCelebrityTextStyle}>{celebrity_name}</Text>
-              <Image source={{uri: celebrity_photo,}} style={styles.celebrityPhotoStyle}/>
+            <View display={!search_visible ? 'flex' : 'none'} style={{marginTop: DEVICE_HEIGHT * 0.075}}>
+              <SelectedCelebrityLine uri={celebrity_photo}
+                                     name={celebrity_name}
+                                     handleSelect={() => this.HideProfile()}/>
             </View>
+
           </View>
 
           <View display={search === '' ? 'flex' : 'none'} style={styles.iconsMainContainerStyle}>

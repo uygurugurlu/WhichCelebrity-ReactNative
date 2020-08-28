@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {DEVICE_WIDTH} from '../../CommonlyUsed/Constants';
+import {DEVICE_WIDTH} from '../../common/Constants';
 import {
   buttons_height,
   page_body_background_color,
-} from '../../CommonlyUsed/ColorIndex';
+} from '../../common/ColorIndex';
 
 const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.95;
 const USER_ICON_SIZE = DEVICE_WIDTH * 0.45;
@@ -42,22 +42,6 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     fontStyle: 'italic',
-  },
-  resultLeftTextStyle: {
-    width: DEVICE_WIDTH * 0.55,
-    fontSize: 18,
-    fontWeight: '700',
-    color: 'brown',
-    textAlign: 'right',
-    marginLeft: 7.5
-  },
-  resultRightTextStyle: {
-    width: DEVICE_WIDTH * 0.6,
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#123456',
-    textAlign: 'left',
-    marginLeft: 7.5
   },
   celebrityTextStyle: {
     fontSize: 18,

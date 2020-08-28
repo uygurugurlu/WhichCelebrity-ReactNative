@@ -3,7 +3,7 @@ import {styles} from './SavingsPageStyles';
 import CameraRoll from '@react-native-community/cameraroll';
 import {FlatList, Text, View} from 'react-native';
 import ImageComponent from './ImageComponent';
-import {DEVICE_WIDTH} from '../../CommonlyUsed/Constants';
+import {DEVICE_WIDTH} from '../../common/Constants';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
 import Icon from 'react-native-fontawesome-pro';
@@ -12,7 +12,7 @@ import {
   clear_delete_list,
   clear_selected_to_delete_count,
 } from '../../Store/Actions';
-import SavedImageNotFoundComponent from '../../CommonlyUsed/Components/SavedImageNotFoundComponent';
+import SavedImageNotFoundComponent from '../../common/Components/SavedImageNotFoundComponent';
 
 class SavingsPage extends Component {
   constructor(props) {

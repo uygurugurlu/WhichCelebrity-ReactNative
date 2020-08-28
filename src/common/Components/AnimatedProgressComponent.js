@@ -12,7 +12,7 @@ class AnimatedProgressComponent extends Component {
     return (
       <View style={{marginLeft: 10}}>
         <AnimatedCircularProgress
-          size={ICON_CONTAINER_SIZE / 1.5}
+          size={ICON_CONTAINER_SIZE / 1.25}
           width={0}
           fill={fill}
           duration={DURATION}
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   percentageTextStyle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '500',
   },
 });

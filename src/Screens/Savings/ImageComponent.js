@@ -10,10 +10,10 @@ import {
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
-} from '../../CommonlyUsed/Constants';
+} from '../../common/Constants';
 import DisplaySavedImage from './DisplayImageComponent/DisplaySavedImage';
 import {connect} from 'react-redux';
-import {CHECKMARK} from '../../CommonlyUsed/IconIndex';
+import {CHECKMARK} from '../../common/IconIndex';
 import {
   add_to_delete_list,
   change_selected_to_delete_count,

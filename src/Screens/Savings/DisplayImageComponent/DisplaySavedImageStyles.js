@@ -2,8 +2,8 @@ import {StyleSheet} from 'react-native';
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
-} from '../../../CommonlyUsed/Constants';
-import {buttons_height} from '../../../CommonlyUsed/ColorIndex';
+} from '../../../common/Constants';
+import {buttons_height} from '../../../common/ColorIndex';
 
 export const styles = StyleSheet.create({
   container: {

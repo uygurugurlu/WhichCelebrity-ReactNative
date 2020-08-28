@@ -24,7 +24,7 @@
     "main_header": "Hangi Ünlüye Benziyorum?",
     "get_result": "Sonucu Gör",
     "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz.",
-    "selected_celebrity": "Seçtiğiniz ünlü: ",
+    "selected_celebrity": "Seçtiğiniz ünlü",
     "select_celebrity": "Bir ünlü seç ... ",
     "select_another_celebrity": "Başka bir ünlü seç ... ",
     "select_warning": "Lütfen ismini yazarak bir ünlü seçiniz.",
@@ -35,7 +35,11 @@
     "try_again": "Tekrar Dene",
     "okay": "Tamam",
     "result_saved": "Sonuç Başarıyla Kaydedildi!",
-    "very_similar": " ile birbirinize çok benziyorsunuz!"
+    "very_similar": " ile birbirinize çok benziyorsunuz!",
+    "similarity_rate": "Benzerlik oranınız",
+    "celebrity": "Ünlü",
+    "birthday": "Doğum Tarihi",
+    "profession": "Meslek"
   },
   "saved": {
     "cancel": "Vazgeç",

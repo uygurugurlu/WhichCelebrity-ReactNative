@@ -6,7 +6,7 @@ import {translate} from '../I18n';
 import {
   header_background_color,
   header_label_color,
-} from '../CommonlyUsed/ColorIndex';
+} from '../common/ColorIndex';
 import ResultPage from '../Screens/ResultScreen/ResultPage';
 import SavingsPage from '../Screens/Savings/SavingsPage';
 import Dashboard from '../Screens/Dashboard/Dashboard';

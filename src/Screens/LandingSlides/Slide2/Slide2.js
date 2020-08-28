@@ -3,7 +3,7 @@ import {Image, View, Text, SafeAreaView} from 'react-native';
 import {styles} from './Slide2Styles';
 import {connect} from 'react-redux';
 import {translate} from '../../../I18n';
-import {GENERIC_USER} from '../../../CommonlyUsed/IconIndex';
+import {GENERIC_USER} from '../../../common/IconIndex';
 
 const DOT_ICON = require('../../../assets/icons/dot_icon.png');
 

@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
-} from '../../CommonlyUsed/Constants';
+} from '../../common/Constants';
 
 export const styles = StyleSheet.create({
   mainContainer: {

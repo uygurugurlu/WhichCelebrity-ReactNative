@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
-import {shadow} from '../../CommonlyUsed/Constants';
+import {shadow} from '../../common/Constants';
 import {styles} from './DashboardStyles';
 import {translate} from '../../I18n';
 

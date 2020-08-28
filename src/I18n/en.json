@@ -24,7 +24,7 @@
     "main_header": "To Which Celebrity Do I Look",
     "get_result": "Get Result",
     "validity_alert": "Please select an image for mother, father and the child.",
-    "selected_celebrity": "The Celebrity you choose: ",
+    "selected_celebrity": "The celebrity you choose",
     "select_celebrity": "Select a celebrity ...",
     "select_another_celebrity": "Select another celebrity ... ",
     "select_warning": "Please select a celebrity by typing its name.",
@@ -35,7 +35,11 @@
     "try_again": "Try Again",
     "okay": "Okay",
     "result_saved": "Result saved successfully!",
-    "very_similar": " and you are very similar to each other!"
+    "very_similar": " and you are very similar to each other!",
+    "similarity_rate": "Similarity rate",
+    "celebrity": "Celebrity",
+    "birthday": "Birthday",
+    "profession": "Profession"
   },
   "saved": {
     "cancel": "Cancel",

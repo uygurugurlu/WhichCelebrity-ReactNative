@@ -12,9 +12,9 @@ import {
   TestIds,
 } from '@react-native-firebase/admob';
 import {get_user_avatar_source} from '../../Store/Actions';
-import {GetUserPhotoFromImageLibrary} from '../../CommonlyUsed/Functions/GetUserPhotoFromImageLibrary';
-import {GetUserPhotoFromCamera} from '../../CommonlyUsed/Functions/GetUserPhotoFromCamera';
-import {RIGHT_HEADER_ICON} from '../../CommonlyUsed/IconIndex';
+import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoFromImageLibrary';
+import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
+import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
 
 const adUnitId = __DEV__
   ? TestIds.INTERSTITIAL
@@ -22,12 +22,12 @@ const adUnitId = __DEV__
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   requestNonPersonalizedAdsOnly: false,
 });
-import AvatarComponent from '../../CommonlyUsed/Components/AvatarComponent';
-import ActionSheetComponent from '../../CommonlyUsed/Components/ActionSheetComponent';
-import {GetCategories} from "../../CommonlyUsed/Functions/GetCategories";
-import {DEVICE_HEIGHT, shadow} from "../../CommonlyUsed/Constants";
-import {UserPhotoAnalyze} from "../../CommonlyUsed/Functions/UserPhotoAnalyze";
-import {GetToken} from "../../CommonlyUsed/Functions/GetToken";
+import AvatarComponent from '../../common/Components/AvatarComponent';
+import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
+import {GetCategories} from "../../common/Functions/GetCategories";
+import {DEVICE_HEIGHT, shadow} from "../../common/Constants";
+import {UserPhotoAnalyze} from "../../common/Functions/UserPhotoAnalyze";
+import {GetToken} from "../../common/Functions/GetToken";
 import Config from "react-native-config";
 
 class HomePage extends Component {

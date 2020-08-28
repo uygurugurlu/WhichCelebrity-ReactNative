@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {DEVICE_WIDTH} from '../../CommonlyUsed/Constants';
-import {buttons_height, page_body_background_color} from '../../CommonlyUsed/ColorIndex';
+import {DEVICE_WIDTH} from '../../common/Constants';
+import {buttons_height, page_body_background_color} from '../../common/ColorIndex';
 
 const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.95;
 const USER_ICON_SIZE = DEVICE_WIDTH * 0.45;
@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
     height: ICON_CONTAINER_SIZE / 2,
     backgroundColor: '#fff',
     paddingHorizontal: 5,
+    marginTop: 7.5
   },
   labelContainerStyle: {
     flexDirection: 'column',
@@ -88,21 +89,5 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     marginRight: 25,
     color: '#393636',
-  },
-  resultLeftTextStyle: {
-    width: DEVICE_WIDTH * 0.3,
-    fontSize: 18,
-    fontWeight: '700',
-    color: 'brown',
-    textAlign: 'right',
-    marginLeft: 7.5
-  },
-  resultRightTextStyle: {
-    width: DEVICE_WIDTH * 0.6,
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#123456',
-    textAlign: 'left',
-    marginLeft: 7.5
   },
 });

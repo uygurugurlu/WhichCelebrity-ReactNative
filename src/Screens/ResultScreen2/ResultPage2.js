@@ -8,16 +8,17 @@ import {translate} from '../../I18n';
 import {get_captured_image_uri, trigger_savings_page} from '../../Store/Actions';
 import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
-import SharedImageBottomComponent from '../../CommonlyUsed/Components/SharedImageBottomComponent';
-import {RIGHT_HEADER_ICON} from '../../CommonlyUsed/IconIndex';
-import {shadow} from '../../CommonlyUsed/Constants';
-import AnimatedProgressComponent from '../../CommonlyUsed/Components/AnimatedProgressComponent';
+import SharedImageBottomComponent from '../../common/Components/SharedImageBottomComponent';
+import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
+import {shadow} from '../../common/Constants';
+import AnimatedProgressComponent from '../../common/Components/AnimatedProgressComponent';
 import * as Animatable from "react-native-animatable";
-import ResultButtonsRow from "../../CommonlyUsed/Components/ResultButtonsRow";
-import AnimatedProgressBar from "../../CommonlyUsed/Components/AnimatedProgressBar";
-import ActionSheetComponent2 from "../../CommonlyUsed/Components/ActionSheetComponent2";
-import {SavePicture} from "../../CommonlyUsed/Functions/SavePicture";
-import SwipeableImageModal from "../../CommonlyUsed/Components/SwipeableImageModal";
+import ResultButtonsRow from "../../common/Components/ResultButtonsRow";
+import AnimatedProgressBar from "../../common/Components/AnimatedProgressBar";
+import ActionSheetComponent2 from "../../common/Components/ActionSheetComponent2";
+import {SavePicture} from "../../common/Functions/SavePicture";
+import SwipeableImageModal from "../../common/Components/SwipeableImageModal";
+import ResultLineComponent from "../../common/Components/ResultLineComponent";
 
 const ANIMATION_DURATION = 1200;
 
@@ -32,7 +33,7 @@ class ResultPage2 extends Component {
       celebrity_name: this.props.route.params.celebrity_name,
       data: this.props.route.params.data,
       isVisible: false,
-      modal_uri:""
+      modal_uri: ""
     };
   }
 
@@ -207,30 +208,26 @@ class ResultPage2 extends Component {
               <TouchableOpacity onPress={() => this.handleModalVisibility(1)}>
                 <Image source={{uri: celebrity_photo}} style={styles.iconStyle}/>
               </TouchableOpacity>
-
             </View>
 
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <AnimatedProgressBar fill={data.percentage}/>
-              <AnimatedProgressComponent fill={data.percentage}/>
+
+            <View style={{alignItems: 'center'}}>
+              <Text style={{fontWeight: '500', fontSize: 17}}>{translate("result.similarity_rate")}</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <AnimatedProgressBar fill={data.percentage}/>
+                <AnimatedProgressComponent fill={data.percentage}/>
+              </View>
             </View>
 
             <View style={styles.labelContainerStyle}>
-              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={styles.resultLeftTextStyle}>{"Ünlü: "}</Text>
-                <Text style={styles.resultRightTextStyle}>{celebrity_name}</Text>
-              </View>
+              <ResultLineComponent leftText={translate("result.celebrity") + ": "}
+                                   rightText={celebrity_name}/>
 
-              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+              <ResultLineComponent leftText={translate("result.birthday") + ": "}
+                                   rightText={data.celebrity.birthday}/>
 
-                <Text style={styles.resultLeftTextStyle}>{"Doğum tarihi: "}</Text>
-                <Text style={styles.resultRightTextStyle}>{data.celebrity.birthday}</Text>
-              </View>
-
-              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={styles.resultLeftTextStyle}>{"Meslek: "}</Text>
-                <Text style={styles.resultRightTextStyle}>{data.celebrity.profession}</Text>
-              </View>
+              <ResultLineComponent leftText={translate("result.profession") + ": "}
+                                   rightText={data.celebrity.profession}/>
             </View>
 
             <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
