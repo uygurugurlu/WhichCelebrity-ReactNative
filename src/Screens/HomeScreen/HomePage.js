@@ -221,8 +221,7 @@ class HomePage extends Component {
           </View>
 
           <View display={!categories_visibility ? 'flex' : 'none'} style={styles.iconsMainContainerStyle}>
-            <AvatarComponent ImageSource={userAvatarSource}
-                             SelectAvatar={() => this.SelectAvatar()}/>
+            <AvatarComponent ImageSource={userAvatarSource} SelectAvatar={() => this.SelectAvatar()} showEditButton={true}/>
           </View>
 
           <View display={!categories_visibility ? 'flex' : 'none'}>

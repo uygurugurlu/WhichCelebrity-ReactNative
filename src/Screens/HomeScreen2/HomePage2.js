@@ -146,7 +146,7 @@ class HomePage2 extends Component {
             celebrity_name: celebrity_name,
             data: JSON.parse(res).data
           });
-          this.setState({result_loading: false, celebrity_name: ""});
+          this.setState({result_loading: false});
         } catch (e) {
           console.log('error on response: ', e);
         }

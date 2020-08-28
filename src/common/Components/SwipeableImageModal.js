@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, SafeAreaView} from "react-native";
+import {Image, StyleSheet, SafeAreaView, TouchableOpacity} from "react-native";
 import Modal from "react-native-modal";
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from "../Constants";
+import Icon from "react-native-fontawesome-pro";
+import {button_colors} from "../ColorIndex";
 
 class SwipeableImageModal extends Component {
   constructor(props) {
@@ -24,7 +26,15 @@ class SwipeableImageModal extends Component {
                backdropOpacity={1}
                swipeDirection={['down', "up", 'left', 'right']}>
           <Image source={index === 0 ? uri : {uri: uri}} style={[styles.imageStyle]}/>
+
+          <Icon name={'times'}
+                size={50}
+                type={'light'}
+                color={'#fff'}
+                onPress={handleVisibility}
+                containerStyle={{alignSelf: 'center', marginTop: DEVICE_HEIGHT * 0.1}}/>
         </Modal>
+
       </SafeAreaView>
     );
   }

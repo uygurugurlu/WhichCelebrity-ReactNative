@@ -8,7 +8,7 @@ class AvatarComponent extends Component {
     const {ImageSource, SelectAvatar} = this.props;
     return (
       <Avatar rounded
-              showEditButton={ImageSource === ''}
+              showEditButton={true}
               size={DEVICE_WIDTH / 2}
               source={ImageSource === '' ? GENERIC_USER : ImageSource}
               title="Grace"

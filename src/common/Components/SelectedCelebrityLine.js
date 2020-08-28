@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH * 0.2,
   },
   nameTextStyle: {
-    fontSize: 19,
+    fontSize: 18,
     fontWeight: '600',
     color: '#ff0051',
     marginTop: 7.5
