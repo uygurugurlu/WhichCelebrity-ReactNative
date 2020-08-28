@@ -40,7 +40,7 @@ class HomePage extends Component {
       result_loading: false,
       categories_visibility: false,
       categories: [],
-      selected_category_name: "Kategori Seç",
+      selected_category_name: translate("home.select_category"),
       selected_category_id: -1,
       scroll_items: [],
       celebrity: {}
@@ -194,12 +194,13 @@ class HomePage extends Component {
       <View style={styles.backgroundImageStyle}>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
-            <Text style={styles.headerTextStyle}>Hangi Ünlüye benzediğini öğren</Text>
+
             <View display={'flex'} style={styles.topLabel2ContainerStyle}>
               <TouchableOpacity style={[styles.categoryContainerStyle, shadow]}
                                 onPress={() => this.HandleCategoriesVisibility()}>
                 <Text style={styles.topLabel2Style}>{selected_category_name}</Text>
               </TouchableOpacity>
+
             </View>
 
             <View display={categories_visibility ? 'flex' : 'none'} style={{marginTop: 25, alignItems: 'center'}}>

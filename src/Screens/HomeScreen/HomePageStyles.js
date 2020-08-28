@@ -35,6 +35,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.9,
+    marginTop: DEVICE_HEIGHT * 0.05
   },
   labelsContainerStyle: {
     flexDirection: 'column',

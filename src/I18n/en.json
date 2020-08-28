@@ -28,7 +28,8 @@
     "select_celebrity": "Select a celebrity ...",
     "select_another_celebrity": "Select another celebrity ... ",
     "select_warning": "Please select a celebrity by typing its name.",
-    "avatar_warning": "Please be sure you select an image.!"
+    "avatar_warning": "Please be sure you select an image.!",
+    "select_category": "Select Category"
   },
   "result": {
     "share": "Share",

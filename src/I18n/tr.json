@@ -21,14 +21,15 @@
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
   "home": {
-    "main_header": "Hangi Ünlüye Benziyorum?",
+    "main_header": "Hangi ünlüye benzediğini hemen öğren?",
     "get_result": "Sonucu Gör",
     "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz.",
     "selected_celebrity": "Seçtiğiniz ünlü",
     "select_celebrity": "Bir ünlü seç ... ",
     "select_another_celebrity": "Başka bir ünlü seç ... ",
     "select_warning": "Lütfen ismini yazarak bir ünlü seçiniz.",
-    "avatar_warning": "Lütfen fotoğraf eklediğinizden emin olun!"
+    "avatar_warning": "Lütfen fotoğraf eklediğinizden emin olun!",
+    "select_category": "Kategori Seç"
   },
   "result": {
     "share": "Paylaş",
