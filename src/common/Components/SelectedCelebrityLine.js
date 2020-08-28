@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Image, View, StyleSheet, Text, TouchableOpacity} from "react-native";
 import {translate} from "../../I18n";
 import Icon from "react-native-fontawesome-pro";
-import {DEVICE_WIDTH} from "../Constants";
+import {DEVICE_WIDTH, shadow} from "../Constants";
 import {button_colors} from "../ColorIndex";
 
 class SelectedCelebrityLine extends Component {
@@ -11,8 +11,8 @@ class SelectedCelebrityLine extends Component {
 
     console.log("name: ", name);
     return (
-      <View style={styles.containerStyle}>
-        <Image source={{uri: uri}} style={styles.imageStyle}/>
+      <View style={[styles.containerStyle, shadow]}>
+        <Image source={{uri: uri}} style={[styles.imageStyle]}/>
 
         <View style={styles.middleContainerStyle}>
           <Text style={styles.headerTextStyle}>{translate('home.selected_celebrity')}</Text>
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   containerStyle: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    //alignItems: 'center',
     width: DEVICE_WIDTH * 0.9,
     paddingVertical: 7.5,
     paddingHorizontal: 5,
@@ -48,8 +47,10 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH * 0.2,
   },
   nameTextStyle: {
-    fontSize: 17,
-    fontWeight: '600'
+    fontSize: 19,
+    fontWeight: '600',
+    color: '#ff0051',
+    marginTop: 7.5
   },
   headerTextStyle: {
     fontSize: 16,
