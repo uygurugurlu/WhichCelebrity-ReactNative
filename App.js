@@ -20,12 +20,6 @@ function App() {
   };
 
   const AxiosInterceptors = () => {
-    /** Print Every Request to the Console*/
-    axios.interceptors.request.use(req => {
-      console.log(`interceptor request: ${req.method} ${req.url}`);
-      // Important: request interceptors **must** return the request.
-      return req;
-    });
 
     /** Print Every Response to the Console*/
     axios.interceptors.response.use(
@@ -45,6 +39,17 @@ function App() {
         throw err;
       }
     );
+
+    /** Add default query parameter to axios. */
+    axios.interceptors.request.use((config) => {
+      config.params = { ...config.params, locale: 'tr'}
+      console.group('interceptor request');
+      console.table(config);
+      console.groupEnd();
+      return config;
+    }, function (error) {
+      return Promise.reject(error);
+    });
   }
 
   const AdMobConfigure = () => {

@@ -163,7 +163,7 @@ class HomePage2 extends Component {
             <TouchableOpacity style={styles.scrollItemContainer} onPress={() => this.CelebritySelected(item)}>
               <View style={[{marginHorizontal: DEVICE_WIDTH * 0.051}, shadow]}>
                 <CacheImageComponent
-                  uri={"https://app-fab-prod.s3.eu-central-1.amazonaws.com/media/celebrities/6661716b-295d-45f0-8f5f-e2a001dd23ee/6661716b-295d-45f0-8f5f-e2a001dd23ee.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA27CYHC3UKWDLRFYI%2F20200831%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20200831T123720Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Signature=3a731ec405ff16cc9d1af03b441cfdca31474cbb3f0ea42c6f724dcc8c97002d"}/>
+                  uri={"https://app-fab-prod.s3.eu-central-1.amazonaws.com/media/celebrities/204e15f5-48cb-4c6e-9c1e-87591f66b072/204e15f5-48cb-4c6e-9c1e-87591f66b072.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA27CYHC3UKWDLRFYI%2F20200831%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20200831T133302Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Signature=cb5cf0fbd1b2e721f96f8da101049e77e02f7c0d1a9d0dc0dea6fa2897b30fcd"}/>
               </View>
               <Text style={styles.scrollTextStyle}>{item.name}</Text>
             </TouchableOpacity>

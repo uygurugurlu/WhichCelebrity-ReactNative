@@ -22,7 +22,6 @@ class CacheImageComponent extends React.Component {
   downloadFile(uri, path) {
     RNFS.downloadFile({fromUrl: uri, toFile: path, background: false, progressDivider: 1}).promise
       .then(res => {
-        console.log("Downloaded: ", res);
         this.loadFile(path)
       });
   };
@@ -61,13 +60,19 @@ class CacheImageComponent extends React.Component {
   render() {
     const {error, source, height, width} = this.state;
     const src = {uri: this.props.uri};
-    return (
+    return Platform.OS === 'ios' ? (
       <Image style={{height: height, width: width}}
              source={!error ? source : src}
              onError={(err) => {
                this.onError()
              }}/>
-    );
+    ) : (
+      <Image style={{height: height, width: width}}
+             source={source}
+             onError={(err) => {
+               this.onError()
+             }}/>
+    )
   }
 }
 
