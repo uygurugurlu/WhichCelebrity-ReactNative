@@ -30,7 +30,8 @@
     "select_warning": "Please select a celebrity by typing its name.",
     "avatar_warning": "Please be sure you select an image.!",
     "select_category": "Select Category",
-    "clear_category": "Clear Category"
+    "clear_category": "Clear Category",
+    "cancel": "Cancel"
   },
   "result": {
     "share": "Share",

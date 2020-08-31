@@ -3,7 +3,6 @@ import {SearchBar} from 'react-native-elements';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../Constants';
 import {Platform, StyleSheet} from 'react-native';
 import {translate} from '../../I18n';
-import {page_body_background_color} from "../ColorIndex";
 
 class SearchBarComponent extends Component {
   render() {
@@ -21,6 +20,7 @@ class SearchBarComponent extends Component {
                  inputStyle={{color: '#000'}}
                  containerStyle={styles.containerStyle}
                  platform={Platform.OS === 'ios' ? 'ios' : 'android'}
+                 cancelButtonTitle={translate("home.cancel")}
                  lightTheme={true}
                  showLoading={false}/>
     );
@@ -29,15 +29,12 @@ class SearchBarComponent extends Component {
 
 const styles = StyleSheet.create({
   inputContainerStyle: {
-    //width: DEVICE_WIDTH * 0.9+15,
     height: DEVICE_HEIGHT * 0.07,
     backgroundColor: '#dedede',
     alignItems: 'center',
     alignSelf: 'center',
-    //backgroundColor: page_body_background_color,
   },
   containerStyle: {
-    // backgroundColor: page_body_background_color,
     height: DEVICE_HEIGHT * 0.091,
     width: DEVICE_WIDTH * 0.9 + 15,
     marginTop: 10,

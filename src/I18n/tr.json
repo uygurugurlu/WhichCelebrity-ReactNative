@@ -30,7 +30,8 @@
     "select_warning": "Lütfen ismini yazarak bir ünlü seçiniz.",
     "avatar_warning": "Lütfen fotoğraf eklediğinizden emin olun!",
     "select_category": "Kategori Seç",
-    "clear_category": "Kategoriyi kaldır"
+    "clear_category": "Kategoriyi kaldır",
+    "cancel": "Vazgeç"
   },
   "result": {
     "share": "Paylaş",
