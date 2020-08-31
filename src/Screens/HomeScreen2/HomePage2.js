@@ -1,14 +1,10 @@
 import React, {Component} from 'react';
-import {
-  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView,
-} from 'react-native';
+import {View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
 import {Button} from 'react-native-elements';
 import {styles} from './HomePage2Styles';
-import {
-  InterstitialAd, AdEventType, TestIds,
-} from '@react-native-firebase/admob';
+import {InterstitialAd, AdEventType, TestIds} from '@react-native-firebase/admob';
 import {get_user_avatar_source} from '../../Store/Actions';
 import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoFromImageLibrary';
 import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
@@ -16,11 +12,12 @@ import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
 import AvatarComponent from '../../common/Components/AvatarComponent';
 import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
 import SearchBarComponent from '../../common/Components/SearchBarComponent';
-import {DEVICE_HEIGHT} from '../../common/Constants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH, shadow} from '../../common/Constants';
 import {SearchCelebrities} from "../../common/Functions/SearchCelebrities";
 import {GetCelebrity} from "../../common/Functions/GetCelebrity";
 import SelectedCelebrityLine from "../../common/Components/SelectedCelebrityLine";
 import {UserPhotoAnalyze2} from "../../common/Functions/UserPhotoAnalyze2";
+import CacheImageComponent from "../../common/Components/CacheImagecomponent";
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
@@ -163,7 +160,11 @@ class HomePage2 extends Component {
 
         const items = res.data.map((item) => {
           return (
-            <TouchableOpacity style={styles.scrollTextContainer} onPress={() => this.CelebritySelected(item)}>
+            <TouchableOpacity style={styles.scrollItemContainer} onPress={() => this.CelebritySelected(item)}>
+              <View style={[{marginHorizontal: DEVICE_WIDTH * 0.051}, shadow]}>
+                <CacheImageComponent
+                  uri={"https://app-fab-prod.s3.eu-central-1.amazonaws.com/media/celebrities/6661716b-295d-45f0-8f5f-e2a001dd23ee/6661716b-295d-45f0-8f5f-e2a001dd23ee.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA27CYHC3UKWDLRFYI%2F20200831%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20200831T123720Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Signature=3a731ec405ff16cc9d1af03b441cfdca31474cbb3f0ea42c6f724dcc8c97002d"}/>
+              </View>
               <Text style={styles.scrollTextStyle}>{item.name}</Text>
             </TouchableOpacity>
           );
@@ -211,13 +212,12 @@ class HomePage2 extends Component {
             </View>
 
             <View display={search !== '' ? 'flex' : 'none'}>
-              <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.45}}>
+              <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.75, color: '#fff'}}>
                 <View style={styles.scrollViewStyle}>{scroll_items}</View>
               </ScrollView>
             </View>
 
-            <View display={search === '' && search_visible ? 'flex' : 'none'}
-                  style={styles.topLabel2ContainerStyle}>
+            <View display={search === '' && search_visible ? 'flex' : 'none'} style={styles.topLabel2ContainerStyle}>
               <Text style={styles.topLabel2Style}>{translate('famous_compare.compare_header')}</Text>
             </View>
 

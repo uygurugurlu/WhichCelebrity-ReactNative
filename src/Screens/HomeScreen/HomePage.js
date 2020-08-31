@@ -6,11 +6,7 @@ import {connect} from 'react-redux';
 import {translate} from '../../I18n';
 import {Button} from 'react-native-elements';
 import {styles} from './HomePageStyles';
-import {
-  InterstitialAd,
-  AdEventType,
-  TestIds,
-} from '@react-native-firebase/admob';
+import {InterstitialAd, AdEventType, TestIds} from '@react-native-firebase/admob';
 import {get_user_avatar_source} from '../../Store/Actions';
 import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoFromImageLibrary';
 import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
@@ -25,9 +21,11 @@ const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
 import AvatarComponent from '../../common/Components/AvatarComponent';
 import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
 import {GetCategories} from "../../common/Functions/GetCategories";
-import {DEVICE_HEIGHT, shadow} from "../../common/Constants";
+import {DEVICE_HEIGHT, DOWN_ICON, FORWARD_ICON} from "../../common/Constants";
 import {UserPhotoAnalyze} from "../../common/Functions/UserPhotoAnalyze";
 import {GetToken} from "../../common/Functions/GetToken";
+import Icon from "react-native-fontawesome-pro";
+import {button_colors} from "../../common/ColorIndex";
 
 class HomePage extends Component {
   constructor(props) {
@@ -162,13 +160,12 @@ class HomePage extends Component {
   fillScroll = (categories) => {
     const items = categories.map((item) => {
       return (
-        <TouchableOpacity style={styles.scrollTextContainer}
-                          onPress={() => this.CategorySelected(item.name, item.id)}>
+        <TouchableOpacity style={styles.scrollTextContainer} onPress={() => this.CategorySelected(item.name, item.id)}>
           <Text style={styles.scrollTextStyle}>{item.name}</Text>
         </TouchableOpacity>
       );
-
     });
+
     this.setState({scroll_items: items});
   };
 
@@ -185,7 +182,11 @@ class HomePage extends Component {
   }
 
   CancelCategory = () => {
-    this.setState({categories_visibility: false, selected_category_name: "Kategori Seç"});
+    this.setState({
+      categories_visibility: false,
+      selected_category_name: translate("home.select_category"),
+      selected_category_id: -1
+    });
   }
 
   render() {
@@ -198,30 +199,33 @@ class HomePage extends Component {
           <View style={styles.labelsContainerStyle}>
 
             <View display={'flex'} style={styles.topLabel2ContainerStyle}>
-              <TouchableOpacity style={[styles.categoryContainerStyle, shadow]}
-                                onPress={() => this.HandleCategoriesVisibility()}>
+              <TouchableOpacity style={styles.categoryContainerStyle} onPress={() => this.HandleCategoriesVisibility()}>
                 <Text style={styles.topLabel2Style}>{selected_category_name}</Text>
-              </TouchableOpacity>
 
+                <View display={selected_category_name === translate("home.select_category") ? 'flex' : 'none'}>
+                  <Image source={categories_visibility ? DOWN_ICON : FORWARD_ICON} style={{height: 25, width: 25}}/>
+                </View>
+
+                <View display={selected_category_name !== translate("home.select_category") ? 'flex' : 'none'}>
+                  <TouchableOpacity onPress={() => this.CancelCategory()}>
+                    <Icon name={'times'} size={25} type={'light'} color={'white'}
+                          containerStyle={{alignSelf: 'center', backgroundColor: 'gray', borderRadius: 2.5}}/>
+                  </TouchableOpacity>
+                </View>
+
+              </TouchableOpacity>
             </View>
 
-            <View display={categories_visibility ? 'flex' : 'none'} style={{marginTop: 25, alignItems: 'center'}}>
-              <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.6}}>
+            <View display={categories_visibility ? 'flex' : 'none'} style={{alignItems: 'center'}}>
+              <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.55}}>
                 <View style={styles.scrollViewStyle}>{scroll_items}</View>
               </ScrollView>
-              <View display={selected_category_name !== "Kategori Seç" ? 'flex' : 'none'}>
-                <Button title={"Temizle"}
-                        buttonStyle={styles.cancelButtonStyle}
-                        titleStyle={{fontSize: 18, fontWeight: '600'}}
-                        onPress={() => this.CancelCategory()}
-                        loading={this.state.result_loading}/>
-              </View>
-
             </View>
           </View>
 
           <View display={!categories_visibility ? 'flex' : 'none'} style={styles.iconsMainContainerStyle}>
-            <AvatarComponent ImageSource={userAvatarSource} SelectAvatar={() => this.SelectAvatar()} showEditButton={true}/>
+            <AvatarComponent ImageSource={userAvatarSource} SelectAvatar={() => this.SelectAvatar()}
+                             showEditButton={true}/>
           </View>
 
           <View display={!categories_visibility ? 'flex' : 'none'}>

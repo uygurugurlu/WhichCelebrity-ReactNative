@@ -1,13 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {
-  DEVICE_HEIGHT,
-  DEVICE_WIDTH,
-} from '../../common/Constants';
-import {
-  buttons_height,
-  button_colors,
-  page_body_background_color,
-} from '../../common/ColorIndex';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
+import {buttons_height, button_colors, page_body_background_color} from '../../common/ColorIndex';
 
 const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.4;
 const MOTHER_ICON_SIZE = DEVICE_WIDTH * 0.35;
@@ -58,19 +51,26 @@ export const styles = StyleSheet.create({
   },
   topLabel2Style: {
     color: '#123456',
-    fontSize: 19,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+  topLabelSelectedStyle: {
+    color: '#123456',
+    fontSize: 18,
+    fontWeight: '500',
     textAlign: 'center',
   },
   categoryContainerStyle: {
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    width: DEVICE_WIDTH * 0.75,
-    paddingVertical: 7.5,
-    borderRadius: 2.5,
+    width: DEVICE_WIDTH * 0.8,
+    padding: 10,
+    borderWidth: 0.5,
+    borderColor: '#dedede',
 
-    backgroundColor: '#d1d1d1',
+    backgroundColor: '#fff',
   },
   resultButtonStyle: {
     width: DEVICE_WIDTH * 0.8,
@@ -157,17 +157,20 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   scrollTextStyle: {
-    fontSize: 17,
+    fontSize: 18,
     fontWeight: '500',
   },
   scrollTextContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'orange',
+    backgroundColor: '#fff',
     width: DEVICE_WIDTH * 0.8,
-    paddingVertical: 10,
-    marginVertical: 5,
-    borderRadius: 5,
+
+    borderTopWidth: 0.45,
+    borderLeftWidth: 0.45,
+    borderRightWidth: 0.45,
+    borderColor: '#dedede',
+    padding: 10,
   },
 });

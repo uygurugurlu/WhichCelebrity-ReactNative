@@ -1,13 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {
-  DEVICE_HEIGHT,
-  DEVICE_WIDTH,
-} from '../../common/Constants';
-import {
-  buttons_height,
-  button_colors,
-  page_body_background_color,
-} from '../../common/ColorIndex';
+import {DEVICE_HEIGHT, DEVICE_WIDTH,} from '../../common/Constants';
+import {buttons_height, button_colors, page_body_background_color} from '../../common/ColorIndex';
 
 const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.4;
 const MOTHER_ICON_SIZE = DEVICE_WIDTH * 0.35;
@@ -39,7 +32,7 @@ export const styles = StyleSheet.create({
   },
   labelsContainerStyle: {
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   topLabelStyle: {
@@ -148,23 +141,25 @@ export const styles = StyleSheet.create({
   },
   scrollTextStyle: {
     fontSize: 17,
-    fontWeight: '500',
+    fontWeight: '600',
   },
-  scrollTextContainer: {
+  scrollItemContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'orange',
-    width: DEVICE_WIDTH * 0.8,
+    backgroundColor: '#fff',
+    width: DEVICE_WIDTH * 0.95,
     paddingVertical: 10,
-    marginVertical: 5,
-    borderRadius: 5,
+
+    borderTopWidth: 0.45,
+    borderLeftWidth: 0.45,
+    borderRightWidth: 0.45,
+    borderColor: '#dedede',
   },
   celebrityPhotoStyle: {
     height: 70,
     width: 70,
     borderRadius: 1,
-    marginVertical: 10,
     resizeMode: 'contain'
   }
 });

@@ -9,7 +9,6 @@ class SelectedCelebrityLine extends Component {
   render() {
     const {uri, name, handleSelect} = this.props;
 
-    console.log("name: ", name);
     return (
       <View style={[styles.containerStyle, shadow]}>
         <Image source={{uri: uri}} style={[styles.imageStyle]}/>
