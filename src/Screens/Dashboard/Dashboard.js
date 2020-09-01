@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {SafeAreaView, Text, TouchableOpacity, Image, View} from 'react-native';
-import {DEVICE_WIDTH, shadow, STAR_ICON} from '../../common/Constants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH, shadow, STAR_ICON} from '../../common/Constants';
 import {styles} from './DashboardStyles';
 import {translate} from '../../I18n';
 
@@ -22,13 +22,18 @@ class Dashboard extends Component {
     return (
       <SafeAreaView style={styles.mainContainer}>
         <TouchableOpacity style={[styles.topContainer, shadow]} onPress={() => this.Navigate(1)}>
-          <Image source={STAR_ICON} style={styles.imageStyle}/>
 
+          <View style={{width: DEVICE_WIDTH * 0.8, height: DEVICE_HEIGHT * 0.35}}>
+            <Image source={STAR_ICON} style={styles.imageStyle}/>
+          </View>
           <Text style={styles.textStyle}>{translate('dashboard.first_label')}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.bottomContainer, shadow]} onPress={() => this.Navigate(2)}>
-          <Image source={STAR_ICON} style={styles.imageStyle}/>
+          <View style={{width: DEVICE_WIDTH * 0.8, height: DEVICE_HEIGHT * 0.35}}>
+            <Image source={STAR_ICON} style={styles.imageStyle}/>
+          </View>
+
           <Text style={styles.textStyle}>{translate('dashboard.second_label')}</Text>
         </TouchableOpacity>
       </SafeAreaView>
