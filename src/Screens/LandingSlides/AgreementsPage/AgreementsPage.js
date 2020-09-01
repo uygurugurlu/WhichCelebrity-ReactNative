@@ -9,6 +9,7 @@ import {first_time_login} from '../../../Store/Actions';
 import {connect} from 'react-redux';
 import {translate} from '../../../I18n';
 import CheckBox from '@react-native-community/checkbox';
+import {DEVICE_WIDTH} from "../../../common/Constants";
 
 const DOT_ICON = require('../../../assets/icons/dot_icon.png');
 const BANNER = require('../../../assets/icons/banner.png');
@@ -69,9 +70,11 @@ class AgreementsPage extends Component {
         <Image source={BANNER} style={styles.imageStyle}/>
 
         <View style={styles.containerStyle}>
-          <View style={styles.rowContainerStyle}>
-            <Image source={DOT_ICON} style={styles.dotImageStyle}/>
-            <Text style={styles.textStyle}>{translate('starter.label2')}</Text>
+
+
+          <View style={{marginBottom: DEVICE_WIDTH * 0.1}}>
+            <Text style={styles.titleTextStyle}>{translate('app_name')}</Text>
+            <Text style={styles.textStyle}>{translate('starter.label1')}</Text>
           </View>
 
           <View style={styles.kvkkRowContainerStyle}>
@@ -86,28 +89,20 @@ class AgreementsPage extends Component {
           </View>
 
           <View style={styles.kvkkRowContainerStyle}>
-            <TouchableOpacity
-              style={styles.kvkkColumnContainerStyle}
-              onPress={() => this.SeeWebViewPage(1)}>
-              <Text style={styles.linkTextStyle}>
-                {translate('starter.privacy_policy_text')}
-              </Text>
+            <TouchableOpacity style={styles.kvkkColumnContainerStyle} onPress={() => this.SeeWebViewPage(1)}>
+              <Text style={styles.linkTextStyle}>{translate('starter.privacy_policy_text')}</Text>
             </TouchableOpacity>
 
-            <CheckBox
-              disabled={false}
-              value={checked2}
-              onValueChange={() => this.Check2()}
-            />
+            <CheckBox disabled={false}
+                      value={checked2}
+                      onValueChange={() => this.Check2()}/>
           </View>
         </View>
 
-        <Button
-          title={translate('continue')}
-          onPress={() => this.Continue()}
-          buttonStyle={styles.getPermissionButtonStyle}
-          titleStyle={styles.getPermissionButtonTittleStyle}
-        />
+        <Button title={translate('continue')}
+                onPress={() => this.Continue()}
+                buttonStyle={styles.getPermissionButtonStyle}
+                titleStyle={styles.getPermissionButtonTittleStyle}/>
       </SafeAreaView>
     );
   }

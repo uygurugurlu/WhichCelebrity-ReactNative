@@ -155,7 +155,7 @@ class SwitchNavigation extends React.Component {
     } else {
       return (
         <NavigationContainer>
-          {is_the_login_first_time ? <StarterPagesStack/> : <MainPagesStack/>}
+          {!is_the_login_first_time ? <StarterPagesStack/> : <MainPagesStack/>}
         </NavigationContainer>
       );
     }

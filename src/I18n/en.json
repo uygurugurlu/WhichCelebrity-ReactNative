@@ -1,6 +1,6 @@
 {
   "continue": "Continue",
-  "app_name": "To Which Celebrity Do I Look",
+  "app_name": "To Which Celebrity Do I Look Like",
   "slide4": {
     "line1": "Select any photo of anyone with your Camera or from Gallery.",
     "line2": "And find out right away to which celebrity is this person looks like."
@@ -52,6 +52,7 @@
     "not_found": "There is no any photo saved"
   },
   "starter": {
+    "label1": "Find out which celebrity you look like with artificial intelligence algorithms.",
     "label2": "The similarity is provided by the artificial intelligence algorithm powered by TURK AI.",
     "kvkk_text": "I have read and accept the Protection of Personal Data Disclosure Text.",
     "privacy_policy_text": "I have read and accept the Privacy Policy Text.",

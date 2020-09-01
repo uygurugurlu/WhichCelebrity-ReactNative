@@ -4,7 +4,6 @@ import {
 } from '../../common/Constants';
 import {StyleSheet} from 'react-native';
 import React from "react";
-import {page_body_background_color} from "../../common/ColorIndex";
 
 export const styles = StyleSheet.create({
   mainContainer: {

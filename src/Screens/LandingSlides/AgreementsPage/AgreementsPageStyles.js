@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: DEVICE_WIDTH * 0.85,
+    width: DEVICE_WIDTH * 0.7,
     backgroundColor: '#fff',
     marginVertical: 15,
     marginHorizontal: DEVICE_WIDTH * 0.05,
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
     //alignItems: 'center',
     width: DEVICE_WIDTH * 0.7,
     backgroundColor: '#fff',
-    marginVertical: 15,
+    marginVertical: 10,
     marginLeft: DEVICE_WIDTH * 0.1,
     marginRight: 5,
   },
@@ -82,12 +82,15 @@ export const styles = StyleSheet.create({
   titleTextStyle: {
     fontSize: 20,
     fontWeight: '600',
+    alignSelf: 'center'
   },
   textStyle: {
     fontSize: 17,
     fontWeight: '500',
     color: 'rgba(0,0,0,0.85)',
-    marginRight: DEVICE_WIDTH * 0.05,
+    marginLeft: DEVICE_WIDTH * 0.05,
+    width: DEVICE_WIDTH * 0.8,
+    marginVertical: DEVICE_HEIGHT * 0.05
   },
   linkTextStyle: {
     fontSize: 16,
