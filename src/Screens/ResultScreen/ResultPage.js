@@ -222,7 +222,7 @@ class ResultPage extends Component {
               <ResultLineComponent leftText={translate("result.celebrity") + ": "}
                                    rightText={data.celebrity.name}/>
 
-              <View display={hide_age ? "none" : 'flex'}>
+              <View display={hide_age ? "none" : 'flex'} style={{marginRight: 25}}>
                 <ResultLineComponent leftText={translate("result.birthday") + ": "}
                                      rightText={GetUserAge(data.celebrity.birthday) + " " + translate("result.years")}/>
               </View>

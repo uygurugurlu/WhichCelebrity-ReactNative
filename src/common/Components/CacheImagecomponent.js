@@ -14,17 +14,19 @@ class CacheImageComponent extends React.Component {
     path: ""
   };
 
-  loadFile = async (path) => {
+  loadFile = (path) => {
     console.log("loadFile");
-    await this.setState({source: {uri: path}});
-    await this.GetImageSize(path);
+    this.setState({source: {uri: path}});
+    this.GetImageSize(path);
   };
 
   downloadFile(uri, path) {
-    RNFS.downloadFile({fromUrl: uri, toFile: path, cacheable: true, background: false, progressDivider: 1}).promise
+    RNFS.downloadFile({fromUrl: uri, toFile: path}).promise
       .then(res => {
         this.loadFile(path);
       });
+
+    console.log("pathh: ", path);
   };
 
   componentWillMount() {
@@ -52,24 +54,6 @@ class CacheImageComponent extends React.Component {
       console.log(error);
     });
   }
-
-  shouldComponentUpdate = async (nextProps, nextState) => {
-    const {uri} = this.props;
-
-    if (nextProps.uri !== uri || nextState.path !== this.state.path) {
-      const name = shorthash.unique(nextProps.uri);
-      const extension = (Platform.OS === 'android') ? 'file://' : '';
-      const path = `${extension}${RNFS.CachesDirectoryPath}/${name}.png`;
-
-      await RNFS.exists(path).then(exists => {
-        if (exists) this.loadFile(path);
-        else this.downloadFile(nextProps.uri, path);
-      });
-
-      this.setState({path: path});
-    }
-  };
-
 
   onError() {
     this.setState({error: true});

@@ -27,7 +27,7 @@ class Dashboard extends Component {
     return (
       <SafeAreaView style={styles.mainContainer}>
         <TouchableOpacity style={[styles.topContainer, shadow]} onPress={() => this.Navigate(1)}>
-          <View style={{width: DEVICE_WIDTH * 0.8, height: DEVICE_HEIGHT * 0.35}}>
+          <View style={{width: DEVICE_WIDTH * 0.8, height: DEVICE_HEIGHT * 0.325}}>
             <Image source={STAR_ICON} style={styles.imageStyle}/>
           </View>
 
@@ -35,7 +35,7 @@ class Dashboard extends Component {
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.bottomContainer, shadow]} onPress={() => this.Navigate(2)}>
-          <View style={{width: DEVICE_WIDTH * 0.8, height: DEVICE_HEIGHT * 0.35}}>
+          <View style={{width: DEVICE_WIDTH * 0.8, height: DEVICE_HEIGHT * 0.325}}>
             <Image source={STAR_ICON} style={styles.imageStyle}/>
           </View>
 
