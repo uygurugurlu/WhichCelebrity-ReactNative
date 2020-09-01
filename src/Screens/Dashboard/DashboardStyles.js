@@ -2,8 +2,9 @@ import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
 } from '../../common/Constants';
-import {Image, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from "react";
+import {page_body_background_color} from "../../common/ColorIndex";
 
 export const styles = StyleSheet.create({
   mainContainer: {
@@ -11,19 +12,20 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    backgroundColor: 'white'
   },
   topContainer: {
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
-    margin: DEVICE_HEIGHT * 0.0125,
+    marginTop: DEVICE_HEIGHT * 0.04,
     backgroundColor: 'white',
   },
   bottomContainer: {
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: DEVICE_HEIGHT * 0.0125,
+    marginTop: DEVICE_HEIGHT * 0.025,
     backgroundColor: '#fff',
   },
   imageStyle: {
