@@ -3,15 +3,12 @@ import {SearchBar} from 'react-native-elements';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../Constants';
 import {Platform, StyleSheet} from 'react-native';
 import {translate} from '../../I18n';
-import {page_body_background_color} from "../ColorIndex";
 
 class SearchBarComponent extends Component {
   render() {
     const {search, updateSearch, selectedCelebrity} = this.props;
     const place_holder =
-      selectedCelebrity === ''
-        ? translate('home.select_celebrity')
-        : translate('home.select_another_celebrity');
+      selectedCelebrity === '' ? translate('home.select_celebrity') : translate('home.select_another_celebrity');
     return (
       <SearchBar placeholder={place_holder}
                  onChangeText={updateSearch}
@@ -31,18 +28,18 @@ class SearchBarComponent extends Component {
 const styles = StyleSheet.create({
   inputContainerStyle: {
     height: DEVICE_HEIGHT * 0.07,
-    backgroundColor: Platform.OS === 'android' ? '#dedede' : '#dedede',
-    //   backgroundColor: '#dedede',
+    backgroundColor: '#fafafa',
     alignItems: 'center',
     alignSelf: 'center',
-    borderRadius: 20,
     paddingLeft: Platform.OS === 'ios' ? 15 : 0
   },
   containerStyle: {
-    height: DEVICE_HEIGHT * 0.091,
-    width: DEVICE_WIDTH * 0.9 + 15,
+    height: DEVICE_HEIGHT * 0.08,
+    width: DEVICE_WIDTH * 0.95,
     marginTop: 10,
-    backgroundColor: Platform.OS === 'ios' ? page_body_background_color : page_body_background_color,
+    backgroundColor: '#fafafa',
+    borderColor: '#dedddd',
+    borderWidth: 1.2,
   },
 });
 

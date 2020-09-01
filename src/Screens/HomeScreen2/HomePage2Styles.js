@@ -133,7 +133,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#f5bc1a',
   },
   scrollViewStyle: {
-    width: DEVICE_WIDTH * 0.9 + 15,
+    width: DEVICE_WIDTH * 0.95,
     backgroundColor: page_body_background_color,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -151,10 +151,10 @@ export const styles = StyleSheet.create({
     width: DEVICE_WIDTH * 0.95,
     paddingVertical: 10,
 
-    borderTopWidth: 0.45,
-    borderLeftWidth: 0.45,
-    borderRightWidth: 0.45,
-    borderColor: '#dedede',
+    borderBottomWidth: 0.5,
+    borderLeftWidth: 1.2,
+    borderRightWidth: 1.2,
+    borderColor: '#dedddd',
   },
   celebrityPhotoStyle: {
     height: 70,
