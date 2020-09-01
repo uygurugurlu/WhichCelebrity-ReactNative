@@ -52,7 +52,6 @@
     "not_found": "There is no any photo saved"
   },
   "starter": {
-    "label1": "Communication between 'To Which Celebrity Do I Look' mobile applications and servers is secure.",
     "label2": "The similarity is provided by the artificial intelligence algorithm powered by TURK AI.",
     "kvkk_text": "I have read and accept the Protection of Personal Data Disclosure Text.",
     "privacy_policy_text": "I have read and accept the Privacy Policy Text.",
@@ -63,7 +62,7 @@
     "share": "Share"
   },
   "dashboard": {
-    "first_label": "Find out which celebrity you look like.",
+    "first_label": "Find out which celebrity do you look like.",
     "second_label": "Pick a celebrity and find out how similar you are."
   }
 }

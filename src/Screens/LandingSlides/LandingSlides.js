@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import Swiper from 'react-native-swiper';
-import {View, StyleSheet, SafeAreaView} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import AgreementsPage from './AgreementsPage/AgreementsPage';
-import Slide2 from './Slide2/Slide2';
 
 class LandingSlides extends Component {
   render() {

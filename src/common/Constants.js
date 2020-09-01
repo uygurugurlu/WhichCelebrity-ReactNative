@@ -6,6 +6,8 @@ export const DEVICE_WIDTH = Dimensions.get('window').width;
 export const FORWARD_ICON = require('../assets/icons/forward-icon.png');
 export const DOWN_ICON = require('../assets/icons/down-arrow.png');
 
+export const STAR_ICON = require('../assets/icons/star.jpg');
+
 export const shadow = {
   shadowColor: '#000000',
   shadowOffset: {width: 0.1, height: 1},

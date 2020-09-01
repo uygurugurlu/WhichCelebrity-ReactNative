@@ -9,6 +9,7 @@ import {first_time_login} from '../../../Store/Actions';
 import {connect} from 'react-redux';
 import {translate} from '../../../I18n';
 import CheckBox from '@react-native-community/checkbox';
+
 const DOT_ICON = require('../../../assets/icons/dot_icon.png');
 const BANNER = require('../../../assets/icons/banner.png');
 
@@ -65,33 +66,23 @@ class AgreementsPage extends Component {
 
     return (
       <SafeAreaView style={styles.mainContainerStyle}>
-        <Image source={BANNER} style={styles.imageStyle} />
+        <Image source={BANNER} style={styles.imageStyle}/>
 
         <View style={styles.containerStyle}>
           <View style={styles.rowContainerStyle}>
-            <Image source={DOT_ICON} style={styles.dotImageStyle} />
-            <Text style={styles.textStyle}>{translate('starter.label1')}</Text>
-          </View>
-
-          <View style={styles.rowContainerStyle}>
-            <Image source={DOT_ICON} style={styles.dotImageStyle} />
+            <Image source={DOT_ICON} style={styles.dotImageStyle}/>
             <Text style={styles.textStyle}>{translate('starter.label2')}</Text>
           </View>
 
           <View style={styles.kvkkRowContainerStyle}>
-            <TouchableOpacity
-              style={styles.kvkkColumnContainerStyle}
-              onPress={() => this.SeeWebViewPage(0)}>
-              <Text style={styles.linkTextStyle}>
-                {translate('starter.kvkk_text')}
-              </Text>
+            <TouchableOpacity style={styles.kvkkColumnContainerStyle}
+                              onPress={() => this.SeeWebViewPage(0)}>
+              <Text style={styles.linkTextStyle}>{translate('starter.kvkk_text')}</Text>
             </TouchableOpacity>
 
-            <CheckBox
-              disabled={false}
-              value={checked}
-              onValueChange={() => this.Check()}
-            />
+            <CheckBox disabled={false}
+                      value={checked}
+                      onValueChange={() => this.Check()}/>
           </View>
 
           <View style={styles.kvkkRowContainerStyle}>
