@@ -12,9 +12,7 @@ import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoF
 import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
 import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
 
-const adUnitId = __DEV__
-  ? TestIds.INTERSTITIAL
-  : 'ca-app-pub-9113500705436853/7410126783';
+const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   requestNonPersonalizedAdsOnly: false,
 });
@@ -208,7 +206,11 @@ class HomePage extends Component {
                 <View display={selected_category_name !== translate("home.select_category") ? 'flex' : 'none'}>
                   <TouchableOpacity onPress={() => this.CancelCategory()}>
                     <Icon name={'times'} size={25} type={'light'} color={'white'}
-                          containerStyle={{alignSelf: 'center', backgroundColor: '#ff0051', borderRadius: 12}}/>
+                          containerStyle={{
+                            alignSelf: 'center',
+                            backgroundColor: 'gray',
+                            borderRadius: 12.5
+                          }}/>
                   </TouchableOpacity>
                 </View>
 

@@ -1,5 +1,5 @@
 import React from 'react' ;
-import {Platform, Image, ActivityIndicator} from 'react-native';
+import {Platform, Image} from 'react-native';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from "../Constants";
 import shorthash from 'shorthash';
 
@@ -14,15 +14,16 @@ class CacheImageComponent extends React.Component {
     path: ""
   };
 
-  loadFile = (path) => {
+  loadFile = async (path) => {
     console.log("loadFile");
-    this.setState({source: {uri: path}});
+    await this.setState({source: {uri: path}});
+    await this.GetImageSize(path);
   };
 
   downloadFile(uri, path) {
-    RNFS.downloadFile({fromUrl: uri, toFile: path, background: false, progressDivider: 1}).promise
+    RNFS.downloadFile({fromUrl: uri, toFile: path, cacheable: true, background: false, progressDivider: 1}).promise
       .then(res => {
-        this.loadFile(path)
+        this.loadFile(path);
       });
   };
 
@@ -30,7 +31,7 @@ class CacheImageComponent extends React.Component {
     const {uri} = this.props;
     const name = shorthash.unique(uri);
     const extension = (Platform.OS === 'android') ? 'file://' : '';
-    const path = `${extension}${RNFS.DocumentDirectoryPath}/${name}.png`;
+    const path = `${extension}${RNFS.CachesDirectoryPath}/${name}.png`;
 
     RNFS.exists(path).then(exists => {
       if (exists) this.loadFile(path);
@@ -40,8 +41,8 @@ class CacheImageComponent extends React.Component {
     this.setState({path: path});
   }
 
-  componentDidMount = () => {
-    Image.getSize(this.state.path, (width, height) => {
+  GetImageSize = (path) => {
+    Image.getSize(path, (width, height) => {
       let resize_width = width / DEVICE_WIDTH * 10;
       let resize_height = height / DEVICE_HEIGHT * 10;
       let max = Math.max(resize_width.toFixed(0), resize_height.toFixed(0));
@@ -51,6 +52,24 @@ class CacheImageComponent extends React.Component {
       console.log(error);
     });
   }
+
+  shouldComponentUpdate = async (nextProps, nextState) => {
+    const {uri} = this.props;
+
+    if (nextProps.uri !== uri || nextState.path !== this.state.path) {
+      const name = shorthash.unique(nextProps.uri);
+      const extension = (Platform.OS === 'android') ? 'file://' : '';
+      const path = `${extension}${RNFS.CachesDirectoryPath}/${name}.png`;
+
+      await RNFS.exists(path).then(exists => {
+        if (exists) this.loadFile(path);
+        else this.downloadFile(nextProps.uri, path);
+      });
+
+      this.setState({path: path});
+    }
+  };
+
 
   onError() {
     this.setState({error: true});
