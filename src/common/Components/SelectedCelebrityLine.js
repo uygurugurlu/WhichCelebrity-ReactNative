@@ -19,7 +19,7 @@ class SelectedCelebrityLine extends Component {
         </View>
 
         <TouchableOpacity onPress={() => handleSelect()} style={{padding: 5, alignSelf: 'center'}}>
-          <Icon name={'times'} size={35} type={'light'} color={button_colors} containerStyle={{alignSelf: 'center'}}/>
+          <Icon name={'times'} size={35} type={'light'} color={'#b4013a'} containerStyle={{alignSelf: 'center'}}/>
         </TouchableOpacity>
       </View>
     );
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH * 0.9,
     paddingVertical: 7.5,
     paddingHorizontal: 5,
-    backgroundColor: '#dedede',
+    backgroundColor: '#fff',
     borderRadius: 5
   },
   middleContainerStyle: {
@@ -48,12 +48,13 @@ const styles = StyleSheet.create({
   nameTextStyle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#ff0051',
+    color: button_colors,
     marginTop: 7.5
   },
   headerTextStyle: {
     fontSize: 16,
-    fontWeight: '500'
+    fontWeight: '500',
+    color: 'gray'
   }
 
 

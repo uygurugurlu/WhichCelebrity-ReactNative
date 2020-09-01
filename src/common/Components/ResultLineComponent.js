@@ -5,7 +5,8 @@ import {DEVICE_WIDTH} from "../Constants";
 class ResultLineComponent extends Component {
   render() {
     const {leftText, rightText} = this.props;
-    const hide = typeof rightText === 'undefined' || rightText === null;
+    const hide = typeof rightText === 'undefined' || rightText === null || rightText === "";
+
     return (
       <View style={styles.containerStyle} display={!hide ? 'flex' : 'none'}>
         <Text style={styles.resultLeftTextStyle}>{leftText}</Text>

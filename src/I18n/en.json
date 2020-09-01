@@ -42,7 +42,8 @@
     "similarity_rate": "Similarity rate",
     "celebrity": "Celebrity",
     "birthday": "Birthday",
-    "profession": "Profession"
+    "profession": "Profession",
+    "years": "years old"
   },
   "saved": {
     "cancel": "Cancel",

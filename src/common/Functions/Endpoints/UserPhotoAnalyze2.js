@@ -1,5 +1,5 @@
-import {ResponseHandler} from './ResponseHandler';
-import {AUTH_TOKEN, API_HOST} from '../../config/index';
+import {ResponseHandler} from '../ResponseHandler';
+import {AUTH_TOKEN, API_HOST} from '../../../config';
 import RNFetchBlob from "rn-fetch-blob";
 
 export const UserPhotoAnalyze2 = async (user_agent, image_data, celebrity_id) => {

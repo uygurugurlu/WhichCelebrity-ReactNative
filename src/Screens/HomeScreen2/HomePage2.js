@@ -13,10 +13,10 @@ import AvatarComponent from '../../common/Components/AvatarComponent';
 import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
 import SearchBarComponent from '../../common/Components/SearchBarComponent';
 import {DEVICE_HEIGHT, DEVICE_WIDTH, shadow} from '../../common/Constants';
-import {SearchCelebrities} from "../../common/Functions/SearchCelebrities";
-import {GetCelebrity} from "../../common/Functions/GetCelebrity";
+import {SearchCelebrities} from "../../common/Functions/Endpoints/SearchCelebrities";
+import {GetCelebrity} from "../../common/Functions/Endpoints/GetCelebrity";
 import SelectedCelebrityLine from "../../common/Components/SelectedCelebrityLine";
-import {UserPhotoAnalyze2} from "../../common/Functions/UserPhotoAnalyze2";
+import {UserPhotoAnalyze2} from "../../common/Functions/Endpoints/UserPhotoAnalyze2";
 import CacheImageComponent from "../../common/Components/CacheImagecomponent";
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
@@ -163,7 +163,7 @@ class HomePage2 extends Component {
             <TouchableOpacity style={styles.scrollItemContainer} onPress={() => this.CelebritySelected(item)}>
               <View style={[{marginHorizontal: DEVICE_WIDTH * 0.051}, shadow]}>
                 <CacheImageComponent
-                  uri={"https://app-fab-prod.s3.eu-central-1.amazonaws.com/media/celebrities/204e15f5-48cb-4c6e-9c1e-87591f66b072/204e15f5-48cb-4c6e-9c1e-87591f66b072.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA27CYHC3UKWDLRFYI%2F20200831%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20200831T133302Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Signature=cb5cf0fbd1b2e721f96f8da101049e77e02f7c0d1a9d0dc0dea6fa2897b30fcd"}/>
+                  uri={"https://app-fab-prod.s3.eu-central-1.amazonaws.com/media/celebrities/f434f216-f579-4fb4-9c94-cce1cc837ba4/f434f216-f579-4fb4-9c94-cce1cc837ba4.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA27CYHC3UKWDLRFYI%2F20200831%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20200831T135536Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Signature=9de45fef46640dfc8bcda7387d0bedfef7adac29ab958cce7a0886eab6c2bed3"}/>
               </View>
               <Text style={styles.scrollTextStyle}>{item.name}</Text>
             </TouchableOpacity>

@@ -42,7 +42,8 @@
     "similarity_rate": "Benzerlik oranınız",
     "celebrity": "Ünlü",
     "birthday": "Doğum Tarihi",
-    "profession": "Meslek"
+    "profession": "Meslek",
+    "years": "yaşında"
   },
   "saved": {
     "cancel": "Vazgeç",

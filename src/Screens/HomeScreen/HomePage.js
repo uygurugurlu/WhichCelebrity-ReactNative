@@ -20,12 +20,11 @@ const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
 });
 import AvatarComponent from '../../common/Components/AvatarComponent';
 import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
-import {GetCategories} from "../../common/Functions/GetCategories";
+import {GetCategories} from "../../common/Functions/Endpoints/GetCategories";
 import {DEVICE_HEIGHT, DOWN_ICON, FORWARD_ICON} from "../../common/Constants";
-import {UserPhotoAnalyze} from "../../common/Functions/UserPhotoAnalyze";
-import {GetToken} from "../../common/Functions/GetToken";
+import {UserPhotoAnalyze} from "../../common/Functions/Endpoints/UserPhotoAnalyze";
+import {GetToken} from "../../common/Functions/Endpoints/GetToken";
 import Icon from "react-native-fontawesome-pro";
-import {button_colors} from "../../common/ColorIndex";
 
 class HomePage extends Component {
   constructor(props) {
@@ -209,7 +208,7 @@ class HomePage extends Component {
                 <View display={selected_category_name !== translate("home.select_category") ? 'flex' : 'none'}>
                   <TouchableOpacity onPress={() => this.CancelCategory()}>
                     <Icon name={'times'} size={25} type={'light'} color={'white'}
-                          containerStyle={{alignSelf: 'center', backgroundColor: 'gray', borderRadius: 2.5}}/>
+                          containerStyle={{alignSelf: 'center', backgroundColor: '#ff0051', borderRadius: 12}}/>
                   </TouchableOpacity>
                 </View>
 

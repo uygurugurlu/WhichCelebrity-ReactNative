@@ -10,7 +10,7 @@ import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../common/Components/SharedImageBottomComponent';
 import {RIGHT_HEADER_ICON,} from '../../common/IconIndex';
-import {DEVICE_HEIGHT, DEVICE_WIDTH, shadow} from '../../common/Constants';
+import {shadow} from '../../common/Constants';
 import * as Animatable from 'react-native-animatable';
 import ResultButtonsRow from "../../common/Components/ResultButtonsRow";
 import AnimatedProgressBar from "../../common/Components/AnimatedProgressBar";
@@ -19,6 +19,7 @@ import ActionSheetComponent2 from "../../common/Components/ActionSheetComponent2
 import {SavePicture} from "../../common/Functions/SavePicture";
 import SwipeableImageModal from "../../common/Components/SwipeableImageModal";
 import ResultLineComponent from "../../common/Components/ResultLineComponent";
+import {GetUserAge} from "../../common/Functions/GetUserAge";
 
 const ANIMATION_DURATION = 1200;
 
@@ -188,6 +189,7 @@ class ResultPage extends Component {
   render() {
     const {userAvatarSource} = this.props;
     const {share_active, data, isVisible, modal_uri, index} = this.state;
+    const hide_age = data.celebrity.birthday === null || data.celebrity.birthday === "" || typeof data.celebrity.birthday === 'undefined';
 
     return (
       <View style={styles.scrollViewStyle}>
@@ -220,9 +222,10 @@ class ResultPage extends Component {
               <ResultLineComponent leftText={translate("result.celebrity") + ": "}
                                    rightText={data.celebrity.name}/>
 
-              <ResultLineComponent leftText={translate("result.birthday") + ": "}
-                                   rightText={data.celebrity.birthday}/>
-
+              <View display={hide_age ? "none" : 'flex'}>
+                <ResultLineComponent leftText={translate("result.birthday") + ": "}
+                                     rightText={GetUserAge(data.celebrity.birthday) + " " + translate("result.years")}/>
+              </View>
               <ResultLineComponent leftText={translate("result.profession") + ": "}
                                    rightText={data.celebrity.profession}/>
 

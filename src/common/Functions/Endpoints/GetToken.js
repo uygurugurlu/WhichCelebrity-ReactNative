@@ -1,6 +1,6 @@
 import axios from "axios";
-import {API_HOST} from '../../config/index';
-import {ResponseHandler} from './ResponseHandler';
+import {API_HOST} from '../../../config';
+import {ResponseHandler} from '../ResponseHandler';
 
 export const GetToken = async (user_agent) => {
   try {

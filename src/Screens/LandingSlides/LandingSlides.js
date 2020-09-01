@@ -16,12 +16,8 @@ class LandingSlides extends Component {
         activeDotColor={'#1490E3'}
         dotColor={'#2a2a2a'}
         loop={false}>
-        <SafeAreaView style={styles.slide1}>
-          <Slide2 />
-        </SafeAreaView>
-
         <View style={styles.slide3}>
-          <AgreementsPage />
+          <AgreementsPage/>
         </View>
       </Swiper>
     );

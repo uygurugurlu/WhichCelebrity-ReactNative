@@ -1,6 +1,6 @@
-import {ResponseHandler} from './ResponseHandler';
-import {AUTH_TOKEN, API_HOST} from '../../config/index';
-import {api} from "./AxiosCacheAdapter";
+import {ResponseHandler} from '../ResponseHandler';
+import {AUTH_TOKEN, API_HOST} from '../../../config';
+import {api} from "../AxiosCacheAdapter";
 
 export const GetCategories = async (user_agent) => {
 
