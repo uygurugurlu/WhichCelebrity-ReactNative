@@ -151,7 +151,7 @@ export const styles = StyleSheet.create({
     width: DEVICE_WIDTH * 0.95,
     paddingVertical: 10,
 
-    borderBottomWidth: 0.5,
+    borderTopWidth: 0.75,
     borderLeftWidth: 1.2,
     borderRightWidth: 1.2,
     borderColor: '#dedddd',

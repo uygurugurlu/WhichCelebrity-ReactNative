@@ -31,7 +31,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
     alignItems: 'center',
     alignSelf: 'center',
-    paddingLeft: Platform.OS === 'ios' ? 15 : 0
+    paddingLeft: Platform.OS === 'ios' ? 15 : 0,
+    borderBottomWidth: Platform.OS === 'ios' ? 0 : 1.2,
+    borderColor: '#dedddd',
   },
   containerStyle: {
     height: DEVICE_HEIGHT * 0.08,
