@@ -44,9 +44,11 @@ class CacheImageComponent extends React.Component {
   }
 
   GetImageSize = (path) => {
+    const {reduce_ratio} = this.props;
+
     Image.getSize(path, (width, height) => {
-      let resize_width = width / DEVICE_WIDTH * 10;
-      let resize_height = height / DEVICE_HEIGHT * 10;
+      let resize_width = width / DEVICE_WIDTH * reduce_ratio;
+      let resize_height = height / DEVICE_HEIGHT * reduce_ratio;
       let max = Math.max(resize_width.toFixed(0), resize_height.toFixed(0));
 
       this.setState({width: width / max, height: height / max});

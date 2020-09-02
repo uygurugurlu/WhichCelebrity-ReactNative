@@ -163,8 +163,7 @@ class HomePage2 extends Component {
           return (
             <TouchableOpacity style={styles.scrollItemContainer} onPress={() => this.CelebritySelected(item)}>
               <View style={[{marginHorizontal: DEVICE_WIDTH * 0.051}, shadow]}>
-                <CacheImageComponent
-                  uri={item.photo}/>
+                <CacheImageComponent uri={item.photo} reduce_ratio={10}/>
               </View>
               <Text style={styles.scrollTextStyle}>{item.name}</Text>
             </TouchableOpacity>

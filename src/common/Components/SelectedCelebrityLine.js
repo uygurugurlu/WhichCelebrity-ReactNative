@@ -4,6 +4,7 @@ import {translate} from "../../I18n";
 import Icon from "react-native-fontawesome-pro";
 import {DEVICE_WIDTH, shadow} from "../Constants";
 import {button_colors} from "../ColorIndex";
+import CacheImageComponent from "./CacheImagecomponent";
 
 class SelectedCelebrityLine extends Component {
   render() {
@@ -11,7 +12,7 @@ class SelectedCelebrityLine extends Component {
 
     return (
       <View style={[styles.containerStyle, shadow]}>
-        <Image source={{uri: uri}} style={[styles.imageStyle]}/>
+        <CacheImageComponent uri={uri} reduce_ratio={5}/>
 
         <View style={styles.middleContainerStyle}>
           <Text style={styles.headerTextStyle}>{translate('home.selected_celebrity')}</Text>
