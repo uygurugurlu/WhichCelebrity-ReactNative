@@ -33,8 +33,7 @@ export const styles = StyleSheet.create({
   },
   labelContainerStyle: {
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
     width: DEVICE_WIDTH * 0.9,
   },
   resultLabelStyle: {

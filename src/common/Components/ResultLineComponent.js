@@ -19,20 +19,17 @@ class ResultLineComponent extends Component {
 const styles = StyleSheet.create({
   containerStyle: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    marginVertical: 2.5
+    marginVertical: 2.5,
   },
   resultLeftTextStyle: {
-    width: DEVICE_WIDTH * 0.5,
     fontSize: 17,
     fontWeight: '600',
     color: 'brown',
-    textAlign: 'right',
-    marginLeft: 7.5
+    textAlign: 'left',
   },
   resultRightTextStyle: {
-    width: DEVICE_WIDTH * 0.5,
     fontSize: 18,
     fontWeight: '600',
     color: '#123456',

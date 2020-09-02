@@ -14,7 +14,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.95,
-   // marginTop: DEVICE_HEIGHT * 0.1,
   },
   turkaiLogoStyle: {
     height: (DEVICE_WIDTH * 0.25) / 3.80962343096,
