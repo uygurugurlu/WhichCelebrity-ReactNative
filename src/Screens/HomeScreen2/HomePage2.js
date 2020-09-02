@@ -164,7 +164,7 @@ class HomePage2 extends Component {
             <TouchableOpacity style={styles.scrollItemContainer} onPress={() => this.CelebritySelected(item)}>
               <View style={[{marginHorizontal: DEVICE_WIDTH * 0.051}, shadow]}>
                 <CacheImageComponent
-                  uri={"https://app-fab-prod.s3.eu-central-1.amazonaws.com/media/celebrities/9248bf25-bb1d-4f7b-a6d7-9f369805e6f9/9248bf25-bb1d-4f7b-a6d7-9f369805e6f9.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA27CYHC3UKWDLRFYI%2F20200901%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20200901T124944Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Signature=1098e3b4075e75e52b3b7b8fe1ffc127969f680f547a3e5c218f864b794cedd9"}/>
+                  uri={item.photo}/>
               </View>
               <Text style={styles.scrollTextStyle}>{item.name}</Text>
             </TouchableOpacity>

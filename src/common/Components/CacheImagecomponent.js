@@ -26,7 +26,7 @@ class CacheImageComponent extends React.Component {
         this.loadFile(path);
       });
 
-    console.log("pathh: ", path);
+    console.log("downloadFile path: ", path);
   };
 
   componentWillMount() {

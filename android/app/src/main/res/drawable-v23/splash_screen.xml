@@ -13,11 +13,11 @@
     </item>
 
     <item
-        android:bottom="29dp"
-        android:top="350dp">
+        android:bottom="25dp"
+        android:top="250dp">
         <bitmap
             android:gravity="center_vertical|center_horizontal"
-            android:src="@mipmap/hikdemis" />
+            android:src="@mipmap/splash_line" />
     </item>
 
 </layer-list>

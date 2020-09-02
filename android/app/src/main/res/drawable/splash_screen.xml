@@ -15,7 +15,7 @@
     <item android:top="175dp">
         <bitmap
             android:gravity="center_horizontal"
-            android:src="@mipmap/hikdemis" />
+            android:src="@mipmap/splash_line" />
     </item>
 
 </layer-list>
