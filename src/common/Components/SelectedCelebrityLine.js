@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, View, StyleSheet, Text, TouchableOpacity} from "react-native";
+import {View, StyleSheet, Text, TouchableOpacity} from "react-native";
 import {translate} from "../../I18n";
 import Icon from "react-native-fontawesome-pro";
 import {DEVICE_WIDTH, shadow} from "../Constants";

@@ -14,14 +14,15 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.95,
+    marginHorizontal: DEVICE_WIDTH * 0.05
   },
   turkaiLogoStyle: {
-    height: (DEVICE_WIDTH * 0.25) / 3.80962343096,
-    width: DEVICE_WIDTH * 0.25,
+    height: (DEVICE_WIDTH * 0.3) / 3.80962343096,
+    width: DEVICE_WIDTH * 0.3,
   },
   storeImageStyle: {
-    height: (DEVICE_WIDTH * 0.25) / 3.80962343096,
-    width: DEVICE_WIDTH * 0.25,
+    height: (DEVICE_WIDTH * 0.3) / 3.80962343096,
+    width: DEVICE_WIDTH * 0.3,
   },
   turkaiTextStyle: {
     fontSize: 14,
@@ -37,11 +38,12 @@ export const styles = StyleSheet.create({
   appLogoImageStyle: {
     height: 55,
     width: 55,
+    borderRadius: 27.5
   },
   appLogoContainerStyles: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 20,
   },
 });

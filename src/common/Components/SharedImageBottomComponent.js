@@ -5,8 +5,7 @@ import {translate} from '../../I18n';
 
 const APP_STORE_ICON = require('../../assets/icons/hikdemis_appstore.png');
 const PLAY_STORE_ICON = require('../../assets/icons/hikdemis_playstore.png');
-const TURK_AI = require('../../assets/icons/turkai_logo.png');
-const HIK_DEMIS = require('../../assets/icons/hikdemis_icon.png');
+const HIK_DEMIS = require('../../assets/icons/banner.png');
 
 class SharedImageBottomComponent extends Component {
   render() {
@@ -15,7 +14,6 @@ class SharedImageBottomComponent extends Component {
     return (
       <View display={shareActive ? 'flex' : 'none'} style={styles.turkaiContainerStyle}>
         <View style={styles.turkaiRowContainerStyle}>
-          <Image source={TURK_AI} style={styles.turkaiLogoStyle}/>
           <Image source={APP_STORE_ICON} style={styles.storeImageStyle}/>
           <Image source={PLAY_STORE_ICON} style={styles.storeImageStyle}/>
         </View>
