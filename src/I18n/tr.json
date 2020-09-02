@@ -27,7 +27,8 @@
     "avatar_warning": "Lütfen fotoğraf eklediğinizden emin olun!",
     "select_category": "Kategori Seç",
     "clear_category": "Kategoriyi kaldır",
-    "cancel": "Vazgeç"
+    "cancel": "Vazgeç",
+    "select_photo": "Fotoğraf seçiniz"
   },
   "result": {
     "share": "Paylaş",
@@ -59,7 +60,7 @@
     "share": "Paylaş"
   },
   "dashboard": {
-    "first_label": "Hangi ünlüye benzediğini öğren.",
-    "second_label": "Bir ünlü seç ve sana ne kadar benzediğini öğren."
+    "first_label": "Hangi ünlüye benzediğini öğren",
+    "second_label": "Bir ünlü seç ve sana ne kadar benzediğini öğren"
   }
 }

@@ -3,6 +3,7 @@ import Avatar, {Sizes} from 'rn-avatar';
 import {GENERIC_USER, CAMERA_ICON2, CAMERA_ICON3, CAMERA_ICON4} from '../IconIndex';
 import {DEVICE_WIDTH, shadow} from '../Constants';
 import {Image, Text, StyleSheet, View, TouchableOpacity} from "react-native";
+import {translate} from "../../I18n";
 
 
 const size = DEVICE_WIDTH / 2.2;
@@ -18,7 +19,7 @@ class AvatarComponent extends Component {
           <Image source={CAMERA_ICON2} style={styles.imageStyle}/>
         </TouchableOpacity>
 
-        <Text style={styles.choosePhotoTextStyle}>Fotoğraf Seçiniz</Text>
+        <Text style={styles.choosePhotoTextStyle}>{translate("home.select_photo")}</Text>
       </View>
       :
       <Avatar rounded

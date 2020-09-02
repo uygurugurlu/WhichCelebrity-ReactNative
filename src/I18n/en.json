@@ -27,7 +27,8 @@
     "avatar_warning": "Please be sure you select an image.!",
     "select_category": "Select Category",
     "clear_category": "Clear Category",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "select_photo": "Select photo"
   },
   "result": {
     "share": "Share",
@@ -59,7 +60,7 @@
     "share": "Share"
   },
   "dashboard": {
-    "first_label": "Find out which celebrity do you look like.",
-    "second_label": "Pick a celebrity and find out how similar you are."
+    "first_label": "Find out which celebrity do you look like",
+    "second_label": "Pick a celebrity and find out how similar you are"
   }
 }
