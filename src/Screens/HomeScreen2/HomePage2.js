@@ -144,6 +144,7 @@ class HomePage2 extends Component {
             data: JSON.parse(res).data
           });
           this.setState({result_loading: false});
+          this.HideProfile();
         } catch (e) {
           console.log('error on response: ', e);
         }
@@ -194,7 +195,7 @@ class HomePage2 extends Component {
   };
 
   HideProfile = () => {
-    this.setState({search_visible: true});
+    this.setState({search_visible: true, celebrity_name: ''});
     console.log("Hide çalıştı");
   }
 

@@ -1,10 +1,6 @@
 {
   "continue": "Continue",
-  "app_name": "To Which Celebrity Do I Look Like",
-  "slide4": {
-    "line1": "Select any photo of anyone with your Camera or from Gallery.",
-    "line2": "And find out right away to which celebrity is this person looks like."
-  },
+  "app_name": "Look Like Celebrity",
   "image_picker": {
     "title": "Select Photo",
     "cancel": "Cancel",

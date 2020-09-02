@@ -1,10 +1,6 @@
 {
   "continue": "Devam Et",
   "app_name": "Hangi Ünlüye Benziyorum",
-  "slide4": {
-    "line1": "Kameranızla veya Galeriden, dilediğiniz birinin fotoğrafını seçin.",
-    "line2": "Ve bu kişinin hangi ünlüye benzediğini hemen öğrenin."
-  },
   "image_picker": {
     "title": "Fotoğraf Seç",
     "cancel": "Vazgeç",
@@ -64,6 +60,6 @@
   },
   "dashboard": {
     "first_label": "Hangi ünlüye benzediğini öğren.",
-    "second_label": "Bir ünlü seç ve sana ne kadar benzediğinizi öğren."
+    "second_label": "Bir ünlü seç ve sana ne kadar benzediğini öğren."
   }
 }

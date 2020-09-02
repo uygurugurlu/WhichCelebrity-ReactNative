@@ -211,7 +211,6 @@ class ResultPage2 extends Component {
               </TouchableOpacity>
             </View>
 
-
             <View style={{alignItems: 'center'}}>
               <Text style={{fontWeight: '500', fontSize: 17}}>{translate("result.similarity_rate")}</Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
