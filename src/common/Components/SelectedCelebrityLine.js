@@ -13,7 +13,7 @@ class SelectedCelebrityLine extends Component {
 
     return (
       <View style={[styles.containerStyle, shadow]}>
-        <CacheImageComponent uri={uri} reduce_ratio={5}/>
+        <CacheImageComponent uri={uri} reduce_ratio={5.5}/>
 
         <View style={styles.middleContainerStyle}>
           <Text style={styles.headerTextStyle}>{translate('home.selected_celebrity')}</Text>

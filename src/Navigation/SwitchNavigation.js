@@ -13,7 +13,6 @@ import DeviceInfo from 'react-native-device-info';
 import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
 import {page_body_background_color} from '../common/ColorIndex';
 import MainPagesStack from './MainStack';
-import {Config} from 'react-native-config';
 import UserAgent from 'react-native-user-agent';
 
 class SwitchNavigation extends React.Component {

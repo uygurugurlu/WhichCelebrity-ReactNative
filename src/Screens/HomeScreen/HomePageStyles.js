@@ -51,10 +51,11 @@ export const styles = StyleSheet.create({
   },
   topLabel2Style: {
     color: '#123456',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '500',
     textAlign: 'left',
     width: DEVICE_WIDTH * 0.7 - 5,
+    height: DEVICE_HEIGHT * 0.071,
   },
   topLabelSelectedStyle: {
     color: '#123456',
@@ -67,6 +68,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.8,
+    height: DEVICE_HEIGHT * 0.075,
     padding: 10,
     borderWidth: 0.5,
     borderColor: '#dedede',
