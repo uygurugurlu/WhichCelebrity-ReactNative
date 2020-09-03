@@ -20,6 +20,7 @@ class SwipeableImageModal extends Component {
         <Modal isVisible={isVisible}
                onSwipeComplete={handleVisibility}
                onBackdropPress={handleVisibility}
+               onRequestClose={handleVisibility}
                backdropOpacity={1}
                swipeDirection={['down', "up", 'left', 'right']}>
 

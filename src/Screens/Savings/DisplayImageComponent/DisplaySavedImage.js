@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Image, Platform, SafeAreaView, ScrollView, View} from 'react-native';
-import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../../common/Constants';
+import {Image, Platform, SafeAreaView, View} from 'react-native';
+import {DEVICE_WIDTH} from '../../../common/Constants';
 import {Button} from 'react-native-elements';
 import {translate} from '../../../I18n';
 import {styles} from './DisplaySavedImageStyles';
@@ -18,6 +18,7 @@ class DisplaySavedImage extends Component {
 
   CloseModal = () => {
     const {closeModal} = this.props;
+    console.log("CloseModal çalıştı.");
     closeModal();
   };
 
@@ -70,8 +71,7 @@ class DisplaySavedImage extends Component {
           <Image
             source={{uri: image.uri}}
             style={
-              Platform.OS === 'ios'
-                ?
+              Platform.OS === 'ios' ?
                 [styles.imageStyle, {height: IOS_HEIGHT}]
                 :
                 [styles.imageStyle, {height: ANDROID_HEIGHT, resizeMode: 'contain'},]
