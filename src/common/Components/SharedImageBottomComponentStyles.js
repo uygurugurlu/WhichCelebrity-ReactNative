@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../Constants';
+import {DEVICE_WIDTH} from '../Constants';
 
 export const styles = StyleSheet.create({
   turkaiContainerStyle: {
@@ -44,6 +44,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 20,
+    marginBottom: 20,
   },
 });

@@ -28,7 +28,7 @@ class ResultPage extends Component {
     super(props);
     this.state = {
       ready_to_share: false,
-      share_active: false,
+      share_active: true,
       progress: new Animated.Value(0),
       data: this.props.route.params.data,
       isVisible: false,
@@ -228,7 +228,6 @@ class ResultPage extends Component {
               </View>
               <ResultLineComponent leftText={translate("result.category") + ": "}
                                    rightText={data.celebrity.profession}/>
-
             </View>
 
             <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>

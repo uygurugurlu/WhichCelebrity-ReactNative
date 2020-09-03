@@ -1,6 +1,6 @@
 {
   "continue": "Devam Et",
-  "app_name": "Hangi Ünlüye Benziyorum",
+  "app_name": "Which Celebrity",
   "image_picker": {
     "title": "Fotoğraf Seç",
     "cancel": "Vazgeç",
@@ -28,7 +28,10 @@
     "select_category": "Kategori Seç ...",
     "clear_category": "Kategoriyi kaldır",
     "cancel": "Vazgeç",
-    "select_photo": "Fotoğraf seçiniz"
+    "select_photo": "Fotoğraf seçiniz",
+    "search_for_all": "Tüm ünlülerde ara",
+    "search_male_celebrities": "Erkek ünlülerde ara",
+    "search_female_celebrities": "Kadın ünlülerde ara"
   },
   "result": {
     "share": "Paylaş",

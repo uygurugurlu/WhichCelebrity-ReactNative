@@ -28,7 +28,7 @@ class ResultPage2 extends Component {
     super(props);
     this.state = {
       ready_to_share: false,
-      share_active: false,
+      share_active: true,
       progress: new Animated.Value(0),
       celebrity_photo: this.props.route.params.celebrity_photo,
       celebrity_name: this.props.route.params.celebrity_name,

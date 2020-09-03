@@ -1,6 +1,6 @@
 {
   "continue": "Continue",
-  "app_name": "Look Like Celebrity",
+  "app_name": "Which Celebrity",
   "image_picker": {
     "title": "Select Photo",
     "cancel": "Cancel",
@@ -28,7 +28,10 @@
     "select_category": "Select Category ...",
     "clear_category": "Clear Category",
     "cancel": "Cancel",
-    "select_photo": "Select photo"
+    "select_photo": "Select photo",
+    "search_for_all": "Search in all genders",
+    "search_male_celebrities": "Search in male celebrities",
+    "search_female_celebrities": "Search in female celebrities"
   },
   "result": {
     "share": "Share",

@@ -27,14 +27,13 @@ class SearchBarComponent extends Component {
 
 const styles = StyleSheet.create({
   inputContainerStyle: {
-    height: DEVICE_HEIGHT * 0.06,
+    height: DEVICE_HEIGHT * 0.0625,
     backgroundColor: '#fafafa',
     alignItems: 'center',
     alignSelf: 'center',
     paddingLeft: Platform.OS === 'ios' ? 15 : 0,
     borderBottomWidth: Platform.OS === 'ios' ? 0 : 1.2,
     borderColor: '#dedddd',
-
   },
   containerStyle: {
     height: DEVICE_HEIGHT * 0.075,

@@ -5,8 +5,8 @@ import {
   page_body_background_color,
 } from '../../common/ColorIndex';
 
-const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.95;
-const USER_ICON_SIZE = DEVICE_WIDTH * 0.45;
+const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.9;
+const USER_ICON_SIZE = DEVICE_WIDTH * 0.4;
 
 export const styles = StyleSheet.create({
   mainContainer: {

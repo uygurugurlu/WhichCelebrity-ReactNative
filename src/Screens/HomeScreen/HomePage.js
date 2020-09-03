@@ -23,6 +23,7 @@ import {DEVICE_HEIGHT, DOWN_ICON, FORWARD_ICON} from "../../common/Constants";
 import {UserPhotoAnalyze} from "../../common/Functions/Endpoints/UserPhotoAnalyze";
 import {GetToken} from "../../common/Functions/Endpoints/GetToken";
 import Icon from "react-native-fontawesome-pro";
+import GenderSelection from "../../common/Components/GenderSelection";
 
 class HomePage extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class HomePage extends Component {
       setLoaded: false,
       result_loading: false,
       categories_visibility: false,
+      genders_visibility: false,
       categories: [],
       selected_category_name: "",
       selected_category_id: -1,
@@ -175,6 +177,10 @@ class HomePage extends Component {
     this.setState({categories_visibility: !this.state.categories_visibility});
   }
 
+  HandleGendersVisibility = () => {
+    this.setState({genders_visibility: !this.state.genders_visibility});
+  }
+
   CancelCategory = () => {
     this.setState({
       categories_visibility: false,
@@ -206,9 +212,13 @@ class HomePage extends Component {
     this.FilterItems(value);
   };
 
+  SelectGender = () => {
+    this.HandleGendersVisibility();
+  };
+
   render() {
     const {userAvatarSource} = this.props;
-    const {categories_visibility, scroll_items, selected_category_name} = this.state;
+    const {categories_visibility, scroll_items, selected_category_name, genders_visibility} = this.state;
 
     return (
       <View style={styles.backgroundImageStyle}>
@@ -229,7 +239,7 @@ class HomePage extends Component {
                 </View>
 
                 <View display={selected_category_name !== "" ? 'flex' : 'none'} style={{marginRight: 5}}>
-                  <TouchableOpacity onPress={() => this.CancelCategory()} >
+                  <TouchableOpacity onPress={() => this.CancelCategory()}>
                     <Icon name={'times'} size={25} type={'light'} color={'white'}
                           containerStyle={styles.cancelIconContainerStyle}/>
                   </TouchableOpacity>
@@ -238,6 +248,11 @@ class HomePage extends Component {
               </TouchableOpacity>
             </View>
 
+            <GenderSelection SelectGender={() => this.SelectGender()}
+                             visibility={genders_visibility}
+                             categoriesVisibility={categories_visibility}
+                             handleVisibilitty={() => this.HandleGendersVisibility()}/>
+
             <View display={categories_visibility ? 'flex' : 'none'} style={{alignItems: 'center'}}>
               <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.55}}>
                 <View style={styles.scrollViewStyle}>{scroll_items}</View>
@@ -245,12 +260,13 @@ class HomePage extends Component {
             </View>
           </View>
 
-          <View display={!categories_visibility ? 'flex' : 'none'} style={styles.iconsMainContainerStyle}>
+          <View display={!categories_visibility && !genders_visibility ? 'flex' : 'none'}
+                style={styles.iconsMainContainerStyle}>
             <AvatarComponent ImageSource={userAvatarSource} SelectAvatar={() => this.SelectAvatar()}
                              showEditButton={true}/>
           </View>
 
-          <View display={!categories_visibility ? 'flex' : 'none'}>
+          <View display={!categories_visibility && !genders_visibility ? 'flex' : 'none'}>
             <Button title={translate('home.get_result')}
                     buttonStyle={styles.resultButtonStyle}
                     titleStyle={{fontSize: 18, fontWeight: '600'}}
