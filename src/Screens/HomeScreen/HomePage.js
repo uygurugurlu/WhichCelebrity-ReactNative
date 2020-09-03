@@ -142,11 +142,8 @@ class HomePage extends Component {
         try {
           interstitial.show();
           this.props.navigation.navigate('ResultPage', {data: JSON.parse(res).data});
-          this.setState({
-            result_loading: false,
-            selected_category_id: -1,
-            selected_category_name: translate("home.select_category")
-          });
+          this.setState({result_loading: false});
+          this.CancelCategory();
         } catch (e) {
           console.log('error on response: ', e);
         }

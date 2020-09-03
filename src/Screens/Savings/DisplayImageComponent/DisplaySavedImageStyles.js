@@ -9,13 +9,14 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#dddddd',
   },
   imageStyle: {
     marginTop: DEVICE_HEIGHT * 0.05,
-    marginHorizontal: DEVICE_WIDTH * 0.02,
+    alignSelf: 'center',
+    width: DEVICE_WIDTH * 0.75,
   },
   cancelButtonStyle: {
     height: buttons_height,

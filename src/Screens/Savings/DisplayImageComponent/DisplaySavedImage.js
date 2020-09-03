@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {Image, Platform, SafeAreaView, ScrollView, View} from 'react-native';
-import {DEVICE_WIDTH} from '../../../common/Constants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../../common/Constants';
 import {Button} from 'react-native-elements';
 import {translate} from '../../../I18n';
 import {styles} from './DisplaySavedImageStyles';
 import Share from 'react-native-share';
 import {connect} from 'react-redux';
+import ImageZoom from "react-native-image-pan-zoom";
 
 class DisplaySavedImage extends Component {
   constructor(props) {
@@ -30,19 +31,19 @@ class DisplaySavedImage extends Component {
     const shareOptions =
       Platform.OS === 'ios'
         ? {
-            title: 'Hık Demiş',
-            url:
-              'assets-library://asset/asset.JPG?id=' + result[1] + '&ext=JPG',
-            subject: 'Hık Demiş', // for email,
-            failOnCancel: false,
-          }
+          title: 'Hık Demiş',
+          url:
+            'assets-library://asset/asset.JPG?id=' + result[1] + '&ext=JPG',
+          subject: 'Hık Demiş', // for email,
+          failOnCancel: false,
+        }
         : {
-            title: 'Hık Demiş',
-            url: image.uri,
-            message: 'https://appfabhikdemis.page.link/H3Ed',
-            subject: 'Hık Demiş', // for email,
-            failOnCancel: false,
-          };
+          title: 'Hık Demiş',
+          url: image.uri,
+          message: 'https://appfabhikdemis.page.link/H3Ed',
+          subject: 'Hık Demiş', // for email,
+          failOnCancel: false,
+        };
 
     await Share.open(shareOptions)
       .then(async (res) => {
@@ -57,33 +58,26 @@ class DisplaySavedImage extends Component {
 
   render() {
     const {image} = this.props;
+    const IOS_HEIGHT = DEVICE_WIDTH * 0.75 * (image.height / image.width);
+    const ANDROID_HEIGHT = DEVICE_WIDTH * 0.75 * 1.8;
 
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ImageZoom cropWidth={DEVICE_WIDTH * 0.9}
+                   imageWidth={DEVICE_WIDTH * 0.9}
+                   cropHeight={Platform.OS === 'ios' ? IOS_HEIGHT : ANDROID_HEIGHT}
+                   imageHeight={Platform.OS === 'ios' ? IOS_HEIGHT : ANDROID_HEIGHT}>
           <Image
             source={{uri: image.uri}}
             style={
               Platform.OS === 'ios'
-                ? [
-                    styles.imageStyle,
-                    {
-                      width: DEVICE_WIDTH * 0.85,
-                      height:
-                        DEVICE_WIDTH * 0.85 * (image.height / image.width),
-                    },
-                  ]
-                : [
-                    styles.imageStyle,
-                    {
-                      width: DEVICE_WIDTH * 0.85,
-                      height: DEVICE_WIDTH * 0.85 * 1.8,
-                      resizeMode: 'contain',
-                    },
-                  ]
+                ?
+                [styles.imageStyle, {height: IOS_HEIGHT}]
+                :
+                [styles.imageStyle, {height: ANDROID_HEIGHT, resizeMode: 'contain'},]
             }
           />
-        </ScrollView>
+        </ImageZoom>
 
         <View style={styles.buttonContainerStyle}>
           <Button

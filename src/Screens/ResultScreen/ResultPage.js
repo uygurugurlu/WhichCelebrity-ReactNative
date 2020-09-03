@@ -226,7 +226,7 @@ class ResultPage extends Component {
                 <ResultLineComponent leftText={translate("result.birthday") + ": "}
                                      rightText={data.celebrity.birthday + ", " + GetUserAge(data.celebrity.birthday) + " " + translate("result.years")}/>
               </View>
-              <ResultLineComponent leftText={translate("result.profession") + ": "}
+              <ResultLineComponent leftText={translate("result.category") + ": "}
                                    rightText={data.celebrity.profession}/>
 
             </View>
