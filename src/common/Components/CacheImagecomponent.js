@@ -14,6 +14,19 @@ class CacheImageComponent extends React.Component {
     path: ""
   };
 
+  componentWillMount() {
+    const {uri} = this.props;
+    this.CheckIfExists(uri);
+  }
+
+  shouldComponentUpdate = async (nextProps, nextState) => {
+    const {uri} = this.props;
+
+    if (nextProps.uri !== uri) {
+      this.CheckIfExists(nextProps.uri);
+    }
+  };
+
   loadFile = (path) => {
     console.log("loadFile");
     this.setState({source: {uri: path}});
@@ -29,8 +42,7 @@ class CacheImageComponent extends React.Component {
     console.log("downloadFile path: ", path);
   };
 
-  componentWillMount() {
-    const {uri} = this.props;
+  CheckIfExists = (uri) => {
     const name = shorthash.unique(uri);
     const extension = (Platform.OS === 'android') ? 'file://' : '';
     const path = `${extension}${RNFS.CachesDirectoryPath}/${name}.png`;

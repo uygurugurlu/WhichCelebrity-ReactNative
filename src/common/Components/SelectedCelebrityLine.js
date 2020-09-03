@@ -9,6 +9,7 @@ import CacheImageComponent from "./CacheImagecomponent";
 class SelectedCelebrityLine extends Component {
   render() {
     const {uri, name, handleSelect} = this.props;
+    console.log("photo uri: ", uri);
 
     return (
       <View style={[styles.containerStyle, shadow]}>
