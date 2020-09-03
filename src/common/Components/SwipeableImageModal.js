@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, SafeAreaView, TouchableOpacity} from "react-native";
+import {Image, StyleSheet, SafeAreaView, TouchableOpacity, View} from "react-native";
 import Modal from "react-native-modal";
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from "../Constants";
 import Icon from "react-native-fontawesome-pro";
-import {button_colors} from "../ColorIndex";
+import ImageZoom from 'react-native-image-pan-zoom';
 
 class SwipeableImageModal extends Component {
   constructor(props) {
@@ -22,7 +22,13 @@ class SwipeableImageModal extends Component {
                onBackdropPress={handleVisibility}
                backdropOpacity={1}
                swipeDirection={['down', "up", 'left', 'right']}>
-          <Image source={index === 0 ? uri : {uri: uri}} style={[styles.imageStyle]}/>
+
+          <ImageZoom cropWidth={DEVICE_WIDTH * 0.9}
+                     imageWidth={DEVICE_WIDTH * 0.9}
+                     cropHeight={DEVICE_HEIGHT * 0.6}
+                     imageHeight={DEVICE_HEIGHT * 0.6}>
+            <Image source={index === 0 ? uri : {uri: uri}} style={[styles.imageStyle]}/>
+          </ImageZoom>
 
           <Icon name={'times'}
                 size={50}
