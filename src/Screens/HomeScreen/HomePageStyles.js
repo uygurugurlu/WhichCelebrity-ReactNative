@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     textAlign: 'left',
-    width: DEVICE_WIDTH * 0.7,
+    width: DEVICE_WIDTH * 0.7 - 5,
   },
   topLabelSelectedStyle: {
     color: '#123456',
@@ -177,7 +177,7 @@ export const styles = StyleSheet.create({
   cancelIconContainerStyle: {
     alignSelf: 'center',
     backgroundColor: 'gray',
-    borderRadius: 12.5
+    borderRadius: 12.5,
   }
 
 });

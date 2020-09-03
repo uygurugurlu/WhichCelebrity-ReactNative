@@ -228,8 +228,8 @@ class HomePage extends Component {
                   <Image source={categories_visibility ? DOWN_ICON : FORWARD_ICON} style={{height: 25, width: 25}}/>
                 </View>
 
-                <View display={selected_category_name !== "" ? 'flex' : 'none'}>
-                  <TouchableOpacity onPress={() => this.CancelCategory()}>
+                <View display={selected_category_name !== "" ? 'flex' : 'none'} style={{marginRight: 5}}>
+                  <TouchableOpacity onPress={() => this.CancelCategory()} >
                     <Icon name={'times'} size={25} type={'light'} color={'white'}
                           containerStyle={styles.cancelIconContainerStyle}/>
                   </TouchableOpacity>
