@@ -3,7 +3,6 @@ import {SafeAreaView, Text, TouchableOpacity, Image, View, StatusBar} from 'reac
 import {DEVICE_HEIGHT, DEVICE_WIDTH, shadow, STAR_ICON} from '../../common/Constants';
 import {styles} from './DashboardStyles';
 import {translate} from '../../I18n';
-import {Provider} from "react-redux";
 
 class Dashboard extends Component {
   constructor(props) {
