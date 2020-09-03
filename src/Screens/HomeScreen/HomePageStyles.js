@@ -53,7 +53,8 @@ export const styles = StyleSheet.create({
     color: '#123456',
     fontSize: 18,
     fontWeight: '500',
-    textAlign: 'center',
+    textAlign: 'left',
+    width: DEVICE_WIDTH * 0.7,
   },
   topLabelSelectedStyle: {
     color: '#123456',
@@ -173,4 +174,10 @@ export const styles = StyleSheet.create({
     borderColor: '#dedede',
     padding: 10,
   },
+  cancelIconContainerStyle: {
+    alignSelf: 'center',
+    backgroundColor: 'gray',
+    borderRadius: 12.5
+  }
+
 });

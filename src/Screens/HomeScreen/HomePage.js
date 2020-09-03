@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView,
+  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView, TextInput,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
@@ -34,7 +34,7 @@ class HomePage extends Component {
       result_loading: false,
       categories_visibility: false,
       categories: [],
-      selected_category_name: translate("home.select_category"),
+      selected_category_name: "",
       selected_category_id: -1,
       scroll_items: [],
       celebrity: {}
@@ -181,10 +181,33 @@ class HomePage extends Component {
   CancelCategory = () => {
     this.setState({
       categories_visibility: false,
-      selected_category_name: translate("home.select_category"),
+      selected_category_name: "",
       selected_category_id: -1
     });
   }
+
+  FilterItems = (filter_line) => {
+    const {categories} = this.state;
+
+    const filtered_categories = categories.filter((item) => {
+      return item.name.includes(filter_line);
+    });
+
+    this.fillScroll(filtered_categories);
+  };
+
+  onChangeText = (key, value) => {
+    this.setState({
+      [key]: value,
+    });
+
+    if (value === "")
+      this.setState({categories_visibility: false});
+    else
+      this.setState({categories_visibility: true});
+
+    this.FilterItems(value);
+  };
 
   render() {
     const {userAvatarSource} = this.props;
@@ -197,20 +220,21 @@ class HomePage extends Component {
 
             <View display={'flex'} style={styles.topLabel2ContainerStyle}>
               <TouchableOpacity style={styles.categoryContainerStyle} onPress={() => this.HandleCategoriesVisibility()}>
-                <Text style={styles.topLabel2Style}>{selected_category_name}</Text>
+                <TextInput style={styles.topLabel2Style}
+                           onChangeText={(value) => this.onChangeText('selected_category_name', value)}
+                           autoFocus={false}
+                           placeholder={translate("home.select_category")}
+                           placeholderTextColor={'#959595'}
+                           value={selected_category_name}/>
 
-                <View display={selected_category_name === translate("home.select_category") ? 'flex' : 'none'}>
+                <View display={selected_category_name === "" ? 'flex' : 'none'}>
                   <Image source={categories_visibility ? DOWN_ICON : FORWARD_ICON} style={{height: 25, width: 25}}/>
                 </View>
 
-                <View display={selected_category_name !== translate("home.select_category") ? 'flex' : 'none'}>
+                <View display={selected_category_name !== "" ? 'flex' : 'none'}>
                   <TouchableOpacity onPress={() => this.CancelCategory()}>
                     <Icon name={'times'} size={25} type={'light'} color={'white'}
-                          containerStyle={{
-                            alignSelf: 'center',
-                            backgroundColor: 'gray',
-                            borderRadius: 12.5
-                          }}/>
+                          containerStyle={styles.cancelIconContainerStyle}/>
                   </TouchableOpacity>
                 </View>
 
