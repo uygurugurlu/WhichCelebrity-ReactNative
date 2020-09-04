@@ -56,7 +56,7 @@ class HomePage extends Component {
     });
 
     this.props.navigation.setOptions({
-      title: translate('app_name'),
+      title: translate('header_label'),
       headerRight: () => (
         <TouchableOpacity
           onPress={() =>

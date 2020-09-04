@@ -1,6 +1,7 @@
 {
   "continue": "Continue",
   "app_name": "Which Celebrity",
+  "header_label": "Which Celebrity You Are",
   "image_picker": {
     "title": "Select Photo",
     "cancel": "Cancel",
@@ -17,7 +18,6 @@
     "validity_alert": "Please make sure you select an image."
   },
   "home": {
-    "main_header": "To Which Celebrity Do I Look",
     "get_result": "Get Result",
     "validity_alert": "Please select an image for mother, father and the child.",
     "selected_celebrity": "The celebrity you choose",

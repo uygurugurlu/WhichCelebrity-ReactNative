@@ -38,6 +38,7 @@ export default function MainPagesStack() {
         component={HomePage}
         options={({navigation, route}) => ({
           headerShown: true,
+          title: translate('header_label'),
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor: header_background_color,
@@ -53,6 +54,7 @@ export default function MainPagesStack() {
         component={HomePage2}
         options={({navigation, route}) => ({
           headerShown: true,
+          title: translate('header_label'),
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor: header_background_color,
@@ -68,7 +70,7 @@ export default function MainPagesStack() {
         component={ResultPage}
         options={({navigation, route}) => ({
           headerShown: true,
-          title: translate('app_name'),
+          title: translate('header_label'),
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor: header_background_color,
@@ -84,7 +86,7 @@ export default function MainPagesStack() {
         component={ResultPage2}
         options={({navigation, route}) => ({
           headerShown: true,
-          title: translate('app_name'),
+          title: translate('header_label'),
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor: header_background_color,

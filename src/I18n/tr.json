@@ -1,6 +1,7 @@
 {
   "continue": "Devam Et",
   "app_name": "Which Celebrity",
+  "header_label": "Hangi Ünlüye Benziyorsun",
   "image_picker": {
     "title": "Fotoğraf Seç",
     "cancel": "Vazgeç",
@@ -17,7 +18,6 @@
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
   "home": {
-    "main_header": "Hangi ünlüye benzediğini hemen öğren?",
     "get_result": "Sonucu Gör",
     "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz.",
     "selected_celebrity": "Seçtiğiniz ünlü",

@@ -47,7 +47,7 @@ class SavingsPage extends Component {
 
   componentWillMount() {
     this.props.navigation.setOptions({
-      headerTitle: translate('app_name'),
+      headerTitle: translate('header_label'),
       headerRight: () => (
         <Icon
           name={'trash-alt'}
