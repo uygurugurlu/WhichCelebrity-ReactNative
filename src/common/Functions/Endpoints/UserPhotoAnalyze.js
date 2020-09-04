@@ -3,25 +3,10 @@ import {AUTH_TOKEN, API_HOST} from '../../../config';
 import RNFetchBlob from "rn-fetch-blob";
 
 export const UserPhotoAnalyze = async (user_agent, image_data, category, locale, gender) => {
-
-  console.log("UserPhotoAnalyze AUTH_TOKEN: ", AUTH_TOKEN);
-  console.log("UserPhotoAnalyze API_HOST: ", API_HOST);
   console.log("category: ", category);
   console.log("gender: ", gender);
 
-  let body = category === -1 ?
-    [
-      // element with property `filename` will be transformed into `file` in form data
-      {name: 'image', filename: 'photo.png', type: 'image/jpg/jpeg/png', data: image_data},
-      {name: 'locale', data: locale}
-    ]
-    :
-    [
-      // element with property `filename` will be transformed into `file` in form data
-      {name: 'image', filename: 'photo.png', type: 'image/jpg/jpeg/png', data: image_data},
-      {name: "category", data: category},
-      {name: 'locale', data: locale}
-    ];
+  let body = [];
 
   if (category === -1) {
     if (gender === null) {
@@ -38,7 +23,6 @@ export const UserPhotoAnalyze = async (user_agent, image_data, category, locale,
         {name: 'gender', data: gender}
       ]
     }
-
   } else {
     if (gender === null) {
       body = [
@@ -54,7 +38,6 @@ export const UserPhotoAnalyze = async (user_agent, image_data, category, locale,
         {name: "category", data: category},
         {name: 'locale', data: locale},
         {name: 'gender', data: gender}
-
       ];
     }
 

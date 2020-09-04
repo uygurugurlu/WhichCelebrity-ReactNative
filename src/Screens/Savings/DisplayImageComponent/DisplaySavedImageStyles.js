@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#dddddd',
   },
   imageStyle: {
-    marginTop: DEVICE_HEIGHT * 0.05,
     alignSelf: 'center',
     width: DEVICE_WIDTH * 0.75,
   },

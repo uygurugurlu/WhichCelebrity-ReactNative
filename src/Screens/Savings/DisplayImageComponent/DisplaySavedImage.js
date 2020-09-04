@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Image, Platform, SafeAreaView, View} from 'react-native';
-import {DEVICE_WIDTH} from '../../../common/Constants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../../common/Constants';
 import {Button} from 'react-native-elements';
 import {translate} from '../../../I18n';
 import {styles} from './DisplaySavedImageStyles';
@@ -66,33 +66,29 @@ class DisplaySavedImage extends Component {
       <SafeAreaView style={styles.container}>
         <ImageZoom cropWidth={DEVICE_WIDTH * 0.9}
                    imageWidth={DEVICE_WIDTH * 0.9}
+                   style={{marginTop: DEVICE_HEIGHT * 0.05}}
                    cropHeight={Platform.OS === 'ios' ? IOS_HEIGHT : ANDROID_HEIGHT}
                    imageHeight={Platform.OS === 'ios' ? IOS_HEIGHT : ANDROID_HEIGHT}>
-          <Image
-            source={{uri: image.uri}}
-            style={
-              Platform.OS === 'ios' ?
-                [styles.imageStyle, {height: IOS_HEIGHT}]
-                :
-                [styles.imageStyle, {height: ANDROID_HEIGHT, resizeMode: 'contain'},]
-            }
+          <Image source={{uri: image.uri}}
+                 style={
+                   Platform.OS === 'ios' ?
+                     [styles.imageStyle, {height: IOS_HEIGHT}]
+                     :
+                     [styles.imageStyle, {height: ANDROID_HEIGHT, resizeMode: 'contain'},]
+                 }
           />
         </ImageZoom>
 
         <View style={styles.buttonContainerStyle}>
-          <Button
-            title={translate('display.cancel')}
-            buttonStyle={styles.cancelButtonStyle}
-            titleStyle={styles.cancelButtonTitleStyle}
-            onPress={() => this.CloseModal()}
-          />
+          <Button title={translate('display.cancel')}
+                  buttonStyle={styles.cancelButtonStyle}
+                  titleStyle={styles.cancelButtonTitleStyle}
+                  onPress={() => this.CloseModal()}/>
 
-          <Button
-            title={translate('display.share')}
-            buttonStyle={styles.shareButtonStyle}
-            titleStyle={styles.shareButtonTitleStyle}
-            onPress={() => this.Share()}
-          />
+          <Button title={translate('display.share')}
+                  buttonStyle={styles.shareButtonStyle}
+                  titleStyle={styles.shareButtonTitleStyle}
+                  onPress={() => this.Share()}/>
         </View>
       </SafeAreaView>
     );
