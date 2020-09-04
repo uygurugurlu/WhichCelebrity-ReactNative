@@ -54,8 +54,9 @@
   "starter": {
     "label1": "Yapay zeka algoritmaları ile hangi ünlüye benzediğinizi öğrenin.",
     "label2": "Benzerlik yapay zeka algoritması TURK AI tarafından sağlanmaktadır.",
-    "kvkk_text": "Kişisel Verilerin Korunması Aydınlatma Metni'ni okudum, kabul ediyorum.",
-    "privacy_policy_text": "Gizlilik Politikası Metnini okudum, kabul ediyorum.",
+    "kvkk_text": "Kişisel Verilerin Korunması Aydınlatma Metni",
+    "privacy_policy_text": "Gizlilik Sözleşmesi Metni",
+    "read_and_accept": " 'ni okudum, kabul ediyorum.",
     "web_view_alert_text": "Kişisel Verilerin Korunması Aydınlatma Metni'ni ve Gizlilik Politikamızı okuyup, kabul ettiğinizden emin olunuz."
   },
   "display": {

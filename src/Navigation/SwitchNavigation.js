@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {setI18nConfig} from '../I18n';
-import {first_time_login, get_user_agent} from '../Store/Actions';
+import {first_time_login, get_user_agent, set_language} from '../Store/Actions';
 import StarterPagesStack from './Starter/StarterPagesStack';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../common/Constants';
 import axios from 'axios';
@@ -88,7 +88,8 @@ class SwitchNavigation extends React.Component {
       console.log("couldn't get value from ASYNC STORAGE");
     }
 
-    setI18nConfig(); // set initial config
+    setI18nConfig((language) => this.props.set_language(language)); // set initial config
+
   };
 
   shouldComponentUpdate = async (nextProps, nextState) => {
@@ -154,7 +155,7 @@ class SwitchNavigation extends React.Component {
     } else {
       return (
         <NavigationContainer>
-          {is_the_login_first_time ? <StarterPagesStack/> : <MainPagesStack/>}
+          {!is_the_login_first_time ? <StarterPagesStack/> : <MainPagesStack/>}
         </NavigationContainer>
       );
     }
@@ -184,6 +185,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     first_time_login: (is_first) => dispatch(first_time_login(is_first)),
     get_user_agent: (agent) => dispatch(get_user_agent(agent)),
+    set_language: (language) => dispatch(set_language(language)),
   };
 };
 

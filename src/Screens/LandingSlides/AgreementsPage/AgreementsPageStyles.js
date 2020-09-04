@@ -39,18 +39,14 @@ export const styles = StyleSheet.create({
   },
   kvkkRowContainerStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#fff',
-    width: DEVICE_WIDTH * 0.87,
+    marginVertical: 5
   },
   kvkkColumnContainerStyle: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    width: DEVICE_WIDTH * 0.7,
     backgroundColor: '#fff',
     marginVertical: 10,
-    marginLeft: 5
   },
   kvkkTextStyle: {
     fontSize: 15,
@@ -63,8 +59,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageStyle: {
-    height: DEVICE_WIDTH * 0.35,
-    width: DEVICE_WIDTH * 0.35 * 1.18241042345,
+    height: DEVICE_WIDTH * 0.4,
+    width: DEVICE_WIDTH * 0.4 * 1.18241042345,
   },
   dotImageStyle: {
     height: 20,
@@ -73,27 +69,33 @@ export const styles = StyleSheet.create({
     marginTop: 5,
   },
   checkBoxStyle: {
-    height: 22,
-    width: 22,
-    marginHorizontal: 5
+    height: 25,
+    width: 25,
+    marginHorizontal: 10
   },
   titleTextStyle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: '600',
     alignSelf: 'center',
+    color: '#1b1b1b'
   },
   textStyle: {
-    fontSize: 17,
-    fontWeight: '500',
-    color: 'rgba(0,0,0,0.85)',
+    fontSize: 19,
+    fontWeight: '600',
+    color: 'rgba(0,0,0,0.60)',
     marginLeft: DEVICE_WIDTH * 0.05,
-    width: DEVICE_WIDTH * 0.9,
-    marginVertical: DEVICE_HEIGHT * 0.05
+    width: DEVICE_WIDTH * 0.85,
+    marginVertical: DEVICE_HEIGHT * 0.025
   },
   linkTextStyle: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '500',
     color: 'rgba(5,76,147,0.87)',
+  },
+  acceptTextStyle: {
+    fontSize: 13,
+    fontWeight: '500',
+    width: DEVICE_WIDTH * 0.75,
   },
   getPermissionButtonStyle: {
     width: DEVICE_WIDTH * 0.9,

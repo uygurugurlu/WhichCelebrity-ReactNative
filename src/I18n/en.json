@@ -54,8 +54,9 @@
   "starter": {
     "label1": "Find out which celebrity you look like with artificial intelligence algorithms.",
     "label2": "The similarity is provided by the artificial intelligence algorithm powered by TURK AI.",
-    "kvkk_text": "I have read and accept the Protection of Personal Data Disclosure Text.",
-    "privacy_policy_text": "I have read and accept the Privacy Policy Text.",
+    "kvkk_text": "Protection of Personal Data Disclosure Text.",
+    "privacy_policy_text": "Privacy Policy Text.",
+    "read_and_accept": "I have read and accept the ",
     "web_view_alert_text": "Be sure to read and accept the Protection of Personal Data Disclosure Text and the Privacy Policy Text."
   },
   "display": {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {SafeAreaView, Text, TouchableOpacity, Image, View, StatusBar} from 'react-native';
+import {SafeAreaView, Text, TouchableOpacity, Image, View} from 'react-native';
 import {DEVICE_HEIGHT, DEVICE_WIDTH, shadow, STAR_ICON} from '../../common/Constants';
 import {styles} from './DashboardStyles';
 import {translate} from '../../I18n';
