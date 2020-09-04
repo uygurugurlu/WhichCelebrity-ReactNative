@@ -39,10 +39,11 @@ export const styles = StyleSheet.create({
   },
   kvkkRowContainerStyle: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#fff',
-    marginVertical: 5
+    marginVertical: 5,
+    width: DEVICE_WIDTH * 0.85
   },
   kvkkColumnContainerStyle: {
     backgroundColor: '#fff',
@@ -82,6 +83,7 @@ export const styles = StyleSheet.create({
   textStyle: {
     fontSize: 19,
     fontWeight: '600',
+    textAlign: 'center',
     color: 'rgba(0,0,0,0.60)',
     marginLeft: DEVICE_WIDTH * 0.05,
     width: DEVICE_WIDTH * 0.85,
@@ -96,6 +98,7 @@ export const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '500',
     width: DEVICE_WIDTH * 0.75,
+    color: "#000"
   },
   getPermissionButtonStyle: {
     width: DEVICE_WIDTH * 0.9,

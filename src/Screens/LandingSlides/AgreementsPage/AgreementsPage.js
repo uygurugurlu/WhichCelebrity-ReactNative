@@ -88,27 +88,35 @@ class AgreementsPage extends Component {
             <Text style={styles.textStyle}>{translate('starter.label1')}</Text>
           </View>
 
-          <View style={{flexDirection: 'column', width: DEVICE_WIDTH * 0.85}}>
+          <View style={{flexDirection: 'column', width: DEVICE_WIDTH * 0.85, alignSelf: 'center'}}>
+
             <View style={styles.kvkkRowContainerStyle}>
-              <Text style={styles.acceptTextStyle}>
-                {languageTag === 'tr' ? translate('starter.kvkk_text') : translate('starter.read_and_accept')}
-                <Text style={styles.linkTextStyle}
-                      onPress={() => this.SeeWebViewPage(0)}>
-                  {languageTag === 'tr' ? translate('starter.read_and_accept') : translate('starter.kvkk_text')}
+              <View style={{width: DEVICE_WIDTH * 0.77}}>
+                <Text style={languageTag === 'tr' ? styles.linkTextStyle : styles.acceptTextStyle}
+                      onPress={() => this.SeeWebViewPage(1)}>
+                  {languageTag === 'tr' ? translate('starter.kvkk_text') : translate('starter.read_and_accept')}
+                  <Text style={languageTag === 'tr' ? styles.acceptTextStyle : styles.linkTextStyle}
+                        onPress={() => this.SeeWebViewPage(0)}>
+                    {languageTag === 'tr' ? translate('starter.read_and_accept') : translate('starter.kvkk_text')}
+                  </Text>
                 </Text>
-              </Text>
+              </View>
 
               <CheckBox disabled={false} style={styles.checkBoxStyle} value={checked}
                         onValueChange={() => this.Check()}/>
             </View>
 
             <View style={styles.kvkkRowContainerStyle}>
-              <Text style={styles.acceptTextStyle}>
-                {languageTag === 'tr' ? translate('starter.privacy_policy_text') : translate('starter.read_and_accept')}
-                <Text style={styles.linkTextStyle} onPress={() => this.SeeWebViewPage(1)}>
-                  {languageTag === 'tr' ? translate('starter.read_and_accept') : translate('starter.privacy_policy_text')}
+              <View style={{width: DEVICE_WIDTH * 0.77}}>
+                <Text style={languageTag === 'tr' ? styles.linkTextStyle : styles.acceptTextStyle}
+                      onPress={() => this.SeeWebViewPage(1)}>
+                  {languageTag === 'tr' ? translate('starter.privacy_policy_text') : translate('starter.read_and_accept')}
+                  <Text style={languageTag === 'tr' ? styles.acceptTextStyle : styles.linkTextStyle}
+                        onPress={() => this.SeeWebViewPage(1)}>
+                    {languageTag === 'tr' ? translate('starter.read_and_accept') : translate('starter.privacy_policy_text')}
+                  </Text>
                 </Text>
-              </Text>
+              </View>
 
               <CheckBox disabled={false} style={styles.checkBoxStyle} value={checked2}
                         onValueChange={() => this.Check2()}/>

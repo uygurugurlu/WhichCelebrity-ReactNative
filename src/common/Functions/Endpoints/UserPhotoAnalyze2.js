@@ -2,10 +2,7 @@ import {ResponseHandler} from '../ResponseHandler';
 import {AUTH_TOKEN, API_HOST} from '../../../config';
 import RNFetchBlob from "rn-fetch-blob";
 
-export const UserPhotoAnalyze2 = async (user_agent, image_data, celebrity_id) => {
-
-  console.log("UserPhotoAnalyze AUTH_TOKEN: ", AUTH_TOKEN);
-  console.log("UserPhotoAnalyze API_HOST: ", API_HOST);
+export const UserPhotoAnalyze2 = async (user_agent, image_data, celebrity_id, locale) => {
 
   try {
     const {data} = await RNFetchBlob.fetch('POST', `${API_HOST}/api/analyze`, {
@@ -14,7 +11,8 @@ export const UserPhotoAnalyze2 = async (user_agent, image_data, celebrity_id) =>
     }, [
       // element with property `filename` will be transformed into `file` in form data
       {name: 'image', filename: 'photo.png', type: 'image/jpg/jpeg/png', data: image_data},
-      {name: "celebrity", data: celebrity_id}
+      {name: "celebrity", data: celebrity_id},
+      {name: 'locale', data: locale}
     ]);
 
     return data;

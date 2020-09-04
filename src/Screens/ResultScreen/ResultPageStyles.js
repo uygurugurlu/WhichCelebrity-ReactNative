@@ -90,8 +90,8 @@ export const styles = StyleSheet.create({
     color: '#393636',
   },
   graveIconStyle: {
-    height: 30,
-    width: 30,
+    height: 32,
+    width: 32,
     marginLeft: 5
   }
 });

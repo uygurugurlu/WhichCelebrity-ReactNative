@@ -10,7 +10,7 @@ import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../common/Components/SharedImageBottomComponent';
 import {RIGHT_HEADER_ICON,} from '../../common/IconIndex';
-import {shadow} from '../../common/Constants';
+import {HEADSTONE2, shadow} from '../../common/Constants';
 import * as Animatable from 'react-native-animatable';
 import ResultButtonsRow from "../../common/Components/ResultButtonsRow";
 import AnimatedProgressBar from "../../common/Components/AnimatedProgressBar";
@@ -19,7 +19,6 @@ import ActionSheetComponent2 from "../../common/Components/ActionSheetComponent2
 import {SavePicture} from "../../common/Functions/SavePicture";
 import SwipeableImageModal from "../../common/Components/SwipeableImageModal";
 import ResultLineComponent from "../../common/Components/ResultLineComponent";
-import {GetUserAge} from "../../common/Functions/GetUserAge";
 
 const ANIMATION_DURATION = 1200;
 
@@ -65,11 +64,9 @@ class ResultPage extends Component {
   };
 
   performTimeConsumingTask = async (timeout) => {
-    return new Promise((resolve) =>
-      setTimeout(() => {
-        resolve('result');
-      }, timeout),
-    );
+    return new Promise((resolve) => setTimeout(() => {
+      resolve('result');
+    }, timeout));
   };
 
   Share = async (index) => {
@@ -190,8 +187,17 @@ class ResultPage extends Component {
   render() {
     const {userAvatarSource} = this.props;
     const {share_active, data, isVisible, modal_uri, index} = this.state;
+
     const hide_age = data.celebrity.birthday === null || data.celebrity.birthday === "" || typeof data.celebrity.birthday === 'undefined';
-    const grave_flex = "flex";
+    const grave_flex = typeof data.celebrity.dead !== 'undefined' && data.celebrity.dead !== null && data.celebrity.dead;
+    const age = typeof (data.celebrity.age !== 'undefined' && data.celebrity.age !== null) ? data.celebrity.age : "";
+    const birthday = typeof (data.celebrity.birthday !== 'undefined' && data.celebrity.birthday !== null) ? data.celebrity.birthday : "";
+    const nationality = typeof (data.celebrity.nationality.name !== 'undefined' && data.celebrity.nationality.name !== null) ? data.celebrity.nationality.name : "";
+    const category = typeof (data.celebrity.category !== 'undefined' && data.celebrity.category !== null) ? data.celebrity.category.name : "";
+    const star_sign = typeof (data.celebrity.star_sign !== 'undefined' && data.celebrity.star_sign !== null) ? data.celebrity.star_sign.name : "";
+
+
+    console.log("grave_flex: ", grave_flex);
 
     return (
       <View style={styles.scrollViewStyle}>
@@ -221,19 +227,24 @@ class ResultPage extends Component {
 
             <View style={styles.labelContainerStyle}>
 
-              <ResultLineComponent leftText={translate("result.celebrity") + ": "}
-                                   rightText={data.celebrity.name}/>
+              <ResultLineComponent leftText={translate("result.celebrity") + ": "} rightText={data.celebrity.name}/>
 
               <View display={hide_age ? "none" : 'flex'} style={{flexDirection: 'row', marginRight: 25}}>
                 <ResultLineComponent leftText={translate("result.birthday") + ": "}
-                                     rightText={data.celebrity.birthday + ", " + GetUserAge(data.celebrity.birthday) + " " + translate("result.years")}/>
-                <View display={grave_flex}>
-                  <Image style={styles.graveIconStyle} source={require("../../assets/icons/grave.png")}/>
+                                     rightText={birthday + ", " + age + " " + translate("result.years")}/>
+                <View display={grave_flex ? "flex" : "none"}>
+                  <Image style={styles.graveIconStyle} source={HEADSTONE2}/>
                 </View>
               </View>
 
               <ResultLineComponent leftText={translate("result.category") + ": "}
-                                   rightText={data.celebrity.profession}/>
+                                   rightText={category}/>
+
+              <ResultLineComponent leftText={translate("result.nationality") + ": "}
+                                   rightText={nationality}/>
+
+              <ResultLineComponent leftText={translate("result.zodiac_sign") + ": "}
+                                   rightText={star_sign}/>
             </View>
 
             <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>

@@ -122,7 +122,7 @@ class HomePage2 extends Component {
   };
 
   GetResult = () => {
-    const {userAvatarB64, user_agent} = this.props;
+    const {userAvatarB64, user_agent, language} = this.props;
     const {celebrity_id, celebrity_photo, celebrity_name} = this.state;
 
     if (this.CheckValidity()) {
@@ -133,8 +133,8 @@ class HomePage2 extends Component {
         }
       });
 
-      UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id).then((res) => {
-        console.log("UserPhotoAnalyze res: ", res);
+      UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag).then((res) => {
+        console.log("UserPhotoAnalyze res: ", JSON.parse(res));
 
         try {
           interstitial.show();
@@ -195,7 +195,6 @@ class HomePage2 extends Component {
 
   HideProfile = () => {
     this.setState({search_visible: true, celebrity_name: ''});
-    console.log("Hide çalıştı");
   }
 
   render() {
@@ -226,7 +225,6 @@ class HomePage2 extends Component {
                                      name={celebrity_name}
                                      handleSelect={() => this.HideProfile()}/>
             </View>
-
           </View>
 
           <View display={search === '' ? 'flex' : 'none'} style={styles.iconsMainContainerStyle}>
@@ -240,6 +238,7 @@ class HomePage2 extends Component {
                     onPress={() => this.GetResult()}
                     loading={this.state.result_loading}/>
           </View>
+
           {this.GetActionSheet()}
         </SafeAreaView>
       </View>

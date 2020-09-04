@@ -29,7 +29,7 @@
     "clear_category": "Kategoriyi kaldır",
     "cancel": "Vazgeç",
     "select_photo": "Fotoğraf seçiniz",
-    "search_for_all": "Tüm ünlülerde ara",
+    "search_for_all": "Kadın ve Erkek ünlülerde ara",
     "search_male_celebrities": "Erkek ünlülerde ara",
     "search_female_celebrities": "Kadın ünlülerde ara"
   },
@@ -43,7 +43,8 @@
     "celebrity": "Ünlü",
     "birthday": "Doğum Tarihi",
     "category": "Kategori",
-    "motherland": "Memleket",
+    "nationality": "Memleket",
+    "zodiac_sign": "Burç",
     "years": "yaşında"
   },
   "saved": {
