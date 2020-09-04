@@ -8,6 +8,6 @@
 
 "CFBundleDisplayName" = "Which Celebrity";
 
-"NSCameraUsageDescription" = "\"Which Celebrity\" wants to use your camera to get photos and calculate the similarity percentage.";
+"NSCameraUsageDescription" = "\"Which Celebrity\" wants to access your camera to be able to calculate how much you resemble which celebrity.";
 
-"NSPhotoLibraryUsageDescription" = "\"Which Celebrity\" wants to use your photo library to get photos and calculate the similarity percentage.";
+"NSPhotoLibraryUsageDescription" = "\"Which Celebrity\" wants to use your photo library to be able to calculate how much you resemble which celebrity.";

@@ -195,6 +195,8 @@ class ResultPage2 extends Component {
     const {userAvatarSource} = this.props;
     const {share_active, celebrity_name, celebrity_photo, data, isVisible, modal_uri, index} = this.state;
     const hide_age = data.celebrity.birthday === null || data.celebrity.birthday === "" || typeof data.celebrity.birthday === 'undefined';
+    const grave_flex = "flex";
+
     return (
       <View style={styles.scrollViewStyle}>
         <ViewShot ref={(ref) => (this.viewShot = ref)}
@@ -224,9 +226,13 @@ class ResultPage2 extends Component {
               <ResultLineComponent leftText={translate("result.celebrity") + ": "}
                                    rightText={celebrity_name}/>
 
-              <View display={hide_age ? "none" : 'flex'}>
+              <View display={hide_age ? "none" : 'flex'} style={{flexDirection: 'row'}}>
                 <ResultLineComponent leftText={translate("result.birthday") + ": "}
                                      rightText={data.celebrity.birthday + ", " + GetUserAge(data.celebrity.birthday) + " " + translate("result.years")}/>
+
+                <View display={grave_flex}>
+                  <Image style={styles.graveIconStyle} source={require("../../assets/icons/grave.png")}/>
+                </View>
               </View>
               <ResultLineComponent leftText={translate("result.category") + ": "}
                                    rightText={data.celebrity.profession}/>

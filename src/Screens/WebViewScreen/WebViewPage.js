@@ -9,7 +9,7 @@ class WebViewPage extends Component {
 
   componentWillMount() {
     this.props.navigation.setOptions({
-      headerTitle: translate('header_label'),
+      headerTitle: translate('app_name'),
     });
   }
 

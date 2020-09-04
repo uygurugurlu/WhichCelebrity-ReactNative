@@ -8,6 +8,6 @@
 
 "CFBundleDisplayName" = "Which Celebrity?";
 
-"NSCameraUsageDescription" = "\"Which Celebrity?\" fotoğraflarınızı kullanarak benzerlik oranını hesaplayabilmek için kameranıza erişmek istiyor.";
+"NSCameraUsageDescription" = "\"Which Celebrity?\" hangi ünlüye ne kadar benzediğinizin oranını hesaplayabilmek için kameranıza erişmek istiyor.";
 
-"NSPhotoLibraryUsageDescription" = "\"Which Celebrity?\" fotoğraflarınızı kullanarak benzerlik oranını hesaplayabilmek için fotoğraf galerinize erişmek istiyor.";
+"NSPhotoLibraryUsageDescription" = "\"Which Celebrity?\" hangi ünlüye ne kadar benzediğinizin oranını hesaplayabilmek için fotoğraf galerinize erişmek istiyor.";

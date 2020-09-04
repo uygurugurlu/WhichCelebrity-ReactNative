@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet} from "react-native";
-import {DEVICE_WIDTH} from "../Constants";
+import {Text, View, StyleSheet, Image} from "react-native";
 
 class ResultLineComponent extends Component {
   render() {
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     color: '#123456',
     textAlign: 'left',
     marginLeft: 7.5
-  },
+  }
 })
 
 export default ResultLineComponent;
