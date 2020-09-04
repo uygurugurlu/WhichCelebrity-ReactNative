@@ -11,19 +11,18 @@ import {get_user_avatar_source} from '../../Store/Actions';
 import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoFromImageLibrary';
 import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
 import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
-
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
-const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-  requestNonPersonalizedAdsOnly: false,
-});
 import AvatarComponent from '../../common/Components/AvatarComponent';
 import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
 import {GetCategories} from "../../common/Functions/Endpoints/GetCategories";
 import {DEVICE_HEIGHT, DOWN_ICON, FORWARD_ICON} from "../../common/Constants";
 import {UserPhotoAnalyze} from "../../common/Functions/Endpoints/UserPhotoAnalyze";
-import {GetToken} from "../../common/Functions/Endpoints/GetToken";
 import Icon from "react-native-fontawesome-pro";
 import GenderSelection from "../../common/Components/GenderSelection";
+
+const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
+const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+  requestNonPersonalizedAdsOnly: false,
+});
 
 class HomePage extends Component {
   constructor(props) {
@@ -39,7 +38,8 @@ class HomePage extends Component {
       selected_category_name: "",
       selected_category_id: -1,
       scroll_items: [],
-      celebrity: {}
+      celebrity: {},
+      gender: null
     };
   }
 
@@ -124,7 +124,7 @@ class HomePage extends Component {
 
   GetResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
-    const {selected_category_id} = this.state;
+    const {selected_category_id, gender} = this.state;
 
     if (this.CheckValidity()) {
       this.setState({result_loading: true});
@@ -134,7 +134,7 @@ class HomePage extends Component {
         }
       });
 
-      await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag).then((res) => {
+      await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender).then((res) => {
         console.log('UserPhotoAnalyze res: ', JSON.parse(res));
         try {
           if (JSON.parse(res).status === 'error') {
@@ -186,7 +186,8 @@ class HomePage extends Component {
     this.setState({
       categories_visibility: false,
       selected_category_name: "",
-      selected_category_id: -1
+      selected_category_id: -1,
+      gender: null
     });
   }
 
@@ -213,8 +214,9 @@ class HomePage extends Component {
     this.FilterItems(value);
   };
 
-  SelectGender = () => {
+  SelectGender = (gender) => {
     this.HandleGendersVisibility();
+    this.setState({gender: gender});
   };
 
   render() {
@@ -249,7 +251,7 @@ class HomePage extends Component {
               </TouchableOpacity>
             </View>
 
-            <GenderSelection SelectGender={() => this.SelectGender()}
+            <GenderSelection SelectGender={this.SelectGender}
                              visibility={genders_visibility}
                              categoriesVisibility={categories_visibility}
                              handleVisibilitty={() => this.HandleGendersVisibility()}/>

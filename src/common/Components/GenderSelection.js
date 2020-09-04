@@ -16,7 +16,7 @@ class GenderSelection extends Component {
 
   componentWillMount() {
     const items = [
-      {label: translate("home.search_for_all"), type: "all"},
+      {label: translate("home.search_for_all"), type: null},
       {label: translate("home.search_male_celebrities"), type: "male"},
       {label: translate("home.search_female_celebrities"), type: "female"}
     ];
@@ -39,6 +39,7 @@ class GenderSelection extends Component {
   GenderSelected = (label, type) => {
     this.setState({selected_gender_label: label, selected_gender_type: type});
     this.props.handleVisibilitty();
+    this.props.SelectGender(type);
   }
 
   HandleVisibility = () => {
