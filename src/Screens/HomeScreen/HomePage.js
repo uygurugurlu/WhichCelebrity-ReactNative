@@ -44,15 +44,11 @@ class HomePage extends Component {
   }
 
   componentWillMount() {
-    GetCategories(this.props.user_agent).then((res) => {
+    GetCategories(this.props.user_agent, this.props.language.languageTag).then((res) => {
       console.log("Categories: ", res.data);
       this.setState({categories: res.data})
 
       this.fillScroll(res.data);
-    });
-
-    GetToken(this.props.user_agent).then((res) => {
-      console.log("Token: ", res);
     });
 
     this.props.navigation.setOptions({
@@ -138,14 +134,21 @@ class HomePage extends Component {
         }
       });
 
-      await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id).then((res) => {
+      await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, this.props.language.languageTag).then((res) => {
         console.log('UserPhotoAnalyze res: ', res);
-        this.setState({celebrity: JSON.parse(res)});
         try {
-          interstitial.show();
-          this.props.navigation.navigate('ResultPage', {data: JSON.parse(res).data});
-          this.setState({result_loading: false});
-          this.CancelCategory();
+          if (JSON.parse(res).status === 'error') {
+            console.log('error on UserPhotoAnalyze: ', JSON.parse(res).message);
+            Alert.alert(JSON.parse(res).message);
+            this.setState({result_loading: false});
+            this.CancelCategory();
+          } else {
+            this.setState({celebrity: JSON.parse(res)});
+            interstitial.show();
+            this.props.navigation.navigate('ResultPage', {data: JSON.parse(res).data});
+            this.setState({result_loading: false});
+            this.CancelCategory();
+          }
         } catch (e) {
           console.log('error on response: ', e);
         }

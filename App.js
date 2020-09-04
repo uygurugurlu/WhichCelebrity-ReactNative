@@ -24,7 +24,7 @@ function App() {
     /** Print Every Response to the Console*/
     axios.interceptors.response.use(
       (res) => {
-        console.group('interceptor response');
+        console.group('interceptor response',res);
         //console.log('status is:' + status);
         //console.table(data);
         console.groupEnd();

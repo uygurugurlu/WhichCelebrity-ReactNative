@@ -234,6 +234,7 @@ class ResultPage2 extends Component {
                   <Image style={styles.graveIconStyle} source={require("../../assets/icons/grave.png")}/>
                 </View>
               </View>
+
               <ResultLineComponent leftText={translate("result.category") + ": "}
                                    rightText={data.celebrity.profession}/>
 

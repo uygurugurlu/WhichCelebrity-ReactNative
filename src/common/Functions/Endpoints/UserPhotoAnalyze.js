@@ -2,7 +2,7 @@ import {ResponseHandler} from '../ResponseHandler';
 import {AUTH_TOKEN, API_HOST} from '../../../config';
 import RNFetchBlob from "rn-fetch-blob";
 
-export const UserPhotoAnalyze = async (user_agent, image_data, category) => {
+export const UserPhotoAnalyze = async (user_agent, image_data, category, locale) => {
 
   console.log("UserPhotoAnalyze AUTH_TOKEN: ", AUTH_TOKEN);
   console.log("UserPhotoAnalyze API_HOST: ", API_HOST);
@@ -12,12 +12,14 @@ export const UserPhotoAnalyze = async (user_agent, image_data, category) => {
     [
       // element with property `filename` will be transformed into `file` in form data
       {name: 'image', filename: 'photo.png', type: 'image/jpg/jpeg/png', data: image_data},
+      {name: 'locale', data: locale}
     ]
     :
     [
       // element with property `filename` will be transformed into `file` in form data
       {name: 'image', filename: 'photo.png', type: 'image/jpg/jpeg/png', data: image_data},
-      {name: "category", data: category}
+      {name: "category", data: category},
+      {name: 'locale', data: locale}
     ];
 
   try {
