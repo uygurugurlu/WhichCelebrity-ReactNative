@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 150,
+    height: 130,
   },
   resultButtonStyle: {
     width: DEVICE_WIDTH * 0.38,

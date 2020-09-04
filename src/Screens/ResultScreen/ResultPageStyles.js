@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {DEVICE_WIDTH} from '../../common/Constants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
 import {buttons_height, page_body_background_color} from '../../common/ColorIndex';
 
 const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.95;
@@ -33,8 +33,9 @@ export const styles = StyleSheet.create({
   },
   labelContainerStyle: {
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    // justifyContent: 'flex-start',
     width: DEVICE_WIDTH * 0.9,
+    height: DEVICE_HEIGHT * 0.275
   },
   resultLabelStyle: {
     fontSize: 18,
@@ -90,8 +91,8 @@ export const styles = StyleSheet.create({
     color: '#393636',
   },
   graveIconStyle: {
-    height: 32,
-    width: 32,
+    height: 30,
+    width: 30,
     marginLeft: 5
   }
 });

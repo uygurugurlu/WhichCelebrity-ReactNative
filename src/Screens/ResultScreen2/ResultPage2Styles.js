@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {DEVICE_WIDTH} from '../../common/Constants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
 import {
   buttons_height,
   page_body_background_color,
@@ -35,8 +35,8 @@ export const styles = StyleSheet.create({
   },
   labelContainerStyle: {
     flexDirection: 'column',
-    justifyContent: 'flex-start',
     width: DEVICE_WIDTH * 0.9,
+    height: DEVICE_HEIGHT * 0.275
   },
   resultLabelStyle: {
     fontSize: 18,

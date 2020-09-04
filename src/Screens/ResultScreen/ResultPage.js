@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  Image, View, Text, TouchableOpacity, Platform, Easing, PermissionsAndroid, SafeAreaView, Animated
+  Image, View, Text, TouchableOpacity, Platform, Easing, PermissionsAndroid, SafeAreaView, Animated, ScrollView
 } from 'react-native';
 import {styles} from './ResultPageStyles';
 import {connect} from 'react-redux';
@@ -218,14 +218,15 @@ class ResultPage extends Component {
             </View>
 
             <View style={{alignItems: 'center'}}>
-              <Text style={{fontWeight: '500', fontSize: 17}}>{translate("result.similarity_rate")}</Text>
+              <Text
+                style={{fontWeight: '500', fontSize: 17, marginTop: 15}}>{translate("result.similarity_rate")}</Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <AnimatedProgressBar fill={data.percentage}/>
                 <AnimatedProgressComponent fill={data.percentage}/>
               </View>
             </View>
 
-            <View style={styles.labelContainerStyle}>
+            <ScrollView style={styles.labelContainerStyle}>
 
               <ResultLineComponent leftText={translate("result.celebrity") + ": "} rightText={data.celebrity.name}/>
 
@@ -245,7 +246,7 @@ class ResultPage extends Component {
 
               <ResultLineComponent leftText={translate("result.zodiac_sign") + ": "}
                                    rightText={star_sign}/>
-            </View>
+            </ScrollView>
 
             <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
               <ResultButtonsRow share_active={share_active}

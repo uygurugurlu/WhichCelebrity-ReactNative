@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.95,
-    height: 150,
+    height: 130,
   },
   turkaiRowContainerStyle: {
     flexDirection: 'row',
@@ -36,8 +36,8 @@ export const styles = StyleSheet.create({
     marginLeft: 5,
   },
   appLogoImageStyle: {
-    height: 55,
-    width: 55,
+    height: 50,
+    width: 50,
     borderRadius: 27.5
   },
   appLogoContainerStyles: {
