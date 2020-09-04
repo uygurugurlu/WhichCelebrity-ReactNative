@@ -236,6 +236,9 @@ class ResultPage2 extends Component {
               </View>
               <ResultLineComponent leftText={translate("result.category") + ": "}
                                    rightText={data.celebrity.profession}/>
+
+              <ResultLineComponent leftText={translate("result.motherland") + ": "}
+                                   rightText={data.celebrity.profession}/>
             </View>
 
             <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
