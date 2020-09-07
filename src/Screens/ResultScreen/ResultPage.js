@@ -43,7 +43,7 @@ class ResultPage extends Component {
     let nationality = "", category = "", star_sign = "";
 
     this.props.navigation.setOptions({
-      title: translate('header_label'),
+      title: translate('app_name'),
       headerRight: () => (
         <TouchableOpacity onPress={() => this.props.navigation.navigate('SavingsPage', {tab_index: 0})}>
           <Image source={RIGHT_HEADER_ICON} style={{height: 35, width: 35, marginRight: 15}}/>
