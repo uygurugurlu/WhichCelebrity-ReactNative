@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
   },
   topLabel2Style: {
     color: '#123456',
-    fontSize: 19,
+    fontSize: 15,
     fontWeight: '500',
     marginTop: 7.5,
     textAlign: 'center',

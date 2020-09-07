@@ -32,6 +32,7 @@ export const styles = StyleSheet.create({
     height: ICON_CONTAINER_SIZE / 2,
     backgroundColor: '#fff',
     paddingHorizontal: 5,
+    marginTop: 10
   },
   labelContainerStyle: {
     flexDirection: 'column',

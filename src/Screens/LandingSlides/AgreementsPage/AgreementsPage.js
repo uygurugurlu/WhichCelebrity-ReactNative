@@ -3,11 +3,17 @@ import {Image, View, Text, SafeAreaView, Alert} from 'react-native';
 import {styles} from './AgreementsPageStyles';
 import {Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
-import {first_time_login, set_language} from '../../../Store/Actions';
+import {first_time_login} from '../../../Store/Actions';
 import {connect} from 'react-redux';
 import {translate} from '../../../I18n';
 import CheckBox from '@react-native-community/checkbox';
-import {DEVICE_WIDTH} from "../../../common/Constants";
+import {
+  DEVICE_WIDTH,
+  KVKK_LINK_EN,
+  KVKK_LINK_TR,
+  PRIVACY_POLICY_LINK_EN,
+  PRIVACY_POLICY_LINK_TR
+} from "../../../common/Constants";
 
 const BANNER = require('../../../assets/icons/banner.png');
 
@@ -17,7 +23,7 @@ class AgreementsPage extends Component {
     this.state = {
       checked: false,
       checked2: false,
-      languageTag: ""
+      languageTag: "en"
     };
   }
 
@@ -46,13 +52,18 @@ class AgreementsPage extends Component {
   };
 
   SeeWebViewPage = (index) => {
+    const {languageTag} = this.state;
+
+    const kvkk_link = languageTag === "tr" ? KVKK_LINK_TR : KVKK_LINK_EN;
+    const policy_link = languageTag === "tr" ? PRIVACY_POLICY_LINK_TR : PRIVACY_POLICY_LINK_EN;
+
     if (index === 0) {
       this.props.navigation.navigate('WebViewPage', {
-        url: 'https://app-fab.com/apps/hik-demis/kvkk.html',
+        url: kvkk_link,
       });
     } else if (index === 1) {
       this.props.navigation.navigate('WebViewPage', {
-        url: 'https://app-fab.com/apps/hik-demis/privacy-policy.html',
+        url: policy_link,
       });
     }
   };
@@ -75,7 +86,6 @@ class AgreementsPage extends Component {
 
   render() {
     const {checked, checked2, languageTag} = this.state;
-    console.log("languageTag: ", languageTag);
 
     return (
       <SafeAreaView style={styles.mainContainerStyle}>
@@ -93,7 +103,7 @@ class AgreementsPage extends Component {
             <View style={styles.kvkkRowContainerStyle}>
               <View style={{width: DEVICE_WIDTH * 0.77}}>
                 <Text style={languageTag === 'tr' ? styles.linkTextStyle : styles.acceptTextStyle}
-                      onPress={() => this.SeeWebViewPage(1)}>
+                      onPress={() => this.SeeWebViewPage(0)}>
                   {languageTag === 'tr' ? translate('starter.kvkk_text') : translate('starter.read_and_accept')}
                   <Text style={languageTag === 'tr' ? styles.acceptTextStyle : styles.linkTextStyle}
                         onPress={() => this.SeeWebViewPage(0)}>
@@ -132,7 +142,6 @@ class AgreementsPage extends Component {
     );
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {

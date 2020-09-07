@@ -13,7 +13,7 @@
     "share_result": "Share Result"
   },
   "famous_compare": {
-    "compare_header": "Find out immediately to which celebrity do you look like",
+    "compare_header": "Select a celebrity and find out how you look alike",
     "result_label": "You look very similar to ",
     "validity_alert": "Please make sure you select an image."
   },
@@ -21,17 +21,18 @@
     "get_result": "Get Result",
     "validity_alert": "Please select an image for mother, father and the child.",
     "selected_celebrity": "The celebrity you choose",
-    "select_celebrity": "Select a celebrity ...",
+    "select_celebrity": "Search a celebrity ...",
     "select_another_celebrity": "Select another celebrity ... ",
     "select_warning": "Please select a celebrity by typing its name.",
     "avatar_warning": "Please be sure you select an image.!",
-    "select_category": "Select Category ...",
+    "select_category": "Select Category (Optional)",
     "clear_category": "Clear Category",
     "cancel": "Cancel",
     "select_photo": "Select photo",
     "search_for_all": "Search in all genders",
     "search_male_celebrities": "Search in male celebrities",
-    "search_female_celebrities": "Search in female celebrities"
+    "search_female_celebrities": "Search in female celebrities",
+    "top_label": "Find out which celebrity you are"
   },
   "result": {
     "share": "Share",

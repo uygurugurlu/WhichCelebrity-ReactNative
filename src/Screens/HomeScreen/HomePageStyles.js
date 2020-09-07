@@ -28,7 +28,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.9,
-    marginTop: DEVICE_HEIGHT * 0.05
   },
   labelsContainerStyle: {
     flexDirection: 'column',
@@ -43,11 +42,13 @@ export const styles = StyleSheet.create({
     color: "#123456"
   },
   topLabelStyle: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '700',
-    marginTop: 10,
-    borderRadius: 5,
+    color: '#123456',
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'center',
+    alignSelf: "flex-start",
+    width: DEVICE_WIDTH * 0.7 - 5,
+    marginVertical: 20
   },
   topLabel2Style: {
     color: '#123456',

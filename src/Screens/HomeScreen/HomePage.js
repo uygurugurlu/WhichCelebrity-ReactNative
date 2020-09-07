@@ -47,19 +47,19 @@ class HomePage extends Component {
     GetCategories(this.props.user_agent, this.props.language.languageTag).then((res) => {
       console.log("Categories: ", res.data);
       this.setState({categories: res.data})
-
       this.fillScroll(res.data);
     });
 
+    /*GetToken().then((res) => {
+      console.log("Res: ", res);
+    });*/
+
     this.props.navigation.setOptions({
-      title: translate('header_label'),
+      title: translate('app_name'),
       headerRight: () => (
-        <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.navigate('SavingsPage', {tab_index: 0})
-          }>
-          <Image source={RIGHT_HEADER_ICON}
-                 style={{height: 35, width: 35, marginRight: 15}}/>
+        <TouchableOpacity onPress={() =>
+          this.props.navigation.navigate('SavingsPage', {tab_index: 0})}>
+          <Image source={RIGHT_HEADER_ICON} style={{height: 35, width: 35, marginRight: 15}}/>
         </TouchableOpacity>
       ),
     });
@@ -228,29 +228,33 @@ class HomePage extends Component {
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
 
-            <View display={'flex'} style={styles.topLabel2ContainerStyle}>
-              <TouchableOpacity style={styles.categoryContainerStyle} onPress={() => this.HandleCategoriesVisibility()}>
-                <TextInput style={styles.topLabel2Style}
-                           onChangeText={(value) => this.onChangeText('selected_category_name', value)}
-                           autoFocus={false}
-                           placeholder={translate("home.select_category")}
-                           placeholderTextColor={'#959595'}
-                           value={selected_category_name}/>
+            <View>
+              <Text style={styles.topLabelStyle}>{translate("home.top_label")}</Text>
 
-                <View display={selected_category_name === "" ? 'flex' : 'none'}>
-                  <Image source={categories_visibility ? DOWN_ICON : FORWARD_ICON} style={{height: 25, width: 25}}/>
-                </View>
+              <View display={'flex'} style={styles.topLabel2ContainerStyle}>
+                <TouchableOpacity style={styles.categoryContainerStyle}
+                                  onPress={() => this.HandleCategoriesVisibility()}>
+                  <TextInput style={styles.topLabel2Style}
+                             onChangeText={(value) => this.onChangeText('selected_category_name', value)}
+                             autoFocus={false}
+                             placeholder={translate("home.select_category")}
+                             placeholderTextColor={'#959595'}
+                             value={selected_category_name}/>
 
-                <View display={selected_category_name !== "" ? 'flex' : 'none'} style={{marginRight: 5}}>
-                  <TouchableOpacity onPress={() => this.CancelCategory()}>
-                    <Icon name={'times'} size={25} type={'light'} color={'white'}
-                          containerStyle={styles.cancelIconContainerStyle}/>
-                  </TouchableOpacity>
-                </View>
+                  <View display={selected_category_name === "" ? 'flex' : 'none'}>
+                    <Image source={categories_visibility ? DOWN_ICON : FORWARD_ICON} style={{height: 25, width: 25}}/>
+                  </View>
 
-              </TouchableOpacity>
+                  <View display={selected_category_name !== "" ? 'flex' : 'none'} style={{marginRight: 5}}>
+                    <TouchableOpacity onPress={() => this.CancelCategory()}>
+                      <Icon name={'times'} size={25} type={'light'} color={'white'}
+                            containerStyle={styles.cancelIconContainerStyle}/>
+                    </TouchableOpacity>
+                  </View>
+
+                </TouchableOpacity>
+              </View>
             </View>
-
             <GenderSelection SelectGender={this.SelectGender}
                              visibility={genders_visibility}
                              categoriesVisibility={categories_visibility}

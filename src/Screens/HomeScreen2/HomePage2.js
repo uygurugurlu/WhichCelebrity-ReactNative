@@ -206,6 +206,10 @@ class HomePage2 extends Component {
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
 
+            <View display={search === '' && search_visible ? 'flex' : 'none'} style={styles.topLabel2ContainerStyle}>
+              <Text style={styles.topLabel2Style}>{translate('famous_compare.compare_header')}</Text>
+            </View>
+
             <View display={search_visible ? 'flex' : 'none'}>
               <SearchBarComponent search={search} updateSearch={this.updateSearch} selectedCelebrity={celebrity_name}/>
             </View>
@@ -214,10 +218,6 @@ class HomePage2 extends Component {
               <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.75, color: '#fff'}}>
                 <View style={styles.scrollViewStyle}>{scroll_items}</View>
               </ScrollView>
-            </View>
-
-            <View display={search === '' && search_visible ? 'flex' : 'none'} style={styles.topLabel2ContainerStyle}>
-              <Text style={styles.topLabel2Style}>{translate('famous_compare.compare_header')}</Text>
             </View>
 
             <View display={!search_visible ? 'flex' : 'none'} style={{marginTop: DEVICE_HEIGHT * 0.075}}>

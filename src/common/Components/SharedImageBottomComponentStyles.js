@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.95,
-    height: 130,
+    height: 120,
   },
   turkaiRowContainerStyle: {
     flexDirection: 'row',
@@ -17,8 +17,8 @@ export const styles = StyleSheet.create({
     marginHorizontal: DEVICE_WIDTH * 0.05
   },
   turkaiLogoStyle: {
-    height: (DEVICE_WIDTH * 0.3) / 3.80962343096,
-    width: DEVICE_WIDTH * 0.3,
+    height: (DEVICE_WIDTH * 0.275) / 3.80962343096,
+    width: DEVICE_WIDTH * 0.275,
   },
   storeImageStyle: {
     height: (DEVICE_WIDTH * 0.3) / 3.80962343096,
@@ -44,6 +44,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 15,
+    marginTop: 10
   },
 });

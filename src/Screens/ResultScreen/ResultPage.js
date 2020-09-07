@@ -31,11 +31,17 @@ class ResultPage extends Component {
       progress: new Animated.Value(0),
       data: this.props.route.params.data,
       isVisible: false,
-      modal_uri: ""
+      modal_uri: "",
+      nationality: "",
+      category: "",
+      star_sign: ""
     };
   }
 
-  componentWillMount() {
+  componentWillMount = async () => {
+    const {data} = this.props.route.params;
+    let nationality = "", category = "", star_sign = "";
+
     this.props.navigation.setOptions({
       title: translate('header_label'),
       headerRight: () => (
@@ -44,6 +50,27 @@ class ResultPage extends Component {
         </TouchableOpacity>
       ),
     });
+
+    try {
+      nationality = typeof (data.celebrity.nationality !== 'undefined' && data.celebrity.nationality !== null) ? data.celebrity.nationality.name : "";
+    } catch (e) {
+      console.log("Error componentWillMount: ", e);
+      nationality = "";
+    }
+
+    try {
+      category = typeof (data.celebrity.category !== 'undefined' && data.celebrity.category !== null) ? data.celebrity.category.name : "";
+    } catch (e) {
+      category = "";
+    }
+
+    try {
+      star_sign = typeof (data.celebrity.star_sign !== 'undefined' && data.celebrity.star_sign !== null) ? data.celebrity.star_sign.name : "";
+    } catch (e) {
+      star_sign = "";
+    }
+
+    this.setState({category: category, nationality: nationality, star_sign: star_sign})
   }
 
   componentDidMount = async () => {
@@ -186,16 +213,12 @@ class ResultPage extends Component {
 
   render() {
     const {userAvatarSource} = this.props;
-    const {share_active, data, isVisible, modal_uri, index} = this.state;
+    const {share_active, data, isVisible, modal_uri, index, nationality, category, star_sign} = this.state;
 
     const hide_age = data.celebrity.birthday === null || data.celebrity.birthday === "" || typeof data.celebrity.birthday === 'undefined';
     const grave_flex = typeof data.celebrity.dead !== 'undefined' && data.celebrity.dead !== null && data.celebrity.dead;
     const age = typeof (data.celebrity.age !== 'undefined' && data.celebrity.age !== null) ? data.celebrity.age : "";
     const birthday = typeof (data.celebrity.birthday !== 'undefined' && data.celebrity.birthday !== null) ? data.celebrity.birthday : "";
-    const nationality = typeof (data.celebrity.nationality.name !== 'undefined' && data.celebrity.nationality.name !== null) ? data.celebrity.nationality.name : "";
-    const category = typeof (data.celebrity.category !== 'undefined' && data.celebrity.category !== null) ? data.celebrity.category.name : "";
-    const star_sign = typeof (data.celebrity.star_sign !== 'undefined' && data.celebrity.star_sign !== null) ? data.celebrity.star_sign.name : "";
-
 
     console.log("grave_flex: ", grave_flex);
 

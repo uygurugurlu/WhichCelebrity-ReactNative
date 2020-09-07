@@ -13,7 +13,7 @@
     "share_result": "Sonucu Paylaş"
   },
   "famous_compare": {
-    "compare_header": "Hangi ünlüye benzediğini hemen öğren",
+    "compare_header": "Bir ünlü seçin ve benzerliğinizi öğrenin",
     "result_label": "Seni en çok benzettiğimiz ünlü: ",
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
@@ -21,17 +21,18 @@
     "get_result": "Sonucu Gör",
     "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz.",
     "selected_celebrity": "Seçtiğiniz ünlü",
-    "select_celebrity": "Bir ünlü seç ... ",
+    "select_celebrity": "Ünlülerde ara ... ",
     "select_another_celebrity": "Başka bir ünlü seç ... ",
     "select_warning": "Lütfen ismini yazarak bir ünlü seçiniz.",
     "avatar_warning": "Lütfen fotoğraf eklediğinizden emin olun!",
-    "select_category": "Kategori Seç ...",
+    "select_category": "Kategori Seç (İsteğe bağlı)",
     "clear_category": "Kategoriyi kaldır",
     "cancel": "Vazgeç",
     "select_photo": "Fotoğraf seçiniz",
     "search_for_all": "Kadın ve Erkek ünlülerde ara",
     "search_male_celebrities": "Erkek ünlülerde ara",
-    "search_female_celebrities": "Kadın ünlülerde ara"
+    "search_female_celebrities": "Kadın ünlülerde ara",
+    "top_label": "Hangi ünlüye benzediğini öğren"
   },
   "result": {
     "share": "Paylaş",

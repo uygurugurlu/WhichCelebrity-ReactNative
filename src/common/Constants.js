@@ -12,6 +12,13 @@ export const HEADSTONE = require('../assets/icons/grave.png');
 export const HEADSTONE2 = require('../assets/icons/grave1.png');
 
 
+export const PRIVACY_POLICY_LINK_EN = "https://app-fab.com/apps/which-celebrity/privacy-policy-en.html";
+export const PRIVACY_POLICY_LINK_TR = "https://app-fab.com/apps/which-celebrity/privacy-policy-tr.html";
+
+export const KVKK_LINK_EN = "https://app-fab.com/apps/which-celebrity/kvkk-en.html";
+export const KVKK_LINK_TR = "https://app-fab.com/apps/which-celebrity/kvkk-tr.html";
+
+
 export const shadow = {
   shadowColor: '#000000',
   shadowOffset: {width: 0.1, height: 1},
