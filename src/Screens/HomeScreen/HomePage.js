@@ -187,7 +187,6 @@ class HomePage extends Component {
       categories_visibility: false,
       selected_category_name: "",
       selected_category_id: -1,
-      gender: null
     });
   }
 
