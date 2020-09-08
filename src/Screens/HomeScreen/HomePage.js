@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView, TextInput,
+  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView, TextInput, TouchableWithoutFeedback,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
@@ -185,6 +185,7 @@ class HomePage extends Component {
   CancelCategory = () => {
     this.setState({
       categories_visibility: false,
+      genders_visibility: false,
       selected_category_name: "",
       selected_category_id: -1,
     });
@@ -223,7 +224,7 @@ class HomePage extends Component {
     const {categories_visibility, scroll_items, selected_category_name, genders_visibility} = this.state;
 
     return (
-      <View style={styles.backgroundImageStyle}>
+      <TouchableWithoutFeedback style={styles.backgroundImageStyle} onPress={() => this.CancelCategory()}>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
 
@@ -282,7 +283,7 @@ class HomePage extends Component {
 
           {this.GetActionSheet()}
         </SafeAreaView>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
