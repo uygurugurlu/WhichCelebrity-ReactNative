@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   resultRightTextStyle: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '600',
     color: '#123456',
     textAlign: 'left',

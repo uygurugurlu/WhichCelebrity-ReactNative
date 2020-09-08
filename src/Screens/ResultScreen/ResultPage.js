@@ -34,13 +34,17 @@ class ResultPage extends Component {
       modal_uri: "",
       nationality: "",
       category: "",
-      star_sign: ""
+      star_sign: "",
+      hide_age: "",
+      grave_flex: "",
+      age: "",
+      birthday: "",
     };
   }
 
   componentWillMount = async () => {
     const {data} = this.props.route.params;
-    let nationality = "", category = "", star_sign = "";
+    let nationality = "", category = "", star_sign = "", hide_age = "", grave_flex = "", age = "", birthday = "";
 
     this.props.navigation.setOptions({
       title: translate('app_name'),
@@ -50,6 +54,11 @@ class ResultPage extends Component {
         </TouchableOpacity>
       ),
     });
+
+    hide_age = data.celebrity.birthday === null || data.celebrity.birthday === "" || typeof data.celebrity.birthday === 'undefined';
+    grave_flex = typeof data.celebrity.dead !== 'undefined' && data.celebrity.dead !== null && data.celebrity.dead;
+    age = typeof (data.celebrity.age !== 'undefined' && data.celebrity.age !== null) ? data.celebrity.age : "";
+    birthday = typeof (data.celebrity.birthday !== 'undefined' && data.celebrity.birthday !== null) ? data.celebrity.birthday : "";
 
     try {
       nationality = typeof (data.celebrity.nationality !== 'undefined' && data.celebrity.nationality !== null) ? data.celebrity.nationality.name : "";
@@ -70,7 +79,15 @@ class ResultPage extends Component {
       star_sign = "";
     }
 
-    this.setState({category: category, nationality: nationality, star_sign: star_sign})
+    this.setState({
+      category: category,
+      nationality: nationality,
+      star_sign: star_sign,
+      grave_flex: grave_flex,
+      hide_age: hide_age,
+      age: age,
+      birthday: birthday
+    });
   }
 
   componentDidMount = async () => {
@@ -184,9 +201,7 @@ class ResultPage extends Component {
 
   getActionSheetRef = (ref) => (this.actionSheet = ref);
 
-  GoBack = async () => {
-    await this.props.navigation.pop();
-  }
+  GoBack = async () => await this.props.navigation.pop();
 
   GetActionSheet = () => {
     return (
@@ -213,12 +228,7 @@ class ResultPage extends Component {
 
   render() {
     const {userAvatarSource} = this.props;
-    const {share_active, data, isVisible, modal_uri, index, nationality, category, star_sign} = this.state;
-
-    const hide_age = data.celebrity.birthday === null || data.celebrity.birthday === "" || typeof data.celebrity.birthday === 'undefined';
-    const grave_flex = typeof data.celebrity.dead !== 'undefined' && data.celebrity.dead !== null && data.celebrity.dead;
-    const age = typeof (data.celebrity.age !== 'undefined' && data.celebrity.age !== null) ? data.celebrity.age : "";
-    const birthday = typeof (data.celebrity.birthday !== 'undefined' && data.celebrity.birthday !== null) ? data.celebrity.birthday : "";
+    const {share_active, data, hide_age, grave_flex, age, birthday, isVisible, modal_uri, index, nationality, category, star_sign} = this.state;
 
     console.log("grave_flex: ", grave_flex);
 
@@ -256,6 +266,7 @@ class ResultPage extends Component {
               <View display={hide_age ? "none" : 'flex'} style={{flexDirection: 'row', marginRight: 25}}>
                 <ResultLineComponent leftText={translate("result.birthday") + ": "}
                                      rightText={birthday + ", " + age + " " + translate("result.years")}/>
+
                 <View display={grave_flex ? "flex" : "none"}>
                   <Image style={styles.graveIconStyle} source={HEADSTONE2}/>
                 </View>

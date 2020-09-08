@@ -19,7 +19,6 @@ import ActionSheetComponent2 from "../../common/Components/ActionSheetComponent2
 import {SavePicture} from "../../common/Functions/SavePicture";
 import SwipeableImageModal from "../../common/Components/SwipeableImageModal";
 import ResultLineComponent from "../../common/Components/ResultLineComponent";
-import {GetUserAge} from "../../common/Functions/GetUserAge";
 
 const ANIMATION_DURATION = 1200;
 
@@ -37,13 +36,17 @@ class ResultPage2 extends Component {
       modal_uri: "",
       nationality: "",
       category: "",
-      star_sign: ""
+      star_sign: "",
+      hide_age: "",
+      grave_flex: "",
+      age: "",
+      birthday: "",
     };
   }
 
   componentWillMount() {
     const {data} = this.props.route.params;
-    let nationality = "", category = "", star_sign = "";
+    let nationality = "", category = "", star_sign = "", hide_age = "", grave_flex = "", age = "", birthday = "";
 
     this.props.navigation.setOptions({
       title: translate('app_name'),
@@ -54,6 +57,10 @@ class ResultPage2 extends Component {
       ),
     });
 
+    hide_age = data.celebrity.birthday === null || data.celebrity.birthday === "" || typeof data.celebrity.birthday === 'undefined';
+    grave_flex = typeof data.celebrity.dead !== 'undefined' && data.celebrity.dead !== null && data.celebrity.dead;
+    age = typeof (data.celebrity.age !== 'undefined' && data.celebrity.age !== null) ? data.celebrity.age : "";
+    birthday = typeof (data.celebrity.birthday !== 'undefined' && data.celebrity.birthday !== null) ? data.celebrity.birthday : "";
 
     try {
       nationality = typeof (data.celebrity.nationality !== 'undefined' && data.celebrity.nationality !== null) ? data.celebrity.nationality.name : "";
@@ -74,7 +81,15 @@ class ResultPage2 extends Component {
       star_sign = "";
     }
 
-    this.setState({category: category, nationality: nationality, star_sign: star_sign})
+    this.setState({
+      category: category,
+      nationality: nationality,
+      star_sign: star_sign,
+      grave_flex: grave_flex,
+      hide_age: hide_age,
+      age: age,
+      birthday: birthday
+    })
 
   }
 
