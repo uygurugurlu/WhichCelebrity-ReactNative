@@ -134,14 +134,14 @@ class HomePage extends Component {
         }
       });
 
-      UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender).then(async (res) => {
+      UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender).then((res) => {
         console.log('UserPhotoAnalyze res: ', JSON.parse(res));
         try {
           if (JSON.parse(res).status === 'error') {
             Alert.alert(JSON.parse(res).message);
           } else {
             this.setState({celebrity: JSON.parse(res)});
-            await interstitial.show();
+            interstitial.show();
             this.props.navigation.navigate('ResultPage', {data: JSON.parse(res).data});
           }
 
@@ -149,7 +149,10 @@ class HomePage extends Component {
           this.CancelCategory();
         } catch (e) {
           console.log('error on response: ', e);
+          this.setState({result_loading: false});
         }
+      }).catch(() => {
+        this.setState({result_loading: false});
       });
     }
   };

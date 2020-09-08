@@ -133,11 +133,11 @@ class HomePage2 extends Component {
         }
       });
 
-      UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag).then(async (res) => {
+      UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag).then((res) => {
         console.log("UserPhotoAnalyze res: ", JSON.parse(res));
 
         try {
-          await interstitial.show();
+          interstitial.show();
           this.props.navigation.navigate('ResultPage2', {
             celebrity_photo: celebrity_photo,
             celebrity_name: celebrity_name,
@@ -147,9 +147,11 @@ class HomePage2 extends Component {
           this.HideProfile();
         } catch (e) {
           console.log('error on response: ', e);
+          this.setState({result_loading: false});
         }
       }).catch((err) => {
         console.log("UserPhotoAnalyze res: ", err);
+        this.setState({result_loading: false});
       });
     }
   };
