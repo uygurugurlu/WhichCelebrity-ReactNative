@@ -121,23 +121,23 @@ class HomePage2 extends Component {
     return true;
   };
 
-  GetResult = () => {
+  GetResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
     const {celebrity_id, celebrity_photo, celebrity_name} = this.state;
 
     if (this.CheckValidity()) {
       this.setState({result_loading: true});
-      interstitial.onAdEvent((type) => {
+      await interstitial.onAdEvent((type) => {
         if (type !== AdEventType.LOADED) {
           interstitial.load();
         }
       });
 
-      UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag).then((res) => {
+      UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag).then(async (res) => {
         console.log("UserPhotoAnalyze res: ", JSON.parse(res));
 
         try {
-          interstitial.show();
+          await interstitial.show();
           this.props.navigation.navigate('ResultPage2', {
             celebrity_photo: celebrity_photo,
             celebrity_name: celebrity_name,

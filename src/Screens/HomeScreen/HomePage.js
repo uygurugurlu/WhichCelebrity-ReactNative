@@ -128,20 +128,20 @@ class HomePage extends Component {
 
     if (this.CheckValidity()) {
       this.setState({result_loading: true});
-      interstitial.onAdEvent((type) => {
+      await interstitial.onAdEvent((type) => {
         if (type !== AdEventType.LOADED) {
           interstitial.load();
         }
       });
 
-      await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender).then((res) => {
+      UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender).then(async (res) => {
         console.log('UserPhotoAnalyze res: ', JSON.parse(res));
         try {
           if (JSON.parse(res).status === 'error') {
             Alert.alert(JSON.parse(res).message);
           } else {
             this.setState({celebrity: JSON.parse(res)});
-            interstitial.show();
+            await interstitial.show();
             this.props.navigation.navigate('ResultPage', {data: JSON.parse(res).data});
           }
 

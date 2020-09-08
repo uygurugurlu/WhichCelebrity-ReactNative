@@ -9,7 +9,8 @@ export const GetUserPhotoFromImageLibrary = (get_mono_user_avatar_source) => {
     includeBase64: true,
     cropperChooseText: translate('image_picker.choose'),
     cropperCancelText: translate('image_picker.cancel'),
-    compressImageQuality: 0.8
+    compressImageQuality: 0.8,
+    mediaType: 'photo'
   }).then((image) => {
     console.log("image path: ", image.path);
     get_mono_user_avatar_source({uri: image.path}, image.data);
