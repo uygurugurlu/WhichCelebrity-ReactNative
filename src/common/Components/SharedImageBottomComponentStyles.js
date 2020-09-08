@@ -21,8 +21,8 @@ export const styles = StyleSheet.create({
     width: DEVICE_WIDTH * 0.275,
   },
   storeImageStyle: {
-    height: (DEVICE_WIDTH * 0.3) / 3.80962343096,
-    width: DEVICE_WIDTH * 0.3,
+    height: (DEVICE_WIDTH * 0.25) / 3.80962343096,
+    width: DEVICE_WIDTH * 0.25,
   },
   turkaiTextStyle: {
     fontSize: 14,
