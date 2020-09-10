@@ -44,27 +44,29 @@ class HomePage extends Component {
     };
   }
 
-  componentWillMount() {
-    GetCategories(this.props.user_agent, this.props.language.languageTag).then((res) => {
-      console.log("Categories: ", res.data);
-      this.setState({categories: res.data})
-      this.fillScroll(res.data);
-    });
+  componentWillMount = async () => {
+    const {user_agent, language} = this.props;
+
+    try {
+      const {data} = await GetCategories(user_agent, language.languageTag)
+      console.log("Categories: ", data.data);
+      this.setState({categories: data.data})
+      this.fillScroll(data.data);
+    } catch (e) {
+      console.log('Error GetCategories: ', e);
+    }
 
     this.props.navigation.setOptions({
       title: translate('app_name'),
       headerRight: () => (
-        <TouchableOpacity onPress={() =>
-          this.props.navigation.navigate('SavingsPage', {tab_index: 0})}>
-          <Image source={RIGHT_HEADER_ICON} style={{height: 35, width: 35, marginRight: 15}}/>
+        <TouchableOpacity onPress={this.NavigateToSavingsPage}>
+          <Image source={RIGHT_HEADER_ICON} style={styles.headerRightButtonStyle}/>
         </TouchableOpacity>
       ),
     });
   }
 
-  componentDidMount() {
-    interstitial.load();
-  }
+  componentDidMount = () => interstitial.load();
 
   showActionSheet = () => this.actionSheet.show();
 
@@ -79,6 +81,14 @@ class HomePage extends Component {
   LaunchImageLibrary = () => GetUserPhotoFromImageLibrary(this.props.get_user_avatar_source);
 
   SelectAvatar = () => this.showActionSheet();
+
+  NavigateToResultPage = (data) => this.props.navigation.navigate('ResultPage', {data: data});
+
+  NavigateToSavingsPage = () => this.props.navigation.navigate('SavingsPage', {tab_index: 0});
+
+  HandleCategoriesVisibility = () => this.setState({categories_visibility: !this.state.categories_visibility});
+
+  HandleGendersVisibility = () => this.setState({genders_visibility: !this.state.genders_visibility});
 
   shouldComponentUpdate = async (nextProps, nextState) => {
     const {userAvatarSource, language} = this.props;
@@ -108,10 +118,6 @@ class HomePage extends Component {
       return false;
     }
     return true;
-  };
-
-  NavigateToResultPage = (data) => {
-    this.props.navigation.navigate('ResultPage', {data: data});
   };
 
   GetResult = async () => {
@@ -164,13 +170,6 @@ class HomePage extends Component {
     });
   }
 
-  HandleCategoriesVisibility = () => {
-    this.setState({categories_visibility: !this.state.categories_visibility});
-  }
-
-  HandleGendersVisibility = () => {
-    this.setState({genders_visibility: !this.state.genders_visibility});
-  }
 
   CancelCategory = () => {
     this.setState({
@@ -192,9 +191,7 @@ class HomePage extends Component {
   };
 
   onChangeText = (key, value) => {
-    this.setState({
-      [key]: value,
-    });
+    this.setState({[key]: value});
 
     if (value === "")
       this.setState({categories_visibility: false});
@@ -214,7 +211,7 @@ class HomePage extends Component {
     const {categories_visibility, scroll_items, selected_category_name, genders_visibility} = this.state;
 
     return (
-      <TouchableWithoutFeedback style={styles.backgroundImageStyle} onPress={() => this.CancelCategory()}>
+      <TouchableWithoutFeedback style={styles.backgroundImageStyle} onPress={this.CancelCategory}>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
 
@@ -222,8 +219,7 @@ class HomePage extends Component {
               <Text style={styles.topLabelStyle}>{translate("home.top_label")}</Text>
 
               <View display={'flex'} style={styles.topLabel2ContainerStyle}>
-                <TouchableOpacity style={styles.categoryContainerStyle}
-                                  onPress={() => this.HandleCategoriesVisibility()}>
+                <TouchableOpacity style={styles.categoryContainerStyle} onPress={this.HandleCategoriesVisibility}>
                   <TextInput style={styles.topLabel2Style}
                              onChangeText={(value) => this.onChangeText('selected_category_name', value)}
                              autoFocus={false}
@@ -236,19 +232,19 @@ class HomePage extends Component {
                   </View>
 
                   <View display={selected_category_name !== "" ? 'flex' : 'none'} style={{marginRight: 5}}>
-                    <TouchableOpacity onPress={() => this.CancelCategory()}>
+                    <TouchableOpacity onPress={this.CancelCategory}>
                       <Icon name={'times'} size={25} type={'light'} color={'white'}
                             containerStyle={styles.cancelIconContainerStyle}/>
                     </TouchableOpacity>
                   </View>
-
                 </TouchableOpacity>
+
               </View>
             </View>
             <GenderSelection SelectGender={this.SelectGender}
                              visibility={genders_visibility}
                              categoriesVisibility={categories_visibility}
-                             handleVisibilitty={() => this.HandleGendersVisibility()}/>
+                             handleVisibilitty={this.HandleGendersVisibility}/>
 
             <View display={categories_visibility ? 'flex' : 'none'} style={{alignItems: 'center'}}>
               <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.55}}>
@@ -259,15 +255,14 @@ class HomePage extends Component {
 
           <View display={!categories_visibility && !genders_visibility ? 'flex' : 'none'}
                 style={styles.iconsMainContainerStyle}>
-            <AvatarComponent ImageSource={userAvatarSource} SelectAvatar={() => this.SelectAvatar()}
-                             showEditButton={true}/>
+            <AvatarComponent ImageSource={userAvatarSource} SelectAvatar={this.SelectAvatar} showEditButton={true}/>
           </View>
 
           <View display={!categories_visibility && !genders_visibility ? 'flex' : 'none'}>
             <Button title={translate('home.get_result')}
                     buttonStyle={styles.resultButtonStyle}
                     titleStyle={{fontSize: 18, fontWeight: '600'}}
-                    onPress={() => this.GetResult()}
+                    onPress={this.GetResult}
                     loading={this.state.result_loading}/>
           </View>
 

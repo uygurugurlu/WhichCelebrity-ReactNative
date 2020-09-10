@@ -19,6 +19,9 @@ import ActionSheetComponent2 from "../../common/Components/ActionSheetComponent2
 import {SavePicture} from "../../common/Functions/SavePicture";
 import SwipeableImageModal from "../../common/Components/SwipeableImageModal";
 import ResultLineComponent from "../../common/Components/ResultLineComponent";
+import ResultPageBody from "./ResultPageBody/ResultPageBody";
+import Swiper from "react-native-swiper";
+import AgreementsPage from "../LandingSlides/AgreementsPage/AgreementsPage";
 
 const ANIMATION_DURATION = 1200;
 
@@ -230,69 +233,51 @@ class ResultPage extends Component {
     const {userAvatarSource} = this.props;
     const {share_active, data, hide_age, grave_flex, age, birthday, isVisible, modal_uri, index, nationality, category, star_sign} = this.state;
 
-    console.log("grave_flex: ", grave_flex);
-
     return (
       <View style={styles.scrollViewStyle}>
         <ViewShot ref={(ref) => (this.viewShot = ref)}
                   options={{format: 'jpg', quality: 0.9}}
                   style={styles.viewShotImageStyle}>
 
-          <SafeAreaView style={styles.mainContainer}>
+          <Swiper
+            style={{}}
+            autoplay={false}
+            showsButtons={false}
+            dotStyle={{height: 7, width: 7}}
+            activeDotStyle={{height: 7, width: 7}}
+            activeDotColor={'#1490E3'}
+            dotColor={'#2a2a2a'}
+            loop={false}>
+            <ResultPageBody userAvatarSource={userAvatarSource}
+                            data={data}
+                            hide_age={hide_age}
+                            grave_flex={grave_flex}
+                            age={age}
+                            birthday={birthday}
+                            nationality={nationality}
+                            category={category}
+                            handleModalVisibility={(index) => this.handleModalVisibility(index)}
+                            star_sign={star_sign}/>
 
-            <View style={[styles.iconContainerStyle, shadow]}>
-              <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
-                <Image source={userAvatarSource} style={styles.iconStyle}/>
-              </TouchableOpacity>
+            <ResultPageBody userAvatarSource={userAvatarSource}
+                            data={data}
+                            hide_age={hide_age}
+                            grave_flex={grave_flex}
+                            age={age}
+                            birthday={birthday}
+                            nationality={nationality}
+                            category={category}
+                            handleModalVisibility={(index) => this.handleModalVisibility(index)}
+                            star_sign={star_sign}/>
+          </Swiper>
 
-              <TouchableOpacity onPress={() => this.handleModalVisibility(1)}>
-                <Image source={{uri: data.celebrity.photo}} style={styles.iconStyle}/>
-              </TouchableOpacity>
-            </View>
+          <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
+            <ResultButtonsRow share_active={share_active} showActionSheet={this.showActionSheet} goBack={this.GoBack}/>
+          </Animatable.View>
 
-            <View style={{alignItems: 'center'}}>
-              <Text
-                style={{fontWeight: '500', fontSize: 17, marginTop: 15}}>{translate("result.similarity_rate")}</Text>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <AnimatedProgressBar fill={data.percentage}/>
-                <AnimatedProgressComponent fill={data.percentage}/>
-              </View>
-            </View>
-
-            <ScrollView style={styles.labelContainerStyle}>
-
-              <ResultLineComponent leftText={translate("result.celebrity") + ": "} rightText={data.celebrity.name}/>
-
-              <View display={hide_age ? "none" : 'flex'} style={{flexDirection: 'row', marginRight: 25}}>
-                <ResultLineComponent leftText={translate("result.birthday") + ": "}
-                                     rightText={birthday + ", " + age + " " + translate("result.years")}/>
-
-                <View display={grave_flex ? "flex" : "none"}>
-                  <Image style={styles.graveIconStyle} source={HEADSTONE2}/>
-                </View>
-              </View>
-
-              <ResultLineComponent leftText={translate("result.category") + ": "}
-                                   rightText={category}/>
-
-              <ResultLineComponent leftText={translate("result.nationality") + ": "}
-                                   rightText={nationality}/>
-
-              <ResultLineComponent leftText={translate("result.zodiac_sign") + ": "}
-                                   rightText={star_sign}/>
-            </ScrollView>
-
-            <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
-              <ResultButtonsRow share_active={share_active}
-                                showActionSheet={this.showActionSheet}
-                                goBack={this.GoBack}/>
-            </Animatable.View>
-
-            <Animatable.View ref={ref => (this.ref1 = ref)} easing={'linear'}>
-              <SharedImageBottomComponent shareActive={share_active}/>
-            </Animatable.View>
-
-          </SafeAreaView>
+          <Animatable.View ref={ref => (this.ref1 = ref)} easing={'linear'}>
+            <SharedImageBottomComponent shareActive={share_active}/>
+          </Animatable.View>
         </ViewShot>
 
         <SwipeableImageModal uri={modal_uri}

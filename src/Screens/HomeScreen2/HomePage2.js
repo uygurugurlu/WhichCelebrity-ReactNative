@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
-  Alert,
-  ScrollView,
-  Platform,
-  TouchableHighlight
+  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView, Platform
 } from 'react-native';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
@@ -28,8 +20,6 @@ import {GetCelebrity} from "../../common/Functions/Endpoints/GetCelebrity";
 import SelectedCelebrityLine from "../../common/Components/SelectedCelebrityLine";
 import {UserPhotoAnalyze2} from "../../common/Functions/Endpoints/UserPhotoAnalyze2";
 import CacheImageComponent from "../../common/Components/CacheImagecomponent";
-import RNTooltips from 'react-native-tooltips';
-import Tooltip from 'react-native-walkthrough-tooltip';
 import TooltipComponent from "../../common/Components/TooltipComponent";
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
@@ -68,13 +58,9 @@ class HomePage2 extends Component {
     });
   }
 
-  componentDidMount() {
-    interstitial.load();
-  }
+  componentDidMount = () => interstitial.load();
 
-  updateSearch = (search) => {
-    this.setState({search: search, profile_visible: search === ""});
-  }
+  updateSearch = (search) => this.setState({search: search, profile_visible: search === ""});
 
   showActionSheet = () => this.actionSheet.show();
 
@@ -171,7 +157,6 @@ class HomePage2 extends Component {
 
     try {
       await this.setState({random_result_loading: true});
-
       const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag)
       console.log("UserPhotoAnalyze res: ", JSON.parse(data));
       await interstitial.show();

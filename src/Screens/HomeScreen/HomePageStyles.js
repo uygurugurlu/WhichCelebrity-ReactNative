@@ -181,6 +181,11 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: 'gray',
     borderRadius: 12.5,
+  },
+  headerRightButtonStyle: {
+    height: 35,
+    width: 35,
+    marginRight: 15
   }
 
 });

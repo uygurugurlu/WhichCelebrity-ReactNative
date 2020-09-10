@@ -24,7 +24,7 @@ function App() {
     /** Print Every Response to the Console*/
     axios.interceptors.response.use(
       (res) => {
-        console.group('interceptor response',res);
+        console.group('interceptor response', res);
         //console.log('status is:' + status);
         //console.table(data);
         console.groupEnd();
@@ -42,7 +42,7 @@ function App() {
 
     /** Add default query parameter to axios. */
     axios.interceptors.request.use((config) => {
-      config.params = { ...config.params, locale: 'tr'}
+      config.params = {...config.params, locale: 'tr'}
       console.group('interceptor request');
       console.table(config);
       console.groupEnd();
