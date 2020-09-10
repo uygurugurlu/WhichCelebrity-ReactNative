@@ -14,27 +14,21 @@ class TooltipComponent extends Component {
     this.setState({tooltipVisible: this.props.isVisible});
   }
 
+  HandleVisibility = () => {
+    this.setState({tooltipVisible: !this.state.tooltipVisible})
+  }
+
   render() {
     const {tooltipVisible} = this.state;
 
     return (
       <Tooltip isVisible={tooltipVisible}
                content={
-                 <Text
-                   style={{
-                     fontSize: 15,
-                     fontWeight: '500',
-                     width: DEVICE_WIDTH * 0.6,
-                     paddingVertical: 7.5
-                   }}>{translate("famous_compare.tooltip_text")}</Text>
+                 <Text style={styles.tooltipTextStyle}>{translate("famous_compare.tooltip_text")}</Text>
                }
                placement="bottom"
-               onClose={() => this.setState({tooltipVisible: false})}>
-        <Text style={{
-          color: "#123456", alignSelf: 'center', fontSize: 15,
-          fontWeight: '500',
-        }}
-              onPress={() => this.setState({tooltipVisible: true})}>
+               onClose={() => this.HandleVisibility()}>
+        <Text style={styles.clickedTextStyle} onPress={() => this.HandleVisibility()}>
           {translate("famous_compare.press_random")}</Text>
         <View style={styles.dashedLineStyle}/>
 
@@ -52,6 +46,19 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     borderColor: '#123456',
   },
+  tooltipTextStyle: {
+    fontSize: 15,
+    fontWeight: '500',
+    width: DEVICE_WIDTH * 0.6,
+    paddingVertical: 7.5
+  },
+  clickedTextStyle: {
+    color: "#123456",
+    alignSelf: 'center',
+    fontSize: 15,
+    fontWeight: '500',
+  }
+
 });
 
 export default TooltipComponent;
