@@ -156,11 +156,11 @@ class HomePage2 extends Component {
 
     try {
       await this.setState({random_result_loading: true});
-      const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, null, language.languageTag, true);
+      const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, null, language.languageTag, "true");
       console.log("UserPhotoAnalyze res: ", JSON.parse(data));
-      await interstitial.show();
-      this.NavigateToResultPage2(JSON.parse(data).data[0]);
-      this.HideProfile();
+      //await interstitial.show();
+      //this.NavigateToResultPage2(JSON.parse(data).data[0]);
+      //this.HideProfile();
     } catch (e) {
       console.log("Error UserPhotoAnalyze2: ", e.response);
       Alert.alert(translate("home.result_not_found"));

@@ -3,9 +3,9 @@ import RNFetchBlob from "rn-fetch-blob";
 
 export const UserPhotoAnalyze2 = (user_agent, image_data, celebrity_id, locale, random) => {
 
-  const body = random ? [
+  const body = random==="true" ? [
       {name: 'image', filename: 'photo.png', type: 'image/jpg/jpeg/png', data: image_data},
-      {name: 'random', data: true},
+      {name: 'random', data: random},
       {name: 'locale', data: locale},
     ] :
     [
