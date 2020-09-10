@@ -65,9 +65,11 @@
     "react-native-simple-image-cropper": "^3.1.0",
     "react-native-svg": "^12.1.0",
     "react-native-swiper": "^1.6.0-rc.3",
+    "react-native-tooltips": "^1.0.2",
     "react-native-vector-icons": "^7.0.0",
     "react-native-version-check": "^3.4.1",
     "react-native-view-shot": "^3.1.2",
+    "react-native-walkthrough-tooltip": "^1.1.10",
     "react-native-webview": "^10.3.2",
     "react-native-zoom-image": "^0.1.2",
     "react-redux": "^7.2.0",
@@ -76,6 +78,7 @@
     "redux-thunk": "^2.3.0",
     "rn-avatar": "^1.0.2",
     "rn-fetch-blob": "^0.12.0",
+    "rn-tooltip": "^3.0.0",
     "shorthash": "0.0.2"
   },
   "devDependencies": {

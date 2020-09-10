@@ -49,6 +49,13 @@ export const styles = StyleSheet.create({
     marginTop: 7.5,
     textAlign: 'center',
   },
+  tooltipTextStyle: {
+    color: '#123456',
+    fontSize: 15,
+    fontWeight: '500',
+    marginTop: 5,
+    textAlign: 'center',
+  },
   selectedLabelTextStyle: {
     color: '#123456',
     fontSize: 17,
@@ -64,9 +71,17 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   resultButtonStyle: {
-    width: DEVICE_WIDTH * 0.8,
+    width: DEVICE_WIDTH * 0.435,
     height: buttons_height,
-    borderRadius: 5,
+    borderRadius: 2.5,
+    fontWeight: '600',
+    backgroundColor: button_colors,
+    marginBottom: 25,
+  },
+  randomButtonStyle: {
+    width: DEVICE_WIDTH * 0.435,
+    height: buttons_height,
+    borderRadius: 2.5,
     fontWeight: '600',
     backgroundColor: button_colors,
     marginBottom: 25,
@@ -161,5 +176,6 @@ export const styles = StyleSheet.create({
     width: 70,
     borderRadius: 1,
     resizeMode: 'contain'
-  }
+  },
+
 });

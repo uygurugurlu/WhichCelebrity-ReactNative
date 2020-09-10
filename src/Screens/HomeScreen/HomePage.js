@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView, TextInput, TouchableWithoutFeedback,
+  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView, TextInput, TouchableWithoutFeedback, Platform,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
@@ -19,7 +19,8 @@ import {UserPhotoAnalyze} from "../../common/Functions/Endpoints/UserPhotoAnalyz
 import Icon from "react-native-fontawesome-pro";
 import GenderSelection from "../../common/Components/GenderSelection";
 
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
+const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
+const adUnitId = TestIds.INTERSTITIAL//__DEV__ ? TestIds.INTERSTITIAL : unit_id;
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   requestNonPersonalizedAdsOnly: false,
 });
@@ -50,10 +51,6 @@ class HomePage extends Component {
       this.fillScroll(res.data);
     });
 
-    /*GetToken().then((res) => {
-      console.log("Res: ", res);
-    });*/
-
     this.props.navigation.setOptions({
       title: translate('app_name'),
       headerRight: () => (
@@ -66,13 +63,6 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    interstitial.onAdEvent((type) => {
-      if (type === AdEventType.LOADED) {
-        this.setState({loaded: true});
-      }
-    });
-
-    // Start loading the interstitial straight away
     interstitial.load();
   }
 
@@ -97,7 +87,7 @@ class HomePage extends Component {
     }
 
     if (userAvatarSource !== nextProps.userAvatarSource) {
-      interstitial.load();
+      //interstitial.load();
       this.actionSheet.hide();
     }
   };
@@ -113,12 +103,10 @@ class HomePage extends Component {
 
   CheckValidity = () => {
     const {userAvatarSource} = this.props;
-
     if (userAvatarSource === '') {
       Alert.alert('', translate('famous_compare.validity_alert'));
       return false;
     }
-
     return true;
   };
 
@@ -128,13 +116,13 @@ class HomePage extends Component {
 
     if (this.CheckValidity()) {
       this.setState({result_loading: true});
-      await interstitial.onAdEvent((type) => {
+      interstitial.onAdEvent((type) => {
         if (type !== AdEventType.LOADED) {
           interstitial.load();
         }
       });
 
-      UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender).then((res) => {
+      await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender).then((res) => {
         console.log('UserPhotoAnalyze res: ', JSON.parse(res));
         try {
           if (JSON.parse(res).status === 'error') {

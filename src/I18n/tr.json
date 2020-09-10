@@ -13,12 +13,15 @@
     "share_result": "Sonucu Paylaş"
   },
   "famous_compare": {
-    "compare_header": "Bir ünlü seçin ve benzerliğinizi öğrenin",
+    "compare_header": "Bir ünlü seçin ve ne kadar benzediğinizi öğrenin yada ",
+    "press_random": "rastgele butonuna basınız",
+    "tooltip_text": "Rastgele butonuna basarak yaklaşık 200B ünlü arasından rastgele bir ünlüye ne kadar benzediğinizi öğrenebilirsiniz.",
     "result_label": "Seni en çok benzettiğimiz ünlü: ",
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
   "home": {
     "get_result": "Sonucu Gör",
+    "random_compare": "Rastgele Karşılaştır",
     "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz.",
     "selected_celebrity": "Seçtiğiniz ünlü",
     "select_celebrity": "Ünlülerde ara ... ",
@@ -32,7 +35,8 @@
     "search_for_all": "Kadın ve Erkek ünlülerde ara",
     "search_male_celebrities": "Erkek ünlülerde ara",
     "search_female_celebrities": "Kadın ünlülerde ara",
-    "top_label": "Hangi ünlüye benzediğini öğren"
+    "top_label": "Hangi ünlüye benzediğini öğren",
+    "result_not_found": "Sonuç bulunamadı"
   },
   "result": {
     "share": "Paylaş",

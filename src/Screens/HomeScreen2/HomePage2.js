@@ -1,5 +1,15 @@
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  Alert,
+  ScrollView,
+  Platform,
+  TouchableHighlight
+} from 'react-native';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
 import {Button} from 'react-native-elements';
@@ -18,8 +28,12 @@ import {GetCelebrity} from "../../common/Functions/Endpoints/GetCelebrity";
 import SelectedCelebrityLine from "../../common/Components/SelectedCelebrityLine";
 import {UserPhotoAnalyze2} from "../../common/Functions/Endpoints/UserPhotoAnalyze2";
 import CacheImageComponent from "../../common/Components/CacheImagecomponent";
+import RNTooltips from 'react-native-tooltips';
+import Tooltip from 'react-native-walkthrough-tooltip';
+import TooltipComponent from "../../common/Components/TooltipComponent";
 
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-9113500705436853/7410126783';
+const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
+const adUnitId = TestIds.INTERSTITIAL//__DEV__ ? TestIds.INTERSTITIAL : unit_id;
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   requestNonPersonalizedAdsOnly: false,
 });
@@ -32,12 +46,14 @@ class HomePage2 extends Component {
       loaded: false,
       setLoaded: false,
       result_loading: false,
+      random_result_loading: false,
       search: '',
       scroll_items: [],
       celebrity_name: "",
       celebrity_photo: "",
       celebrity_id: 0,
-      search_visible: true
+      search_visible: true,
+      tooltipVisible: false
     };
   }
 
@@ -53,11 +69,6 @@ class HomePage2 extends Component {
   }
 
   componentDidMount() {
-    interstitial.onAdEvent((type) => {
-      if (type === AdEventType.LOADED) this.setState({loaded: true});
-    });
-
-    // Start loading the interstitial straight away
     interstitial.load();
   }
 
@@ -109,7 +120,6 @@ class HomePage2 extends Component {
   CheckValidity = () => {
     const {userAvatarSource} = this.props;
     const {celebrity_name} = this.state;
-
     if (userAvatarSource === '') {
       Alert.alert('', translate('home.avatar_warning'));
       return false;
@@ -117,44 +127,63 @@ class HomePage2 extends Component {
       Alert.alert('', translate('home.select_warning'));
       return false;
     }
-
     return true;
   };
 
+  NavigateToResultPage2 = (data) => {
+    const {celebrity_photo, celebrity_name} = this.state;
+    this.props.navigation.navigate('ResultPage2', {
+      celebrity_photo: celebrity_photo,
+      celebrity_name: celebrity_name,
+      data: data
+    });
+  }
+
   GetResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
-    const {celebrity_id, celebrity_photo, celebrity_name} = this.state;
+    const {celebrity_id} = this.state;
 
     if (this.CheckValidity()) {
       this.setState({result_loading: true});
-      await interstitial.onAdEvent((type) => {
+      interstitial.onAdEvent((type) => {
         if (type !== AdEventType.LOADED) {
           interstitial.load();
         }
       });
 
-      UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag).then((res) => {
-        console.log("UserPhotoAnalyze res: ", JSON.parse(res));
+      try {
+        const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag)
+        console.log("UserPhotoAnalyze res: ", JSON.parse(data));
+        await interstitial.show();
+        this.NavigateToResultPage2(JSON.parse(data).data);
+        this.HideProfile();
+      } catch (e) {
+        console.log("Error UserPhotoAnalyze2: ", e);
+      }
 
-        try {
-          interstitial.show();
-          this.props.navigation.navigate('ResultPage2', {
-            celebrity_photo: celebrity_photo,
-            celebrity_name: celebrity_name,
-            data: JSON.parse(res).data
-          });
-          this.setState({result_loading: false});
-          this.HideProfile();
-        } catch (e) {
-          console.log('error on response: ', e);
-          this.setState({result_loading: false});
-        }
-      }).catch((err) => {
-        console.log("UserPhotoAnalyze res: ", err);
-        this.setState({result_loading: false});
-      });
+      this.setState({result_loading: false});
     }
   };
+
+  GetRandomResult = async () => {
+    const {userAvatarB64, user_agent, language} = this.props;
+    const {celebrity_id} = this.state;
+
+    try {
+      await this.setState({random_result_loading: true});
+
+      const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag)
+      console.log("UserPhotoAnalyze res: ", JSON.parse(data));
+      await interstitial.show();
+      this.NavigateToResultPage2(JSON.parse(data).data);
+      this.HideProfile();
+    } catch (e) {
+      console.log("Error UserPhotoAnalyze2: ", e);
+      Alert.alert(translate("home.result_not_found"));
+    }
+
+    this.setState({random_result_loading: false});
+  }
 
   fillScroll = async (search) => {
     if (search.length > 1) {
@@ -201,7 +230,7 @@ class HomePage2 extends Component {
 
   render() {
     const {userAvatarSource} = this.props;
-    const {search, scroll_items, celebrity_name, celebrity_photo, search_visible} = this.state;
+    const {search, scroll_items, celebrity_name, celebrity_photo, search_visible, tooltipVisible, random_result_loading, result_loading} = this.state;
 
     return (
       <View style={styles.backgroundImageStyle}>
@@ -210,6 +239,7 @@ class HomePage2 extends Component {
 
             <View display={search === '' && search_visible ? 'flex' : 'none'} style={styles.topLabel2ContainerStyle}>
               <Text style={styles.topLabel2Style}>{translate('famous_compare.compare_header')}</Text>
+              <TooltipComponent isVisible={tooltipVisible}/>
             </View>
 
             <View display={search_visible ? 'flex' : 'none'}>
@@ -233,12 +263,20 @@ class HomePage2 extends Component {
             <AvatarComponent ImageSource={userAvatarSource} SelectAvatar={() => this.SelectAvatar()}/>
           </View>
 
-          <View display={search === '' ? 'flex' : 'none'}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', width: DEVICE_WIDTH * 0.9}}
+                display={search === '' ? 'flex' : 'none'}>
+            <Button title={translate('home.random_compare')}
+                    buttonStyle={styles.randomButtonStyle}
+                    titleStyle={{fontSize: 17, fontWeight: '600'}}
+                    onPress={() => this.GetRandomResult()}
+                    disabled={celebrity_name !== ""}
+                    loading={random_result_loading}/>
+
             <Button title={translate('home.get_result')}
                     buttonStyle={styles.resultButtonStyle}
-                    titleStyle={{fontSize: 18, fontWeight: '600'}}
+                    titleStyle={{fontSize: 17, fontWeight: '600'}}
                     onPress={() => this.GetResult()}
-                    loading={this.state.result_loading}/>
+                    loading={result_loading}/>
           </View>
 
           {this.GetActionSheet()}

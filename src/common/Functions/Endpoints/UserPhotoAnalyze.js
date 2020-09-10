@@ -40,8 +40,6 @@ export const UserPhotoAnalyze = async (user_agent, image_data, category, locale,
         {name: 'gender', data: gender}
       ];
     }
-
-
   }
 
 

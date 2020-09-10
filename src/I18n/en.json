@@ -13,12 +13,15 @@
     "share_result": "Share Result"
   },
   "famous_compare": {
-    "compare_header": "Select a celebrity and find out how you look alike",
+    "compare_header": "Select a celebrity and find out how you look alike or ",
+    "press_random": "press the random button",
+    "tooltip_text": "You can find out how similar you are to a random celebrity out of about 200K by pressing the random button.",
     "result_label": "You look very similar to ",
     "validity_alert": "Please make sure you select an image."
   },
   "home": {
     "get_result": "Get Result",
+    "random_compare": "Compare Randomly",
     "validity_alert": "Please select an image for mother, father and the child.",
     "selected_celebrity": "The celebrity you choose",
     "select_celebrity": "Search a celebrity ...",
@@ -32,7 +35,8 @@
     "search_for_all": "Search in all genders",
     "search_male_celebrities": "Search in male celebrities",
     "search_female_celebrities": "Search in female celebrities",
-    "top_label": "Find out which celebrity you are"
+    "top_label": "Find out which celebrity you are",
+    "result_not_found": "Result not found"
   },
   "result": {
     "share": "Share",
