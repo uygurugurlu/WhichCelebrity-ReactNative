@@ -18,6 +18,7 @@ import {DEVICE_HEIGHT, DOWN_ICON, FORWARD_ICON} from "../../common/Constants";
 import {UserPhotoAnalyze} from "../../common/Functions/Endpoints/UserPhotoAnalyze";
 import Icon from "react-native-fontawesome-pro";
 import GenderSelection from "../../common/Components/GenderSelection";
+import {GetToken} from "../../common/Functions/Endpoints/GetToken";
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
 const adUnitId = TestIds.INTERSTITIAL//__DEV__ ? TestIds.INTERSTITIAL : unit_id;
@@ -47,13 +48,17 @@ class HomePage extends Component {
   componentWillMount = async () => {
     const {user_agent, language} = this.props;
 
+    //const token = await GetToken(user_agent);
+    //console.log("GetToken: ", token);
+
     try {
-      const {data} = await GetCategories(user_agent, language.languageTag)
+      const {data} = await GetCategories(user_agent, language.languageTag);
+
       console.log("Categories: ", data.data);
       this.setState({categories: data.data})
       this.fillScroll(data.data);
     } catch (e) {
-      console.log('Error GetCategories: ', e);
+      console.log('Error GetCategories: ', e.response);
     }
 
     this.props.navigation.setOptions({

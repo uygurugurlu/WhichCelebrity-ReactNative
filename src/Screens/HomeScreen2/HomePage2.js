@@ -138,13 +138,13 @@ class HomePage2 extends Component {
       });
 
       try {
-        const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag)
+        const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag, false);
         console.log("UserPhotoAnalyze res: ", JSON.parse(data));
         await interstitial.show();
-        this.NavigateToResultPage2(JSON.parse(data).data);
+        this.NavigateToResultPage2(JSON.parse(data).data[0]);
         this.HideProfile();
       } catch (e) {
-        console.log("Error UserPhotoAnalyze2: ", e);
+        console.log("Error UserPhotoAnalyze2: ", e.response);
       }
 
       this.setState({result_loading: false});
@@ -153,17 +153,16 @@ class HomePage2 extends Component {
 
   GetRandomResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
-    const {celebrity_id} = this.state;
 
     try {
       await this.setState({random_result_loading: true});
-      const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag)
+      const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, null, language.languageTag, true);
       console.log("UserPhotoAnalyze res: ", JSON.parse(data));
       await interstitial.show();
-      this.NavigateToResultPage2(JSON.parse(data).data);
+      this.NavigateToResultPage2(JSON.parse(data).data[0]);
       this.HideProfile();
     } catch (e) {
-      console.log("Error UserPhotoAnalyze2: ", e);
+      console.log("Error UserPhotoAnalyze2: ", e.response);
       Alert.alert(translate("home.result_not_found"));
     }
 

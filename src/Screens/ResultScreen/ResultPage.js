@@ -10,18 +10,13 @@ import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../common/Components/SharedImageBottomComponent';
 import {RIGHT_HEADER_ICON,} from '../../common/IconIndex';
-import {HEADSTONE2, shadow} from '../../common/Constants';
 import * as Animatable from 'react-native-animatable';
 import ResultButtonsRow from "../../common/Components/ResultButtonsRow";
-import AnimatedProgressBar from "../../common/Components/AnimatedProgressBar";
-import AnimatedProgressComponent from "../../common/Components/AnimatedProgressComponent";
 import ActionSheetComponent2 from "../../common/Components/ActionSheetComponent2";
 import {SavePicture} from "../../common/Functions/SavePicture";
 import SwipeableImageModal from "../../common/Components/SwipeableImageModal";
-import ResultLineComponent from "../../common/Components/ResultLineComponent";
 import ResultPageBody from "./ResultPageBody/ResultPageBody";
 import Swiper from "react-native-swiper";
-import AgreementsPage from "../LandingSlides/AgreementsPage/AgreementsPage";
 
 const ANIMATION_DURATION = 1200;
 
@@ -42,6 +37,7 @@ class ResultPage extends Component {
       grave_flex: "",
       age: "",
       birthday: "",
+      swiper_index: 0
     };
   }
 
@@ -108,7 +104,19 @@ class ResultPage extends Component {
     if (data !== null) {
       await this.GetScreenShot();
     }
+
+    await this.ScrollAnimation();
   };
+
+  ScrollAnimation = async () => {
+    const data = await this.performTimeConsumingTask(2000);
+    await this.ref3.scrollTo(0.3, true);
+
+    if (data !== null) {
+      await this.ref3.scrollTo(0.1, true);
+    }
+
+  }
 
   performTimeConsumingTask = async (timeout) => {
     return new Promise((resolve) => setTimeout(() => {
@@ -240,13 +248,18 @@ class ResultPage extends Component {
                   style={styles.viewShotImageStyle}>
 
           <Swiper
+            ref={ref => (this.ref3 = ref)}
             style={{}}
             autoplay={false}
+            index={this.state.swiper_index}
             showsButtons={false}
             dotStyle={{height: 7, width: 7}}
             activeDotStyle={{height: 7, width: 7}}
             activeDotColor={'#1490E3'}
             dotColor={'#2a2a2a'}
+            onIndexChanged={(index) => {
+              console.log("çalıştı")
+            }}
             loop={false}>
             <ResultPageBody userAvatarSource={userAvatarSource}
                             data={data}
