@@ -1,4 +1,3 @@
-import {ResponseHandler} from '../ResponseHandler';
 import {AUTH_TOKEN, API_HOST} from '../../../config';
 import RNFetchBlob from "rn-fetch-blob";
 
@@ -43,20 +42,11 @@ export const UserPhotoAnalyze = async (user_agent, image_data, category, locale,
   }
 
 
-  try {
-    const {data} = await RNFetchBlob.fetch('POST', `${API_HOST}/api/analyze`, {
-      'Content-Type': 'multipart/form-data',
-      'Authorization': `Bearer ${AUTH_TOKEN}`,
-    }, body);
+  return RNFetchBlob.fetch('POST', `${API_HOST}/api/analyze`, {
+    'Content-Type': 'multipart/form-data',
+    'Authorization': `Bearer ${AUTH_TOKEN}`,
+  }, body);
 
-    return data;
-  } catch (error) {
-    ResponseHandler('GetCelebrities Response: ', error.response);
-    console.group('GetCelebrities Error ...');
-    console.table({...error.response.data});
-    console.groupEnd();
-  }
+}
 
-  return {};
-};
 

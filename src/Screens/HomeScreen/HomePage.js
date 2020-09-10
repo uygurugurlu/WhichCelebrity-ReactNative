@@ -110,6 +110,10 @@ class HomePage extends Component {
     return true;
   };
 
+  NavigateToResultPage = (data) => {
+    this.props.navigation.navigate('ResultPage', {data: data});
+  };
+
   GetResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
     const {selected_category_id, gender} = this.state;
@@ -122,26 +126,21 @@ class HomePage extends Component {
         }
       });
 
-      await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender).then((res) => {
-        console.log('UserPhotoAnalyze res: ', JSON.parse(res));
-        try {
-          if (JSON.parse(res).status === 'error') {
-            Alert.alert(JSON.parse(res).message);
-          } else {
-            this.setState({celebrity: JSON.parse(res)});
-            interstitial.show();
-            this.props.navigation.navigate('ResultPage', {data: JSON.parse(res).data});
-          }
-
-          this.setState({result_loading: false});
-          this.CancelCategory();
-        } catch (e) {
-          console.log('error on response: ', e);
-          this.setState({result_loading: false});
+      try {
+        const {data} = await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender);
+        if (JSON.parse(data).status === 'error') {
+          Alert.alert(JSON.parse(data).message);
+        } else {
+          this.setState({celebrity: JSON.parse(data)});
+          await interstitial.show();
+          this.NavigateToResultPage(JSON.parse(data).data);
         }
-      }).catch(() => {
-        this.setState({result_loading: false});
-      });
+        this.CancelCategory();
+      } catch (e) {
+        console.log('error on response: ', e);
+      }
+
+      this.setState({result_loading: false});
     }
   };
 
