@@ -144,7 +144,7 @@ class HomePage extends Component {
         } else {
           this.setState({celebrity: JSON.parse(data)});
           await interstitial.show();
-          this.NavigateToResultPage(JSON.parse(data).data);
+          this.NavigateToResultPage(JSON.parse(data).data[0]);
         }
         this.CancelCategory();
       } catch (e) {
