@@ -14,8 +14,8 @@
   },
   "famous_compare": {
     "compare_header": "Select a celebrity and find out how you look alike or ",
-    "press_random": "press the random button",
-    "tooltip_text": "You can find out how similar you are to a random celebrity out of about 200K by pressing the random button.",
+    "press_random": "press the 'Compare Randomly' button",
+    "tooltip_text": "You can find out how similar you are to a random celebrity out of about 200K by pressing the 'Compare Randomly' button.",
     "result_label": "You look very similar to ",
     "validity_alert": "Please make sure you select an image."
   },

@@ -14,8 +14,8 @@
   },
   "famous_compare": {
     "compare_header": "Bir ünlü seçin ve ne kadar benzediğinizi öğrenin yada ",
-    "press_random": "rastgele butonuna basınız",
-    "tooltip_text": "Rastgele butonuna basarak yaklaşık 200B ünlü arasından rastgele bir ünlüye ne kadar benzediğinizi öğrenebilirsiniz.",
+    "press_random": "'Rastgele Karşılaştır' butonuna basınız",
+    "tooltip_text": "'Rastgele Karşılaştır' butonuna basarak yaklaşık 200B ünlü arasından rastgele bir ünlüye ne kadar benzediğinizi öğrenebilirsiniz.",
     "result_label": "Seni en çok benzettiğimiz ünlü: ",
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
