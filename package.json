@@ -15,6 +15,7 @@
     "@fortawesome/pro-regular-svg-icons": "^5.14.0",
     "@fortawesome/pro-solid-svg-icons": "^5.14.0",
     "@react-native-community/art": "^1.2.0",
+    "@react-native-community/blur": "^3.6.0",
     "@react-native-community/cameraroll": "^4.0.0",
     "@react-native-community/checkbox": "^0.4.2",
     "@react-native-community/image-editor": "^2.3.0",

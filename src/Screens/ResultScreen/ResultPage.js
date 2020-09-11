@@ -24,11 +24,12 @@ class ResultPage extends Component {
     super(props);
     this.state = {
       ready_to_share: false,
-      share_active: true,
+      share_active: false,
       progress: new Animated.Value(0),
       data: this.props.route.params.data,
       isVisible: false,
       swiper_index: 0,
+      captured_image: ""
     };
   }
 
@@ -44,32 +45,25 @@ class ResultPage extends Component {
   }
 
   componentDidMount = async () => {
-    const data = await this.performTimeConsumingTask(2000);
-
-    await Animated.timing(this.state.progress, {
-      useNativeDriver: true,
-      toValue: 1,
-      duration: 8000,
-      easing: Easing.linear,
-    }).start();
-
-    await this.setState({share_active: true});
-
-    if (data !== null) {
-      await this.GetScreenShot();
-    }
-
     await this.ScrollAnimation();
+  };
+
+  takeScreenShot = async (index) => {
+    await this.actionSheet.hide();
+    const data = await this.performTimeConsumingTask(2000);
+    await this.setState({share_active: true});
+    if (data !== null) {
+      await this.GetScreenShot(index);
+    }
   };
 
   ScrollAnimation = async () => {
     const data = await this.performTimeConsumingTask(2000);
-    await this.ref3.scrollTo(0.3, true);
+    await this.ref3.scrollTo(1, true);
 
     if (data !== null) {
-      await this.ref3.scrollTo(0.1, true);
+      await this.ref3.scrollTo(0, true);
     }
-
   }
 
   performTimeConsumingTask = async (timeout) => {
@@ -78,51 +72,82 @@ class ResultPage extends Component {
     }, timeout));
   };
 
-  Share = async (index) => {
-    /** This functions share an image passed using the url param */
-    const shareOptions1 = Platform.OS === 'ios'
-      ? {
-        title: translate('app_name'),
-        url: this.props.captured_image_uri,
-        subject: translate('app_name'), // for email,
-        failOnCancel: false,
-      }
-      : {
-        title: translate('app_name'),
-        url: this.props.captured_image_uri,
-        message: 'https://looklikecelebrity.page.link/naxz',
-        subject: translate('app_name'), // for email,
-        failOnCancel: false,
-      };
 
-    const shareOptions2 = {
+  Save = async (uri) => {
+    if (Platform.OS === 'android') {
+      await this.HasAndroidPermission().then((res) => {
+        return !res;
+      });
+    }
+
+    await SavePicture(uri, this.HasAndroidPermission, this.props.trigger_savings_page, this.actionSheet.hide);
+  };
+
+  ShareApp = async () => {
+    const shareOptions = {
       title: translate('app_name'),
       message: 'https://looklikecelebrity.page.link/naxz',
       failOnCancel: false,
     };
 
-    if (index === 0) {
-      if (Platform.OS === 'android') {
-        await this.HasAndroidPermission().then((res) => {
-          return !res;
-        });
+    await Share.open(shareOptions)
+      .then(async (res) => {
+        console.log('share response: ', res);
+        await this.setState({share_active: false});
+        this.ref2.zoomInUp(ANIMATION_DURATION);
+        await this.actionSheet.hide();
+      })
+      .catch((err) => {
+        err && console.log(err);
+        this.setState({share_active: false});
+        this.ref2.zoomInUp(ANIMATION_DURATION);
+        this.actionSheet.hide();
+      });
+  };
+
+  ShareResult = async (captured_uri) => {
+    /** This functions share an image passed using the url param */
+    const shareOptions = Platform.OS === 'ios'
+      ? {
+        title: translate('app_name'),
+        url: captured_uri,
+        subject: translate('app_name'), // for email,
+        failOnCancel: false,
       }
-      await SavePicture(this.props.captured_image_uri, () => this.HasAndroidPermission(), () => this.props.trigger_savings_page(), () => this.actionSheet.hide());
-    } else {
-      await Share.open(index === 1 ? shareOptions1 : shareOptions2)
-        .then(async (res) => {
-          console.log('share response: ', res);
-          await this.setState({share_active: false});
-          this.ref2.zoomInUp(ANIMATION_DURATION);
-          await this.actionSheet.hide();
-        })
-        .catch((err) => {
-          err && console.log(err);
-          this.setState({share_active: false});
-          this.ref2.zoomInUp(ANIMATION_DURATION);
-          this.actionSheet.hide();
-        });
+      : {
+        title: translate('app_name'),
+        url: captured_uri,
+        message: 'https://looklikecelebrity.page.link/naxz',
+        subject: translate('app_name'), // for email,
+        failOnCancel: false,
+      };
+
+    await Share.open(shareOptions)
+      .then(async (res) => {
+        console.log('share response: ', res);
+        await this.setState({share_active: false});
+        this.ref2.zoomInUp(ANIMATION_DURATION);
+        await this.actionSheet.hide();
+      })
+      .catch((err) => {
+        err && console.log(err);
+        this.setState({share_active: false});
+        this.ref2.zoomInUp(ANIMATION_DURATION);
+        this.actionSheet.hide();
+      });
+
+  };
+
+  ActionHandler = async (index) => {
+    try {
+      if (index === 2)
+        await this.ShareApp();
+      else
+        await this.takeScreenShot(index);
+    } catch (e) {
+      console.log("Error takeScreenShot: ", e);
     }
+
   };
 
   HasAndroidPermission = async () => {
@@ -137,7 +162,7 @@ class ResultPage extends Component {
     return status === 'granted';
   };
 
-  GetScreenShot = async () => {
+  GetScreenShot = async (index) => {
     const data = await this.performTimeConsumingTask(2000);
 
     if (data !== null) {
@@ -145,7 +170,13 @@ class ResultPage extends Component {
         .then(async (uri) => {
           this.setState({share_active: false});
           this.ref2.zoomInUp(ANIMATION_DURATION);
+          await this.setState({"captured_image": uri});
           this.props.get_captured_image_uri(uri);
+          if (index === 0)
+            await this.Save(uri);
+          else {
+            await this.ShareResult(uri);
+          }
         })
         .catch(() => {
           this.setState({share_active: false});
@@ -173,7 +204,7 @@ class ResultPage extends Component {
       <ActionSheetComponent2 launchImageLibrary={this.LaunchImageLibrary}
                              launchCamera={this.LaunchCamera}
                              handlePress={this.handlePress}
-                             Share={(index) => this.Share(index)}
+                             Share={(index) => this.ActionHandler(index)}
                              getActionSheetRef={this.getActionSheetRef}/>
     );
   };

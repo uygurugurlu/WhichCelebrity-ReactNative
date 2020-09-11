@@ -14,14 +14,14 @@
   },
   "famous_compare": {
     "compare_header": "Select a celebrity and find out how you look alike or ",
-    "press_random": "press the 'Compare Randomly' button",
-    "tooltip_text": "You can find out how similar you are to a random celebrity out of about 200K by pressing the 'Compare Randomly' button.",
+    "press_random": "press the 'Random' button",
+    "tooltip_text": "You can find out how similar you are to a random celebrity out of about 200K by pressing the 'Random' button.",
     "result_label": "You look very similar to ",
     "validity_alert": "Please make sure you select an image."
   },
   "home": {
     "get_result": "Get Result",
-    "random_compare": "Compare Randomly",
+    "random_compare": "Random",
     "validity_alert": "Please select an image for mother, father and the child.",
     "selected_celebrity": "The celebrity you choose",
     "select_celebrity": "Search a celebrity ...",

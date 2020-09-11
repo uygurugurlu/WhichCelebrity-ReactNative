@@ -7,6 +7,7 @@ import AnimatedProgressBar from "../../../common/Components/AnimatedProgressBar"
 import AnimatedProgressComponent from "../../../common/Components/AnimatedProgressComponent";
 import ResultLineComponent from "../../../common/Components/ResultLineComponent";
 import SwipeableImageModal from "../../../common/Components/SwipeableImageModal";
+import {BlurView, VibrancyView} from "@react-native-community/blur";
 
 class ResultPageBody extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class ResultPageBody extends Component {
       name: "",
       swiper_index: 0,
       index: 0,
-      title: ""
+      title: "",
     };
   }
 
@@ -99,6 +100,21 @@ class ResultPageBody extends Component {
     });
   }
 
+  performTimeConsumingTask = async (timeout) => {
+    return new Promise((resolve) => setTimeout(() => {
+      resolve('result');
+    }, timeout));
+  };
+
+  screenShotEffect = async () => {
+    const data = await this.performTimeConsumingTask(2000);
+    //this.setState({blur: true});
+
+    if (data !== null) {
+      // this.setState({blur: false});
+    }
+  };
+
   handleModalVisibility = (index) => {
     const {isVisible, photo} = this.state;
     const {userAvatarSource} = this.props;
@@ -117,7 +133,7 @@ class ResultPageBody extends Component {
     const {userAvatarSource} = this.props;
 
     return (
-      <SafeAreaView style={styles.mainContainer}>
+      <View style={[styles.mainContainer]}>
 
         <View style={[styles.iconContainerStyle, shadow]}>
           <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
@@ -164,7 +180,7 @@ class ResultPageBody extends Component {
                              isVisible={isVisible}
                              handleVisibility={() => this.handleModalVisibility(index)}/>
 
-      </SafeAreaView>
+      </View>
     );
   }
 }
