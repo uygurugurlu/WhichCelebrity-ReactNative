@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  Image, View, Text, TouchableOpacity, Platform, Easing, PermissionsAndroid, SafeAreaView, Animated, ScrollView
+  Image, View, TouchableOpacity, Platform, Easing, PermissionsAndroid, Animated
 } from 'react-native';
 import {styles} from './ResultPageStyles';
 import {connect} from 'react-redux';
@@ -14,7 +14,6 @@ import * as Animatable from 'react-native-animatable';
 import ResultButtonsRow from "../../common/Components/ResultButtonsRow";
 import ActionSheetComponent2 from "../../common/Components/ActionSheetComponent2";
 import {SavePicture} from "../../common/Functions/SavePicture";
-import SwipeableImageModal from "../../common/Components/SwipeableImageModal";
 import ResultPageBody from "./ResultPageBody/ResultPageBody";
 import Swiper from "react-native-swiper";
 
@@ -30,21 +29,11 @@ class ResultPage extends Component {
       data: this.props.route.params.data,
       isVisible: false,
       modal_uri: "",
-      nationality: "",
-      category: "",
-      star_sign: "",
-      hide_age: "",
-      grave_flex: "",
-      age: "",
-      birthday: "",
-      swiper_index: 0
+      swiper_index: 0,
     };
   }
 
   componentWillMount = async () => {
-    const {data} = this.props.route.params;
-    let nationality = "", category = "", star_sign = "", hide_age = "", grave_flex = "", age = "", birthday = "";
-
     this.props.navigation.setOptions({
       title: translate('app_name'),
       headerRight: () => (
@@ -52,40 +41,6 @@ class ResultPage extends Component {
           <Image source={RIGHT_HEADER_ICON} style={{height: 35, width: 35, marginRight: 15}}/>
         </TouchableOpacity>
       ),
-    });
-
-    hide_age = data.celebrity.birthday === null || data.celebrity.birthday === "" || typeof data.celebrity.birthday === 'undefined';
-    grave_flex = typeof data.celebrity.dead !== 'undefined' && data.celebrity.dead !== null && data.celebrity.dead;
-    age = typeof (data.celebrity.age !== 'undefined' && data.celebrity.age !== null) ? data.celebrity.age : "";
-    birthday = typeof (data.celebrity.birthday !== 'undefined' && data.celebrity.birthday !== null) ? data.celebrity.birthday : "";
-
-    try {
-      nationality = typeof (data.celebrity.nationality !== 'undefined' && data.celebrity.nationality !== null) ? data.celebrity.nationality.name : "";
-    } catch (e) {
-      console.log("Error componentWillMount: ", e);
-      nationality = "";
-    }
-
-    try {
-      category = typeof (data.celebrity.category !== 'undefined' && data.celebrity.category !== null) ? data.celebrity.category.name : "";
-    } catch (e) {
-      category = "";
-    }
-
-    try {
-      star_sign = typeof (data.celebrity.star_sign !== 'undefined' && data.celebrity.star_sign !== null) ? data.celebrity.star_sign.name : "";
-    } catch (e) {
-      star_sign = "";
-    }
-
-    this.setState({
-      category: category,
-      nationality: nationality,
-      star_sign: star_sign,
-      grave_flex: grave_flex,
-      hide_age: hide_age,
-      age: age,
-      birthday: birthday
     });
   }
 
@@ -224,22 +179,9 @@ class ResultPage extends Component {
     );
   };
 
-  handleModalVisibility = (index) => {
-    const {isVisible, data} = this.state;
-    const {userAvatarSource} = this.props;
-
-    if (index === 0) {
-      this.setState({isVisible: !isVisible, modal_uri: userAvatarSource, index: index});
-    }
-
-    if (index === 1) {
-      this.setState({isVisible: !isVisible, modal_uri: data.celebrity.photo, index: index});
-    }
-  }
-
   render() {
     const {userAvatarSource} = this.props;
-    const {share_active, data, hide_age, grave_flex, age, birthday, isVisible, modal_uri, index, nationality, category, star_sign} = this.state;
+    const {share_active, data} = this.state;
 
     return (
       <View style={styles.scrollViewStyle}>
@@ -247,41 +189,27 @@ class ResultPage extends Component {
                   options={{format: 'jpg', quality: 0.9}}
                   style={styles.viewShotImageStyle}>
 
-          <Swiper
-            ref={ref => (this.ref3 = ref)}
-            style={{}}
-            autoplay={false}
-            index={this.state.swiper_index}
-            showsButtons={false}
-            dotStyle={{height: 7, width: 7}}
-            activeDotStyle={{height: 7, width: 7}}
-            activeDotColor={'#1490E3'}
-            dotColor={'#2a2a2a'}
-            onIndexChanged={(index) => {
-              console.log("çalıştı")
-            }}
-            loop={false}>
+          <Swiper ref={ref => (this.ref3 = ref)}
+                  style={{}}
+                  autoplay={false}
+                  index={this.state.swiper_index}
+                  showsButtons={false}
+                  dotStyle={{height: 7, width: 7}}
+                  activeDotStyle={{height: 7, width: 7}}
+                  activeDotColor={'#1490E3'}
+                  dotColor={'#2a2a2a'}
+                  onIndexChanged={(index) => {
+                    console.log("çalıştı")
+                  }}
+                  loop={false}>
             <ResultPageBody userAvatarSource={userAvatarSource}
-                            data={data}
-                            hide_age={hide_age}
-                            grave_flex={grave_flex}
-                            age={age}
-                            birthday={birthday}
-                            nationality={nationality}
-                            category={category}
-                            handleModalVisibility={(index) => this.handleModalVisibility(index)}
-                            star_sign={star_sign}/>
+                            data={data[0]}/>
 
             <ResultPageBody userAvatarSource={userAvatarSource}
-                            data={data}
-                            hide_age={hide_age}
-                            grave_flex={grave_flex}
-                            age={age}
-                            birthday={birthday}
-                            nationality={nationality}
-                            category={category}
-                            handleModalVisibility={(index) => this.handleModalVisibility(index)}
-                            star_sign={star_sign}/>
+                            data={data[1]}/>
+
+            <ResultPageBody userAvatarSource={userAvatarSource}
+                            data={data[2]}/>
           </Swiper>
 
           <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
@@ -292,11 +220,6 @@ class ResultPage extends Component {
             <SharedImageBottomComponent shareActive={share_active}/>
           </Animatable.View>
         </ViewShot>
-
-        <SwipeableImageModal uri={modal_uri}
-                             index={index}
-                             isVisible={isVisible}
-                             handleVisibility={() => this.handleModalVisibility(index)}/>
         {this.GetActionSheet()}
       </View>
     );

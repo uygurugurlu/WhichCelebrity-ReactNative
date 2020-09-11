@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  Image, View, Text, TouchableOpacity, Platform, Easing, PermissionsAndroid, SafeAreaView, Animated, ScrollView,
+  Image, View, TouchableOpacity, Platform, Easing, PermissionsAndroid, Animated,
 } from 'react-native';
 import {styles} from './ResultPage2Styles';
 import {connect} from 'react-redux';
@@ -10,15 +10,11 @@ import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 import SharedImageBottomComponent from '../../common/Components/SharedImageBottomComponent';
 import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
-import {HEADSTONE2, shadow} from '../../common/Constants';
-import AnimatedProgressComponent from '../../common/Components/AnimatedProgressComponent';
 import * as Animatable from "react-native-animatable";
 import ResultButtonsRow from "../../common/Components/ResultButtonsRow";
-import AnimatedProgressBar from "../../common/Components/AnimatedProgressBar";
 import ActionSheetComponent2 from "../../common/Components/ActionSheetComponent2";
 import {SavePicture} from "../../common/Functions/SavePicture";
-import SwipeableImageModal from "../../common/Components/SwipeableImageModal";
-import ResultLineComponent from "../../common/Components/ResultLineComponent";
+import ResultPageBody from "../ResultScreen/ResultPageBody/ResultPageBody";
 
 const ANIMATION_DURATION = 1200;
 
@@ -29,25 +25,13 @@ class ResultPage2 extends Component {
       ready_to_share: false,
       share_active: true,
       progress: new Animated.Value(0),
-      celebrity_photo: this.props.route.params.celebrity_photo,
-      celebrity_name: this.props.route.params.celebrity_name,
+      celebrity_name: "",
       data: this.props.route.params.data,
-      isVisible: false,
       modal_uri: "",
-      nationality: "",
-      category: "",
-      star_sign: "",
-      hide_age: "",
-      grave_flex: "",
-      age: "",
-      birthday: "",
     };
   }
 
   componentWillMount() {
-    const {data} = this.props.route.params;
-    let nationality = "", category = "", star_sign = "", hide_age = "", grave_flex = "", age = "", birthday = "";
-
     this.props.navigation.setOptions({
       title: translate('app_name'),
       headerRight: () => (
@@ -56,46 +40,11 @@ class ResultPage2 extends Component {
         </TouchableOpacity>
       ),
     });
-
-    hide_age = data.celebrity.birthday === null || data.celebrity.birthday === "" || typeof data.celebrity.birthday === 'undefined';
-    grave_flex = typeof data.celebrity.dead !== 'undefined' && data.celebrity.dead !== null && data.celebrity.dead;
-    age = typeof (data.celebrity.age !== 'undefined' && data.celebrity.age !== null) ? data.celebrity.age : "";
-    birthday = typeof (data.celebrity.birthday !== 'undefined' && data.celebrity.birthday !== null) ? data.celebrity.birthday : "";
-
-    try {
-      nationality = typeof (data.celebrity.nationality !== 'undefined' && data.celebrity.nationality !== null) ? data.celebrity.nationality.name : "";
-    } catch (e) {
-      console.log("Error componentWillMount: ", e);
-      nationality = "";
-    }
-
-    try {
-      category = typeof (data.celebrity.category !== 'undefined' && data.celebrity.category !== null) ? data.celebrity.category.name : "";
-    } catch (e) {
-      category = "";
-    }
-
-    try {
-      star_sign = typeof (data.celebrity.star_sign !== 'undefined' && data.celebrity.star_sign !== null) ? data.celebrity.star_sign.name : "";
-    } catch (e) {
-      star_sign = "";
-    }
-
-    this.setState({
-      category: category,
-      nationality: nationality,
-      star_sign: star_sign,
-      grave_flex: grave_flex,
-      hide_age: hide_age,
-      age: age,
-      birthday: birthday
-    })
-
   }
 
   componentDidMount = async () => {
-    const {celebrity_photo, celebrity_name} = this.props.route.params;
-    this.setState({celebrity_photo: celebrity_photo, celebrity_name: celebrity_name})
+    const {celebrity_name} = this.props.route.params;
+    this.setState({celebrity_name: celebrity_name})
     const data = await this.performTimeConsumingTask(2000);
 
     await Animated.timing(this.state.progress, {
@@ -211,7 +160,6 @@ class ResultPage2 extends Component {
     }
   };
 
-
   GetActionSheet = () => {
     return (
       <ActionSheetComponent2 launchImageLibrary={this.LaunchImageLibrary}
@@ -222,94 +170,30 @@ class ResultPage2 extends Component {
     );
   };
 
-  handleModalVisibility = (index) => {
-    const {isVisible, celebrity_photo} = this.state;
-    const {userAvatarSource} = this.props;
-
-    if (index === 0) {
-      this.setState({isVisible: !isVisible, modal_uri: userAvatarSource, index: index});
-    }
-
-    if (index === 1) {
-      this.setState({isVisible: !isVisible, modal_uri: celebrity_photo, index: index});
-    }
-  }
-
   render() {
     const {userAvatarSource} = this.props;
-    const {share_active, celebrity_name, celebrity_photo, data, isVisible, modal_uri, index, nationality, category, star_sign} = this.state;
-
-    const hide_age = data.celebrity.birthday === null || data.celebrity.birthday === "" || typeof data.celebrity.birthday === 'undefined';
-    const grave_flex = typeof data.celebrity.dead !== 'undefined' && data.celebrity.dead !== null && data.celebrity.dead;
-    const age = typeof (data.celebrity.age !== 'undefined' && data.celebrity.age !== null) ? data.celebrity.age : "";
-    const birthday = typeof (data.celebrity.birthday !== 'undefined' && data.celebrity.birthday !== null) ? data.celebrity.birthday : "";
+    const {data, share_active} = this.state;
 
     return (
       <View style={styles.scrollViewStyle}>
         <ViewShot ref={(ref) => (this.viewShot = ref)}
                   options={{format: 'jpg', quality: 0.9}}
                   style={styles.viewShotImageStyle}>
-          <SafeAreaView style={styles.mainContainer}>
+          <ResultPageBody userAvatarSource={userAvatarSource}
+                          data={data}/>
 
-            <View style={[styles.iconContainerStyle, shadow]}>
-              <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
-                <Image source={userAvatarSource} style={styles.iconStyle}/>
-              </TouchableOpacity>
+          <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
+            <ResultButtonsRow share_active={share_active}
+                              showActionSheet={this.showActionSheet}
+                              goBack={this.GoBack}/>
+          </Animatable.View>
 
-              <TouchableOpacity onPress={() => this.handleModalVisibility(1)}>
-                <Image source={{uri: celebrity_photo}} style={styles.iconStyle}/>
-              </TouchableOpacity>
-            </View>
+          <Animatable.View>
+            <SharedImageBottomComponent shareActive={share_active}/>
+          </Animatable.View>
 
-            <View style={{alignItems: 'center'}}>
-              <Text
-                style={{fontWeight: '500', fontSize: 17, marginTop: 15}}>{translate("result.similarity_rate")}</Text>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <AnimatedProgressBar fill={data.percentage}/>
-                <AnimatedProgressComponent fill={data.percentage}/>
-              </View>
-            </View>
-
-            <ScrollView style={styles.labelContainerStyle}>
-              <ResultLineComponent leftText={translate("result.celebrity") + ": "}
-                                   rightText={celebrity_name}/>
-
-              <View display={hide_age ? "none" : 'flex'} style={{flexDirection: 'row'}}>
-                <ResultLineComponent leftText={translate("result.birthday") + ": "}
-                                     rightText={birthday + ", " + age + " " + translate("result.years")}/>
-
-                <View display={grave_flex ? "flex" : "none"}>
-                  <Image style={styles.graveIconStyle} source={HEADSTONE2}/>
-                </View>
-              </View>
-
-              <ResultLineComponent leftText={translate("result.category") + ": "}
-                                   rightText={category}/>
-
-              <ResultLineComponent leftText={translate("result.nationality") + ": "}
-                                   rightText={nationality}/>
-
-              <ResultLineComponent leftText={translate("result.zodiac_sign") + ": "}
-                                   rightText={star_sign}/>
-            </ScrollView>
-
-            <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>
-              <ResultButtonsRow share_active={share_active}
-                                showActionSheet={this.showActionSheet}
-                                goBack={this.GoBack}/>
-            </Animatable.View>
-
-            <Animatable.View>
-              <SharedImageBottomComponent shareActive={share_active}/>
-            </Animatable.View>
-
-          </SafeAreaView>
         </ViewShot>
 
-        <SwipeableImageModal uri={modal_uri}
-                             index={index}
-                             isVisible={isVisible}
-                             handleVisibility={() => this.handleModalVisibility(index)}/>
         {this.GetActionSheet()}
       </View>
     );
@@ -331,4 +215,5 @@ const mapDispatchToProps = (dispatch) => {
     trigger_savings_page: () => dispatch(trigger_savings_page()),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(ResultPage2);

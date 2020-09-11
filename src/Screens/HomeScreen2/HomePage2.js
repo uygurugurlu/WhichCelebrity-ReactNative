@@ -117,9 +117,9 @@ class HomePage2 extends Component {
   };
 
   NavigateToResultPage2 = (data) => {
-    const {celebrity_photo, celebrity_name} = this.state;
+    const {celebrity_name} = this.state;
     this.props.navigation.navigate('ResultPage2', {
-      celebrity_photo: celebrity_photo,
+      celebrity_photo: data.celebrity.photo,
       celebrity_name: celebrity_name,
       data: data
     });
@@ -138,8 +138,8 @@ class HomePage2 extends Component {
       });
 
       try {
-        const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag, false);
-        console.log("UserPhotoAnalyze res: ", JSON.parse(data));
+        const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag, "false");
+        console.log("UserPhotoAnalyze res: ", JSON.parse(data).data[0]);
         await interstitial.show();
         this.NavigateToResultPage2(JSON.parse(data).data[0]);
         this.HideProfile();
@@ -157,10 +157,10 @@ class HomePage2 extends Component {
     try {
       await this.setState({random_result_loading: true});
       const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, null, language.languageTag, "true");
-      console.log("UserPhotoAnalyze res: ", JSON.parse(data));
-      //await interstitial.show();
-      //this.NavigateToResultPage2(JSON.parse(data).data[0]);
-      //this.HideProfile();
+      console.log("UserPhotoAnalyze res: ", JSON.parse(data).data[0]);
+      await interstitial.show();
+      this.NavigateToResultPage2(JSON.parse(data).data[0]);
+      this.HideProfile();
     } catch (e) {
       console.log("Error UserPhotoAnalyze2: ", e.response);
       Alert.alert(translate("home.result_not_found"));
