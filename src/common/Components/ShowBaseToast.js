@@ -1,4 +1,4 @@
-import {WToast, WModal, WSnackBar} from "react-native-smart-tip";
+import {WSnackBar} from "react-native-smart-tip";
 
 export const ShowBaseToast = (data, duration, position, type) => {
 

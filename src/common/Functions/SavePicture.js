@@ -1,6 +1,5 @@
 import {translate} from "../../I18n";
 import CameraRoll from "@react-native-community/cameraroll";
-import {Alert} from "react-native";
 import {ShowBaseToast} from "../Components/ShowBaseToast";
 
 export const SavePicture = async (uri, HasAndroidPermission, trigger_savings_page, hide) => {
