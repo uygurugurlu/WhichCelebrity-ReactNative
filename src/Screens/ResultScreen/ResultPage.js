@@ -17,7 +17,7 @@ import {SavePicture} from "../../common/Functions/SavePicture";
 import ResultPageBody from "./ResultPageBody/ResultPageBody";
 import Swiper from "react-native-swiper";
 
-const ANIMATION_DURATION = 1200;
+const ANIMATION_DURATION = 1000;
 
 class ResultPage extends Component {
   constructor(props) {
@@ -50,7 +50,7 @@ class ResultPage extends Component {
 
   takeScreenShot = async (index) => {
     await this.actionSheet.hide();
-    const data = await this.performTimeConsumingTask(2000);
+    const data = await this.performTimeConsumingTask(1);
     await this.setState({share_active: true});
     if (data !== null) {
       await this.GetScreenShot(index);
@@ -71,7 +71,6 @@ class ResultPage extends Component {
       resolve('result');
     }, timeout));
   };
-
 
   Save = async (uri) => {
     if (Platform.OS === 'android') {
@@ -135,7 +134,6 @@ class ResultPage extends Component {
         this.ref2.zoomInUp(ANIMATION_DURATION);
         this.actionSheet.hide();
       });
-
   };
 
   ActionHandler = async (index) => {
@@ -147,7 +145,6 @@ class ResultPage extends Component {
     } catch (e) {
       console.log("Error takeScreenShot: ", e);
     }
-
   };
 
   HasAndroidPermission = async () => {
@@ -163,7 +160,7 @@ class ResultPage extends Component {
   };
 
   GetScreenShot = async (index) => {
-    const data = await this.performTimeConsumingTask(2000);
+    const data = await this.performTimeConsumingTask(50);
 
     if (data !== null) {
       this.viewShot.capture()
@@ -171,6 +168,7 @@ class ResultPage extends Component {
           this.setState({share_active: false});
           this.ref2.zoomInUp(ANIMATION_DURATION);
           await this.setState({"captured_image": uri});
+          await this.ref4.flash(1000);
           this.props.get_captured_image_uri(uri);
           if (index === 0)
             await this.Save(uri);
@@ -180,7 +178,6 @@ class ResultPage extends Component {
         })
         .catch(() => {
           this.setState({share_active: false});
-          this.ref2.zoomInUp(ANIMATION_DURATION);
         });
     }
   };
@@ -214,7 +211,7 @@ class ResultPage extends Component {
     const {share_active, data} = this.state;
 
     return (
-      <View style={styles.scrollViewStyle}>
+      <Animatable.View ref={ref => (this.ref4 = ref)} style={styles.scrollViewStyle}>
         <ViewShot ref={(ref) => (this.viewShot = ref)}
                   options={{format: 'jpg', quality: 0.9}}
                   style={styles.viewShotImageStyle}>
@@ -228,9 +225,6 @@ class ResultPage extends Component {
                   activeDotStyle={{height: 7, width: 7}}
                   activeDotColor={'#1490E3'}
                   dotColor={'#2a2a2a'}
-                  onIndexChanged={(index) => {
-                    console.log("çalıştı")
-                  }}
                   loop={false}>
             <ResultPageBody userAvatarSource={userAvatarSource}
                             titleIndex={0}
@@ -254,7 +248,7 @@ class ResultPage extends Component {
           </Animatable.View>
         </ViewShot>
         {this.GetActionSheet()}
-      </View>
+      </Animatable.View>
     );
   }
 }

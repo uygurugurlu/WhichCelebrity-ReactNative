@@ -8,6 +8,8 @@ import AnimatedProgressComponent from "../../../common/Components/AnimatedProgre
 import ResultLineComponent from "../../../common/Components/ResultLineComponent";
 import SwipeableImageModal from "../../../common/Components/SwipeableImageModal";
 import {BlurView, VibrancyView} from "@react-native-community/blur";
+import * as Animatable from "react-native-animatable";
+import ViewShot from "react-native-view-shot";
 
 class ResultPageBody extends Component {
   constructor(props) {
