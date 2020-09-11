@@ -50,7 +50,10 @@
     "category": "Kategori",
     "nationality": "Memleket",
     "zodiac_sign": "Burç",
-    "years": "yaşında"
+    "years": "yaşında",
+    "first_similar": "Size en çok benzeyen ünlünün benzerlik oranı",
+    "second_similar": "Size en çok benzeyen ikinci ünlünün benzerlik oranı",
+    "third_similar": "Size en çok benzeyen üçüncü ünlünün benzerlik oranı"
   },
   "saved": {
     "cancel": "Vazgeç",

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Animated, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {styles} from "./ResultPageBodyStyles";
-import {HEADSTONE2, shadow} from "../../../common/Constants";
+import {DEVICE_WIDTH, HEADSTONE2, shadow} from "../../../common/Constants";
 import {translate} from "../../../I18n";
 import AnimatedProgressBar from "../../../common/Components/AnimatedProgressBar";
 import AnimatedProgressComponent from "../../../common/Components/AnimatedProgressComponent";
@@ -28,14 +28,15 @@ class ResultPageBody extends Component {
       photo: "",
       name: "",
       swiper_index: 0,
-      index: 0
+      index: 0,
+      title: ""
     };
   }
 
   componentWillMount = async () => {
-    const {data} = this.props;
+    const {data, titleIndex} = this.props;
     let nationality = "", category = "", star_sign = "", hide_age = "", grave_flex = "", age = "", birthday = "",
-      photo = "", name = "", similarity = "";
+      photo = "", name = "", similarity = "", title = "";
     const celebrity = data.celebrity;
 
     hide_age = celebrity.birthday === null || celebrity.birthday === "" || typeof celebrity.birthday === 'undefined';
@@ -71,6 +72,18 @@ class ResultPageBody extends Component {
       star_sign = "";
     }
 
+    switch (titleIndex) {
+      case 0:
+        title = translate("result.first_similar");
+        break;
+      case 1:
+        title = translate("result.second_similar");
+        break;
+      case 2:
+        title = translate("result.third_similar");
+        break;
+
+    }
     this.setState({
       category: category,
       nationality: nationality,
@@ -81,7 +94,8 @@ class ResultPageBody extends Component {
       birthday: birthday,
       name: name,
       photo: photo,
-      similarity: similarity
+      similarity: similarity,
+      title: title
     });
   }
 
@@ -99,7 +113,7 @@ class ResultPageBody extends Component {
   }
 
   render() {
-    const {similarity, name, photo, hide_age, grave_flex, age, index, birthday, nationality, category, star_sign, isVisible, modal_uri} = this.state;
+    const {similarity, name, title, photo, hide_age, grave_flex, age, index, birthday, nationality, category, star_sign, isVisible, modal_uri} = this.state;
     const {userAvatarSource} = this.props;
 
     return (
@@ -115,9 +129,8 @@ class ResultPageBody extends Component {
           </TouchableOpacity>
         </View>
 
-        <View style={{alignItems: 'center'}}>
-          <Text
-            style={{fontWeight: '500', fontSize: 17, marginTop: 15}}>{translate("result.similarity_rate")}</Text>
+        <View style={{alignItems: 'center', width: DEVICE_WIDTH * 0.9}}>
+          <Text style={styles.titleTextStyle}>{title}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <AnimatedProgressBar fill={similarity}/>
             <AnimatedProgressComponent fill={similarity}/>
@@ -125,7 +138,6 @@ class ResultPageBody extends Component {
         </View>
 
         <ScrollView style={styles.labelContainerStyle}>
-
           <ResultLineComponent leftText={translate("result.celebrity") + ": "} rightText={name}/>
 
           <View display={hide_age ? "none" : 'flex'} style={{flexDirection: 'row', marginRight: 25}}>

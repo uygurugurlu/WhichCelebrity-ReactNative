@@ -50,7 +50,10 @@
     "category": "Category",
     "nationality": "Nationality",
     "zodiac_sign": "Zodiac Sign",
-    "years": "years old"
+    "years": "years old",
+    "first_similar": "Similarity ratio of the most similar celebrity to you",
+    "second_similar": "Similarity ratio of the second most similar celebrity to you",
+    "third_similar": "Similarity ratio of the third most similar celebrity to you"
   },
   "saved": {
     "cancel": "Cancel",

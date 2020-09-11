@@ -28,7 +28,6 @@ class ResultPage extends Component {
       progress: new Animated.Value(0),
       data: this.props.route.params.data,
       isVisible: false,
-      modal_uri: "",
       swiper_index: 0,
     };
   }
@@ -203,12 +202,15 @@ class ResultPage extends Component {
                   }}
                   loop={false}>
             <ResultPageBody userAvatarSource={userAvatarSource}
+                            titleIndex={0}
                             data={data[0]}/>
 
             <ResultPageBody userAvatarSource={userAvatarSource}
+                            titleIndex={1}
                             data={data[1]}/>
 
             <ResultPageBody userAvatarSource={userAvatarSource}
+                            titleIndex={2}
                             data={data[2]}/>
           </Swiper>
 

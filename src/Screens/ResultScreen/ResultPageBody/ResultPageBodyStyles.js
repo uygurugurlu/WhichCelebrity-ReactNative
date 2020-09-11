@@ -93,5 +93,13 @@ export const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginLeft: 5
+  },
+  titleTextStyle: {
+    fontWeight: '500',
+    fontSize: 17,
+    marginTop: 15,
+   // marginHorizontal:10,
+    alignSelf:'center'
   }
+
 });

@@ -27,7 +27,6 @@ class ResultPage2 extends Component {
       progress: new Animated.Value(0),
       celebrity_name: "",
       data: this.props.route.params.data,
-      modal_uri: "",
     };
   }
 
