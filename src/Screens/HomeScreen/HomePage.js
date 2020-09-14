@@ -21,6 +21,7 @@ import GenderSelection from "../../common/Components/GenderSelection";
 import {GetToken} from "../../common/Functions/Endpoints/GetToken";
 import {ShowSnackBar} from "../../common/Components/ShowSnackBar";
 import {DetectFace} from "../../common/Functions/DetectFace";
+import LoadingAnimationModal from "../../common/Components/LoadingAnimationModal/LoadingAnimationModal";
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : unit_id;
@@ -130,7 +131,7 @@ class HomePage extends Component {
   };
 
   CheckValidity = () => {
-    const {userAvatarSource,detected_face_count} = this.props;
+    const {userAvatarSource, detected_face_count} = this.props;
     console.log("CheckValidity detected_faces: ", detected_face_count);
 
     if (userAvatarSource === '') {
@@ -309,6 +310,7 @@ class HomePage extends Component {
           </View>
 
           {this.GetActionSheet()}
+          <LoadingAnimationModal isModalVisible={this.state.result_loading}/>
         </SafeAreaView>
       </TouchableWithoutFeedback>
     );
