@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import Avatar, {Sizes} from 'rn-avatar';
-import {GENERIC_USER, CAMERA_ICON2, CAMERA_ICON3, CAMERA_ICON4} from '../IconIndex';
+import {CAMERA_ICON2} from '../IconIndex';
 import {DEVICE_WIDTH, shadow} from '../Constants';
 import {Image, Text, StyleSheet, View, TouchableOpacity} from "react-native";
 import {translate} from "../../I18n";
-
 
 const size = DEVICE_WIDTH / 2.2;
 
@@ -13,7 +12,6 @@ class AvatarComponent extends Component {
     const {ImageSource, SelectAvatar} = this.props;
 
     return ImageSource === '' ?
-
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity style={[styles.imageContainerStyle, shadow]} onPress={() => SelectAvatar()}>
           <Image source={CAMERA_ICON2} style={styles.imageStyle}/>
@@ -34,19 +32,10 @@ class AvatarComponent extends Component {
               editButton={{
                 name: 'camera',
                 type: 'font-awesome',
-                size: 25,
-                style: {
-                  padding: 5,
-                  marginRight: 10,
-                  marginBottom: 10,
-                  backgroundColor: '#f2f2f2',
-                  width: 45,
-                  height: 45,
-                  borderRadius: 22.5
-                },
+                size: size / 7.5,
+                style: styles.cameraIconStyle,
                 color: '#576f87',
               }}/>
-
   }
 }
 
@@ -69,6 +58,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 15,
     color: '#123456'
+  },
+  cameraIconStyle: {
+    padding: size / 50,
+    marginRight: size / 22.5,
+    marginBottom: size / 22.5,
+    backgroundColor: '#fff',
+    width: size / 4.5,
+    height: size / 4.5,
+    borderRadius: (size / 4.5) / 2
   }
 })
 export default AvatarComponent;
