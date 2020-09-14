@@ -1,6 +1,6 @@
 import {WSnackBar} from "react-native-smart-tip";
 
-export const ShowBaseToast = (data, duration, position, type) => {
+export const ShowSnackBar = (data, duration, position, type) => {
 
   let backgroundColor = "#4e4e4e", color = "#fff";
 
@@ -36,7 +36,7 @@ export const ShowBaseToast = (data, duration, position, type) => {
       color = "#fff";
       break;
     case "ERROR":
-      backgroundColor = '#ff0033';
+      backgroundColor = '#ED4337';
       color = "#fff";
       break;
   }

@@ -21,6 +21,7 @@ import SelectedCelebrityLine from "../../common/Components/SelectedCelebrityLine
 import {UserPhotoAnalyze2} from "../../common/Functions/Endpoints/UserPhotoAnalyze2";
 import CacheImageComponent from "../../common/Components/CacheImagecomponent";
 import TooltipComponent from "../../common/Components/TooltipComponent";
+import {ShowSnackBar} from "../../common/Components/ShowSnackBar";
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
 const adUnitId = TestIds.INTERSTITIAL//__DEV__ ? TestIds.INTERSTITIAL : unit_id;
@@ -85,7 +86,6 @@ class HomePage2 extends Component {
     }
 
     if (userAvatarSource !== nextProps.userAvatarSource) {
-      interstitial.load();
       this.actionSheet.hide();
     }
 
@@ -103,17 +103,27 @@ class HomePage2 extends Component {
     );
   };
 
-  CheckValidity = () => {
+  CheckValidity = (random) => {
     const {userAvatarSource} = this.props;
     const {celebrity_name} = this.state;
     if (userAvatarSource === '') {
       Alert.alert('', translate('home.avatar_warning'));
       return false;
-    } else if (celebrity_name === '') {
+    } else if (celebrity_name === '' && !random) {
       Alert.alert('', translate('home.select_warning'));
       return false;
     }
     return true;
+  };
+
+  LoadAD = () => {
+    interstitial.onAdEvent((type) => {
+      if (type !== AdEventType.LOADED || type === AdEventType.CLOSED) {
+        console.log(" AdEventType.LOADED: ", type === AdEventType.LOADED);
+        console.log(" AdEventType.CLOSED: ", type === AdEventType.CLOSED);
+        interstitial.load();
+      }
+    });
   };
 
   NavigateToResultPage2 = (data) => {
@@ -128,23 +138,25 @@ class HomePage2 extends Component {
   GetResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
     const {celebrity_id} = this.state;
+    this.LoadAD();
 
-    if (this.CheckValidity()) {
+    if (this.CheckValidity(false)) {
       this.setState({result_loading: true});
-      interstitial.onAdEvent((type) => {
-        if (type !== AdEventType.LOADED) {
-          interstitial.load();
-        }
-      });
 
       try {
         const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag, "false");
         console.log("UserPhotoAnalyze res: ", JSON.parse(data).data[0]);
-        await interstitial.show();
-        this.NavigateToResultPage2(JSON.parse(data).data[0]);
-        this.HideProfile();
+
+        if (JSON.parse(data).status === 'error') {
+          ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
+        } else {
+          await interstitial.show();
+          this.NavigateToResultPage2(JSON.parse(data).data[0]);
+          this.HideProfile();
+        }
       } catch (e) {
-        console.log("Error UserPhotoAnalyze2: ", e.response);
+        console.log("Error UserPhotoAnalyze2: ", e);
+        ShowSnackBar(translate("home.result_not_found"), "SHORT", "TOP", "ERROR");
       }
 
       this.setState({result_loading: false});
@@ -153,20 +165,31 @@ class HomePage2 extends Component {
 
   GetRandomResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
+    this.LoadAD();
 
-    try {
-      await this.setState({random_result_loading: true});
-      const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, null, language.languageTag, "true");
-      console.log("UserPhotoAnalyze res: ", JSON.parse(data).data[0]);
-      await interstitial.show();
-      this.NavigateToResultPage2(JSON.parse(data).data[0]);
-      this.HideProfile();
-    } catch (e) {
-      console.log("Error UserPhotoAnalyze2: ", e.response);
-      Alert.alert(translate("home.result_not_found"));
+    if (this.CheckValidity(true)) {
+
+      try {
+
+        await this.setState({random_result_loading: true});
+        const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, null, language.languageTag, "true");
+        console.log("UserPhotoAnalyze res: ", JSON.parse(data).data[0]);
+
+        if (JSON.parse(data).status === 'error') {
+          ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
+        } else {
+          await interstitial.show();
+          this.NavigateToResultPage2(JSON.parse(data).data[0]);
+          this.HideProfile();
+        }
+
+      } catch (e) {
+        console.log("Error UserPhotoAnalyze2: ", e);
+        ShowSnackBar(translate("home.result_not_found"), "SHORT", "TOP", "ERROR");
+      }
+
+      this.setState({random_result_loading: false});
     }
-
-    this.setState({random_result_loading: false});
   }
 
   fillScroll = async (search) => {

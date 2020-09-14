@@ -19,6 +19,7 @@ import {UserPhotoAnalyze} from "../../common/Functions/Endpoints/UserPhotoAnalyz
 import Icon from "react-native-fontawesome-pro";
 import GenderSelection from "../../common/Components/GenderSelection";
 import {GetToken} from "../../common/Functions/Endpoints/GetToken";
+import {ShowSnackBar} from "../../common/Components/ShowSnackBar";
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
 const adUnitId = TestIds.INTERSTITIAL//__DEV__ ? TestIds.INTERSTITIAL : unit_id;
@@ -102,7 +103,6 @@ class HomePage extends Component {
     }
 
     if (userAvatarSource !== nextProps.userAvatarSource) {
-      //interstitial.load();
       this.actionSheet.hide();
     }
   };
@@ -125,22 +125,28 @@ class HomePage extends Component {
     return true;
   };
 
+  LoadAD = () => {
+    interstitial.onAdEvent((type) => {
+      if (type !== AdEventType.LOADED || type === AdEventType.CLOSED) {
+        console.log(" AdEventType.LOADED: ", type === AdEventType.LOADED);
+        console.log(" AdEventType.CLOSED: ", type === AdEventType.CLOSED);
+        interstitial.load();
+      }
+    });
+  };
+
   GetResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
     const {selected_category_id, gender} = this.state;
+    await this.LoadAD();
 
     if (this.CheckValidity()) {
       this.setState({result_loading: true});
-      interstitial.onAdEvent((type) => {
-        if (type !== AdEventType.LOADED) {
-          interstitial.load();
-        }
-      });
 
       try {
         const {data} = await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender);
         if (JSON.parse(data).status === 'error') {
-          Alert.alert(JSON.parse(data).message);
+          ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
           this.setState({celebrity: JSON.parse(data)});
           await interstitial.show();
@@ -149,6 +155,7 @@ class HomePage extends Component {
         this.CancelCategory();
       } catch (e) {
         console.log('error on response: ', e);
+        ShowSnackBar(translate("home.result_not_found"), "SHORT", "TOP", "ERROR");
       }
 
       this.setState({result_loading: false});
