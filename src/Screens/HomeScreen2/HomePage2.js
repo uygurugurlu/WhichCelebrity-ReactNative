@@ -24,7 +24,7 @@ import TooltipComponent from "../../common/Components/TooltipComponent";
 import {ShowSnackBar} from "../../common/Components/ShowSnackBar";
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
-const adUnitId = TestIds.INTERSTITIAL//__DEV__ ? TestIds.INTERSTITIAL : unit_id;
+const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : unit_id;
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   requestNonPersonalizedAdsOnly: false,
 });
@@ -126,6 +126,14 @@ class HomePage2 extends Component {
     });
   };
 
+  ShowAD = async () => {
+    try {
+      await interstitial.show();
+    } catch (e) {
+      console.log("Error ShowAD: ", e);
+    }
+  };
+
   NavigateToResultPage2 = (data) => {
     const {celebrity_name} = this.state;
     this.props.navigation.navigate('ResultPage2', {
@@ -150,7 +158,7 @@ class HomePage2 extends Component {
         if (JSON.parse(data).status === 'error') {
           ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
-          await interstitial.show();
+          await this.ShowAD();
           this.NavigateToResultPage2(JSON.parse(data).data[0]);
           this.HideProfile();
         }
@@ -178,7 +186,7 @@ class HomePage2 extends Component {
         if (JSON.parse(data).status === 'error') {
           ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
-          await interstitial.show();
+          await this.ShowAD();
           this.NavigateToResultPage2(JSON.parse(data).data[0]);
           this.HideProfile();
         }

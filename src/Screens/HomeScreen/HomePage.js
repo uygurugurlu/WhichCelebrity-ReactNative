@@ -22,7 +22,7 @@ import {GetToken} from "../../common/Functions/Endpoints/GetToken";
 import {ShowSnackBar} from "../../common/Components/ShowSnackBar";
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
-const adUnitId = TestIds.INTERSTITIAL//__DEV__ ? TestIds.INTERSTITIAL : unit_id;
+const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : unit_id;
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   requestNonPersonalizedAdsOnly: false,
 });
@@ -135,6 +135,14 @@ class HomePage extends Component {
     });
   };
 
+  ShowAD = async () => {
+    try {
+      await interstitial.show();
+    } catch (e) {
+      console.log("Error ShowAD: ", e);
+    }
+  };
+
   GetResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
     const {selected_category_id, gender} = this.state;
@@ -149,7 +157,7 @@ class HomePage extends Component {
           ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
           this.setState({celebrity: JSON.parse(data)});
-          await interstitial.show();
+          await this.ShowAD();
           this.NavigateToResultPage(JSON.parse(data).data);
         }
         this.CancelCategory();
