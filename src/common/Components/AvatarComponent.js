@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Avatar, {Sizes} from 'rn-avatar';
+import Avatar from 'rn-avatar';
 import {CAMERA_ICON2} from '../IconIndex';
 import {DEVICE_WIDTH, shadow} from '../Constants';
 import {Image, Text, StyleSheet, View, TouchableOpacity} from "react-native";
@@ -68,5 +68,6 @@ const styles = StyleSheet.create({
     height: size / 4.5,
     borderRadius: (size / 4.5) / 2
   }
-})
+});
+
 export default AvatarComponent;

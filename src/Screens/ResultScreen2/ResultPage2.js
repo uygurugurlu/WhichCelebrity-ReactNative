@@ -207,7 +207,7 @@ class ResultPage2 extends Component {
   };
 
   GetScreenShot = async (index) => {
-    const data = await this.performTimeConsumingTask(50);
+    const data = await this.performTimeConsumingTask(250);
 
     if (data !== null) {
       this.viewShot.capture()
@@ -255,6 +255,7 @@ class ResultPage2 extends Component {
                   options={{format: 'jpg', quality: 0.9}}
                   style={styles.viewShotImageStyle}>
           <ResultPageBody userAvatarSource={userAvatarSource}
+                          titleIndex={0}
                           data={data}/>
 
           <Animatable.View ref={ref => (this.ref2 = ref)} easing={'linear'}>

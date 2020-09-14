@@ -36,7 +36,9 @@
     "search_male_celebrities": "Search in male celebrities",
     "search_female_celebrities": "Search in female celebrities",
     "top_label": "Find out which celebrity you are",
-    "result_not_found": "Result not found"
+    "result_not_found": "Result not found",
+    "face_not_found": "No face found in the photo you selected",
+    "more_than_one_face_found": "Please make sure there is only one face in the photo you chose"
   },
   "result": {
     "share": "Share",
@@ -53,7 +55,8 @@
     "years": "years old",
     "first_similar": "Similarity ratio of the most similar celebrity to you",
     "second_similar": "Similarity ratio of the second most similar celebrity to you",
-    "third_similar": "Similarity ratio of the third most similar celebrity to you"
+    "third_similar": "Similarity ratio of the third most similar celebrity to you",
+    "fourth_similar": "Similarity ratio"
   },
   "saved": {
     "cancel": "Cancel",

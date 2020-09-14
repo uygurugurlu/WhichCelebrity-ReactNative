@@ -48,6 +48,7 @@ export const ShowSnackBar = (data, duration, position, type) => {
     duration: duration,
     position: position,
     isShowShadow: true,
+    numberOfLines: 4
   };
 
   WSnackBar.show(toastOpts);

@@ -9,7 +9,7 @@ import {
   REMOVE_FROM_DELETE_LIST,
   CLEAR_DELETE_LIST,
   CHANGE_SELECTED_TO_DELETE_COUNT,
-  CLEAR_SELECTED_TO_DELETE_COUNT,
+  CLEAR_SELECTED_TO_DELETE_COUNT, GET_DETECTED_FACE_COUNT,
 } from '../Actions/ActionTypes';
 
 import update from 'react-addons-update';
@@ -34,6 +34,8 @@ const initialState = {
   selected_to_delete_count: 0,
 
   delete_list: [],
+
+  detected_face_count: 0
 };
 
 const reducer = (state = initialState, action) => {
@@ -47,6 +49,12 @@ const reducer = (state = initialState, action) => {
       return (state = update(state, {
         language: {$set: action.language},
       }));
+
+    case GET_DETECTED_FACE_COUNT:
+      return (state = update(state, {
+        detected_face_count: {$set: action.count},
+      }));
+
 
     case GET_USER_AGENT:
       return (state = update(state, {

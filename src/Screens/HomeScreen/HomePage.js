@@ -7,7 +7,7 @@ import {translate} from '../../I18n';
 import {Button} from 'react-native-elements';
 import {styles} from './HomePageStyles';
 import {InterstitialAd, AdEventType, TestIds} from '@react-native-firebase/admob';
-import {get_user_avatar_source} from '../../Store/Actions';
+import {get_detected_face_count, get_user_avatar_source} from '../../Store/Actions';
 import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoFromImageLibrary';
 import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
 import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
@@ -20,6 +20,7 @@ import Icon from "react-native-fontawesome-pro";
 import GenderSelection from "../../common/Components/GenderSelection";
 import {GetToken} from "../../common/Functions/Endpoints/GetToken";
 import {ShowSnackBar} from "../../common/Components/ShowSnackBar";
+import {DetectFace} from "../../common/Functions/DetectFace";
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : unit_id;
@@ -42,7 +43,8 @@ class HomePage extends Component {
       selected_category_id: -1,
       scroll_items: [],
       celebrity: {},
-      gender: null
+      gender: null,
+      detected_faces: 0
     };
   }
 
@@ -54,7 +56,6 @@ class HomePage extends Component {
 
     try {
       const {data} = await GetCategories(user_agent, language.languageTag);
-
       console.log("Categories: ", data.data);
       this.setState({categories: data.data})
       this.fillScroll(data.data);
@@ -82,9 +83,21 @@ class HomePage extends Component {
 
   WhenTheLanguageChanged = () => this.forceUpdate();
 
-  LaunchCamera = async () => await GetUserPhotoFromCamera(this.props.get_user_avatar_source);
+  LaunchCamera = async () => {
+    const {path, data} = await GetUserPhotoFromCamera();
+    this.props.get_user_avatar_source({uri: path}, data);
+    const faces = await DetectFace(path);
+    this.props.get_detected_face_count(faces.length);
+    console.log("faces:", faces, faces.length);
+  };
 
-  LaunchImageLibrary = () => GetUserPhotoFromImageLibrary(this.props.get_user_avatar_source);
+  LaunchImageLibrary = async () => {
+    const {path, data} = await GetUserPhotoFromImageLibrary();
+    this.props.get_user_avatar_source({uri: path}, data);
+    const faces = await DetectFace(path);
+    this.props.get_detected_face_count(faces.length);
+    console.log("faces:", faces, faces.length);
+  };
 
   SelectAvatar = () => this.showActionSheet();
 
@@ -117,11 +130,20 @@ class HomePage extends Component {
   };
 
   CheckValidity = () => {
-    const {userAvatarSource} = this.props;
+    const {userAvatarSource,detected_face_count} = this.props;
+    console.log("CheckValidity detected_faces: ", detected_face_count);
+
     if (userAvatarSource === '') {
       Alert.alert('', translate('famous_compare.validity_alert'));
       return false;
+    } else if (detected_face_count === 0) {
+      ShowSnackBar(translate("home.face_not_found"), "SHORT", "TOP", "ERROR");
+      return false;
+    } else if (detected_face_count > 1) {
+      ShowSnackBar(translate("home.more_than_one_face_found"), "SHORT", "TOP", "ERROR");
+      return false;
     }
+
     return true;
   };
 
@@ -299,12 +321,14 @@ const mapStateToProps = (state) => {
     userAvatarSource: state.mainReducer.userAvatarSource,
     userAvatarB64: state.mainReducer.userAvatarB64,
     user_agent: state.mainReducer.user_agent,
+    detected_face_count: state.mainReducer.detected_face_count
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     get_user_avatar_source: (source, base64_data) => dispatch(get_user_avatar_source(source, base64_data)),
+    get_detected_face_count: (count) => dispatch(get_detected_face_count(count)),
   };
 };
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Animated, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import {Animated, Image, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {styles} from "./ResultPageBodyStyles";
 import {DEVICE_WIDTH, HEADSTONE2, shadow} from "../../../common/Constants";
 import {translate} from "../../../I18n";
@@ -7,9 +7,6 @@ import AnimatedProgressBar from "../../../common/Components/AnimatedProgressBar"
 import AnimatedProgressComponent from "../../../common/Components/AnimatedProgressComponent";
 import ResultLineComponent from "../../../common/Components/ResultLineComponent";
 import SwipeableImageModal from "../../../common/Components/SwipeableImageModal";
-import {BlurView, VibrancyView} from "@react-native-community/blur";
-import * as Animatable from "react-native-animatable";
-import ViewShot from "react-native-view-shot";
 
 class ResultPageBody extends Component {
   constructor(props) {
@@ -85,8 +82,11 @@ class ResultPageBody extends Component {
       case 2:
         title = translate("result.third_similar");
         break;
-
+      case 3:
+        title = translate("result.third_similar");
+        break;
     }
+
     this.setState({
       category: category,
       nationality: nationality,
@@ -101,21 +101,6 @@ class ResultPageBody extends Component {
       title: title
     });
   }
-
-  performTimeConsumingTask = async (timeout) => {
-    return new Promise((resolve) => setTimeout(() => {
-      resolve('result');
-    }, timeout));
-  };
-
-  screenShotEffect = async () => {
-    const data = await this.performTimeConsumingTask(2000);
-    //this.setState({blur: true});
-
-    if (data !== null) {
-      // this.setState({blur: false});
-    }
-  };
 
   handleModalVisibility = (index) => {
     const {isVisible, photo} = this.state;
@@ -138,6 +123,7 @@ class ResultPageBody extends Component {
       <View style={[styles.mainContainer]}>
 
         <View style={[styles.iconContainerStyle, shadow]}>
+
           <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
             <Image source={userAvatarSource} style={styles.iconStyle}/>
           </TouchableOpacity>

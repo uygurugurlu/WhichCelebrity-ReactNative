@@ -1,8 +1,8 @@
 import ImagePicker from 'react-native-image-crop-picker';
 import {translate} from '../../I18n';
 
-export const GetUserPhotoFromImageLibrary = (get_mono_user_avatar_source) => {
-  ImagePicker.openPicker({
+export const GetUserPhotoFromImageLibrary = async () => {
+  return await ImagePicker.openPicker({
     width: 300,
     height: 300,
     cropping: true,
@@ -11,8 +11,5 @@ export const GetUserPhotoFromImageLibrary = (get_mono_user_avatar_source) => {
     cropperCancelText: translate('image_picker.cancel'),
     compressImageQuality: 0.8,
     mediaType: 'photo'
-  }).then((image) => {
-    console.log("image path: ", image.path);
-    get_mono_user_avatar_source({uri: image.path}, image.data);
   });
 };
