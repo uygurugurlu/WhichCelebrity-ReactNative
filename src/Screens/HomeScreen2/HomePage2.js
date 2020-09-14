@@ -128,10 +128,10 @@ class HomePage2 extends Component {
       Alert.alert('', translate('home.select_warning'));
       return false;
     } else if (detected_face_count === 0) {
-      ShowSnackBar(translate("home.face_not_found"), "SHORT", "TOP", "ERROR");
+      ShowSnackBar(translate("home.face_not_found"), "LONG", "TOP", "ERROR");
       return false;
     } else if (detected_face_count > 1) {
-      ShowSnackBar(translate("home.more_than_one_face_found"), "SHORT", "TOP", "ERROR");
+      ShowSnackBar(translate("home.more_than_one_face_found"), "LONG", "TOP", "ERROR");
       return false;
     }
 
