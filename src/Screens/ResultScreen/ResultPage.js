@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  Image, View, TouchableOpacity, Platform, Easing, PermissionsAndroid, Animated
+  Image, TouchableOpacity, Platform, PermissionsAndroid, Animated
 } from 'react-native';
 import {styles} from './ResultPageStyles';
 import {connect} from 'react-redux';
@@ -16,6 +16,7 @@ import ActionSheetComponent2 from "../../common/Components/ActionSheetComponent2
 import {SavePicture} from "../../common/Functions/SavePicture";
 import ResultPageBody from "./ResultPageBody/ResultPageBody";
 import Swiper from "react-native-swiper";
+import {PerformTimeConsumingTask} from "../../common/Functions/PerformTimeConsumingTask";
 
 const ANIMATION_DURATION = 1000;
 
@@ -50,7 +51,7 @@ class ResultPage extends Component {
 
   takeScreenShot = async (index) => {
     await this.actionSheet.hide();
-    const data = await this.performTimeConsumingTask(1);
+    const data = await PerformTimeConsumingTask(50);
     await this.setState({share_active: true});
     if (data !== null) {
       await this.GetScreenShot(index);
@@ -58,7 +59,7 @@ class ResultPage extends Component {
   };
 
   ScrollAnimation = async () => {
-    const data = await this.performTimeConsumingTask(2000);
+    const data = await PerformTimeConsumingTask(2000);
     await this.ref3.scrollTo(1, true);
 
     if (data !== null) {
@@ -66,11 +67,6 @@ class ResultPage extends Component {
     }
   }
 
-  performTimeConsumingTask = async (timeout) => {
-    return new Promise((resolve) => setTimeout(() => {
-      resolve('result');
-    }, timeout));
-  };
 
   Save = async (uri) => {
     if (Platform.OS === 'android') {
@@ -160,7 +156,7 @@ class ResultPage extends Component {
   };
 
   GetScreenShot = async (index) => {
-    const data = await this.performTimeConsumingTask(50);
+    const data = await PerformTimeConsumingTask(50);
 
     if (data !== null) {
       this.viewShot.capture()

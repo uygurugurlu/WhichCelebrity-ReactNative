@@ -24,6 +24,7 @@ import TooltipComponent from "../../common/Components/TooltipComponent";
 import {ShowSnackBar} from "../../common/Components/ShowSnackBar";
 import {DetectFace} from "../../common/Functions/DetectFace";
 import LoadingAnimationModal from "../../common/Components/LoadingAnimationModal/LoadingAnimationModal";
+import {PerformTimeConsumingTask} from "../../common/Functions/PerformTimeConsumingTask";
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : unit_id;
@@ -182,7 +183,9 @@ class HomePage2 extends Component {
           ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
           this.setState({result_loading: false});
-          await this.ShowAD();
+          const data_xx = await PerformTimeConsumingTask(500);
+          if (data_xx !== null)
+            await this.ShowAD();
           this.NavigateToResultPage2(JSON.parse(data).data[0]);
           this.HideProfile();
         }
@@ -200,17 +203,20 @@ class HomePage2 extends Component {
     this.LoadAD();
 
     if (this.CheckValidity(true)) {
+      await this.setState({random_result_loading: true});
 
       try {
-        await this.setState({random_result_loading: true});
         const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, null, language.languageTag, "true");
         console.log("UserPhotoAnalyze res: ", JSON.parse(data).data[0]);
 
         if (JSON.parse(data).status === 'error') {
           ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
-          this.setState({result_loading: false});
-          await this.ShowAD();
+          this.setState({random_result_loading: false});
+          const data_xx = await PerformTimeConsumingTask(500);
+          if (data_xx !== null)
+            await this.ShowAD();
+
           this.NavigateToResultPage2(JSON.parse(data).data[0]);
           this.HideProfile();
         }

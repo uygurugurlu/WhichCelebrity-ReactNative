@@ -22,6 +22,7 @@ import {GetToken} from "../../common/Functions/Endpoints/GetToken";
 import {ShowSnackBar} from "../../common/Components/ShowSnackBar";
 import {DetectFace} from "../../common/Functions/DetectFace";
 import LoadingAnimationModal from "../../common/Components/LoadingAnimationModal/LoadingAnimationModal";
+import {PerformTimeConsumingTask} from "../../common/Functions/PerformTimeConsumingTask";
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : unit_id;
@@ -172,16 +173,19 @@ class HomePage extends Component {
     await this.LoadAD();
 
     if (this.CheckValidity()) {
-      this.setState({result_loading: true});
+      await this.setState({result_loading: true});
 
       try {
         const {data} = await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender);
+        await this.setState({result_loading: false});
+
         if (JSON.parse(data).status === 'error') {
           ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
+          const data_xx = await PerformTimeConsumingTask(500);
+          if (data_xx !== null)
+            await this.ShowAD();
           this.setState({celebrity: JSON.parse(data)});
-          this.setState({result_loading: false});
-          await this.ShowAD();
           this.NavigateToResultPage(JSON.parse(data).data);
         }
         this.CancelCategory();
@@ -311,7 +315,7 @@ class HomePage extends Component {
           </View>
 
           {this.GetActionSheet()}
-          <LoadingAnimationModal isModalVisible={this.state.result_loading}/>
+          {<LoadingAnimationModal isModalVisible={this.state.result_loading}/>}
         </SafeAreaView>
       </TouchableWithoutFeedback>
     );

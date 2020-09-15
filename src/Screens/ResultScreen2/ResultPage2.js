@@ -15,6 +15,7 @@ import ResultButtonsRow from "../../common/Components/ResultButtonsRow";
 import ActionSheetComponent2 from "../../common/Components/ActionSheetComponent2";
 import {SavePicture} from "../../common/Functions/SavePicture";
 import ResultPageBody from "../ResultScreen/ResultPageBody/ResultPageBody";
+import {PerformTimeConsumingTask} from "../../common/Functions/PerformTimeConsumingTask";
 
 const ANIMATION_DURATION = 1000;
 
@@ -48,19 +49,11 @@ class ResultPage2 extends Component {
 
   takeScreenShot = async (index) => {
     await this.actionSheet.hide();
-    const data = await this.performTimeConsumingTask(1);
+    const data = await PerformTimeConsumingTask(50);
     await this.setState({share_active: true});
     if (data !== null) {
       await this.GetScreenShot(index);
     }
-  };
-
-  performTimeConsumingTask = async (timeout) => {
-    return new Promise((resolve) =>
-      setTimeout(() => {
-        resolve('result');
-      }, timeout),
-    );
   };
 
   GoBack = async () => await this.props.navigation.pop();
@@ -207,7 +200,7 @@ class ResultPage2 extends Component {
   };
 
   GetScreenShot = async (index) => {
-    const data = await this.performTimeConsumingTask(250);
+    const data = await PerformTimeConsumingTask(250);
 
     if (data !== null) {
       this.viewShot.capture()

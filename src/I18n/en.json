@@ -39,7 +39,7 @@
     "result_not_found": "Result not found",
     "face_not_found": "No face found in the photo you selected",
     "more_than_one_face_found": "Please make sure there is only one face in the photo you chose",
-    "loading_text": "Yapay zeka algoritmamız size en çok benzeyen ünlüyü aramaktadır"
+    "loading_text": "Our artificial intelligence algorithm is looking for the celebrity who looks most like you."
   },
   "result": {
     "share": "Share",
