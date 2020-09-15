@@ -180,6 +180,7 @@ class HomePage extends Component {
           ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
           this.setState({celebrity: JSON.parse(data)});
+          this.setState({result_loading: false});
           await this.ShowAD();
           this.NavigateToResultPage(JSON.parse(data).data);
         }
