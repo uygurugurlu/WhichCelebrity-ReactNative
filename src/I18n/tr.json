@@ -55,8 +55,8 @@
     "zodiac_sign": "Burç",
     "years": "yaşında",
     "first_similar": "Size en çok benzeyen ünlünün benzerlik oranı",
-    "second_similar": "Size en çok benzeyen ikinci ünlünün benzerlik oranı",
-    "third_similar": "Size en çok benzeyen üçüncü ünlünün benzerlik oranı",
+    "second_similar": "Size en çok benzeyen 2. ünlünün benzerlik oranı",
+    "third_similar": "Size en çok benzeyen 3. ünlünün benzerlik oranı",
     "fourth_similar": "Benzerlik oranınız"
   },
   "saved": {

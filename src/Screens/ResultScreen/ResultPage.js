@@ -142,7 +142,7 @@ class ResultPage extends Component {
   };
 
   GetScreenShot = async (index) => {
-    const data = await PerformTimeConsumingTask(50);
+    const data = await PerformTimeConsumingTask(250);
 
     if (data !== null) {
       this.viewShot.capture()
