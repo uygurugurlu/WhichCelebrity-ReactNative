@@ -7,22 +7,25 @@ import {translate} from "../../../I18n";
 import * as Animatable from 'react-native-animatable';
 
 class LoadingAnimationModal extends Component {
-  state = {
-    animations: [
-      require(`./loader_1.json`),
-      require(`./loader_2.json`),
-      require(`./loader_10.json`),
-      require(`./loader_11.json`),
-      require(`./loader_12.json`),
-      require(`./loader_15.json`),
-      require(`./loader_18.json`),
-      require(`./loader_21.json`)
-    ]
+  constructor(props) {
+    super(props);
+    this.state = {
+      animations: [
+        require(`./loader_1.json`),
+        require(`./loader_2.json`),
+        require(`./loader_10.json`),
+        require(`./loader_11.json`),
+        require(`./loader_12.json`),
+        require(`./loader_15.json`),
+        require(`./loader_18.json`),
+        require(`./loader_21.json`)
+      ]
+    };
   }
 
   render() {
     const {isModalVisible} = this.props;
-    const rand = Math.floor(Math.random() * 8);     // returns a random integer from 0 to 9
+    const rand = Math.floor(Math.random() * 8);     // returns a random integer from 0 to 7
 
     return (
       <Modal isVisible={isModalVisible}

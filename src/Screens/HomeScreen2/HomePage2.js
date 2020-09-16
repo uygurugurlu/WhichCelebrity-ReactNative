@@ -14,7 +14,12 @@ import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
 import AvatarComponent from '../../common/Components/AvatarComponent';
 import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
 import SearchBarComponent from '../../common/Components/SearchBarComponent';
-import {DEVICE_HEIGHT, DEVICE_WIDTH, shadow} from '../../common/Constants';
+import {
+  DEVICE_HEIGHT,
+  DEVICE_WIDTH,
+  shadow, WAIT_BEFORE_AD_MILLISECONDS,
+  WAIT_LOADING_ANIMATION_MILLISECONDS
+} from '../../common/Constants';
 import {SearchCelebrities} from "../../common/Functions/Endpoints/SearchCelebrities";
 import {GetCelebrity} from "../../common/Functions/Endpoints/GetCelebrity";
 import SelectedCelebrityLine from "../../common/Components/SelectedCelebrityLine";
@@ -179,11 +184,14 @@ class HomePage2 extends Component {
         const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag, "false");
         console.log("UserPhotoAnalyze res: ", JSON.parse(data).data[0]);
 
+        const wait = await PerformTimeConsumingTask(WAIT_LOADING_ANIMATION_MILLISECONDS);
+        if (wait !== null)
+          this.setState({result_loading: false});
+
         if (JSON.parse(data).status === 'error') {
           ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
-          this.setState({result_loading: false});
-          const data_xx = await PerformTimeConsumingTask(500);
+          const data_xx = await PerformTimeConsumingTask(WAIT_BEFORE_AD_MILLISECONDS);
           if (data_xx !== null)
             await this.ShowAD();
           this.NavigateToResultPage2(JSON.parse(data).data[0]);
@@ -209,11 +217,14 @@ class HomePage2 extends Component {
         const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, null, language.languageTag, "true");
         console.log("UserPhotoAnalyze res: ", JSON.parse(data).data[0]);
 
+        const wait = await PerformTimeConsumingTask(WAIT_LOADING_ANIMATION_MILLISECONDS);
+        if (wait !== null)
+          this.setState({random_result_loading: false});
+
         if (JSON.parse(data).status === 'error') {
           ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
-          this.setState({random_result_loading: false});
-          const data_xx = await PerformTimeConsumingTask(500);
+          const data_xx = await PerformTimeConsumingTask(WAIT_BEFORE_AD_MILLISECONDS);
           if (data_xx !== null)
             await this.ShowAD();
 

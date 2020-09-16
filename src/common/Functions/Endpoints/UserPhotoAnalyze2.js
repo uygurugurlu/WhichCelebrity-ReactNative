@@ -22,4 +22,3 @@ export const UserPhotoAnalyze2 = (user_agent, image_data, celebrity_id, locale, 
   }, body);
 
 };
-

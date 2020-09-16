@@ -14,7 +14,12 @@ import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
 import AvatarComponent from '../../common/Components/AvatarComponent';
 import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
 import {GetCategories} from "../../common/Functions/Endpoints/GetCategories";
-import {DEVICE_HEIGHT, DOWN_ICON, FORWARD_ICON} from "../../common/Constants";
+import {
+  DEVICE_HEIGHT,
+  DOWN_ICON,
+  FORWARD_ICON, WAIT_BEFORE_AD_MILLISECONDS,
+  WAIT_LOADING_ANIMATION_MILLISECONDS
+} from "../../common/Constants";
 import {UserPhotoAnalyze} from "../../common/Functions/Endpoints/UserPhotoAnalyze";
 import Icon from "react-native-fontawesome-pro";
 import GenderSelection from "../../common/Components/GenderSelection";
@@ -177,12 +182,15 @@ class HomePage extends Component {
 
       try {
         const {data} = await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender);
-        await this.setState({result_loading: false});
+
+        const wait = await PerformTimeConsumingTask(WAIT_LOADING_ANIMATION_MILLISECONDS);
+        if (wait !== null)
+          await this.setState({result_loading: false});
 
         if (JSON.parse(data).status === 'error') {
           ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
         } else {
-          const data_xx = await PerformTimeConsumingTask(500);
+          const data_xx = await PerformTimeConsumingTask(WAIT_BEFORE_AD_MILLISECONDS);
           if (data_xx !== null)
             await this.ShowAD();
           this.setState({celebrity: JSON.parse(data)});
