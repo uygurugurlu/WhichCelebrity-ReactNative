@@ -45,10 +45,6 @@ class ResultPage extends Component {
     });
   }
 
-  componentDidMount = async () => {
-    await this.ScrollAnimation();
-  };
-
   takeScreenShot = async (index) => {
     await this.actionSheet.hide();
     const data = await PerformTimeConsumingTask(50);
@@ -57,16 +53,6 @@ class ResultPage extends Component {
       await this.GetScreenShot(index);
     }
   };
-
-  ScrollAnimation = async () => {
-    const data = await PerformTimeConsumingTask(2000);
-    await this.ref3.scrollTo(1, true);
-
-    if (data !== null) {
-      await this.ref3.scrollTo(0, true);
-    }
-  }
-
 
   Save = async (uri) => {
     if (Platform.OS === 'android') {

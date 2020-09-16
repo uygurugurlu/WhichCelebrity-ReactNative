@@ -3,7 +3,7 @@ import RNFetchBlob from "rn-fetch-blob";
 
 export const UserPhotoAnalyze2 = (user_agent, image_data, celebrity_id, locale, random) => {
 
-  const body = random==="true" ? [
+  const body = random === "true" ? [
       {name: 'image', filename: 'photo.png', type: 'image/jpg/jpeg/png', data: image_data},
       {name: 'random', data: random},
       {name: 'locale', data: locale},
@@ -15,7 +15,7 @@ export const UserPhotoAnalyze2 = (user_agent, image_data, celebrity_id, locale, 
       {name: 'locale', data: locale},
     ];
 
-  return RNFetchBlob.fetch('POST', `${API_HOST}/api/analyze`, {
+  return RNFetchBlob.fetch('POST', `${API_HOST}/api/v2/analyze`, {
     'Content-Type': 'multipart/form-data',
     'Authorization': `Bearer ${AUTH_TOKEN}`,
     'User-Agent': user_agent,

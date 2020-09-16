@@ -41,8 +41,7 @@ export const UserPhotoAnalyze = async (user_agent, image_data, category, locale,
     }
   }
 
-
-  return RNFetchBlob.fetch('POST', `${API_HOST}/api/analyze`, {
+  return RNFetchBlob.fetch('POST', `${API_HOST}/api/v2/analyze`, {
     'Content-Type': 'multipart/form-data',
     'Authorization': `Bearer ${AUTH_TOKEN}`,
     'User-Agent': user_agent,
