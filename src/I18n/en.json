@@ -80,5 +80,10 @@
   "dashboard": {
     "first_label": "Find out which celebrity do you look like",
     "second_label": "Pick a celebrity and find out how similar you are"
+  },
+  "update": {
+    "update": "Update",
+    "not_up_to_date": "The application is out of date",
+    "update_the_app": "Please update the 'Which Celebrity' app before continuing"
   }
 }

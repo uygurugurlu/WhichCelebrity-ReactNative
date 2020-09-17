@@ -7,13 +7,13 @@ import {setI18nConfig} from '../I18n';
 import {first_time_login, get_user_agent, set_language} from '../Store/Actions';
 import StarterPagesStack from './Starter/StarterPagesStack';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../common/Constants';
-import axios from 'axios';
-import {ResponseHandler} from '../common/Functions/ResponseHandler';
 import DeviceInfo from 'react-native-device-info';
 import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
 import {page_body_background_color} from '../common/ColorIndex';
 import MainPagesStack from './MainStack';
 import UserAgent from 'react-native-user-agent';
+import {GetAppVersion} from "../common/Functions/Endpoints/GetAppVersion";
+import {PerformTimeConsumingTask} from "../common/Functions/PerformTimeConsumingTask";
 
 class SwitchNavigation extends React.Component {
   constructor(props) {
@@ -51,7 +51,7 @@ class SwitchNavigation extends React.Component {
   };
 
   componentWillMount = async () => {
-    const data = await this.performTimeConsumingTask(1000);
+    const data = await PerformTimeConsumingTask(1000);
     await this.GetVersion();
 
     await UserAgent.getWebViewUserAgent() //asynchronous
@@ -65,14 +65,6 @@ class SwitchNavigation extends React.Component {
     if (data !== null) {
       await this.getData('LOGGED_IN_FIRST_TIME');
     }
-  };
-
-  performTimeConsumingTask = async (timeout) => {
-    return new Promise((resolve) =>
-      setTimeout(() => {
-        resolve('result');
-      }, timeout),
-    );
   };
 
   componentDidMount = async () => {
@@ -89,7 +81,6 @@ class SwitchNavigation extends React.Component {
     }
 
     setI18nConfig((language) => this.props.set_language(language)); // set initial config
-
   };
 
   shouldComponentUpdate = async (nextProps, nextState) => {
@@ -99,45 +90,52 @@ class SwitchNavigation extends React.Component {
   };
 
   GetVersion = async () => {
-    await axios({
-      method: 'get',
-      url: `https://myface.io/version`,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/json',
-        'User-Agent': this.props.user_agent,
-      },
-    })
-      .then((res) => {
-        console.log('GetVersion Api doğru çalıştı ...', res);
+    const {data} = await GetAppVersion(this.props.user_agent);
+    console.log('GetVersion Api doğru çalıştı ...', data);
 
-        try {
-          /** APP VERSION ON DEVICE */
-          let version = Number(DeviceInfo.getVersion());
-          let min_sup_ver_android = Number(
-            res.data.android.minimum_supported_version,
-          );
-          let min_sup_ver_ios = Number(res.data.ios.minimum_supported_version);
+    try {
+      /** APP VERSION ON DEVICE */
+      let version = DeviceInfo.getVersion();
+      let min_sup_ver_android = data.android.minimum_supported_version;
+      let min_sup_ver_ios = data.ios.minimum_supported_version;
 
-          if (Platform.OS === 'android') {
-            if (version < min_sup_ver_android) {
-              this.setState({update_needed: true});
-            }
-          } else if (Platform.OS === 'ios') {
-            if (version < min_sup_ver_ios) {
-              this.setState({update_needed: true});
-            }
-          }
-        } catch (e) {
-          console.log('version control error: ', e);
+      console.log("agent version: ", version);
+
+      console.log("min_sup_ver_android: ", min_sup_ver_android);
+      console.log("min_sup_ver_ios: ", min_sup_ver_ios);
+
+      console.log("split: ", min_sup_ver_android.split("."));
+
+      const agent_version_split = version.split(".");
+      const min_sup_ver_android_split = min_sup_ver_android.split(".");
+      const min_sup_ver_ios_split = min_sup_ver_ios.split(".");
+
+      let agent_version = 0;
+
+      if (agent_version_split[2])
+        agent_version = agent_version_split[0] * 1000000 + agent_version_split[1] * 100 + agent_version_split[2];
+      else
+        agent_version = agent_version_split[0] * 1000000 + agent_version_split[1] * 100;
+
+      const min_sup_android_version = Number(min_sup_ver_android_split[0]) * 1000000 + Number(min_sup_ver_android_split[1]) * 100 + Number(min_sup_ver_android_split[2]);
+      const min_sup_ios_version = Number(min_sup_ver_ios_split[0]) * 1000000 + Number(min_sup_ver_ios_split[1]) * 100 + Number(min_sup_ver_ios_split[2]);
+
+      console.log("agent_version: ", agent_version);
+      console.log("min_sup_android_version: ", min_sup_android_version);
+      console.log("min_sup_ios_version: ", min_sup_ios_version);
+
+      if (Platform.OS === 'android') {
+        if (agent_version < min_sup_android_version) {
+          this.setState({update_needed: true});
         }
-      })
-      .catch((error) => {
-        ResponseHandler(error.response);
-        console.group('GetVersion Api Api Hatası ...');
-        console.table({...error.response.data});
-        console.groupEnd();
-      });
+      } else if (Platform.OS === 'ios') {
+        if (agent_version < min_sup_ios_version) {
+          this.setState({update_needed: true});
+        }
+      }
+    } catch (e) {
+      console.log('version control error: ', e);
+    }
   };
 
   render() {

@@ -15,8 +15,7 @@ import AvatarComponent from '../../common/Components/AvatarComponent';
 import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
 import {GetCategories} from "../../common/Functions/Endpoints/GetCategories";
 import {
-  DEVICE_HEIGHT,
-  DOWN_ICON,
+  DEVICE_HEIGHT, DOWN_ICON,
   FORWARD_ICON, WAIT_BEFORE_AD_MILLISECONDS,
   WAIT_LOADING_ANIMATION_MILLISECONDS
 } from "../../common/Constants";
@@ -31,9 +30,7 @@ import {PerformTimeConsumingTask} from "../../common/Functions/PerformTimeConsum
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : unit_id;
-const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-  requestNonPersonalizedAdsOnly: false,
-});
+const interstitial = InterstitialAd.createForAdRequest(adUnitId);
 
 class HomePage extends Component {
   constructor(props) {
@@ -58,8 +55,8 @@ class HomePage extends Component {
   componentWillMount = async () => {
     const {user_agent, language} = this.props;
 
-    //const token = await GetToken(user_agent);
-    //console.log("GetToken: ", token);
+    const token = await GetToken(user_agent);
+    console.log("GetToken: ", token);
 
     try {
       const {data} = await GetCategories(user_agent, language.languageTag);
@@ -182,7 +179,6 @@ class HomePage extends Component {
 
       try {
         const {data} = await UserPhotoAnalyze(user_agent, userAvatarB64, selected_category_id, language.languageTag, gender);
-
         const wait = await PerformTimeConsumingTask(WAIT_LOADING_ANIMATION_MILLISECONDS);
         if (wait !== null)
           await this.setState({result_loading: false});

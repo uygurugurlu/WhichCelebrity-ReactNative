@@ -4,15 +4,16 @@ import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
 } from '../../common/Constants';
+import {translate} from "../../I18n";
 
 class UpdateApp extends Component {
   componentWillMount() {
     Alert.alert(
-      'Uygulama güncel değil',
-      'Lütfen devam etmeden önce "Hık Demiş" uygulamasını güncelleyiniz.',
+      translate("update.not_up_to_date"),
+      translate("update.update_the_app"),
       [
         {
-          text: 'Güncelle',
+          text: translate("update.update"),
           onPress: () => this.Update(),
         },
       ],
@@ -21,16 +22,15 @@ class UpdateApp extends Component {
   }
 
   Update = () => {
-    console.log('Update pressed');
     Platform.OS === 'android'
-      ? Linking.openURL('market://details?id=90728571327')
+      ? Linking.openURL('market://details?id=com.looklikecelebrity')
       : Linking.openURL(
-          'itms-apps://itunes.apple.com/us/app/apple-store/1524011545?mt=8',
-        );
+      'itms-apps://itunes.apple.com/us/app/apple-store/1524011545?mt=8',
+      );
   };
 
   render() {
-    return <View />;
+    return <View/>;
   }
 }
 

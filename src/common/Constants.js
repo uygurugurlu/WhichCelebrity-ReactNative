@@ -25,5 +25,5 @@ export const shadow = {
 
 export const TOKEN = "1|6htseHNZzqrRZ7c83CBxBe6CyDI9SO8OIq74v3egRO6dVA9pWOTPjkfGpwnn2RiSgwtojyzE0zJ0vxOh";
 
-export const  WAIT_LOADING_ANIMATION_MILLISECONDS = 1000;
+export const  WAIT_LOADING_ANIMATION_MILLISECONDS = 2000;
 export const  WAIT_BEFORE_AD_MILLISECONDS = 500;

@@ -33,9 +33,7 @@ import {PerformTimeConsumingTask} from "../../common/Functions/PerformTimeConsum
 
 const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : unit_id;
-const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-  requestNonPersonalizedAdsOnly: false,
-});
+const interstitial = InterstitialAd.createForAdRequest(adUnitId);
 
 class HomePage2 extends Component {
   constructor(props) {
