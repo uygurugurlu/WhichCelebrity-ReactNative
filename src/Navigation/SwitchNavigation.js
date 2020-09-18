@@ -12,8 +12,8 @@ import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
 import {page_body_background_color} from '../common/ColorIndex';
 import MainPagesStack from './MainStack';
 import UserAgent from 'react-native-user-agent';
-import {GetAppVersion} from "../common/Functions/Endpoints/GetAppVersion";
-import {PerformTimeConsumingTask} from "../common/Functions/PerformTimeConsumingTask";
+import {GetAppVersion} from '../common/Functions/Endpoints/GetAppVersion';
+import {PerformTimeConsumingTask} from '../common/Functions/PerformTimeConsumingTask';
 
 class SwitchNavigation extends React.Component {
   constructor(props) {
@@ -55,10 +55,10 @@ class SwitchNavigation extends React.Component {
     await this.GetVersion();
 
     await UserAgent.getWebViewUserAgent() //asynchronous
-      .then(ua => {
+      .then((ua) => {
         this.props.get_user_agent(ua);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log('user agent error: ', e);
       });
 
@@ -99,30 +99,41 @@ class SwitchNavigation extends React.Component {
       let min_sup_ver_android = data.android.minimum_supported_version;
       let min_sup_ver_ios = data.ios.minimum_supported_version;
 
-      console.log("agent version: ", version);
+      console.log('agent version: ', version);
 
-      console.log("min_sup_ver_android: ", min_sup_ver_android);
-      console.log("min_sup_ver_ios: ", min_sup_ver_ios);
+      console.log('min_sup_ver_android: ', min_sup_ver_android);
+      console.log('min_sup_ver_ios: ', min_sup_ver_ios);
 
-      console.log("split: ", min_sup_ver_android.split("."));
+      console.log('split: ', min_sup_ver_android.split('.'));
 
-      const agent_version_split = version.split(".");
-      const min_sup_ver_android_split = min_sup_ver_android.split(".");
-      const min_sup_ver_ios_split = min_sup_ver_ios.split(".");
+      const agent_version_split = version.split('.');
+      const min_sup_ver_android_split = min_sup_ver_android.split('.');
+      const min_sup_ver_ios_split = min_sup_ver_ios.split('.');
 
       let agent_version = 0;
 
-      if (agent_version_split[2])
-        agent_version = agent_version_split[0] * 1000000 + agent_version_split[1] * 100 + agent_version_split[2];
-      else
-        agent_version = agent_version_split[0] * 1000000 + agent_version_split[1] * 100;
+      if (agent_version_split[2]) {
+        agent_version =
+          agent_version_split[0] * 1000000 +
+          agent_version_split[1] * 100 +
+          agent_version_split[2];
+      } else {
+        agent_version =
+          agent_version_split[0] * 1000000 + agent_version_split[1] * 100;
+      }
 
-      const min_sup_android_version = Number(min_sup_ver_android_split[0]) * 1000000 + Number(min_sup_ver_android_split[1]) * 100 + Number(min_sup_ver_android_split[2]);
-      const min_sup_ios_version = Number(min_sup_ver_ios_split[0]) * 1000000 + Number(min_sup_ver_ios_split[1]) * 100 + Number(min_sup_ver_ios_split[2]);
+      const min_sup_android_version =
+        Number(min_sup_ver_android_split[0]) * 1000000 +
+        Number(min_sup_ver_android_split[1]) * 100 +
+        Number(min_sup_ver_android_split[2]);
+      const min_sup_ios_version =
+        Number(min_sup_ver_ios_split[0]) * 1000000 +
+        Number(min_sup_ver_ios_split[1]) * 100 +
+        Number(min_sup_ver_ios_split[2]);
 
-      console.log("agent_version: ", agent_version);
-      console.log("min_sup_android_version: ", min_sup_android_version);
-      console.log("min_sup_ios_version: ", min_sup_ios_version);
+      console.log('agent_version: ', agent_version);
+      console.log('min_sup_android_version: ', min_sup_android_version);
+      console.log('min_sup_ios_version: ', min_sup_ios_version);
 
       if (Platform.OS === 'android') {
         if (agent_version < min_sup_android_version) {
@@ -143,19 +154,19 @@ class SwitchNavigation extends React.Component {
     const {update_needed} = this.state;
 
     if (update_needed) {
-      return <UpdateApp/>;
+      return <UpdateApp />;
     } else if (is_the_login_first_time === null) {
       return (
         <View style={styles.indicatorContainer}>
-          <ActivityIndicator size="large" color={'#000'}/>
+          <ActivityIndicator size="large" color={'#000'} />
         </View>
       );
     } else {
-      return (
-        <NavigationContainer>
-          {is_the_login_first_time ? <StarterPagesStack/> : <MainPagesStack/>}
-        </NavigationContainer>
-      );
+      if (is_the_login_first_time) {
+        return <StarterPagesStack />;
+      } else {
+        return <MainPagesStack />;
+      }
     }
   }
 }

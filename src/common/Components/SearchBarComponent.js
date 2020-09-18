@@ -8,19 +8,23 @@ class SearchBarComponent extends Component {
   render() {
     const {search, updateSearch, selectedCelebrity} = this.props;
     const place_holder =
-      selectedCelebrity === '' ? translate('home.select_celebrity') : translate('home.select_another_celebrity');
+      selectedCelebrity === ''
+        ? translate('home.select_celebrity')
+        : translate('home.select_another_celebrity');
     return (
-      <SearchBar placeholder={place_holder}
-                 onChangeText={updateSearch}
-                 value={search}
-                 searchIcon={null}
-                 inputContainerStyle={styles.inputContainerStyle}
-                 inputStyle={{color: '#000'}}
-                 containerStyle={styles.containerStyle}
-                 platform={Platform.OS === 'ios' ? 'ios' : 'android'}
-                 cancelButtonTitle={translate("home.cancel")}
-                 lightTheme={true}
-                 showLoading={false}/>
+      <SearchBar
+        placeholder={place_holder}
+        onChangeText={updateSearch}
+        value={search}
+        searchIcon={null}
+        inputContainerStyle={styles.inputContainerStyle}
+        inputStyle={{color: '#000'}}
+        containerStyle={styles.containerStyle}
+        platform={Platform.OS === 'ios' ? 'ios' : 'android'}
+        cancelButtonTitle={translate('home.cancel')}
+        lightTheme={true}
+        showLoading={false}
+      />
     );
   }
 }

@@ -8,7 +8,10 @@ import {connect} from 'react-redux';
 import {translate} from '../../I18n';
 import Icon from 'react-native-fontawesome-pro';
 import {Button} from 'react-native-elements';
-import {clear_delete_list, clear_selected_to_delete_count} from '../../Store/Actions';
+import {
+  clear_delete_list,
+  clear_selected_to_delete_count,
+} from '../../Store/Actions';
 import SavedImageNotFoundComponent from '../../common/Components/SavedImageNotFoundComponent';
 
 class SavingsPage extends Component {
@@ -46,12 +49,14 @@ class SavingsPage extends Component {
     this.props.navigation.setOptions({
       headerTitle: translate('app_name'),
       headerRight: () => (
-        <Icon name={'trash-alt'}
-              color={'white'}
-              iconStyle={{marginRight: DEVICE_WIDTH * 0.05}}
-              size={24}
-              type={'regular'}
-              onPress={() => this.DeleteSelected()}/>
+        <Icon
+          name={'trash-alt'}
+          color={'white'}
+          iconStyle={{marginRight: DEVICE_WIDTH * 0.05}}
+          size={24}
+          type={'regular'}
+          onPress={() => this.DeleteSelected()}
+        />
       ),
     });
   }
@@ -95,9 +100,9 @@ class SavingsPage extends Component {
 
   renderHeader = () => {
     if (this.state.photos.length === 0) {
-      return <SavedImageNotFoundComponent/>;
+      return <SavedImageNotFoundComponent />;
     } else {
-      return <View/>;
+      return <View />;
     }
   };
 
@@ -107,42 +112,57 @@ class SavingsPage extends Component {
 
     return (
       <View style={styles.mainContainer}>
-        <FlatList data={this.state.photos}
-                  numColumns={3}
-                  showsVerticalScrollIndicator={false}
-                  showsHorizontalScrollIndicator={false}
-                  ListHeaderComponent={this.renderHeader}
-                  onRefresh={() => this.handleRefresh()}
-                  onEndReached={() => this.OnEndReached()}
-                  refreshing={this.state.refreshing}
-                  onEndReachedThreshold={0.35}
-                  renderItem={({item}) => (
-                    <ImageComponent image={item.node.image}
-                                    deleteMode={delete_mode}
-                                    changeDeleteMode={(mode) => this.ChangeDeleteMode(mode)}/>
-                  )}
-                  keyExtractor={(item) => item.node.timestamp}
-                  style={{flex: 1}}
-                  contentContainerStyle={{width: DEVICE_WIDTH * 0.98}}/>
+        <FlatList
+          data={this.state.photos}
+          numColumns={3}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          ListHeaderComponent={this.renderHeader}
+          onRefresh={() => this.handleRefresh()}
+          onEndReached={() => this.OnEndReached()}
+          refreshing={this.state.refreshing}
+          onEndReachedThreshold={0.35}
+          renderItem={({item}) => (
+            <ImageComponent
+              image={item.node.image}
+              deleteMode={delete_mode}
+              changeDeleteMode={(mode) => this.ChangeDeleteMode(mode)}
+            />
+          )}
+          keyExtractor={(item) => item.node.timestamp}
+          style={{flex: 1}}
+          contentContainerStyle={{width: DEVICE_WIDTH * 0.98}}
+        />
 
-        <View style={styles.buttonsRowStyle} display={selected_to_delete_count !== 0 && delete_mode ? 'flex' : 'none'}>
-          <Button title={translate('saved.cancel')}
-                  titleStyle={styles.buttonTitleStyle}
-                  buttonStyle={styles.buttonStyle}
-                  color={'#123456'}
-                  containerStyle={styles.buttonContainerStyle}
-                  onPress={this.CancelDelete}/>
+        <View
+          style={styles.buttonsRowStyle}
+          display={
+            selected_to_delete_count !== 0 && delete_mode ? 'flex' : 'none'
+          }>
+          <Button
+            title={translate('saved.cancel')}
+            titleStyle={styles.buttonTitleStyle}
+            buttonStyle={styles.buttonStyle}
+            color={'#123456'}
+            containerStyle={styles.buttonContainerStyle}
+            onPress={this.CancelDelete}
+          />
 
-          <Button title={translate('saved.delete')}
-                  titleStyle={styles.buttonTitleStyle}
-                  buttonStyle={styles.buttonStyle}
-                  color={'#123456'}
-                  containerStyle={styles.buttonContainerStyle}
-                  onPress={this.Delete}/>
+          <Button
+            title={translate('saved.delete')}
+            titleStyle={styles.buttonTitleStyle}
+            buttonStyle={styles.buttonStyle}
+            color={'#123456'}
+            containerStyle={styles.buttonContainerStyle}
+            onPress={this.Delete}
+          />
         </View>
 
-        <View style={styles.buttonsRowStyle}
-              display={selected_to_delete_count === 0 && delete_mode ? 'flex' : 'none'}>
+        <View
+          style={styles.buttonsRowStyle}
+          display={
+            selected_to_delete_count === 0 && delete_mode ? 'flex' : 'none'
+          }>
           <Text style={{color: 'white', fontSize: 17, fontWeight: '500'}}>
             {translate('saved.select')}
           </Text>
@@ -160,7 +180,7 @@ const mapStateToProps = (state) => {
   return {
     language: state.mainReducer.language,
     savings_page_refresh_trigger:
-    state.mainReducer.savings_page_refresh_trigger,
+      state.mainReducer.savings_page_refresh_trigger,
     selected_to_delete_count: state.mainReducer.selected_to_delete_count,
     delete_list: state.mainReducer.delete_list,
   };

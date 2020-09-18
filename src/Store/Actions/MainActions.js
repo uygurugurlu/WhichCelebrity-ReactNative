@@ -10,13 +10,13 @@ import {
   REMOVE_FROM_DELETE_LIST,
   CHANGE_SELECTED_TO_DELETE_COUNT,
   CLEAR_SELECTED_TO_DELETE_COUNT,
-  GET_DETECTED_FACE_COUNT
+  GET_DETECTED_FACE_COUNT,
 } from './ActionTypes';
 
 export const get_detected_face_count = (count) => {
   return {
     type: GET_DETECTED_FACE_COUNT,
-    count: count
+    count: count,
   };
 };
 

@@ -1,8 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {
-  DEVICE_HEIGHT,
-  DEVICE_WIDTH,
-} from '../../../common/Constants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../../common/Constants';
 import {buttons_height} from '../../../common/ColorIndex';
 
 export const styles = StyleSheet.create({
@@ -43,7 +40,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     marginVertical: 5,
-    width: DEVICE_WIDTH * 0.85
+    width: DEVICE_WIDTH * 0.85,
   },
   kvkkColumnContainerStyle: {
     backgroundColor: '#fff',
@@ -72,13 +69,13 @@ export const styles = StyleSheet.create({
   checkBoxStyle: {
     height: 25,
     width: 25,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   titleTextStyle: {
     fontSize: 24,
     fontWeight: '600',
     alignSelf: 'center',
-    color: '#1b1b1b'
+    color: '#1b1b1b',
   },
   textStyle: {
     fontSize: 19,
@@ -87,7 +84,7 @@ export const styles = StyleSheet.create({
     color: 'rgba(0,0,0,0.60)',
     marginLeft: DEVICE_WIDTH * 0.05,
     width: DEVICE_WIDTH * 0.85,
-    marginVertical: DEVICE_HEIGHT * 0.025
+    marginVertical: DEVICE_HEIGHT * 0.025,
   },
   linkTextStyle: {
     fontSize: 14,
@@ -98,14 +95,14 @@ export const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '500',
     width: DEVICE_WIDTH * 0.75,
-    color: "#000"
+    color: '#000',
   },
   getPermissionButtonStyle: {
     width: DEVICE_WIDTH * 0.9,
     borderRadius: 7.5,
     height: buttons_height,
     backgroundColor: '#0177C9',
-    marginVertical: 15
+    marginVertical: 15,
   },
   getPermissionButtonTittleStyle: {
     fontSize: 18,

@@ -1,17 +1,17 @@
-import React from 'react' ;
+import React from 'react';
 import {Platform, Image} from 'react-native';
-import {DEVICE_HEIGHT, DEVICE_WIDTH} from "../Constants";
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../Constants';
 import shorthash from 'shorthash';
 
 const RNFS = require('react-native-fs');
 
 class CacheImageComponent extends React.Component {
   state = {
-    source: "",
+    source: '',
     error: false,
     width: 0,
     height: 0,
-    path: ""
+    path: '',
   };
 
   componentWillMount() {
@@ -28,68 +28,78 @@ class CacheImageComponent extends React.Component {
   };
 
   loadFile = (path) => {
-    console.log("loadFile");
+    console.log('loadFile');
     this.setState({source: {uri: path}});
     this.GetImageSize(path);
   };
 
   downloadFile(uri, path) {
-    RNFS.downloadFile({fromUrl: uri, toFile: path}).promise
-      .then(res => {
-        this.loadFile(path);
-      });
+    RNFS.downloadFile({fromUrl: uri, toFile: path}).promise.then((res) => {
+      this.loadFile(path);
+    });
 
-    console.log("downloadFile path: ", path);
-  };
+    console.log('downloadFile path: ', path);
+  }
 
   CheckIfExists = (uri) => {
     const name = shorthash.unique(uri);
-    const extension = (Platform.OS === 'android') ? 'file://' : '';
+    const extension = Platform.OS === 'android' ? 'file://' : '';
     const path = `${extension}${RNFS.CachesDirectoryPath}/${name}.png`;
 
-    RNFS.exists(path).then(exists => {
-      if (exists) this.loadFile(path);
-      else this.downloadFile(uri, path);
+    RNFS.exists(path).then((exists) => {
+      if (exists) {
+        this.loadFile(path);
+      } else {
+        this.downloadFile(uri, path);
+      }
     });
 
     this.setState({path: path});
-  }
+  };
 
   GetImageSize = (path) => {
     const {reduce_ratio} = this.props;
 
-    Image.getSize(path, (width, height) => {
-      let resize_width = width / DEVICE_WIDTH * reduce_ratio;
-      let resize_height = height / DEVICE_HEIGHT * reduce_ratio;
-      let max = Math.max(resize_width.toFixed(0), resize_height.toFixed(0));
+    Image.getSize(
+      path,
+      (width, height) => {
+        let resize_width = (width / DEVICE_WIDTH) * reduce_ratio;
+        let resize_height = (height / DEVICE_HEIGHT) * reduce_ratio;
+        let max = Math.max(resize_width.toFixed(0), resize_height.toFixed(0));
 
-      this.setState({width: width / max, height: height / max});
-    }, (error) => {
-      console.log(error);
-    });
-  }
+        this.setState({width: width / max, height: height / max});
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  };
 
   onError() {
     this.setState({error: true});
-    console.log("CacheImageComponent error: ");
+    console.log('CacheImageComponent error: ');
   }
 
   render() {
     const {error, source, height, width} = this.state;
     const src = {uri: this.props.uri};
     return Platform.OS === 'ios' ? (
-      <Image style={{height: height, width: width}}
-             source={!error ? source : src}
-             onError={(err) => {
-               this.onError()
-             }}/>
+      <Image
+        style={{height: height, width: width}}
+        source={!error ? source : src}
+        onError={(err) => {
+          this.onError();
+        }}
+      />
     ) : (
-      <Image style={{height: height, width: width}}
-             source={source}
-             onError={(err) => {
-               this.onError()
-             }}/>
-    )
+      <Image
+        style={{height: height, width: width}}
+        source={source}
+        onError={(err) => {
+          this.onError();
+        }}
+      />
+    );
   }
 }
 

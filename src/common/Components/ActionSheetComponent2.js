@@ -15,8 +15,9 @@ class ActionSheetComponent2 extends Component {
           translate('image_picker.cancel'),
           {
             component: (
-              <TouchableOpacity style={styles.line_container_style}
-                                onPress={() => Share(0)}>
+              <TouchableOpacity
+                style={styles.line_container_style}
+                onPress={() => Share(0)}>
                 <Text style={styles.modal_text_style}>
                   {translate('image_picker.save_result')}
                 </Text>
@@ -26,8 +27,9 @@ class ActionSheetComponent2 extends Component {
           },
           {
             component: (
-              <TouchableOpacity style={styles.line_container_style}
-                                onPress={() => Share(1)}>
+              <TouchableOpacity
+                style={styles.line_container_style}
+                onPress={() => Share(1)}>
                 <Text style={styles.modal_text_style}>
                   {translate('image_picker.share_result')}
                 </Text>
@@ -37,8 +39,9 @@ class ActionSheetComponent2 extends Component {
           },
           {
             component: (
-              <TouchableOpacity style={styles.line_container_style}
-                                onPress={() => Share(2)}>
+              <TouchableOpacity
+                style={styles.line_container_style}
+                onPress={() => Share(2)}>
                 <Text style={styles.modal_text_style}>
                   {translate('image_picker.share_app')}
                 </Text>

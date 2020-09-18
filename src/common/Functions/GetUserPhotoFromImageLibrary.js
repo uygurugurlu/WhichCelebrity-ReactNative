@@ -10,6 +10,6 @@ export const GetUserPhotoFromImageLibrary = async () => {
     cropperChooseText: translate('image_picker.choose'),
     cropperCancelText: translate('image_picker.cancel'),
     compressImageQuality: 0.8,
-    mediaType: 'photo'
+    mediaType: 'photo',
   });
 };

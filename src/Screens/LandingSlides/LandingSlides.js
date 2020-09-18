@@ -16,7 +16,7 @@ class LandingSlides extends Component {
         dotColor={'#2a2a2a'}
         loop={false}>
         <View style={styles.slide3}>
-          <AgreementsPage navigation={this.props.navigation}/>
+          <AgreementsPage navigation={this.props.navigation} />
         </View>
       </Swiper>
     );

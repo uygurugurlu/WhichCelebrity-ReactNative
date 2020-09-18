@@ -1,9 +1,6 @@
-import {
-  DEVICE_HEIGHT,
-  DEVICE_WIDTH,
-} from '../../common/Constants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
 import {StyleSheet} from 'react-native';
-import React from "react";
+import React from 'react';
 
 export const styles = StyleSheet.create({
   mainContainer: {
@@ -11,7 +8,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   topContainer: {
     flexDirection: 'column',
@@ -33,7 +30,7 @@ export const styles = StyleSheet.create({
     width: undefined,
     height: undefined,
     margin: 10,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   textStyle: {
     fontSize: 18,

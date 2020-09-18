@@ -16,6 +16,4 @@ export const DetectFace = async (localPath) => {
       }
     });
   });*/
-
-
-}
+};

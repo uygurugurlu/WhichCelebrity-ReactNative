@@ -12,15 +12,17 @@ class SharedImageBottomComponent extends Component {
     const {shareActive} = this.props;
 
     return (
-      <View display={shareActive ? 'flex' : 'none'} style={styles.turkaiContainerStyle}>
+      <View
+        display={shareActive ? 'flex' : 'none'}
+        style={styles.turkaiContainerStyle}>
         <View style={styles.appLogoContainerStyles}>
-          <Image source={HIK_DEMIS} style={styles.appLogoImageStyle}/>
+          <Image source={HIK_DEMIS} style={styles.appLogoImageStyle} />
           <Text style={styles.hikdemisTextStyle}>{translate('app_name')}</Text>
         </View>
 
         <View style={styles.turkaiRowContainerStyle}>
-          <Image source={APP_STORE_ICON} style={styles.storeImageStyle}/>
-          <Image source={PLAY_STORE_ICON} style={styles.storeImageStyle}/>
+          <Image source={APP_STORE_ICON} style={styles.storeImageStyle} />
+          <Image source={PLAY_STORE_ICON} style={styles.storeImageStyle} />
         </View>
       </View>
     );

@@ -1,13 +1,27 @@
 import React, {Component} from 'react';
 import {
-  View, Text, Image, TouchableOpacity, SafeAreaView, Alert, ScrollView, Platform
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  Alert,
+  ScrollView,
+  Platform,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
 import {Button} from 'react-native-elements';
 import {styles} from './HomePage2Styles';
-import {InterstitialAd, AdEventType, TestIds} from '@react-native-firebase/admob';
-import {get_detected_face_count, get_user_avatar_source} from '../../Store/Actions';
+import {
+  InterstitialAd,
+  AdEventType,
+  TestIds,
+} from '@react-native-firebase/admob';
+import {
+  get_detected_face_count,
+  get_user_avatar_source,
+} from '../../Store/Actions';
 import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoFromImageLibrary';
 import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
 import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
@@ -17,21 +31,31 @@ import SearchBarComponent from '../../common/Components/SearchBarComponent';
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
-  shadow, WAIT_BEFORE_AD_MILLISECONDS,
-  WAIT_LOADING_ANIMATION_MILLISECONDS
+  shadow,
+  WAIT_BEFORE_AD_MILLISECONDS,
+  WAIT_LOADING_ANIMATION_MILLISECONDS,
 } from '../../common/Constants';
-import {SearchCelebrities} from "../../common/Functions/Endpoints/SearchCelebrities";
-import {GetCelebrity} from "../../common/Functions/Endpoints/GetCelebrity";
-import SelectedCelebrityLine from "../../common/Components/SelectedCelebrityLine";
-import {UserPhotoAnalyze2} from "../../common/Functions/Endpoints/UserPhotoAnalyze2";
-import CacheImageComponent from "../../common/Components/CacheImagecomponent";
-import TooltipComponent from "../../common/Components/TooltipComponent";
-import {ShowSnackBar} from "../../common/Components/ShowSnackBar";
-import {DetectFace} from "../../common/Functions/DetectFace";
-import LoadingAnimationModal from "../../common/Components/LoadingAnimationModal/LoadingAnimationModal";
-import {PerformTimeConsumingTask} from "../../common/Functions/PerformTimeConsumingTask";
+import {SearchCelebrities} from '../../common/Functions/Endpoints/SearchCelebrities';
+import {GetCelebrity} from '../../common/Functions/Endpoints/GetCelebrity';
+import SelectedCelebrityLine from '../../common/Components/SelectedCelebrityLine';
+import {UserPhotoAnalyze2} from '../../common/Functions/Endpoints/UserPhotoAnalyze2';
+import CacheImageComponent from '../../common/Components/CacheImagecomponent';
+import TooltipComponent from '../../common/Components/TooltipComponent';
+import {ShowSnackBar} from '../../common/Components/ShowSnackBar';
+import {DetectFace} from '../../common/Functions/DetectFace';
+import LoadingAnimationModal from '../../common/Components/LoadingAnimationModal/LoadingAnimationModal';
+import {PerformTimeConsumingTask} from '../../common/Functions/PerformTimeConsumingTask';
+import {
+  SetCelebritySelectionScreenEvent,
+  RandomResultEvent,
+  SelectedCelebrityResultEvent,
+} from '../../common/Functions/AnalyticEvents/Events';
+import analytics from '@react-native-firebase/analytics';
 
-const unit_id = Platform.OS === "ios" ? 'ca-app-pub-9113500705436853/7410126783' : 'ca-app-pub-9113500705436853/6296695945';
+const unit_id =
+  Platform.OS === 'ios'
+    ? 'ca-app-pub-9113500705436853/7410126783'
+    : 'ca-app-pub-9113500705436853/6296695945';
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : unit_id;
 const interstitial = InterstitialAd.createForAdRequest(adUnitId);
 
@@ -46,12 +70,12 @@ class HomePage2 extends Component {
       random_result_loading: false,
       search: '',
       scroll_items: [],
-      celebrity_name: "",
-      celebrity_photo: "",
+      celebrity_name: '',
+      celebrity_photo: '',
       celebrity_id: 0,
       search_visible: true,
       tooltipVisible: false,
-      detected_faces: false
+      detected_faces: false,
     };
   }
 
@@ -59,16 +83,24 @@ class HomePage2 extends Component {
     this.props.navigation.setOptions({
       title: translate('app_name'),
       headerRight: () => (
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('SavingsPage')}>
-          <Image source={RIGHT_HEADER_ICON} style={{height: 35, width: 35, marginRight: 15}}/>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('SavingsPage')}>
+          <Image
+            source={RIGHT_HEADER_ICON}
+            style={{height: 35, width: 35, marginRight: 15}}
+          />
         </TouchableOpacity>
       ),
     });
   }
 
-  componentDidMount = () => interstitial.load();
+  componentDidMount = () => {
+    SetCelebritySelectionScreenEvent();
+    interstitial.load();
+  };
 
-  updateSearch = (search) => this.setState({search: search, profile_visible: search === ""});
+  updateSearch = (search) =>
+    this.setState({search: search, profile_visible: search === ''});
 
   showActionSheet = () => this.actionSheet.show();
 
@@ -83,7 +115,7 @@ class HomePage2 extends Component {
     this.props.get_user_avatar_source({uri: path}, data);
     const faces = await DetectFace(path);
     this.props.get_detected_face_count(faces.length);
-    console.log("faces:", faces, faces.length);
+    console.log('faces:', faces, faces.length);
   };
 
   LaunchImageLibrary = async () => {
@@ -91,7 +123,7 @@ class HomePage2 extends Component {
     this.props.get_user_avatar_source({uri: path}, data);
     const faces = await DetectFace(path);
     this.props.get_detected_face_count(faces.length);
-    console.log("faces:", faces, faces.length);
+    console.log('faces:', faces, faces.length);
   };
 
   SelectAvatar = () => this.showActionSheet();
@@ -115,10 +147,12 @@ class HomePage2 extends Component {
 
   GetActionSheet = () => {
     return (
-      <ActionSheetComponent launchImageLibrary={this.LaunchImageLibrary}
-                            launchCamera={this.LaunchCamera}
-                            handlePress={this.handlePress}
-                            getActionSheetRef={this.getActionSheetRef}/>
+      <ActionSheetComponent
+        launchImageLibrary={this.LaunchImageLibrary}
+        launchCamera={this.LaunchCamera}
+        handlePress={this.handlePress}
+        getActionSheetRef={this.getActionSheetRef}
+      />
     );
   };
 
@@ -133,10 +167,15 @@ class HomePage2 extends Component {
       Alert.alert('', translate('home.select_warning'));
       return false;
     } else if (detected_face_count === 0) {
-      ShowSnackBar(translate("home.face_not_found"), "LONG", "TOP", "ERROR");
+      ShowSnackBar(translate('home.face_not_found'), 'LONG', 'TOP', 'ERROR');
       return false;
     } else if (detected_face_count > 1) {
-      ShowSnackBar(translate("home.more_than_one_face_found"), "LONG", "TOP", "ERROR");
+      ShowSnackBar(
+        translate('home.more_than_one_face_found'),
+        'LONG',
+        'TOP',
+        'ERROR',
+      );
       return false;
     }
 
@@ -146,8 +185,8 @@ class HomePage2 extends Component {
   LoadAD = () => {
     interstitial.onAdEvent((type) => {
       if (type !== AdEventType.LOADED || type === AdEventType.CLOSED) {
-        console.log(" AdEventType.LOADED: ", type === AdEventType.LOADED);
-        console.log(" AdEventType.CLOSED: ", type === AdEventType.CLOSED);
+        console.log(' AdEventType.LOADED: ', type === AdEventType.LOADED);
+        console.log(' AdEventType.CLOSED: ', type === AdEventType.CLOSED);
         interstitial.load();
       }
     });
@@ -157,7 +196,7 @@ class HomePage2 extends Component {
     try {
       await interstitial.show();
     } catch (e) {
-      console.log("Error ShowAD: ", e);
+      console.log('Error ShowAD: ', e);
     }
   };
 
@@ -166,38 +205,56 @@ class HomePage2 extends Component {
     this.props.navigation.navigate('ResultPage2', {
       celebrity_photo: data.celebrity.photo,
       celebrity_name: celebrity_name,
-      data: data
+      data: data,
     });
-  }
+  };
 
   GetResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
     const {celebrity_id} = this.state;
     this.LoadAD();
+    await SelectedCelebrityResultEvent();
 
     if (this.CheckValidity(false)) {
       this.setState({result_loading: true});
 
       try {
-        const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, celebrity_id, language.languageTag, "false");
-        console.log("UserPhotoAnalyze res: ", JSON.parse(data).data[0]);
+        const {data} = await UserPhotoAnalyze2(
+          user_agent,
+          userAvatarB64,
+          celebrity_id,
+          language.languageTag,
+          'false',
+        );
+        console.log('UserPhotoAnalyze res: ', JSON.parse(data).data[0]);
 
-        const wait = await PerformTimeConsumingTask(WAIT_LOADING_ANIMATION_MILLISECONDS);
-        if (wait !== null)
+        const wait = await PerformTimeConsumingTask(
+          WAIT_LOADING_ANIMATION_MILLISECONDS,
+        );
+        if (wait !== null) {
           this.setState({result_loading: false});
+        }
 
         if (JSON.parse(data).status === 'error') {
-          ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
+          ShowSnackBar(JSON.parse(data).message, 'SHORT', 'TOP', 'ERROR');
         } else {
-          const data_xx = await PerformTimeConsumingTask(WAIT_BEFORE_AD_MILLISECONDS);
-          if (data_xx !== null)
+          const data_xx = await PerformTimeConsumingTask(
+            WAIT_BEFORE_AD_MILLISECONDS,
+          );
+          if (data_xx !== null) {
             await this.ShowAD();
+          }
           this.NavigateToResultPage2(JSON.parse(data).data[0]);
           this.HideProfile();
         }
       } catch (e) {
-        console.log("Error UserPhotoAnalyze2: ", e);
-        ShowSnackBar(translate("home.result_not_found"), "SHORT", "TOP", "ERROR");
+        console.log('Error UserPhotoAnalyze2: ', e);
+        ShowSnackBar(
+          translate('home.result_not_found'),
+          'SHORT',
+          'TOP',
+          'ERROR',
+        );
       }
 
       this.setState({result_loading: false});
@@ -207,48 +264,71 @@ class HomePage2 extends Component {
   GetRandomResult = async () => {
     const {userAvatarB64, user_agent, language} = this.props;
     this.LoadAD();
+    await RandomResultEvent();
+
+    analytics().logEvent('randomevent', {
+      item: 'Clicked',
+    });
 
     if (this.CheckValidity(true)) {
       await this.setState({random_result_loading: true});
 
       try {
-        const {data} = await UserPhotoAnalyze2(user_agent, userAvatarB64, null, language.languageTag, "true");
-        console.log("UserPhotoAnalyze res: ", JSON.parse(data).data[0]);
+        const {data} = await UserPhotoAnalyze2(
+          user_agent,
+          userAvatarB64,
+          null,
+          language.languageTag,
+          'true',
+        );
+        console.log('UserPhotoAnalyze res: ', JSON.parse(data).data[0]);
 
-        const wait = await PerformTimeConsumingTask(WAIT_LOADING_ANIMATION_MILLISECONDS);
-        if (wait !== null)
+        const wait = await PerformTimeConsumingTask(
+          WAIT_LOADING_ANIMATION_MILLISECONDS,
+        );
+        if (wait !== null) {
           this.setState({random_result_loading: false});
+        }
 
         if (JSON.parse(data).status === 'error') {
-          ShowSnackBar(JSON.parse(data).message, "SHORT", "TOP", "ERROR");
+          ShowSnackBar(JSON.parse(data).message, 'SHORT', 'TOP', 'ERROR');
         } else {
-          const data_xx = await PerformTimeConsumingTask(WAIT_BEFORE_AD_MILLISECONDS);
-          if (data_xx !== null)
+          const data_xx = await PerformTimeConsumingTask(
+            WAIT_BEFORE_AD_MILLISECONDS,
+          );
+          if (data_xx !== null) {
             await this.ShowAD();
+          }
 
           this.NavigateToResultPage2(JSON.parse(data).data[0]);
           this.HideProfile();
         }
-
       } catch (e) {
-        console.log("Error UserPhotoAnalyze2: ", e);
-        ShowSnackBar(translate("home.result_not_found"), "SHORT", "TOP", "ERROR");
+        console.log('Error UserPhotoAnalyze2: ', e);
+        ShowSnackBar(
+          translate('home.result_not_found'),
+          'SHORT',
+          'TOP',
+          'ERROR',
+        );
       }
 
       this.setState({random_result_loading: false});
     }
-  }
+  };
 
   fillScroll = async (search) => {
     if (search.length > 1) {
       SearchCelebrities(this.props.user_agent, search).then((res) => {
-        console.log("Celebrities after search: ", res.data);
+        console.log('Celebrities after search: ', res.data);
 
         const items = res.data.map((item) => {
           return (
-            <TouchableOpacity style={styles.scrollItemContainer} onPress={() => this.CelebritySelected(item)}>
+            <TouchableOpacity
+              style={styles.scrollItemContainer}
+              onPress={() => this.CelebritySelected(item)}>
               <View style={[{marginHorizontal: DEVICE_WIDTH * 0.051}, shadow]}>
-                <CacheImageComponent uri={item.photo} reduce_ratio={10}/>
+                <CacheImageComponent uri={item.photo} reduce_ratio={10} />
               </View>
               <Text style={styles.scrollTextStyle}>{item.name}</Text>
             </TouchableOpacity>
@@ -269,72 +349,109 @@ class HomePage2 extends Component {
       scroll_items: [],
       celebrity_name: celebrity.name,
       celebrity_id: celebrity.id,
-      search_visible: false
+      search_visible: false,
     });
 
     GetCelebrity(user_agent, celebrity.id).then((res) => {
-      console.log("GetCelebrity res: ", res);
+      console.log('GetCelebrity res: ', res);
       this.setState({celebrity_photo: res.data.photo});
     });
   };
 
   HideProfile = () => {
     this.setState({search_visible: true, celebrity_name: ''});
-  }
+  };
 
   render() {
     const {userAvatarSource} = this.props;
-    const {search, scroll_items, celebrity_name, celebrity_photo, search_visible, tooltipVisible, random_result_loading, result_loading} = this.state;
+    const {
+      search,
+      scroll_items,
+      celebrity_name,
+      celebrity_photo,
+      search_visible,
+      tooltipVisible,
+      random_result_loading,
+      result_loading,
+    } = this.state;
 
     return (
       <View style={styles.backgroundImageStyle}>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.labelsContainerStyle}>
-
-            <View display={search === '' && search_visible ? 'flex' : 'none'} style={styles.topLabel2ContainerStyle}>
-              <Text style={styles.topLabel2Style}>{translate('famous_compare.compare_header')}</Text>
-              <TooltipComponent isVisible={tooltipVisible}/>
+            <View
+              display={search === '' && search_visible ? 'flex' : 'none'}
+              style={styles.topLabel2ContainerStyle}>
+              <Text style={styles.topLabel2Style}>
+                {translate('famous_compare.compare_header')}
+              </Text>
+              <TooltipComponent isVisible={tooltipVisible} />
             </View>
 
             <View display={search_visible ? 'flex' : 'none'}>
-              <SearchBarComponent search={search} updateSearch={this.updateSearch} selectedCelebrity={celebrity_name}/>
+              <SearchBarComponent
+                search={search}
+                updateSearch={this.updateSearch}
+                selectedCelebrity={celebrity_name}
+              />
             </View>
 
             <View display={search !== '' ? 'flex' : 'none'}>
-              <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.75, color: '#fff'}}>
+              <ScrollView
+                style={{maxHeight: DEVICE_HEIGHT * 0.75, color: '#fff'}}>
                 <View style={styles.scrollViewStyle}>{scroll_items}</View>
               </ScrollView>
             </View>
 
-            <View display={!search_visible ? 'flex' : 'none'} style={{marginTop: DEVICE_HEIGHT * 0.075}}>
-              <SelectedCelebrityLine uri={celebrity_photo}
-                                     name={celebrity_name}
-                                     handleSelect={() => this.HideProfile()}/>
+            <View
+              display={!search_visible ? 'flex' : 'none'}
+              style={{marginTop: DEVICE_HEIGHT * 0.075}}>
+              <SelectedCelebrityLine
+                uri={celebrity_photo}
+                name={celebrity_name}
+                handleSelect={() => this.HideProfile()}
+              />
             </View>
           </View>
 
-          <View display={search === '' ? 'flex' : 'none'} style={styles.iconsMainContainerStyle}>
-            <AvatarComponent ImageSource={userAvatarSource} SelectAvatar={() => this.SelectAvatar()}/>
+          <View
+            display={search === '' ? 'flex' : 'none'}
+            style={styles.iconsMainContainerStyle}>
+            <AvatarComponent
+              ImageSource={userAvatarSource}
+              SelectAvatar={() => this.SelectAvatar()}
+            />
           </View>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between', width: DEVICE_WIDTH * 0.9}}
-                display={search === '' ? 'flex' : 'none'}>
-            <Button title={translate('home.random_compare')}
-                    buttonStyle={styles.randomButtonStyle}
-                    titleStyle={{fontSize: 17, fontWeight: '600'}}
-                    onPress={() => this.GetRandomResult()}
-                    disabled={celebrity_name !== ""}
-                    loading={random_result_loading}/>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: DEVICE_WIDTH * 0.9,
+            }}
+            display={search === '' ? 'flex' : 'none'}>
+            <Button
+              title={translate('home.random_compare')}
+              buttonStyle={styles.randomButtonStyle}
+              titleStyle={{fontSize: 17, fontWeight: '600'}}
+              onPress={() => this.GetRandomResult()}
+              disabled={celebrity_name !== ''}
+              loading={random_result_loading}
+            />
 
-            <Button title={translate('home.get_result')}
-                    buttonStyle={styles.resultButtonStyle}
-                    titleStyle={{fontSize: 17, fontWeight: '600'}}
-                    onPress={() => this.GetResult()}
-                    loading={result_loading}/>
+            <Button
+              title={translate('home.get_result')}
+              buttonStyle={styles.resultButtonStyle}
+              titleStyle={{fontSize: 17, fontWeight: '600'}}
+              onPress={() => this.GetResult()}
+              loading={result_loading}
+            />
           </View>
 
           {this.GetActionSheet()}
-          <LoadingAnimationModal isModalVisible={result_loading || random_result_loading}/>
+          <LoadingAnimationModal
+            isModalVisible={result_loading || random_result_loading}
+          />
         </SafeAreaView>
       </View>
     );
@@ -347,14 +464,16 @@ const mapStateToProps = (state) => {
     userAvatarSource: state.mainReducer.userAvatarSource,
     userAvatarB64: state.mainReducer.userAvatarB64,
     user_agent: state.mainReducer.user_agent,
-    detected_face_count: state.mainReducer.detected_face_count
+    detected_face_count: state.mainReducer.detected_face_count,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    get_user_avatar_source: (source, base64_data) => dispatch(get_user_avatar_source(source, base64_data)),
-    get_detected_face_count: (count) => dispatch(get_detected_face_count(count)),
+    get_user_avatar_source: (source, base64_data) =>
+      dispatch(get_user_avatar_source(source, base64_data)),
+    get_detected_face_count: (count) =>
+      dispatch(get_detected_face_count(count)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage2);

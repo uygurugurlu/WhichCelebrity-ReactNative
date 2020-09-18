@@ -10,5 +10,5 @@ export {
   add_to_delete_list,
   remove_from_delete_list,
   clear_delete_list,
-  get_detected_face_count
+  get_detected_face_count,
 } from './MainActions';

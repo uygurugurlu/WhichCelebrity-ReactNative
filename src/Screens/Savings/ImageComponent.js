@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
-import {Image, ImageBackground, Modal, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ImageBackground,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
 import DisplaySavedImage from './DisplayImageComponent/DisplaySavedImage';
 import {connect} from 'react-redux';
 import {CHECKMARK} from '../../common/IconIndex';
 import {
-  add_to_delete_list, change_selected_to_delete_count, remove_from_delete_list,
+  add_to_delete_list,
+  change_selected_to_delete_count,
+  remove_from_delete_list,
 } from '../../Store/Actions';
 
 class ImageComponent extends Component {
@@ -70,22 +79,26 @@ class ImageComponent extends Component {
           onPress={() => this.DisplayImage(deleteMode)}
           onLongPress={() => this.handlerLongClick()}>
           <ImageBackground source={{uri: image.uri}} style={style}>
-            <View display={deleteMode && will_be_deleted ? 'flex' : 'none'}
-                  style={styles.deleteStyle}>
+            <View
+              display={deleteMode && will_be_deleted ? 'flex' : 'none'}
+              style={styles.deleteStyle}>
               <View display={deleteMode && will_be_deleted ? 'flex' : 'none'}>
-                <Image source={CHECKMARK} style={styles.checkStyle}/>
+                <Image source={CHECKMARK} style={styles.checkStyle} />
               </View>
             </View>
           </ImageBackground>
         </TouchableOpacity>
 
-        <Modal animationType="slide"
-               transparent={false}
-               visible={modalVisible}
-               onRequestClose={() => this.setState({modalVisible: false})}
-               onBackdropPress={() => this.setState({modalVisible: false})}>
-          <DisplaySavedImage image={image}
-                             closeModal={() => this.setState({modalVisible: false})}/>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={modalVisible}
+          onRequestClose={() => this.setState({modalVisible: false})}
+          onBackdropPress={() => this.setState({modalVisible: false})}>
+          <DisplaySavedImage
+            image={image}
+            closeModal={() => this.setState({modalVisible: false})}
+          />
         </Modal>
       </View>
     );

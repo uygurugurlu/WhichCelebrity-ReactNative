@@ -1,37 +1,41 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet} from "react-native";
-import {translate} from "../../I18n";
-import Tooltip from "react-native-walkthrough-tooltip";
-import {DEVICE_WIDTH} from "../Constants";
+import {Text, View, StyleSheet} from 'react-native';
+import {translate} from '../../I18n';
+import Tooltip from 'react-native-walkthrough-tooltip';
+import {DEVICE_WIDTH} from '../Constants';
 
 class TooltipComponent extends Component {
-
   state = {
-    tooltipVisible: false
-  }
+    tooltipVisible: false,
+  };
 
   componentWillMount() {
     this.setState({tooltipVisible: this.props.isVisible});
   }
 
   HandleVisibility = () => {
-    this.setState({tooltipVisible: !this.state.tooltipVisible})
-  }
+    this.setState({tooltipVisible: !this.state.tooltipVisible});
+  };
 
   render() {
     const {tooltipVisible} = this.state;
 
     return (
-      <Tooltip isVisible={tooltipVisible}
-               content={
-                 <Text style={styles.tooltipTextStyle}>{translate("famous_compare.tooltip_text")}</Text>
-               }
-               placement="bottom"
-               onClose={() => this.HandleVisibility()}>
-        <Text style={styles.clickedTextStyle} onPress={() => this.HandleVisibility()}>
-          {translate("famous_compare.press_random")}</Text>
-        <View style={styles.dashedLineStyle}/>
-
+      <Tooltip
+        isVisible={tooltipVisible}
+        content={
+          <Text style={styles.tooltipTextStyle}>
+            {translate('famous_compare.tooltip_text')}
+          </Text>
+        }
+        placement="bottom"
+        onClose={() => this.HandleVisibility()}>
+        <Text
+          style={styles.clickedTextStyle}
+          onPress={() => this.HandleVisibility()}>
+          {translate('famous_compare.press_random')}
+        </Text>
+        <View style={styles.dashedLineStyle} />
       </Tooltip>
     );
   }
@@ -50,15 +54,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     width: DEVICE_WIDTH * 0.6,
-    paddingVertical: 7.5
+    paddingVertical: 7.5,
   },
   clickedTextStyle: {
-    color: "#123456",
+    color: '#123456',
     alignSelf: 'center',
     fontSize: 15,
     fontWeight: '500',
-  }
-
+  },
 });
 
 export default TooltipComponent;

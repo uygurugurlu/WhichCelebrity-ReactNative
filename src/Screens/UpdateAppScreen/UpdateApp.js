@@ -1,19 +1,16 @@
 import React, {Component} from 'react';
 import {Alert, StyleSheet, Linking, View, Platform} from 'react-native';
-import {
-  DEVICE_HEIGHT,
-  DEVICE_WIDTH,
-} from '../../common/Constants';
-import {translate} from "../../I18n";
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
+import {translate} from '../../I18n';
 
 class UpdateApp extends Component {
   componentWillMount() {
     Alert.alert(
-      translate("update.not_up_to_date"),
-      translate("update.update_the_app"),
+      translate('update.not_up_to_date'),
+      translate('update.update_the_app'),
       [
         {
-          text: translate("update.update"),
+          text: translate('update.update'),
           onPress: () => this.Update(),
         },
       ],
@@ -25,12 +22,12 @@ class UpdateApp extends Component {
     Platform.OS === 'android'
       ? Linking.openURL('market://details?id=com.looklikecelebrity')
       : Linking.openURL(
-      'itms-apps://itunes.apple.com/us/app/apple-store/1524011545?mt=8',
-      );
+          'itms-apps://itunes.apple.com/us/app/apple-store/1524011545?mt=8',
+        );
   };
 
   render() {
-    return <View/>;
+    return <View />;
   }
 }
 

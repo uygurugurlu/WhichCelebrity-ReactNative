@@ -1,6 +1,10 @@
 import {StyleSheet} from 'react-native';
-import {DEVICE_HEIGHT, DEVICE_WIDTH,} from '../../common/Constants';
-import {buttons_height, button_colors, page_body_background_color} from '../../common/ColorIndex';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
+import {
+  buttons_height,
+  button_colors,
+  page_body_background_color,
+} from '../../common/ColorIndex';
 
 const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.4;
 const MOTHER_ICON_SIZE = DEVICE_WIDTH * 0.35;
@@ -175,7 +179,6 @@ export const styles = StyleSheet.create({
     height: 70,
     width: 70,
     borderRadius: 1,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
-
 });

@@ -1,6 +1,10 @@
 import {StyleSheet} from 'react-native';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
-import {buttons_height, button_colors, page_body_background_color} from '../../common/ColorIndex';
+import {
+  buttons_height,
+  button_colors,
+  page_body_background_color,
+} from '../../common/ColorIndex';
 
 const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.4;
 const MOTHER_ICON_SIZE = DEVICE_WIDTH * 0.35;
@@ -39,16 +43,16 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 15,
-    color: "#123456"
+    color: '#123456',
   },
   topLabelStyle: {
     color: '#123456',
     fontSize: 16,
     fontWeight: '500',
     textAlign: 'center',
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
     width: DEVICE_WIDTH * 0.7 - 5,
-    marginVertical: 20
+    marginVertical: 20,
   },
   topLabel2Style: {
     color: '#123456',
@@ -185,7 +189,6 @@ export const styles = StyleSheet.create({
   headerRightButtonStyle: {
     height: 35,
     width: 35,
-    marginRight: 15
-  }
-
+    marginRight: 15,
+  },
 });

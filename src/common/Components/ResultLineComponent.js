@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Image} from "react-native";
+import {Text, View, StyleSheet, Image} from 'react-native';
 
 class ResultLineComponent extends Component {
   render() {
     const {leftText, rightText} = this.props;
-    const hide = typeof rightText === 'undefined' || rightText === null || rightText === "";
+    const hide =
+      typeof rightText === 'undefined' ||
+      rightText === null ||
+      rightText === '';
 
     return (
       <View style={styles.containerStyle} display={!hide ? 'flex' : 'none'}>
@@ -33,8 +36,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#123456',
     textAlign: 'left',
-    marginLeft: 7.5
-  }
-})
+    marginLeft: 7.5,
+  },
+});
 
 export default ResultLineComponent;

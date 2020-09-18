@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 import {WebView} from 'react-native-webview';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {DEVICE_WIDTH} from '../../common/Constants';
-import {translate} from "../../I18n";
+import {translate} from '../../I18n';
 
 class WebViewPage extends Component {
-
-
   componentWillMount() {
     this.props.navigation.setOptions({
       headerTitle: translate('app_name'),
@@ -19,7 +17,7 @@ class WebViewPage extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <WebView source={{uri: url}}/>
+        <WebView source={{uri: url}} />
       </SafeAreaView>
     );
   }

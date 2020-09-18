@@ -32,12 +32,12 @@ export const styles = StyleSheet.create({
     height: ICON_CONTAINER_SIZE / 2,
     backgroundColor: '#fff',
     paddingHorizontal: 5,
-    marginTop: 10
+    marginTop: 10,
   },
   labelContainerStyle: {
     flexDirection: 'column',
     width: DEVICE_WIDTH * 0.9,
-    height: DEVICE_HEIGHT * 0.275
+    height: DEVICE_HEIGHT * 0.275,
   },
   resultLabelStyle: {
     fontSize: 18,
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
   iconStyle: {
     width: USER_ICON_SIZE,
     height: USER_ICON_SIZE,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   buttonsRowContainerStyle: {
     flexDirection: 'row',
@@ -94,6 +94,6 @@ export const styles = StyleSheet.create({
   graveIconStyle: {
     height: 30,
     width: 30,
-    marginLeft: 5
-  }
+    marginLeft: 5,
+  },
 });

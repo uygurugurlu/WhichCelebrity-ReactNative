@@ -1,12 +1,12 @@
-import axios from "axios";
+import axios from 'axios';
 import {API_HOST} from '../../../config';
 
 export const GetToken = async (user_agent) => {
-
-  return axios.post(`${API_HOST}/api/login`,
+  return axios.post(
+    `${API_HOST}/api/login`,
     {
-      "password": "123456",
-      "email": "mobile-user@app-fab.com"
+      password: '123456',
+      email: 'mobile-user@app-fab.com',
     },
     {
       headers: {
@@ -14,6 +14,6 @@ export const GetToken = async (user_agent) => {
         'Content-Type': 'application/json',
         'User-Agent': user_agent,
       },
-    });
-
-}
+    },
+  );
+};

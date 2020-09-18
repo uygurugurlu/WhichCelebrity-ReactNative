@@ -133,8 +133,8 @@ android {
         applicationId "com.looklikecelebrity"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.1"
+        versionCode 4
+        versionName "1.2.0"
     }
     splits {
         abi {
@@ -233,6 +233,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 apply plugin: 'com.google.gms.google-services' // <- Add this line
+apply plugin: 'com.google.firebase.crashlytics'
 
 project.ext.vectoricons = [
         iconFontNames: [

@@ -6,7 +6,7 @@ import {translate} from '../../../I18n';
 import {styles} from './DisplaySavedImageStyles';
 import Share from 'react-native-share';
 import {connect} from 'react-redux';
-import ImageZoom from "react-native-image-pan-zoom";
+import ImageZoom from 'react-native-image-pan-zoom';
 
 class DisplaySavedImage extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class DisplaySavedImage extends Component {
 
   CloseModal = () => {
     const {closeModal} = this.props;
-    console.log("CloseModal çalıştı.");
+    console.log('CloseModal çalıştı.');
     closeModal();
   };
 
@@ -32,19 +32,19 @@ class DisplaySavedImage extends Component {
     const shareOptions =
       Platform.OS === 'ios'
         ? {
-          title: 'Hık Demiş',
-          url:
-            'assets-library://asset/asset.JPG?id=' + result[1] + '&ext=JPG',
-          subject: 'Hık Demiş', // for email,
-          failOnCancel: false,
-        }
+            title: 'Hık Demiş',
+            url:
+              'assets-library://asset/asset.JPG?id=' + result[1] + '&ext=JPG',
+            subject: 'Hık Demiş', // for email,
+            failOnCancel: false,
+          }
         : {
-          title: 'Hık Demiş',
-          url: image.uri,
-          message: 'https://appfabhikdemis.page.link/H3Ed',
-          subject: 'Hık Demiş', // for email,
-          failOnCancel: false,
-        };
+            title: 'Hık Demiş',
+            url: image.uri,
+            message: 'https://appfabhikdemis.page.link/H3Ed',
+            subject: 'Hık Demiş', // for email,
+            failOnCancel: false,
+          };
 
     await Share.open(shareOptions)
       .then(async (res) => {
@@ -64,31 +64,39 @@ class DisplaySavedImage extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <ImageZoom cropWidth={DEVICE_WIDTH * 0.9}
-                   imageWidth={DEVICE_WIDTH * 0.9}
-                   style={{marginTop: DEVICE_HEIGHT * 0.05}}
-                   cropHeight={Platform.OS === 'ios' ? IOS_HEIGHT : ANDROID_HEIGHT}
-                   imageHeight={Platform.OS === 'ios' ? IOS_HEIGHT : ANDROID_HEIGHT}>
-          <Image source={{uri: image.uri}}
-                 style={
-                   Platform.OS === 'ios' ?
-                     [styles.imageStyle, {height: IOS_HEIGHT}]
-                     :
-                     [styles.imageStyle, {height: ANDROID_HEIGHT, resizeMode: 'contain'},]
-                 }
+        <ImageZoom
+          cropWidth={DEVICE_WIDTH * 0.9}
+          imageWidth={DEVICE_WIDTH * 0.9}
+          style={{marginTop: DEVICE_HEIGHT * 0.05}}
+          cropHeight={Platform.OS === 'ios' ? IOS_HEIGHT : ANDROID_HEIGHT}
+          imageHeight={Platform.OS === 'ios' ? IOS_HEIGHT : ANDROID_HEIGHT}>
+          <Image
+            source={{uri: image.uri}}
+            style={
+              Platform.OS === 'ios'
+                ? [styles.imageStyle, {height: IOS_HEIGHT}]
+                : [
+                    styles.imageStyle,
+                    {height: ANDROID_HEIGHT, resizeMode: 'contain'},
+                  ]
+            }
           />
         </ImageZoom>
 
         <View style={styles.buttonContainerStyle}>
-          <Button title={translate('display.cancel')}
-                  buttonStyle={styles.cancelButtonStyle}
-                  titleStyle={styles.cancelButtonTitleStyle}
-                  onPress={() => this.CloseModal()}/>
+          <Button
+            title={translate('display.cancel')}
+            buttonStyle={styles.cancelButtonStyle}
+            titleStyle={styles.cancelButtonTitleStyle}
+            onPress={() => this.CloseModal()}
+          />
 
-          <Button title={translate('display.share')}
-                  buttonStyle={styles.shareButtonStyle}
-                  titleStyle={styles.shareButtonTitleStyle}
-                  onPress={() => this.Share()}/>
+          <Button
+            title={translate('display.share')}
+            buttonStyle={styles.shareButtonStyle}
+            titleStyle={styles.shareButtonTitleStyle}
+            onPress={() => this.Share()}
+          />
         </View>
       </SafeAreaView>
     );

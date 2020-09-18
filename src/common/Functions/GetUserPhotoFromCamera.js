@@ -7,6 +7,6 @@ export const GetUserPhotoFromCamera = async () => {
     cropping: true,
     includeBase64: true,
     compressImageQuality: 0.8,
-    mediaType: 'photo'
+    mediaType: 'photo',
   });
 };

@@ -1,24 +1,36 @@
 import React, {Component} from 'react';
-import {Image, ScrollView, Text, StyleSheet, TouchableOpacity, View} from "react-native";
-import {DEVICE_HEIGHT, DEVICE_WIDTH, DOWN_ICON, FORWARD_ICON} from "../Constants";
-import {page_body_background_color} from "../ColorIndex";
-import {translate} from "../../I18n";
+import {
+  Image,
+  ScrollView,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  DEVICE_HEIGHT,
+  DEVICE_WIDTH,
+  DOWN_ICON,
+  FORWARD_ICON,
+} from '../Constants';
+import {page_body_background_color} from '../ColorIndex';
+import {translate} from '../../I18n';
 
 class GenderSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected_gender_label: translate("home.search_for_all"),
-      selected_gender_type: "",
-      scroll_items: []
-    }
+      selected_gender_label: translate('home.search_for_all'),
+      selected_gender_type: '',
+      scroll_items: [],
+    };
   }
 
   componentWillMount() {
     const items = [
-      {label: translate("home.search_for_all"), type: null},
-      {label: translate("home.search_male_celebrities"), type: "male"},
-      {label: translate("home.search_female_celebrities"), type: "female"}
+      {label: translate('home.search_for_all'), type: null},
+      {label: translate('home.search_male_celebrities'), type: 'male'},
+      {label: translate('home.search_female_celebrities'), type: 'female'},
     ];
     this.fillScroll(items);
   }
@@ -26,8 +38,9 @@ class GenderSelection extends Component {
   fillScroll = (categories) => {
     const items = categories.map((item) => {
       return (
-        <TouchableOpacity style={styles.scrollTextContainer}
-                          onPress={() => this.GenderSelected(item.label, item.type)}>
+        <TouchableOpacity
+          style={styles.scrollTextContainer}
+          onPress={() => this.GenderSelected(item.label, item.type)}>
           <Text style={styles.scrollTextStyle}>{item.label}</Text>
         </TouchableOpacity>
       );
@@ -40,33 +53,42 @@ class GenderSelection extends Component {
     this.setState({selected_gender_label: label, selected_gender_type: type});
     this.props.handleVisibilitty();
     this.props.SelectGender(type);
-  }
+  };
 
   HandleVisibility = () => {
     this.props.handleVisibilitty();
-  }
+  };
 
   render() {
     const {scroll_items, selected_gender_label} = this.state;
     const {visibility, categoriesVisibility} = this.props;
 
     return (
-      <View style={styles.mainContainerStyle} display={!categoriesVisibility ? 'flex' : 'none'}>
-
+      <View
+        style={styles.mainContainerStyle}
+        display={!categoriesVisibility ? 'flex' : 'none'}>
         <View style={styles.topLabel2ContainerStyle}>
-          <TouchableOpacity style={styles.containerStyle} onPress={() => this.HandleVisibility()}>
-            <Text style={styles.selectedTextStyle}>{selected_gender_label}</Text>
+          <TouchableOpacity
+            style={styles.containerStyle}
+            onPress={() => this.HandleVisibility()}>
+            <Text style={styles.selectedTextStyle}>
+              {selected_gender_label}
+            </Text>
 
-            <Image source={selected_gender_label === "" ? DOWN_ICON : FORWARD_ICON} style={{height: 25, width: 25}}/>
+            <Image
+              source={selected_gender_label === '' ? DOWN_ICON : FORWARD_ICON}
+              style={{height: 25, width: 25}}
+            />
           </TouchableOpacity>
         </View>
 
-        <View display={visibility ? 'flex' : 'none'} style={{alignItems: 'center'}}>
+        <View
+          display={visibility ? 'flex' : 'none'}
+          style={{alignItems: 'center'}}>
           <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.55}}>
             <View style={styles.scrollViewStyle}>{scroll_items}</View>
           </ScrollView>
         </View>
-
       </View>
     );
   }
@@ -74,7 +96,7 @@ class GenderSelection extends Component {
 
 const styles = StyleSheet.create({
   mainContainerStyle: {
-    marginTop: 15
+    marginTop: 15,
   },
   containerStyle: {
     flexDirection: 'row',
@@ -132,5 +154,5 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH * 0.8,
     //backgroundColor: '#dedede'
   },
-})
+});
 export default GenderSelection;

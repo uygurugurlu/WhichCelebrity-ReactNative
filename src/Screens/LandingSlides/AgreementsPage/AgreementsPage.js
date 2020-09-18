@@ -12,8 +12,8 @@ import {
   KVKK_LINK_EN,
   KVKK_LINK_TR,
   PRIVACY_POLICY_LINK_EN,
-  PRIVACY_POLICY_LINK_TR
-} from "../../../common/Constants";
+  PRIVACY_POLICY_LINK_TR,
+} from '../../../common/Constants';
 
 const BANNER = require('../../../assets/icons/banner.png');
 
@@ -23,13 +23,13 @@ class AgreementsPage extends Component {
     this.state = {
       checked: false,
       checked2: false,
-      languageTag: "en"
+      languageTag: 'en',
     };
   }
 
   componentDidMount() {
     const {language} = this.props;
-    this.setState({languageTag: language.languageTag})
+    this.setState({languageTag: language.languageTag});
   }
 
   Continue = async () => {
@@ -54,8 +54,9 @@ class AgreementsPage extends Component {
   SeeWebViewPage = (index) => {
     const {languageTag} = this.state;
 
-    const kvkk_link = languageTag === "tr" ? KVKK_LINK_TR : KVKK_LINK_EN;
-    const policy_link = languageTag === "tr" ? PRIVACY_POLICY_LINK_TR : PRIVACY_POLICY_LINK_EN;
+    const kvkk_link = languageTag === 'tr' ? KVKK_LINK_TR : KVKK_LINK_EN;
+    const policy_link =
+      languageTag === 'tr' ? PRIVACY_POLICY_LINK_TR : PRIVACY_POLICY_LINK_EN;
 
     if (index === 0) {
       this.props.navigation.navigate('WebViewPage', {
@@ -79,7 +80,7 @@ class AgreementsPage extends Component {
   shouldComponentUpdate = async (nextProps, nextState) => {
     const {language} = this.props;
     if (nextProps.language.languageTag !== language.languageTag) {
-      this.setState({languageTag: nextProps.language.languageTag})
+      this.setState({languageTag: nextProps.language.languageTag});
       await this.forceUpdate();
     }
   };
@@ -89,55 +90,99 @@ class AgreementsPage extends Component {
 
     return (
       <SafeAreaView style={styles.mainContainerStyle}>
-
         <View style={styles.containerStyle}>
-          <Image source={BANNER} style={styles.imageStyle}/>
+          <Image source={BANNER} style={styles.imageStyle} />
 
-          <View style={{marginTop: DEVICE_WIDTH * 0.05, marginBottom: DEVICE_WIDTH * 0.2}}>
+          <View
+            style={{
+              marginTop: DEVICE_WIDTH * 0.05,
+              marginBottom: DEVICE_WIDTH * 0.2,
+            }}>
             <Text style={styles.titleTextStyle}>{translate('app_name')}</Text>
             <Text style={styles.textStyle}>{translate('starter.label1')}</Text>
           </View>
 
-          <View style={{flexDirection: 'column', width: DEVICE_WIDTH * 0.85, alignSelf: 'center'}}>
-
+          <View
+            style={{
+              flexDirection: 'column',
+              width: DEVICE_WIDTH * 0.85,
+              alignSelf: 'center',
+            }}>
             <View style={styles.kvkkRowContainerStyle}>
               <View style={{width: DEVICE_WIDTH * 0.77}}>
-                <Text style={languageTag === 'tr' ? styles.linkTextStyle : styles.acceptTextStyle}
-                      onPress={() => this.SeeWebViewPage(0)}>
-                  {languageTag === 'tr' ? translate('starter.kvkk_text') : translate('starter.read_and_accept')}
-                  <Text style={languageTag === 'tr' ? styles.acceptTextStyle : styles.linkTextStyle}
-                        onPress={() => this.SeeWebViewPage(0)}>
-                    {languageTag === 'tr' ? translate('starter.read_and_accept') : translate('starter.kvkk_text')}
+                <Text
+                  style={
+                    languageTag === 'tr'
+                      ? styles.linkTextStyle
+                      : styles.acceptTextStyle
+                  }
+                  onPress={() => this.SeeWebViewPage(0)}>
+                  {languageTag === 'tr'
+                    ? translate('starter.kvkk_text')
+                    : translate('starter.read_and_accept')}
+                  <Text
+                    style={
+                      languageTag === 'tr'
+                        ? styles.acceptTextStyle
+                        : styles.linkTextStyle
+                    }
+                    onPress={() => this.SeeWebViewPage(0)}>
+                    {languageTag === 'tr'
+                      ? translate('starter.read_and_accept')
+                      : translate('starter.kvkk_text')}
                   </Text>
                 </Text>
               </View>
 
-              <CheckBox disabled={false} style={styles.checkBoxStyle} value={checked}
-                        onValueChange={() => this.Check()}/>
+              <CheckBox
+                disabled={false}
+                style={styles.checkBoxStyle}
+                value={checked}
+                onValueChange={() => this.Check()}
+              />
             </View>
 
             <View style={styles.kvkkRowContainerStyle}>
               <View style={{width: DEVICE_WIDTH * 0.77}}>
-                <Text style={languageTag === 'tr' ? styles.linkTextStyle : styles.acceptTextStyle}
-                      onPress={() => this.SeeWebViewPage(1)}>
-                  {languageTag === 'tr' ? translate('starter.privacy_policy_text') : translate('starter.read_and_accept')}
-                  <Text style={languageTag === 'tr' ? styles.acceptTextStyle : styles.linkTextStyle}
-                        onPress={() => this.SeeWebViewPage(1)}>
-                    {languageTag === 'tr' ? translate('starter.read_and_accept') : translate('starter.privacy_policy_text')}
+                <Text
+                  style={
+                    languageTag === 'tr'
+                      ? styles.linkTextStyle
+                      : styles.acceptTextStyle
+                  }
+                  onPress={() => this.SeeWebViewPage(1)}>
+                  {languageTag === 'tr'
+                    ? translate('starter.privacy_policy_text')
+                    : translate('starter.read_and_accept')}
+                  <Text
+                    style={
+                      languageTag === 'tr'
+                        ? styles.acceptTextStyle
+                        : styles.linkTextStyle
+                    }
+                    onPress={() => this.SeeWebViewPage(1)}>
+                    {languageTag === 'tr'
+                      ? translate('starter.read_and_accept')
+                      : translate('starter.privacy_policy_text')}
                   </Text>
                 </Text>
               </View>
 
-              <CheckBox disabled={false} style={styles.checkBoxStyle} value={checked2}
-                        onValueChange={() => this.Check2()}/>
+              <CheckBox
+                disabled={false}
+                style={styles.checkBoxStyle}
+                value={checked2}
+                onValueChange={() => this.Check2()}
+              />
             </View>
           </View>
-          <Button title={translate('continue')}
-                  onPress={() => this.Continue()}
-                  buttonStyle={styles.getPermissionButtonStyle}
-                  titleStyle={styles.getPermissionButtonTittleStyle}/>
+          <Button
+            title={translate('continue')}
+            onPress={() => this.Continue()}
+            buttonStyle={styles.getPermissionButtonStyle}
+            titleStyle={styles.getPermissionButtonTittleStyle}
+          />
         </View>
-
       </SafeAreaView>
     );
   }

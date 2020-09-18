@@ -1,15 +1,18 @@
 import {ResponseHandler} from '../ResponseHandler';
 import {AUTH_TOKEN, API_HOST} from '../../../config';
-import {api} from "../AxiosCacheAdapter";
+import {api} from '../AxiosCacheAdapter';
 
 export const SearchCelebrities = async (user_agent, search) => {
   try {
-    const {data} = await api.get(`${API_HOST}/api/celebrities/search/${search}`, {
-      headers: {
-        'Authorization': `Bearer ${AUTH_TOKEN}`,
-        'User-Agent': user_agent,
-      }
-    });
+    const {data} = await api.get(
+      `${API_HOST}/api/celebrities/search/${search}`,
+      {
+        headers: {
+          Authorization: `Bearer ${AUTH_TOKEN}`,
+          'User-Agent': user_agent,
+        },
+      },
+    );
 
     return data;
   } catch (error) {
