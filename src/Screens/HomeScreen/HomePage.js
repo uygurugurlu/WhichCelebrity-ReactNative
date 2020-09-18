@@ -49,6 +49,7 @@ import {
   CelebrityFinderResultEvent,
   SetCelebrityFinderScreenEvent,
 } from '../../common/Functions/AnalyticEvents/Events';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const unit_id =
   Platform.OS === 'ios'
@@ -90,6 +91,7 @@ class HomePage extends Component {
       this.fillScroll(data.data);
     } catch (e) {
       console.log('Error GetCategories: ', e.response);
+      crashlytics().recordError(e);
     }
 
     this.props.navigation.setOptions({
@@ -106,6 +108,7 @@ class HomePage extends Component {
   };
 
   componentDidMount = () => {
+    //crashlytics().crash();
     SetCelebrityFinderScreenEvent();
     interstitial.load();
   };
@@ -208,6 +211,7 @@ class HomePage extends Component {
       await interstitial.show();
     } catch (e) {
       console.log('Error ShowAD: ', e);
+      crashlytics().recordError(e);
     }
   };
 
@@ -215,7 +219,6 @@ class HomePage extends Component {
     const {userAvatarB64, user_agent, language} = this.props;
     const {selected_category_id, gender, selected_category_name} = this.state;
     await this.LoadAD();
-    CelebrityFinderResultEvent(selected_category_name, gender);
 
     if (this.CheckValidity()) {
       await this.setState({result_loading: true});
@@ -228,6 +231,9 @@ class HomePage extends Component {
           language.languageTag,
           gender,
         );
+
+        CelebrityFinderResultEvent(selected_category_name, gender);
+
         const wait = await PerformTimeConsumingTask(
           WAIT_LOADING_ANIMATION_MILLISECONDS,
         );
@@ -250,6 +256,7 @@ class HomePage extends Component {
         this.CancelCategory();
       } catch (e) {
         console.log('error on response: ', e);
+        crashlytics().recordError(e);
         ShowSnackBar(
           translate('home.result_not_found'),
           'SHORT',
@@ -421,7 +428,7 @@ class HomePage extends Component {
           </View>
 
           {this.GetActionSheet()}
-          {<LoadingAnimationModal isModalVisible={this.state.result_loading} />}
+          {<LoadingAnimationModal isModalVisible={this.state.result_loading}/>}
         </SafeAreaView>
       </TouchableWithoutFeedback>
     );

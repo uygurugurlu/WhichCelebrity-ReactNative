@@ -13,9 +13,9 @@
     "share_result": "Sonucu Paylaş"
   },
   "famous_compare": {
-    "compare_header": "Bir ünlü seçin ve ne kadar benzediğinizi öğrenin yada ",
-    "press_random": "'Rastgele Karşılaştır' butonuna basınız",
-    "tooltip_text": "'Rastgele Karşılaştır' butonuna basarak yaklaşık 200B ünlü arasından rastgele bir ünlüye ne kadar benzediğinizi öğrenebilirsiniz.",
+    "compare_header": "Bir ünlü seç ve ne kadar benzediğini öğren yada ",
+    "press_random": "'Rastgele Karşılaştır' butonuna bas",
+    "tooltip_text": "'Rastgele Karşılaştır' butonuna basarak yaklaşık 200B ünlü arasından rastgele bir ünlüye ne kadar benzediğini öğrenebilirsin.",
     "result_label": "Seni en çok benzettiğimiz ünlü: ",
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
@@ -37,9 +37,9 @@
     "search_female_celebrities": "Kadın ünlülerde ara",
     "top_label": "Hangi ünlüye benzediğini öğren",
     "result_not_found": "Sonuç bulunamadı",
-    "face_not_found": "Seçtiğiniz fotoğrafta yüz bulunamadı",
-    "more_than_one_face_found": "Lütfen seçtiğiniz fotoğrafta sadece tek bir yüz olduğundan emin olun",
-    "loading_text": "Yapay zeka algoritmamız size en çok benzeyen ünlüyü aramaktadır"
+    "face_not_found": "Seçtiğin fotoğrafta yüz bulunamadı",
+    "more_than_one_face_found": "Lütfen seçtiğin fotoğrafta sadece tek bir yüz olduğundan emin ol",
+    "loading_text": "Yapay zeka algoritmamız sana en çok benzeyen ünlüyü aramaktadır"
   },
   "result": {
     "share": "Paylaş",
@@ -54,9 +54,9 @@
     "nationality": "Milliyet",
     "zodiac_sign": "Burç",
     "years": "yaşında",
-    "first_similar": "Size en çok benzeyen ünlünün benzerlik oranı",
-    "second_similar": "Size en çok benzeyen 2. ünlünün benzerlik oranı",
-    "third_similar": "Size en çok benzeyen 3. ünlünün benzerlik oranı",
+    "first_similar": "Sana en çok benzeyen ünlünün benzerlik oranı",
+    "second_similar": "Sana en çok benzeyen 2. ünlünün benzerlik oranı",
+    "third_similar": "Sana en çok benzeyen 3. ünlünün benzerlik oranı",
     "fourth_similar": "Benzerlik oranınız"
   },
   "saved": {
@@ -66,7 +66,7 @@
     "not_found": "Hiç Kayıtlı fotoğraf bulunamadı"
   },
   "starter": {
-    "label1": "Yapay zeka algoritmaları ile hangi ünlüye benzediğinizi öğrenin.",
+    "label1": "Yapay zeka algoritmaları ile hangi ünlüye benzediğini öğren.",
     "label2": "Benzerlik yapay zeka algoritması TURK AI tarafından sağlanmaktadır.",
     "kvkk_text": "Kişisel Verilerin Korunması Aydınlatma Metni",
     "privacy_policy_text": "Gizlilik Sözleşmesi Metni",

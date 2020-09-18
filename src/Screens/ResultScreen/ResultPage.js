@@ -30,6 +30,7 @@ import {
   ShareResultEvent,
   ShareAppEvent,
 } from '../../common/Functions/AnalyticEvents/Events';
+import crashlytics from "@react-native-firebase/crashlytics";
 
 const ANIMATION_DURATION = 1000;
 
@@ -104,6 +105,7 @@ class ResultPage extends Component {
         ShareAppEvent();
       })
       .catch((err) => {
+        crashlytics().recordError(err);
         err && console.log(err);
         this.setState({share_active: false});
         this.ref2.zoomInUp(ANIMATION_DURATION);
@@ -139,6 +141,7 @@ class ResultPage extends Component {
       })
       .catch((err) => {
         err && console.log(err);
+        crashlytics().recordError(err);
         this.setState({share_active: false});
         this.ref2.zoomInUp(ANIMATION_DURATION);
         this.actionSheet.hide();
@@ -154,6 +157,7 @@ class ResultPage extends Component {
       }
     } catch (e) {
       console.log('Error takeScreenShot: ', e);
+      crashlytics().recordError(e);
     }
   };
 
@@ -187,7 +191,8 @@ class ResultPage extends Component {
             await this.ShareResult(uri);
           }
         })
-        .catch(() => {
+        .catch((e) => {
+          crashlytics().recordError(e);
           this.setState({share_active: false});
         });
     }

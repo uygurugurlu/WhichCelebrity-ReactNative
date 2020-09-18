@@ -1,7 +1,13 @@
 import vision, {VisionFaceContourType} from '@react-native-firebase/ml-vision';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 export const DetectFace = async (localPath) => {
-  return await vision().faceDetectorProcessImage(localPath);
+  try {
+    return await vision().faceDetectorProcessImage(localPath);
+  } catch (e) {
+    console.log('DetectFace error: ', e);
+    crashlytics().recordError(e);
+  }
   /*faces.forEach(face => {
    console.log('Head rotation on Y axis: ', face.headEulerAngleY);
    console.log('Head rotation on Z axis: ', face.headEulerAngleZ);

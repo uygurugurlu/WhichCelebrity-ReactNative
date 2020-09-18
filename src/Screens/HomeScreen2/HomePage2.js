@@ -51,6 +51,7 @@ import {
   SelectedCelebrityResultEvent,
 } from '../../common/Functions/AnalyticEvents/Events';
 import analytics from '@react-native-firebase/analytics';
+import crashlytics from "@react-native-firebase/crashlytics";
 
 const unit_id =
   Platform.OS === 'ios'
@@ -196,6 +197,7 @@ class HomePage2 extends Component {
     try {
       await interstitial.show();
     } catch (e) {
+      crashlytics().recordError(e);
       console.log('Error ShowAD: ', e);
     }
   };
@@ -249,6 +251,7 @@ class HomePage2 extends Component {
         }
       } catch (e) {
         console.log('Error UserPhotoAnalyze2: ', e);
+        crashlytics().recordError(e);
         ShowSnackBar(
           translate('home.result_not_found'),
           'SHORT',
@@ -305,6 +308,7 @@ class HomePage2 extends Component {
         }
       } catch (e) {
         console.log('Error UserPhotoAnalyze2: ', e);
+        crashlytics().recordError(e);
         ShowSnackBar(
           translate('home.result_not_found'),
           'SHORT',

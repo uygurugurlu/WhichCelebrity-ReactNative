@@ -3,9 +3,10 @@ import analytics from '@react-native-firebase/analytics';
 export const SetCelebrityFinderScreenEvent = () => {
   try {
     console.log('celebrity_finder_screen Event çalıştı ...');
-    analytics().logEvent('celebrity_finder_screen', {
-      description: 'Celebrity Finder Screen Visited',
-    });
+    analytics().setCurrentScreen(
+      'celebrity_finder_screen',
+      'celebrity_finder_screen',
+    );
   } catch (e) {
     console.log('Celebrity finder screen visiting Firebase-Log error: ', e);
   }
@@ -14,9 +15,10 @@ export const SetCelebrityFinderScreenEvent = () => {
 export const SetCelebritySelectionScreenEvent = () => {
   try {
     console.log('celebrity_selection_screen Event çalıştı ...');
-    analytics().logEvent('celebrity_selection_screen', {
-      description: 'Celebrity Selection Screen Visited',
-    });
+    analytics().setCurrentScreen(
+      'celebrity_selection_screen',
+      'celebrity_selection_screen',
+    );
   } catch (e) {
     console.log('Celebrity selection screen visiting Firebase-Log error: ', e);
   }
@@ -37,10 +39,23 @@ export const CelebrityFinderResultEvent = (category, gender) => {
   try {
     console.log('celebrity_finder_result_button Event çalıştı ...');
     analytics().logEvent('celebrity_finder_result_button', {
-      description: 'Celebrity Finder Result Button Clicked',
       category: category,
       gender: gender,
     });
+
+    if (category !== null) {
+      analytics().logSelectContent({
+        content_type: 'category',
+        item_id: category,
+      });
+    }
+
+    if (gender !== null) {
+      analytics().logSelectContent({
+        content_type: 'gender',
+        item_id: gender,
+      });
+    }
   } catch (e) {
     console.log('Celebrity Finder Result Button click Firebase-Log error: ', e);
   }

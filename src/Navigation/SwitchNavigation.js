@@ -14,6 +14,7 @@ import MainPagesStack from './MainStack';
 import UserAgent from 'react-native-user-agent';
 import {GetAppVersion} from '../common/Functions/Endpoints/GetAppVersion';
 import {PerformTimeConsumingTask} from '../common/Functions/PerformTimeConsumingTask';
+import crashlytics from "@react-native-firebase/crashlytics";
 
 class SwitchNavigation extends React.Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class SwitchNavigation extends React.Component {
       }
     } catch (e) {
       // error reading value
+      crashlytics().recordError(e);
       console.log('error reading value: ', e);
     }
   };
@@ -59,6 +61,7 @@ class SwitchNavigation extends React.Component {
         this.props.get_user_agent(ua);
       })
       .catch((e) => {
+        crashlytics().recordError(e);
         console.log('user agent error: ', e);
       });
 
@@ -77,6 +80,7 @@ class SwitchNavigation extends React.Component {
       value = await AsyncStorage.getItem('USER_LANGUAGE');
       console.log('value: ', JSON.parse(value));
     } catch (e) {
+      crashlytics().recordError(e);
       console.log("couldn't get value from ASYNC STORAGE");
     }
 
@@ -145,6 +149,7 @@ class SwitchNavigation extends React.Component {
         }
       }
     } catch (e) {
+      crashlytics().recordError(e);
       console.log('version control error: ', e);
     }
   };
@@ -162,11 +167,11 @@ class SwitchNavigation extends React.Component {
         </View>
       );
     } else {
-      if (is_the_login_first_time) {
-        return <StarterPagesStack />;
-      } else {
-        return <MainPagesStack />;
-      }
+      return (
+        <NavigationContainer>
+          {is_the_login_first_time ? <StarterPagesStack /> : <MainPagesStack />}
+        </NavigationContainer>
+      );
     }
   }
 }
