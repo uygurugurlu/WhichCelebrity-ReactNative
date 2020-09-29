@@ -43,6 +43,8 @@ class ResultPageBody extends Component {
       swiper_index: 0,
       index: 0,
       title: '',
+
+      size: 0,
     };
   }
 
@@ -197,8 +199,32 @@ class ResultPageBody extends Component {
 
     return (
       <View style={[styles.mainContainer]}>
-        <ImageBackground source={RESULTCARDBACK} style={styles.cardImageBack}>
-          <View style={[styles.iconContainerStyle, shadow]}>
+        <ImageBackground style={styles.imageBack} source={RESULTCARDBACK}>
+          <View style={styles.imagesContainer}>
+            <View
+              style={styles.imagesWrapper}
+              onLayout={(event) => {
+                var {x, y, width, height} = event.nativeEvent.layout;
+                var value = Math.min(width / 2, height);
+                this.setState({size: value});
+              }}>
+              <View
+                style={[
+                  styles.imageWrap,
+                  {height: this.state.size, width: this.state.size},
+                ]}>
+                <Image source={userAvatarSource} style={styles.cameraImage} />
+              </View>
+              <View
+                style={[
+                  styles.imageWrap,
+                  {height: this.state.size, width: this.state.size},
+                ]}>
+                <Image source={{uri: photo}} style={styles.cameraImage} />
+              </View>
+            </View>
+          </View>
+          {/*<View style={[styles.iconContainerStyle, shadow]}>
             <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
               <Image source={userAvatarSource} style={styles.iconStyle} />
             </TouchableOpacity>
@@ -207,6 +233,7 @@ class ResultPageBody extends Component {
               <Image source={{uri: photo}} style={styles.iconStyle} />
             </TouchableOpacity>
           </View>
+          */}
 
           <View style={{alignItems: 'center', width: DEVICE_WIDTH * 0.9}}>
             <Text style={styles.titleTextStyle}>{title}</Text>

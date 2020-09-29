@@ -11,26 +11,49 @@ const USER_ICON_SIZE = DEVICE_WIDTH * 0.45;
 export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    margin: 5,
-    borderRadius:20,
-    overflow:'hidden',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderRadius: 30,
+    borderColor: 'rgb(150,150,150)',
     borderWidth: 3,
-    borderColor: 'white',
-    marginHorizontal:'20',
+    overflow: 'hidden',
+    margin: 10,
   },
-  cardImageBack: {
-    flex:1,
-    resizeMode:'cover',
-    borderRadius:30
-
+  imageBack: {
+    flex: 1,
+    resizeMode:"cover",
+    borderRadius: 20,
   },
   scrollViewStyle: {
-    backgroundColor: page_body_background_color,
+    
   },
   viewShotImageStyle: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: page_body_background_color,
+    flex: 1,
+  },
+  imagesContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    marginVertical: 0,
+  },
+  imagesWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  imageWrap: {
+    backgroundColor: 'white',
+    borderRadius: 100,
+    overflow: 'hidden',
+  },
+  cameraImage: {
+    resizeMode: 'contain',
+    position: 'absolute',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    height: 200,
+    width: 200,
   },
   iconContainerStyle: {
     flexDirection: 'row',
@@ -38,14 +61,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     width: ICON_CONTAINER_SIZE,
     height: ICON_CONTAINER_SIZE / 2,
-    backgroundColor: '#fff',
     paddingHorizontal: 5,
     marginTop: 10,
   },
   labelContainerStyle: {
     flexDirection: 'column',
-    width: DEVICE_WIDTH * 0.9,
-    height: DEVICE_HEIGHT * 0.275,
+    flex: 1,
   },
   resultLabelStyle: {
     fontSize: 18,

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  View,
   Image,
   TouchableOpacity,
   Platform,
@@ -230,70 +231,73 @@ class ResultPage extends Component {
     const {share_active, data} = this.state;
 
     return (
-      <Animatable.View
-        ref={(ref) => (this.ref4 = ref)}
-        style={styles.scrollViewStyle}>
-        <Image source={IMAGEBACK} style={styles.imageBack} />
-        <ViewShot
-          ref={(ref) => (this.viewShot = ref)}
-          options={{format: 'jpg', quality: 0.9}}
-          style={styles.viewShotImageStyle}>
-          <Swiper
-            autoplay={false}
-            index={this.state.swiper_index}
-            showsButtons={false}
-            dotStyle={{
-              height: 5,
-              width: 5,
-              position: 'relative',
-              bottom: -DEVICE_HEIGHT * 0.045,
-            }}
-            activeDotStyle={{
-              height: 5,
-              width: 5,
-              position: 'relative',
-              bottom: -DEVICE_HEIGHT * 0.045,
-            }}
-            activeDotColor={'#1490E3'}
-            dotColor={'#2a2a2a'}
-            loop={false}>
-            <ResultPageBody
-              userAvatarSource={userAvatarSource}
-              titleIndex={0}
-              data={data[0]}
-            />
-
-            <ResultPageBody
-              userAvatarSource={userAvatarSource}
-              titleIndex={1}
-              data={data[1]}
-            />
-
-            <ResultPageBody
-              userAvatarSource={userAvatarSource}
-              titleIndex={2}
-              data={data[2]}
-            />
-          </Swiper>
-
+      <View style={styles.container}>
+        <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
           <Animatable.View
-            ref={(ref) => (this.ref2 = ref)}
-            easing={'linear'}
-            style={styles.resultButtonsContainer}>
-            <ResultButtonsRow
-              share_active={share_active}
-              showActionSheet={this.showActionSheet}
-              goBack={this.GoBack}
-            />
-          </Animatable.View>
+            ref={(ref) => (this.ref4 = ref)}
+            style={styles.scrollViewStyle}>
+            <ViewShot
+              ref={(ref) => (this.viewShot = ref)}
+              options={{format: 'jpg', quality: 0.9}}
+              style={styles.viewShotImageStyle}>
+              <Swiper
+                autoplay={false}
+                index={this.state.swiper_index}
+                showsButtons={false}
+                dotStyle={{
+                  height: 5,
+                  width: 5,
+                  position: 'relative',
+                  bottom: -DEVICE_HEIGHT * 0.045,
+                }}
+                activeDotStyle={{
+                  height: 5,
+                  width: 5,
+                  position: 'relative',
+                  bottom: -DEVICE_HEIGHT * 0.045,
+                }}
+                activeDotColor={'#1490E3'}
+                dotColor={'#2a2a2a'}
+                loop={false}>
+                <ResultPageBody
+                  userAvatarSource={userAvatarSource}
+                  titleIndex={0}
+                  data={data[0]}
+                />
 
-          <Animatable.View ref={(ref) => (this.ref1 = ref)} easing={'linear'}>
-            <SharedImageBottomComponent shareActive={share_active} />
-          </Animatable.View>
-        </ViewShot>
+                <ResultPageBody
+                  userAvatarSource={userAvatarSource}
+                  titleIndex={1}
+                  data={data[1]}
+                />
 
-        {this.GetActionSheet()}
-      </Animatable.View>
+                <ResultPageBody
+                  userAvatarSource={userAvatarSource}
+                  titleIndex={2}
+                  data={data[2]}
+                />
+              </Swiper>
+
+              <Animatable.View
+                ref={(ref) => (this.ref2 = ref)}
+                easing={'linear'}>
+                <ResultButtonsRow
+                  share_active={share_active}
+                  showActionSheet={this.showActionSheet}
+                  goBack={this.GoBack}
+                />
+              </Animatable.View>
+
+              <Animatable.View
+                ref={(ref) => (this.ref1 = ref)}
+                easing={'linear'}>
+                <SharedImageBottomComponent shareActive={share_active} />
+              </Animatable.View>
+            </ViewShot>
+            {this.GetActionSheet()}
+          </Animatable.View>
+        </ImageBackground>
+      </View>
     );
   }
 }
