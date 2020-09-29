@@ -2,7 +2,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {translate} from '../../I18n';
 
 export const GetUserPhotoFromImageLibrary = async () => {
-  return await ImagePicker.openPicker({
+  return await ImagePicker.launchImageLibrary({
     width: 300,
     height: 300,
     cropping: true,

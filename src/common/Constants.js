@@ -8,6 +8,11 @@ export const DOWN_ICON = require('../assets/icons/down-arrow.png');
 
 export const STAR_ICON = require('../assets/icons/star.jpg');
 export const HEADSTONE2 = require('../assets/icons/grave1.png');
+export const WHICHCELEBRITYBACK = require('../assets/icons/WhichCelebrityCardBack.png');
+export const CALCCELEBRITYBACK = require('../assets/icons/CalcCelebrityCardBack.png');
+export const IMAGEBACK = require('../assets/icons/ImageBack.png');
+export const CAMERAFRAME = require('../assets/icons/CameraFrame.png');
+export const CAMERAICON = require('../assets/icons/CameraIcon.png');
 
 export const PRIVACY_POLICY_LINK_EN =
   'https://app-fab.com/apps/which-celebrity/privacy-policy-en.html';

@@ -40,4 +40,19 @@ export const styles = StyleSheet.create({
     padding: 7.5,
     width: DEVICE_WIDTH * 0.65,
   },
+  container: {
+    flex: 1,
+  },
+  imageBack: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+  title: {
+    textAlign:'center',
+    color: 'white',
+    marginHorizontal: 10,
+    marginTop: 20,
+    fontSize: 15,
+    fontWeight: '800',
+  },
 });

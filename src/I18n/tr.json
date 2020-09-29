@@ -29,9 +29,11 @@
     "select_warning": "Lütfen ismini yazarak bir ünlü seçiniz.",
     "avatar_warning": "Lütfen fotoğraf eklediğinizden emin olun!",
     "select_category": "Kategori Seç (İsteğe bağlı)",
+    "search_category": "Kategori ara ...",
     "clear_category": "Kategoriyi kaldır",
     "cancel": "Vazgeç",
     "select_photo": "Fotoğraf seçiniz",
+    "search_gender": "Cinsiyet seçenği",
     "search_for_all": "Kadın ve Erkek ünlülerde ara",
     "search_male_celebrities": "Erkek ünlülerde ara",
     "search_female_celebrities": "Kadın ünlülerde ara",
@@ -39,7 +41,9 @@
     "result_not_found": "Sonuç bulunamadı",
     "face_not_found": "Seçtiğin fotoğrafta yüz bulunamadı",
     "more_than_one_face_found": "Lütfen seçtiğin fotoğrafta sadece tek bir yüz olduğundan emin ol",
-    "loading_text": "Yapay zeka algoritmamız sana en çok benzeyen ünlüyü aramaktadır"
+    "loading_text": "Yapay zeka algoritmamız sana en çok benzeyen ünlüyü aramaktadır",
+    "none": "Hiçbiri"
+
   },
   "result": {
     "share": "Paylaş",

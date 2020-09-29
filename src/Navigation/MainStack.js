@@ -20,18 +20,16 @@ export default function MainPagesStack() {
   return (
     <MainStack.Navigator>
       <MainStack.Screen
-        name={'Dashboard'}
+        name={'WhichCelebrity'}
         component={Dashboard}
         options={({navigation, route}) => ({
-          headerShown: false,
+          headerShown: true,
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor: header_background_color,
           },
           headerTintColor: header_label_color,
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
+
         })}
       />
       <MainStack.Screen

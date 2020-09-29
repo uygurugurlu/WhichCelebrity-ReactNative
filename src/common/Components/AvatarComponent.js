@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Avatar from 'rn-avatar';
 import {CAMERA_ICON2} from '../IconIndex';
-import {DEVICE_WIDTH, shadow} from '../Constants';
-import {Image, Text, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {DEVICE_WIDTH, shadow, CAMERAFRAME, CAMERAICON} from '../Constants';
+import {Image, Text, StyleSheet, View, TouchableHighlight} from 'react-native';
 import {translate} from '../../I18n';
 
 const size = DEVICE_WIDTH / 2.2;
@@ -10,8 +10,23 @@ const size = DEVICE_WIDTH / 2.2;
 class AvatarComponent extends Component {
   render() {
     const {ImageSource, SelectAvatar} = this.props;
+    return (
+      <View style={styles.cameraImageContainer}>
+        <Image source={CAMERAFRAME} style={styles.cameraImage} />
+        <TouchableHighlight
+          style={styles.cameraButton}
+          onPress={() => SelectAvatar()}>
+          <View style={styles.cameraWrapper}>
+            <Image
+              source={ImageSource ? ImageSource : CAMERAICON}
+              style={styles.cameraIcon}
+            />
+          </View>
+        </TouchableHighlight>
+      </View>
+    );
 
-    return ImageSource === '' ? (
+    /*return ImageSource === '' ? (
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity
           style={[styles.imageContainerStyle, shadow]}
@@ -42,7 +57,7 @@ class AvatarComponent extends Component {
           color: '#576f87',
         }}
       />
-    );
+    ); */
   }
 }
 
@@ -74,6 +89,49 @@ const styles = StyleSheet.create({
     width: size / 4.5,
     height: size / 4.5,
     borderRadius: size / 4.5 / 2,
+  },
+
+  cameraImageContainer: {
+    alignSelf: 'center',
+    height: 200,
+    width: 200,
+    borderRadius: 1000,
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  cameraImage: {
+    height: 200,
+    width: 200,
+    resizeMode: 'cover',
+    position: 'absolute',
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  cameraWrapper: {
+    height: 199,
+    width: 199,
+    position: 'absolute',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    borderRadius: 1000,
+    overflow: 'hidden',
+  },
+  cameraIcon: {
+    height: 190,
+    width: 190,
+    resizeMode: 'cover',
+    position: 'absolute',
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  cameraButton: {
+    alignSelf: 'center',
+    height: 190,
+    width: 190,
+    borderRadius: 1000,
+    margin: 30,
+    justifyContent: 'center',
+    overflow: 'hidden',
   },
 });
 

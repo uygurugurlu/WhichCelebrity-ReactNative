@@ -59,6 +59,7 @@ class SwitchNavigation extends React.Component {
     await UserAgent.getWebViewUserAgent() //asynchronous
       .then((ua) => {
         this.props.get_user_agent(ua);
+        console.log("Agent: ", ua);
       })
       .catch((e) => {
         crashlytics().recordError(e);
@@ -94,6 +95,7 @@ class SwitchNavigation extends React.Component {
   };
 
   GetVersion = async () => {
+    console.log("user_agent: ", this.props.user_agent);
     const {data} = await GetAppVersion(this.props.user_agent);
     console.log('GetVersion Api doğru çalıştı ...', data);
 
@@ -157,7 +159,6 @@ class SwitchNavigation extends React.Component {
   render() {
     const {is_the_login_first_time} = this.props;
     const {update_needed} = this.state;
-
     if (update_needed) {
       return <UpdateApp />;
     } else if (is_the_login_first_time === null) {
@@ -167,6 +168,7 @@ class SwitchNavigation extends React.Component {
         </View>
       );
     } else {
+
       return (
         <NavigationContainer>
           {is_the_login_first_time ? <StarterPagesStack /> : <MainPagesStack />}
