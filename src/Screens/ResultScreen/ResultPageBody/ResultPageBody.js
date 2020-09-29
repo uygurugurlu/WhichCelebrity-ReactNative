@@ -6,9 +6,15 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ImageBackground,
 } from 'react-native';
 import {styles} from './ResultPageBodyStyles';
-import {DEVICE_WIDTH, HEADSTONE2, shadow} from '../../../common/Constants';
+import {
+  DEVICE_WIDTH,
+  HEADSTONE2,
+  shadow,
+  RESULTCARDBACK,
+} from '../../../common/Constants';
 import {translate} from '../../../I18n';
 import AnimatedProgressBar from '../../../common/Components/AnimatedProgressBar';
 import AnimatedProgressComponent from '../../../common/Components/AnimatedProgressComponent';
@@ -191,67 +197,69 @@ class ResultPageBody extends Component {
 
     return (
       <View style={[styles.mainContainer]}>
-        <View style={[styles.iconContainerStyle, shadow]}>
-          <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
-            <Image source={userAvatarSource} style={styles.iconStyle} />
-          </TouchableOpacity>
+        <ImageBackground source={RESULTCARDBACK} style={styles.cardImageBack}>
+          <View style={[styles.iconContainerStyle, shadow]}>
+            <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
+              <Image source={userAvatarSource} style={styles.iconStyle} />
+            </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => this.handleModalVisibility(1)}>
-            <Image source={{uri: photo}} style={styles.iconStyle} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={{alignItems: 'center', width: DEVICE_WIDTH * 0.9}}>
-          <Text style={styles.titleTextStyle}>{title}</Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <AnimatedProgressBar fill={similarity} />
-            <AnimatedProgressComponent fill={similarity} />
+            <TouchableOpacity onPress={() => this.handleModalVisibility(1)}>
+              <Image source={{uri: photo}} style={styles.iconStyle} />
+            </TouchableOpacity>
           </View>
-        </View>
 
-        <ScrollView style={styles.labelContainerStyle}>
-          <ResultLineComponent
-            leftText={translate('result.celebrity') + ': '}
-            rightText={name}
-          />
-
-          <View
-            display={hide_age ? 'none' : 'flex'}
-            style={{flexDirection: 'row', marginRight: 25}}>
-            <ResultLineComponent
-              leftText={translate('result.birthday') + ': '}
-              rightText={
-                birthday + ', ' + age + ' ' + translate('result.years')
-              }
-            />
-
-            <View display={grave_flex ? 'flex' : 'none'}>
-              <Image style={styles.graveIconStyle} source={HEADSTONE2} />
+          <View style={{alignItems: 'center', width: DEVICE_WIDTH * 0.9}}>
+            <Text style={styles.titleTextStyle}>{title}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <AnimatedProgressBar fill={similarity} />
+              <AnimatedProgressComponent fill={similarity} />
             </View>
           </View>
 
-          <ResultLineComponent
-            leftText={translate('result.category') + ': '}
-            rightText={category}
-          />
+          <ScrollView style={styles.labelContainerStyle}>
+            <ResultLineComponent
+              leftText={translate('result.celebrity') + ': '}
+              rightText={name}
+            />
 
-          <ResultLineComponent
-            leftText={translate('result.nationality') + ': '}
-            rightText={nationality}
-          />
+            <View
+              display={hide_age ? 'none' : 'flex'}
+              style={{flexDirection: 'row', marginRight: 25}}>
+              <ResultLineComponent
+                leftText={translate('result.birthday') + ': '}
+                rightText={
+                  birthday + ', ' + age + ' ' + translate('result.years')
+                }
+              />
 
-          <ResultLineComponent
-            leftText={translate('result.zodiac_sign') + ': '}
-            rightText={star_sign}
-          />
-        </ScrollView>
+              <View display={grave_flex ? 'flex' : 'none'}>
+                <Image style={styles.graveIconStyle} source={HEADSTONE2} />
+              </View>
+            </View>
 
-        <SwipeableImageModal
-          uri={modal_uri}
-          index={index}
-          isVisible={isVisible}
-          handleVisibility={() => this.handleModalVisibility(index)}
-        />
+            <ResultLineComponent
+              leftText={translate('result.category') + ': '}
+              rightText={category}
+            />
+
+            <ResultLineComponent
+              leftText={translate('result.nationality') + ': '}
+              rightText={nationality}
+            />
+
+            <ResultLineComponent
+              leftText={translate('result.zodiac_sign') + ': '}
+              rightText={star_sign}
+            />
+          </ScrollView>
+
+          <SwipeableImageModal
+            uri={modal_uri}
+            index={index}
+            isVisible={isVisible}
+            handleVisibility={() => this.handleModalVisibility(index)}
+          />
+        </ImageBackground>
       </View>
     );
   }

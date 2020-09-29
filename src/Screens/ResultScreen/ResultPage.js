@@ -5,6 +5,7 @@ import {
   Platform,
   PermissionsAndroid,
   Animated,
+  ImageBackground,
 } from 'react-native';
 import {styles} from './ResultPageStyles';
 import {connect} from 'react-redux';
@@ -25,12 +26,12 @@ import {SavePicture} from '../../common/Functions/SavePicture';
 import ResultPageBody from './ResultPageBody/ResultPageBody';
 import Swiper from 'react-native-swiper';
 import {PerformTimeConsumingTask} from '../../common/Functions/PerformTimeConsumingTask';
-import {DEVICE_HEIGHT} from '../../common/Constants';
+import {DEVICE_HEIGHT, IMAGEBACK} from '../../common/Constants';
 import {
   ShareResultEvent,
   ShareAppEvent,
 } from '../../common/Functions/AnalyticEvents/Events';
-import crashlytics from "@react-native-firebase/crashlytics";
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const ANIMATION_DURATION = 1000;
 
@@ -232,6 +233,7 @@ class ResultPage extends Component {
       <Animatable.View
         ref={(ref) => (this.ref4 = ref)}
         style={styles.scrollViewStyle}>
+        <Image source={IMAGEBACK} style={styles.imageBack} />
         <ViewShot
           ref={(ref) => (this.viewShot = ref)}
           options={{format: 'jpg', quality: 0.9}}
@@ -274,7 +276,10 @@ class ResultPage extends Component {
             />
           </Swiper>
 
-          <Animatable.View ref={(ref) => (this.ref2 = ref)} easing={'linear'}>
+          <Animatable.View
+            ref={(ref) => (this.ref2 = ref)}
+            easing={'linear'}
+            style={styles.resultButtonsContainer}>
             <ResultButtonsRow
               share_active={share_active}
               showActionSheet={this.showActionSheet}
@@ -286,6 +291,7 @@ class ResultPage extends Component {
             <SharedImageBottomComponent shareActive={share_active} />
           </Animatable.View>
         </ViewShot>
+
         {this.GetActionSheet()}
       </Animatable.View>
     );

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {translate} from '../../I18n';
 import {DEVICE_WIDTH} from '../Constants';
@@ -16,6 +16,7 @@ class ResultButtonsRow extends Component {
       <View
         style={styles.buttonsRowContainerStyle}
         display={!share_active ? 'flex' : 'none'}>
+
         <Button
           title={translate('result.try_again')}
           buttonStyle={styles.resultButtonStyle}
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 85,
+    flex: 1,
   },
   resultButtonStyle: {
     width: DEVICE_WIDTH * 0.38,

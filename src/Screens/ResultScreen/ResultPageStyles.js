@@ -9,30 +9,39 @@ const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.95;
 const USER_ICON_SIZE = DEVICE_WIDTH * 0.45;
 
 export const styles = StyleSheet.create({
+  container: {
+    flex:1,
+  },
   mainContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: page_body_background_color,
   },
   scrollViewStyle: {
-    backgroundColor: page_body_background_color,
+    flex: 1,
+  },
+  imageBack: {
+    position:'absolute',
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT,
+    flex: 1,
+    resizeMode: 'cover',
   },
   viewShotImageStyle: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: page_body_background_color,
+    flex: 1,
   },
+
   iconContainerStyle: {
+    flex: 0.1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: ICON_CONTAINER_SIZE,
-    height: ICON_CONTAINER_SIZE / 2,
-    backgroundColor: '#fff',
     paddingHorizontal: 5,
     marginTop: 10,
+  },
+  resultButtonsContainer: {
+    flex: 0.1,
   },
   labelContainerStyle: {
     flexDirection: 'column',

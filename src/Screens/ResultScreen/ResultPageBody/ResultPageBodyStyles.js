@@ -11,10 +11,18 @@ const USER_ICON_SIZE = DEVICE_WIDTH * 0.45;
 export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: page_body_background_color,
+    margin: 5,
+    borderRadius:20,
+    overflow:'hidden',
+    borderWidth: 3,
+    borderColor: 'white',
+    marginHorizontal:'20',
+  },
+  cardImageBack: {
+    flex:1,
+    resizeMode:'cover',
+    borderRadius:30
+
   },
   scrollViewStyle: {
     backgroundColor: page_body_background_color,

@@ -13,6 +13,7 @@ export const CALCCELEBRITYBACK = require('../assets/icons/CalcCelebrityCardBack.
 export const IMAGEBACK = require('../assets/icons/ImageBack.png');
 export const CAMERAFRAME = require('../assets/icons/CameraFrame.png');
 export const CAMERAICON = require('../assets/icons/CameraIcon.png');
+export const RESULTCARDBACK = require('../assets/icons/ResultCardBack.png');
 
 export const PRIVACY_POLICY_LINK_EN =
   'https://app-fab.com/apps/which-celebrity/privacy-policy-en.html';

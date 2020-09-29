@@ -29,7 +29,9 @@ export default function MainPagesStack() {
             backgroundColor: header_background_color,
           },
           headerTintColor: header_label_color,
-
+          headerTitleStyle: {
+            alignSelf: 'center',
+          },
         })}
       />
       <MainStack.Screen
@@ -43,9 +45,7 @@ export default function MainPagesStack() {
             backgroundColor: header_background_color,
           },
           headerTintColor: header_label_color,
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
+
         })}
       />
       <MainStack.Screen
@@ -68,7 +68,7 @@ export default function MainPagesStack() {
         name="ResultPage"
         component={ResultPage}
         options={({navigation, route}) => ({
-          headerShown: true,
+          headerShown: false,
           title: translate('header_label'),
           headerBackTitleVisible: false,
           headerStyle: {

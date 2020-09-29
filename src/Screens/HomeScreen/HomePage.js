@@ -182,9 +182,9 @@ class HomePage extends Component {
   handleCroppedImage = async (res) => {
     var data = await RNFS.readFile(res.uri, 'base64')
     console.log('base64Image: ',data);
-    this.setState({crop_visibility: false});
     this.props.get_user_avatar_source({uri: res.uri}, data);
-    const faces = await DetectFace(res.uri);
+    const faces = await DetectFace(res.uri);  
+    this.setState({crop_visibility: false});
     this.props.get_detected_face_count(faces.length);
     console.log('faces:', faces, faces.length);
   }
@@ -508,8 +508,7 @@ class HomePage extends Component {
               style={styles.cropView}
               ref={this.cropViewRef}
               onImageCrop={(res) => this.handleCroppedImage(res)}
-              keepAspectRatio
-              aspectRatio={{width: 1, height: 1}}
+
             />
             <View style={styles.cropButtonsContainer}>
             <View style={styles.cropButtonContainer}>
