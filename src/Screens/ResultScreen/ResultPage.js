@@ -64,7 +64,8 @@ class ResultPage extends Component {
           }>
           <Icon
             name={'photo-library'} 
-            style={{height: 35, width: 35, marginRight: 15}}
+            color={'white'}
+            style={{height: 35, width: 35, marginRight: 15, alignSelf:'center'}}
             />
 
         </TouchableOpacity>

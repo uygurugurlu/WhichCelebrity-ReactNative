@@ -20,7 +20,7 @@ export default function MainPagesStack() {
   return (
     <MainStack.Navigator>
       <MainStack.Screen
-        name={'WhichCelebrity'}
+        name={translate('header_label')}
         component={Dashboard}
         options={({navigation, route}) => ({
           headerShown: true,

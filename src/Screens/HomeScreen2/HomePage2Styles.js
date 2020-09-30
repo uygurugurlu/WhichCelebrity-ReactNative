@@ -22,27 +22,24 @@ export const styles = StyleSheet.create({
     flex: 2.5,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor:'red',
   },
   topLabelStyle: {
     color: 'white',
     fontSize: 16,
     fontWeight: '500',
     textAlign: 'center',
-    marginHorizontal:30,
+    marginHorizontal: 30,
   },
   cameraContainer: {
     flex: 2.5,
     justifyContent: 'center',
-    backgroundColor:'yellow',
   },
   buttonContainer: {
     flex: 1,
-    flexDirection:'row',
-    justifyContent:'space-between',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginHorizontal: 30,
-    alignItems:'center',
-    backgroundColor:'blue',
+    alignItems: 'center',
   },
   selectCategoryContainer: {
     height: 40,
@@ -100,20 +97,22 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   resultButtonStyle: {
-    width: DEVICE_WIDTH * 0.435,
+    width: DEVICE_WIDTH * 0.4,
     height: buttons_height,
     borderRadius: 2.5,
     fontWeight: '600',
     backgroundColor: button_colors,
     marginBottom: 25,
+    borderRadius: 20,
   },
   randomButtonStyle: {
-    width: DEVICE_WIDTH * 0.435,
+    width: DEVICE_WIDTH * 0.4,
     height: buttons_height,
     borderRadius: 2.5,
     fontWeight: '600',
     backgroundColor: button_colors,
     marginBottom: 25,
+    borderRadius: 20,
   },
   modalTextStyle: {
     fontSize: 18,
@@ -207,7 +206,44 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 
-
+  //Options Modal Styles
+  settingsModalContainer: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    backgroundColor: 'rgb(240,240,240)',
+    borderRadius: 15,
+  },
+  settingsMainButtons: {
+    alignItems: 'center',
+    height: 50,
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgb(100,100,100)',
+    flexDirection: 'row',
+  },
+  settingsButton: {
+    textAlign: 'center',
+    color: '#1a84f4',
+    fontSize: 19,
+  },
+  cancelButtonContainer: {
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    height: 50,
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    borderRadius: 15,
+    backgroundColor: 'rgb(240,240,240)',
+  },
+  cancelButton: {
+    textAlign: 'center',
+    color: 'red',
+    fontSize: 19,
+  },
   //celebrities style
   modalBack: {
     backgroundColor: '#00000080',
@@ -265,4 +301,34 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginHorizontal: 10,
   },
+  modalItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  modalImage: {
+    height: 50,
+    width: 50,
+  },
+
+  cropView: {
+    flex: 5,
+  },
+  cropButtonsContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+
+  cropButtonContainer: {
+    flex: 0.5,
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  cropWrapper: {
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  cropButtons: {
+    height: 70,
+    width: 70,
+  }
 });
