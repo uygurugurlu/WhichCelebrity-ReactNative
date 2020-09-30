@@ -28,6 +28,13 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  swiperContainer: {
+    flex: 0.9,
+  },
+  bottomContainer: {
+    flex: 0.1,
+    justifyContent:'center',
+  },
   iconContainerStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',

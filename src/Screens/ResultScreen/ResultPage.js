@@ -240,59 +240,62 @@ class ResultPage extends Component {
               ref={(ref) => (this.viewShot = ref)}
               options={{format: 'jpg', quality: 0.9}}
               style={styles.viewShotImageStyle}>
-              <Swiper
-                autoplay={false}
-                index={this.state.swiper_index}
-                showsButtons={false}
-                dotStyle={{
-                  height: 5,
-                  width: 5,
-                  position: 'relative',
-                  bottom: -DEVICE_HEIGHT * 0.045,
-                }}
-                activeDotStyle={{
-                  height: 5,
-                  width: 5,
-                  position: 'relative',
-                  bottom: -DEVICE_HEIGHT * 0.045,
-                }}
-                activeDotColor={'#1490E3'}
-                dotColor={'#2a2a2a'}
-                loop={false}>
-                <ResultPageBody
-                  userAvatarSource={userAvatarSource}
-                  titleIndex={0}
-                  data={data[0]}
-                />
+              <View style={styles.swiperContainer}>
+                <Swiper
+                  autoplay={false}
+                  index={this.state.swiper_index}
+                  showsButtons={false}
+                  dotStyle={{
+                    height: 5,
+                    width: 5,
+                    position: 'relative',
+                    bottom: -DEVICE_HEIGHT * 0.045,
+                  }}
+                  activeDotStyle={{
+                    height: 5,
+                    width: 5,
+                    position: 'relative',
+                    bottom: -DEVICE_HEIGHT * 0.045,
+                  }}
+                  activeDotColor={'#1490E3'}
+                  dotColor={'#2a2a2a'}
+                  loop={false}>
+                  <ResultPageBody
+                    userAvatarSource={userAvatarSource}
+                    titleIndex={0}
+                    data={data[0]}
+                  />
 
-                <ResultPageBody
-                  userAvatarSource={userAvatarSource}
-                  titleIndex={1}
-                  data={data[1]}
-                />
+                  <ResultPageBody
+                    userAvatarSource={userAvatarSource}
+                    titleIndex={1}
+                    data={data[1]}
+                  />
 
-                <ResultPageBody
-                  userAvatarSource={userAvatarSource}
-                  titleIndex={2}
-                  data={data[2]}
-                />
-              </Swiper>
+                  <ResultPageBody
+                    userAvatarSource={userAvatarSource}
+                    titleIndex={2}
+                    data={data[2]}
+                  />
+                </Swiper>
+              </View>
+              <View style={styles.bottomContainer}>
+                <Animatable.View
+                  ref={(ref) => (this.ref2 = ref)}
+                  easing={'linear'}>
+                  <ResultButtonsRow
+                    share_active={share_active}
+                    showActionSheet={this.showActionSheet}
+                    goBack={this.GoBack}
+                  />
+                </Animatable.View>
 
-              <Animatable.View
-                ref={(ref) => (this.ref2 = ref)}
-                easing={'linear'}>
-                <ResultButtonsRow
-                  share_active={share_active}
-                  showActionSheet={this.showActionSheet}
-                  goBack={this.GoBack}
-                />
-              </Animatable.View>
-
-              <Animatable.View
-                ref={(ref) => (this.ref1 = ref)}
-                easing={'linear'}>
-                <SharedImageBottomComponent shareActive={share_active} />
-              </Animatable.View>
+                <Animatable.View
+                  ref={(ref) => (this.ref1 = ref)}
+                  easing={'linear'}>
+                  <SharedImageBottomComponent shareActive={share_active} />
+                </Animatable.View>
+              </View>
             </ViewShot>
             {this.GetActionSheet()}
           </Animatable.View>

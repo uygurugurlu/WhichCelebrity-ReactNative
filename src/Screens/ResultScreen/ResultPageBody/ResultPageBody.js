@@ -20,6 +20,14 @@ import AnimatedProgressBar from '../../../common/Components/AnimatedProgressBar'
 import AnimatedProgressComponent from '../../../common/Components/AnimatedProgressComponent';
 import ResultLineComponent from '../../../common/Components/ResultLineComponent';
 import SwipeableImageModal from '../../../common/Components/SwipeableImageModal';
+const CONTAINER_MARGIN = 10;
+
+const celebrityIcon = require('../../../assets/icons/celebrityIcon.png');
+const calendarIcon = require('../../../assets/icons/calendarIcon.png');
+const categoryIcon = require('../../../assets/icons/categoryIcon.png');
+const nationalityIcon = require('../../../assets/icons/nationalityIcon.png');
+const zodiacIcon = require('../../../assets/icons/zodiacIcon.png');
+
 
 class ResultPageBody extends Component {
   constructor(props) {
@@ -208,20 +216,24 @@ class ResultPageBody extends Component {
                 var value = Math.min(width / 2, height);
                 this.setState({size: value});
               }}>
-              <View
-                style={[
-                  styles.imageWrap,
-                  {height: this.state.size, width: this.state.size},
-                ]}>
-                <Image source={userAvatarSource} style={styles.cameraImage} />
-              </View>
-              <View
-                style={[
-                  styles.imageWrap,
-                  {height: this.state.size, width: this.state.size},
-                ]}>
-                <Image source={{uri: photo}} style={styles.cameraImage} />
-              </View>
+              <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
+                <View
+                  style={[
+                    styles.imageWrap,
+                    {height: this.state.size - 10, width: this.state.size - 10},
+                  ]}>
+                  <Image source={userAvatarSource} style={styles.cameraImage} />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.handleModalVisibility(1)}>
+                <View
+                  style={[
+                    styles.imageWrap,
+                    {height: this.state.size - 10, width: this.state.size - 10},
+                  ]}>
+                  <Image source={{uri: photo}} style={styles.cameraImage} />
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
           {/*<View style={[styles.iconContainerStyle, shadow]}>
@@ -234,29 +246,34 @@ class ResultPageBody extends Component {
             </TouchableOpacity>
           </View>
           */}
-
-          <View style={{alignItems: 'center', width: DEVICE_WIDTH * 0.9}}>
-            <Text style={styles.titleTextStyle}>{title}</Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <AnimatedProgressBar fill={similarity} />
-              <AnimatedProgressComponent fill={similarity} />
+          <View style={styles.similarityContainer}>
+            <View style={styles.textContainer}>
+              <Text style={styles.titleTextStyle}>{title}</Text>
             </View>
-          </View>
+            <View style={styles.animatedSimilarityContainer}>
+            <AnimatedProgressComponent fill={similarity} />
 
-          <ScrollView style={styles.labelContainerStyle}>
+            <AnimatedProgressBar fill={similarity} margin={30 - CONTAINER_MARGIN}/>
+            </View>
+
+          </View>
+          
+          <View style={styles.labelContainerStyle}>
             <ResultLineComponent
               leftText={translate('result.celebrity') + ': '}
               rightText={name}
+              icon= {celebrityIcon}
             />
 
             <View
-              display={hide_age ? 'none' : 'flex'}
-              style={{flexDirection: 'row', marginRight: 25}}>
+              display={hide_age ? 'none' : 'flex'}>
               <ResultLineComponent
                 leftText={translate('result.birthday') + ': '}
                 rightText={
                   birthday + ', ' + age + ' ' + translate('result.years')
                 }
+                icon= {calendarIcon}
+
               />
 
               <View display={grave_flex ? 'flex' : 'none'}>
@@ -267,18 +284,25 @@ class ResultPageBody extends Component {
             <ResultLineComponent
               leftText={translate('result.category') + ': '}
               rightText={category}
+              icon= {categoryIcon}
+
             />
 
             <ResultLineComponent
               leftText={translate('result.nationality') + ': '}
               rightText={nationality}
+              icon= {nationalityIcon}
+
             />
 
             <ResultLineComponent
               leftText={translate('result.zodiac_sign') + ': '}
               rightText={star_sign}
+              icon= {zodiacIcon}
+              
+
             />
-          </ScrollView>
+          </View>
 
           <SwipeableImageModal
             uri={modal_uri}

@@ -7,6 +7,7 @@ import {
 
 const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.95;
 const USER_ICON_SIZE = DEVICE_WIDTH * 0.45;
+const CONTAINER_MARGIN = 10;
 
 export const styles = StyleSheet.create({
   mainContainer: {
@@ -18,21 +19,21 @@ export const styles = StyleSheet.create({
     borderColor: 'rgb(150,150,150)',
     borderWidth: 3,
     overflow: 'hidden',
-    margin: 10,
+    marginHorizontal: CONTAINER_MARGIN,
+    marginTop: 15,
   },
   imageBack: {
+    width: '100%',
     flex: 1,
-    resizeMode:"cover",
+    resizeMode:'cover',
     borderRadius: 20,
   },
-  scrollViewStyle: {
-    
-  },
+  scrollViewStyle: {},
   viewShotImageStyle: {
     flex: 1,
   },
   imagesContainer: {
-    flex: 1,
+    flex: 0.33,
     justifyContent: 'center',
     marginVertical: 0,
   },
@@ -46,15 +47,39 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 100,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: 'rgb(150,150,150)',
   },
   cameraImage: {
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     position: 'absolute',
     alignSelf: 'center',
     justifyContent: 'center',
     height: 200,
     width: 200,
   },
+  similarityContainer: {
+    flex: 0.22,
+    justifyContent:'space-evenly',
+    alignItems:'center',
+  },
+  textContainer: {
+    justifyContent:'center',
+    flex: 1,
+  },  
+  animatedSimilarityContainer: {
+    justifyContent:'center',
+    flex: 1,
+    alignItems:'center',
+  },
+  titleTextStyle: {
+    fontWeight: '500',
+    color:'white',
+    textAlign:'center',
+    marginHorizontal:10,
+    fontSize: 17,
+  },
+
   iconContainerStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -66,7 +91,11 @@ export const styles = StyleSheet.create({
   },
   labelContainerStyle: {
     flexDirection: 'column',
-    flex: 1,
+    flex: 0.45,
+    backgroundColor: 'white',
+    borderRadius: 30,
+    margin: 30 - CONTAINER_MARGIN,
+    justifyContent: 'space-evenly',
   },
   resultLabelStyle: {
     fontSize: 18,
@@ -126,11 +155,5 @@ export const styles = StyleSheet.create({
     width: 30,
     marginLeft: 5,
   },
-  titleTextStyle: {
-    fontWeight: '500',
-    fontSize: 17,
-    marginTop: 15,
-    // marginHorizontal:10,
-    alignSelf: 'center',
-  },
+
 });

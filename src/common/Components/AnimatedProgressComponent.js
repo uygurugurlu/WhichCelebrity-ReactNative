@@ -10,17 +10,16 @@ class AnimatedProgressComponent extends Component {
   render() {
     const {fill} = this.props;
     return (
-      <View style={{marginLeft: 10}}>
+      <View>
         <AnimatedCircularProgress
           size={ICON_CONTAINER_SIZE / 1.25}
           width={0}
           fill={fill}
           duration={DURATION}
           tintColor="red"
-          style={styles.iconWrapperStyle}
-          backgroundColor="#dddddd">
+          style={styles.iconWrapperStyle}>
           {(fill) => (
-            <Text style={styles.percentageTextStyle}>% {Math.ceil(fill)}</Text>
+            <Text style={styles.percentageTextStyle}>{Math.ceil(fill)}%</Text>
           )}
         </AnimatedCircularProgress>
       </View>
@@ -33,10 +32,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    height: 35
   },
   percentageTextStyle: {
-    fontSize: 16,
-    fontWeight: '500',
+    color:'white',
+    fontSize: 20,
+    fontWeight: '900',
   },
 });
 export default AnimatedProgressComponent;

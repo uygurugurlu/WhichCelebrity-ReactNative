@@ -521,7 +521,7 @@ class HomePage extends Component {
             <View style={styles.cropButtonContainer}>
             <TouchableOpacity
               style={styles.cropWrapper}
-              onPress={() => this.cropViewRef.current.saveImage(true,90)}>
+              onPress={() => this.cropViewRef.current.saveImage(true,30)}>
               <Icon color={'white'} name={'check'}/>
             </TouchableOpacity>
             </View>

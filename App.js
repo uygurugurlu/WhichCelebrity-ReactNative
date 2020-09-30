@@ -8,7 +8,7 @@ import {Alert, StatusBar} from 'react-native';
 import admob, {MaxAdContentRating} from '@react-native-firebase/admob';
 import {configureFontAwesomePro} from 'react-native-fontawesome-pro';
 import axios from 'axios';
-
+import {header_background_color} from './src/common/ColorIndex';
 configureFontAwesomePro();
 const store = configureStore();
 
@@ -108,7 +108,10 @@ function App() {
   return (
     <Provider store={store}>
       <SwitchNavigation />
-      <StatusBar barStyle="light-content" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={header_background_color}
+      />
     </Provider>
   );
 }
