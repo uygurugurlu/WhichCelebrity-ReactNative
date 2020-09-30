@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
 import {
   buttons_height,
@@ -22,6 +22,27 @@ export const styles = StyleSheet.create({
     flex: 2.5,
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    backgroundColor:'red',
+  },
+  topLabelStyle: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'center',
+    marginHorizontal:30,
+  },
+  cameraContainer: {
+    flex: 2.5,
+    justifyContent: 'center',
+    backgroundColor:'yellow',
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection:'row',
+    justifyContent:'space-between',
+    marginHorizontal: 30,
+    alignItems:'center',
+    backgroundColor:'blue',
   },
   selectCategoryContainer: {
     height: 40,
@@ -44,266 +65,55 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cameraContainer: {
-    flex: 2.5,
-    justifyContent: 'center',
-  },
-  cameraImageContainer: {
-    alignSelf: 'center',
-    height: 200,
-    width: 200,
-    backgroundColor: 'red',
-    borderRadius: 1000,
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  cameraImage: {
-    height: 200,
-    width: 200,
-    resizeMode: 'cover',
-    position: 'absolute',
-    alignSelf: 'center',
-    justifyContent: 'center',
-  },
-  cameraWrapper: {
-    height: 199,
-    width: 199,
-    position: 'absolute',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'blue',
-    borderRadius: 1000,
-    overflow: 'hidden',
-  },
-  cameraIcon: {
-    height: 190,
-    width: 190,
-    resizeMode: 'cover',
-    position: 'absolute',
-    alignSelf: 'center',
-    justifyContent: 'center',
-  },
-  cameraButton: {
-    alignSelf: 'center',
-    height: 190,
-    width: 190,
-    borderRadius: 1000,
-    margin: 30,
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  headerRightButtonStyle: {
-    height: 35,
-    width: 35,
-    marginRight: 15,
-  },
-  topLabelStyle: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  button: {
-    height: 40,
-    justifyContent: 'center',
-    width: DEVICE_WIDTH - 60,
-    alignSelf: 'center',
-    borderRadius: 20,
-    backgroundColor: '#284077',
-  },
-  buttonText: {
-    color: 'white',
-    justifyContent: 'center',
-    textAlign: 'center',
-    fontWeight: '800',
-  },
-  //Options Modal Styles
-  settingsModalContainer: {
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: DEVICE_WIDTH - 20,
-    backgroundColor: 'rgb(240,240,240)',
-    borderRadius: 15,
-  },
-  settingsMainButtons: {
-    alignItems: 'center',
-    height: 50,
-    justifyContent: 'center',
-    width: DEVICE_WIDTH - 20,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgb(100,100,100)',
-    flexDirection: 'row',
-  },
-  settingsButton: {
-    textAlign: 'center',
-    color: '#1a84f4',
-    fontSize: 19,
-  },
-  cancelButtonContainer: {
-    alignSelf: 'center',
-    marginTop: 10,
-    marginBottom: 10,
-    height: 50,
-    justifyContent: 'center',
-    width: DEVICE_WIDTH - 20,
-    borderRadius: 15,
-    backgroundColor: 'rgb(240,240,240)',
-  },
-  cancelButton: {
-    textAlign: 'center',
-    color: 'red',
-    fontSize: 19,
-  },
-  // Category Modal Styles
-  modalBack: {
-    backgroundColor: '#00000080',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  bottomModal: {
-    justifyContent: 'flex-end',
-    flex: 1,
-  },
-  modalContainer: {
-    backgroundColor: 'rgb(245,245,245)',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  modalHeader: {
-    height: 55,
-    backgroundColor: '#284077',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    flex: 10,
-    justifyContent: 'center',
-  },
-  modalHeaderTitle: {
-    flex: 8,
-    color: 'white',
-    alignSelf: 'center',
-    paddingVertical: 10,
-    paddingLeft: 40,
-    textAlign: 'center',
-  },
-  ModalCloseButton: {
-    alignSelf: 'center',
-    paddingHorizontal: 10,
-  },
-  modalItem: {
-    borderBottomWidth: 0.5,
-    borderColor: 'rgb(150,150,150)',
-  },
-  categoryListContainer: {
-    height: Math.round(DEVICE_HEIGHT) * 0.5,
-    marginBottom: 30,
-  },
-  categoryListContainerNoHeight: {
-    marginBottom: 30,
-  },
-  categoriesListText: {
-    textAlign: 'center',
-    paddingVertical: 10,
-  },
-
-  cropView: {
-    flex: 5,
-  },
-  cropButtonsContainer: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-
-  cropButtonContainer: {
-    flex: 0.5,
-    alignItems:'center',
-    justifyContent:'center',
-  },
-  cropWrapper: {
-    justifyContent:'center',
-    alignItems:'center',
-  },
-  cropButtons: {
-    height: 70,
-    width: 70,
-  }
-
-  ////////////////////////////
-  /*
-  topLabel2ContainerStyle: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: DEVICE_WIDTH * 0.9,
-  },
   labelsContainerStyle: {
-    backgroundColor:'red',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: DEVICE_HEIGHT * 0.025,
   },
-  headerTextStyle: {
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 15,
-    color: '#123456',
-  },
-  topLabelStyle: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
+
   topLabel2Style: {
     color: '#123456',
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '500',
-    textAlign: 'left',
-    width: DEVICE_WIDTH * 0.7 - 5,
-    height: DEVICE_HEIGHT * 0.071,
-  },
-  topLabelSelectedStyle: {
-    color: '#123456',
-    fontSize: 18,
-    fontWeight: '500',
+    marginTop: 7.5,
     textAlign: 'center',
   },
-  categoryContainerStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: DEVICE_HEIGHT * 0.075,
-    padding: 10,
-    borderWidth: 0.5,
-    borderColor: '#dedede',
-
-    backgroundColor: '#fff',
+  tooltipTextStyle: {
+    color: '#123456',
+    fontSize: 15,
+    fontWeight: '500',
+    marginTop: 5,
+    textAlign: 'center',
+  },
+  selectedLabelTextStyle: {
+    color: '#123456',
+    fontSize: 17,
+    fontWeight: '500',
+    marginTop: 7.5,
+    textAlign: 'center',
+  },
+  selectedCelebrityTextStyle: {
+    color: 'red',
+    fontSize: 19,
+    fontWeight: '600',
+    marginTop: 7.5,
+    textAlign: 'center',
   },
   resultButtonStyle: {
-    width: DEVICE_WIDTH * 0.8,
+    width: DEVICE_WIDTH * 0.435,
     height: buttons_height,
-    borderRadius: 5,
+    borderRadius: 2.5,
     fontWeight: '600',
     backgroundColor: button_colors,
     marginBottom: 25,
   },
-  cancelButtonStyle: {
-    width: DEVICE_WIDTH * 0.8,
+  randomButtonStyle: {
+    width: DEVICE_WIDTH * 0.435,
     height: buttons_height,
-    borderRadius: 5,
+    borderRadius: 2.5,
     fontWeight: '600',
     backgroundColor: button_colors,
-    marginVertical: 20,
+    marginBottom: 25,
   },
   modalTextStyle: {
     fontSize: 18,
@@ -367,38 +177,92 @@ export const styles = StyleSheet.create({
     backgroundColor: '#f5bc1a',
   },
   scrollViewStyle: {
-    width: DEVICE_WIDTH * 0.9 + 15,
+    width: DEVICE_WIDTH * 0.95,
     backgroundColor: page_body_background_color,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   scrollTextStyle: {
-    fontSize: 18,
-    fontWeight: '500',
+    fontSize: 17,
+    fontWeight: '600',
   },
-  scrollTextContainer: {
+  scrollItemContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#fff',
-    width: DEVICE_WIDTH * 0.8,
+    width: DEVICE_WIDTH * 0.95,
+    paddingVertical: 10,
 
-    borderTopWidth: 0.45,
-    borderLeftWidth: 0.45,
-    borderRightWidth: 0.45,
-    borderColor: '#dedede',
-    padding: 10,
+    borderTopWidth: 0.75,
+    borderLeftWidth: 1.2,
+    borderRightWidth: 1.2,
+    borderColor: '#dedddd',
   },
-  cancelIconContainerStyle: {
+  celebrityPhotoStyle: {
+    height: 70,
+    width: 70,
+    borderRadius: 1,
+    resizeMode: 'contain',
+  },
+
+
+  //celebrities style
+  modalBack: {
+    backgroundColor: '#00000080',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  bottomModal: {
+    justifyContent: 'flex-end',
+    flex: 1,
+  },
+
+  modalContainer: {
+    backgroundColor: 'rgb(245,245,245)',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  modalHeader: {
+    height: 55,
+    backgroundColor: '#284077',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    flex: 10,
+    justifyContent: 'center',
+  },
+  modalHeaderTitle: {
+    flex: 8,
+    color: 'white',
     alignSelf: 'center',
-    backgroundColor: 'gray',
-    borderRadius: 12.5,
+    paddingVertical: 10,
+    paddingLeft: 40,
+    textAlign: 'center',
   },
-  headerRightButtonStyle: {
-    height: 35,
-    width: 35,
-    marginRight: 15,
+  ModalCloseButton: {
+    alignSelf: 'center',
+    paddingHorizontal: 10,
   },
-  */
+  modalItem: {
+    borderBottomWidth: 0.5,
+    borderColor: 'rgb(150,150,150)',
+  },
+  categoryListContainer: {
+    height: Math.round(Dimensions.get('window').height) * 0.5,
+    marginBottom: 30,
+  },
+  categoryListContainerNoHeight: {
+    marginBottom: 30,
+  },
+  categoriesListText: {
+    textAlign: 'center',
+    marginHorizontal: 10,
+  },
 });

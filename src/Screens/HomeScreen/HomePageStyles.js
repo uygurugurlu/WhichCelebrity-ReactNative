@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
     flex: 2.5,
     justifyContent: 'space-evenly',
     alignItems: 'center',
+  
   },
   selectCategoryContainer: {
     height: 40,

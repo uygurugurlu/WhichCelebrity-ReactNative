@@ -38,6 +38,7 @@
     "search_male_celebrities": "Erkek ünlülerde ara",
     "search_female_celebrities": "Kadın ünlülerde ara",
     "top_label": "Hangi ünlüye benzediğini öğren",
+    "select_celebrity": "Bir ünlü seçin",
     "result_not_found": "Sonuç bulunamadı",
     "face_not_found": "Seçtiğin fotoğrafta yüz bulunamadı",
     "more_than_one_face_found": "Lütfen seçtiğin fotoğrafta sadece tek bir yüz olduğundan emin ol",
