@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     borderColor: 'rgb(150,150,150)',
   },
   cameraImage: {
-    resizeMode: 'cover',
+    resizeMode: 'contain',
     position: 'absolute',
     alignSelf: 'center',
     justifyContent: 'center',
@@ -96,6 +96,7 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
     margin: 30 - CONTAINER_MARGIN,
     justifyContent: 'space-evenly',
+    marginBottom: 35,
   },
   resultLabelStyle: {
     fontSize: 18,

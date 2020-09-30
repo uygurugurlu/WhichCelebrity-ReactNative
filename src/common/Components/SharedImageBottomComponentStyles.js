@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.95,
-    height: 120,
   },
   turkaiRowContainerStyle: {
     flexDirection: 'row',
@@ -32,7 +31,7 @@ export const styles = StyleSheet.create({
   hikdemisTextStyle: {
     fontSize: 18,
     fontWeight: '500',
-    color: 'rgba(47,47,49,0.72)',
+    color: 'white',
     marginLeft: 5,
   },
   appLogoImageStyle: {

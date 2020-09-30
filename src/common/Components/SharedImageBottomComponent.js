@@ -20,10 +20,11 @@ class SharedImageBottomComponent extends Component {
           <Text style={styles.hikdemisTextStyle}>{translate('app_name')}</Text>
         </View>
 
-        <View style={styles.turkaiRowContainerStyle}>
+        {/*<View style={styles.turkaiRowContainerStyle}>
           <Image source={APP_STORE_ICON} style={styles.storeImageStyle} />
           <Image source={PLAY_STORE_ICON} style={styles.storeImageStyle} />
         </View>
+        */}
       </View>
     );
   }

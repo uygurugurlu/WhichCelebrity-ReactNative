@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {translate} from '../../I18n';
 import {DEVICE_WIDTH} from '../Constants';
-import {buttons_height} from '../ColorIndex';
+import {buttons_height, blue_text_color} from '../ColorIndex';
 
 class ResultButtonsRow extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class ResultButtonsRow extends Component {
   }
 
   render() {
-    const {share_active, showActionSheet, goBack} = this.props;
+    const {share_active, optionsModalVisible, goBack} = this.props;
     return (
       <View
         style={styles.buttonsRowContainerStyle}
@@ -27,7 +27,7 @@ class ResultButtonsRow extends Component {
           title={translate('result.share')}
           buttonStyle={styles.shareButtonStyle}
           titleStyle={{fontSize: 18, fontWeight: '600'}}
-          onPress={showActionSheet}
+          onPress={optionsModalVisible}
         />
       </View>
     );
@@ -43,17 +43,15 @@ const styles = StyleSheet.create({
   resultButtonStyle: {
     width: DEVICE_WIDTH * 0.38,
     height: buttons_height,
-    borderRadius: 10,
-    fontWeight: '600',
-    backgroundColor: '#123456',
+    borderRadius: 40,
+    backgroundColor: blue_text_color,
     paddingVertical: 2.5,
   },
   shareButtonStyle: {
     width: DEVICE_WIDTH * 0.38,
     height: buttons_height,
-    borderRadius: 10,
-    fontWeight: '600',
-    backgroundColor: '#123456',
+    borderRadius: 40,
+    backgroundColor: blue_text_color,
     marginLeft: DEVICE_WIDTH * 0.05,
     paddingVertical: 2.5,
   },

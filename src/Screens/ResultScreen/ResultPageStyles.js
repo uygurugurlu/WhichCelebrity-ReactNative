@@ -22,8 +22,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  scrollViewStyle: {
-  },
+  scrollViewStyle: {},
   viewShotImageStyle: {
     width: '100%',
     height: '100%',
@@ -33,7 +32,7 @@ export const styles = StyleSheet.create({
   },
   bottomContainer: {
     flex: 0.1,
-    justifyContent:'center',
+    justifyContent: 'center',
   },
   iconContainerStyle: {
     flexDirection: 'row',
@@ -107,5 +106,55 @@ export const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginLeft: 5,
+  },
+  // Category Modal Styles
+  modalBack: {
+    backgroundColor: '#00000080',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  bottomModal: {
+    justifyContent: 'flex-end',
+    flex: 1,
+  },
+  settingsModalContainer: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    backgroundColor: 'rgb(240,240,240)',
+    borderRadius: 15,
+  },
+  settingsMainButtons: {
+    alignItems: 'center',
+    height: 50,
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgb(100,100,100)',
+    flexDirection: 'row',
+  },
+  settingsButton: {
+    textAlign: 'center',
+    color: '#1a84f4',
+    fontSize: 19,
+  },
+  cancelButtonContainer: {
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    height: 50,
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    borderRadius: 15,
+    backgroundColor: 'rgb(240,240,240)',
+  },
+  cancelButton: {
+    textAlign: 'center',
+    color: 'red',
+    fontSize: 19,
   },
 });

@@ -122,11 +122,12 @@ class HomePage extends Component {
     this.props.navigation.setOptions({
       title: translate('app_name'),
       headerRight: () => (
-        <TouchableOpacity onPress={this.NavigateToSavingsPage}>
-          <Image
-            source={RIGHT_HEADER_ICON}
-            style={styles.headerRightButtonStyle}
-          />
+        <TouchableOpacity style={{justifyContent:'center'}} onPress={this.NavigateToSavingsPage}>
+          <Icon
+            name={'photo-library'} 
+            color={'white'}
+            style={{height: 35, width: 35, marginRight: 15, alignSelf:'center'}}
+            />
         </TouchableOpacity>
       ),
     });

@@ -7,7 +7,10 @@ import {
   PermissionsAndroid,
   Animated,
   ImageBackground,
+  Modal,
+  Text,
 } from 'react-native';
+import {Icon} from 'react-native-elements';
 import {styles} from './ResultPageStyles';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
@@ -47,6 +50,7 @@ class ResultPage extends Component {
       isVisible: false,
       swiper_index: 0,
       captured_image: '',
+      optionsModalVisible: false,
     };
   }
 
@@ -58,17 +62,17 @@ class ResultPage extends Component {
           onPress={() =>
             this.props.navigation.navigate('SavingsPage', {tab_index: 0})
           }>
-          <Image
-            source={RIGHT_HEADER_ICON}
+          <Icon
+            name={'photo-library'} 
             style={{height: 35, width: 35, marginRight: 15}}
-          />
+            />
+
         </TouchableOpacity>
       ),
     });
   };
 
   takeScreenShot = async (index) => {
-    await this.actionSheet.hide();
     const data = await PerformTimeConsumingTask(50);
     await this.setState({share_active: true});
     if (data !== null) {
@@ -87,7 +91,6 @@ class ResultPage extends Component {
       uri,
       this.HasAndroidPermission,
       this.props.trigger_savings_page,
-      this.actionSheet.hide,
     );
   };
 
@@ -103,7 +106,6 @@ class ResultPage extends Component {
         console.log('share response: ', res);
         await this.setState({share_active: false});
         this.ref2.zoomInUp(ANIMATION_DURATION);
-        await this.actionSheet.hide();
         ShareAppEvent();
       })
       .catch((err) => {
@@ -111,7 +113,6 @@ class ResultPage extends Component {
         err && console.log(err);
         this.setState({share_active: false});
         this.ref2.zoomInUp(ANIMATION_DURATION);
-        this.actionSheet.hide();
       });
   };
 
@@ -138,7 +139,6 @@ class ResultPage extends Component {
         console.log('share response: ', res);
         await this.setState({share_active: false});
         this.ref2.zoomInUp(ANIMATION_DURATION);
-        await this.actionSheet.hide();
         ShareResultEvent();
       })
       .catch((err) => {
@@ -146,7 +146,6 @@ class ResultPage extends Component {
         crashlytics().recordError(err);
         this.setState({share_active: false});
         this.ref2.zoomInUp(ANIMATION_DURATION);
-        this.actionSheet.hide();
       });
   };
 
@@ -208,7 +207,7 @@ class ResultPage extends Component {
 
   WhenTheLanguageChanged = () => this.forceUpdate();
 
-  showActionSheet = () => this.actionSheet.show();
+  showActionSheet = () => this.setState({optionsModalVisible:true});
 
   getActionSheetRef = (ref) => (this.actionSheet = ref);
 
@@ -244,22 +243,31 @@ class ResultPage extends Component {
                 <Swiper
                   autoplay={false}
                   index={this.state.swiper_index}
-                  showsButtons={false}
+                  showsButtons={true}
                   dotStyle={{
-                    height: 5,
-                    width: 5,
+                    height: 10,
+                    width: 10,
                     position: 'relative',
-                    bottom: -DEVICE_HEIGHT * 0.045,
+                    bottom: -DEVICE_HEIGHT * 0.03,
                   }}
                   activeDotStyle={{
-                    height: 5,
-                    width: 5,
+                    height: 10,
+                    width: 10,
                     position: 'relative',
-                    bottom: -DEVICE_HEIGHT * 0.045,
+                    bottom: -DEVICE_HEIGHT * 0.03,
                   }}
-                  activeDotColor={'#1490E3'}
-                  dotColor={'#2a2a2a'}
-                  loop={false}>
+                  activeDotColor={'#562068'}
+                  dotColor={'white'}
+                  loop={false}
+                  buttonWrapperStyle={{
+                    backgroundColor: 'transparent',
+                    flexDirection: 'row',
+                    flex: 1,
+                    marginTop: 15,
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-end',
+                    paddingHorizontal: 30,
+                  }}>
                   <ResultPageBody
                     userAvatarSource={userAvatarSource}
                     titleIndex={0}
@@ -285,7 +293,7 @@ class ResultPage extends Component {
                   easing={'linear'}>
                   <ResultButtonsRow
                     share_active={share_active}
-                    showActionSheet={this.showActionSheet}
+                    optionsModalVisible={this.showActionSheet}
                     goBack={this.GoBack}
                   />
                 </Animatable.View>
@@ -297,7 +305,79 @@ class ResultPage extends Component {
                 </Animatable.View>
               </View>
             </ViewShot>
-            {this.GetActionSheet()}
+            {
+              //Options Modal Start
+            }
+            <Modal
+              visible={this.state.optionsModalVisible}
+              transparent={true}
+              animationType="slide">
+              <TouchableOpacity
+                style={styles.modalBack}
+                onPress={() => this.setState({optionsModalVisible: false})}
+              />
+
+              <View style={styles.bottomModal}>
+                <View style={styles.settingsModalContainer}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.setState({optionsModalVisible: false}, () =>
+                      this.ActionHandler(0),
+                      )
+                    }
+                    style={styles.settingsMainButtons}>
+                    <Text style={styles.settingsButton}>
+                      {translate('image_picker.save_result')}
+                    </Text>
+                    <Icon
+                      name="save"
+                      color="#1a84f4"
+                      style={{margin: 4, alignSelf: 'center'}}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.setState({optionsModalVisible: false}, () =>
+                      this.ActionHandler(1),
+                      )
+                    }
+                    style={styles.settingsMainButtons}>
+                    <Text style={styles.settingsButton}>
+                      {translate('image_picker.share_result')}
+                    </Text>
+                    <Icon
+                      name="share"
+                      color="#1a84f4"
+                      style={{margin: 4, alignSelf: 'center'}}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.setState({optionsModalVisible: false}, () =>
+                      this.ActionHandler(2),
+                      )
+                    }
+                    style={styles.settingsMainButtons}>
+                    <Text style={styles.settingsButton}>
+                      {translate('image_picker.share_app')}
+                    </Text>
+                    <Icon
+                      name="mobile-screen-share"
+                      color="#1a84f4"
+                      style={{margin: 4, alignSelf: 'center'}}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                  onPress={() => this.setState({optionsModalVisible: false})}
+                  style={styles.cancelButtonContainer}>
+                  <Text style={styles.cancelButton}>İptal Et</Text>
+                </TouchableOpacity>
+              </View>
+            </Modal>
+            {
+              //Options Modal End
+            }
           </Animatable.View>
         </ImageBackground>
       </View>
