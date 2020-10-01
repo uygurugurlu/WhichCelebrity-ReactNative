@@ -7,6 +7,7 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native';
+import {translate} from '../../I18n';
 
 export default class Home extends Component {
   render() {
@@ -18,7 +19,9 @@ export default class Home extends Component {
           <ImageBackground style={styles.backImage} source={this.props.image}>
             <View style={styles.buttonContainer}>
               <View style={styles.button}>
-                <Text style={styles.buttonText}>Click Here!</Text>
+                <Text style={styles.buttonText}>
+                  {translate('dashboard.click_here')}
+                </Text>
                 <Image
                   source={require('../../../src/assets/icons/click-icon.png')}
                   style={styles.clickIcon}
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
   },
   optionsCard: {
     marginVertical: 10,
-    marginHorizontal: 30, 
+    marginHorizontal: 30,
     flex: 0.9,
     maxHeight: 300,
     borderRadius: 20,

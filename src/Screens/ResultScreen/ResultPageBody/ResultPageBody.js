@@ -28,7 +28,6 @@ const categoryIcon = require('../../../assets/icons/categoryIcon.png');
 const nationalityIcon = require('../../../assets/icons/nationalityIcon.png');
 const zodiacIcon = require('../../../assets/icons/zodiacIcon.png');
 
-
 class ResultPageBody extends Component {
   constructor(props) {
     super(props);
@@ -251,32 +250,37 @@ class ResultPageBody extends Component {
               <Text style={styles.titleTextStyle}>{title}</Text>
             </View>
             <View style={styles.animatedSimilarityContainer}>
-            <AnimatedProgressComponent fill={similarity} />
+              <AnimatedProgressComponent fill={similarity} />
 
-            <AnimatedProgressBar fill={similarity} margin={30 - CONTAINER_MARGIN}/>
+              <AnimatedProgressBar
+                fill={similarity}
+                margin={30 - CONTAINER_MARGIN}
+              />
             </View>
-
           </View>
-          
+
           <View style={styles.labelContainerStyle}>
             <ResultLineComponent
               leftText={translate('result.celebrity') + ': '}
               rightText={name}
-              icon= {celebrityIcon}
+              icon={celebrityIcon}
             />
 
             <View
-              display={hide_age ? 'none' : 'flex'}>
-              <ResultLineComponent
-                leftText={translate('result.birthday') + ': '}
-                rightText={
-                  birthday + ', ' + age + ' ' + translate('result.years')
-                }
-                icon= {calendarIcon}
-
-              />
-
-              <View display={grave_flex ? 'flex' : 'none'}>
+              display={hide_age ? 'none' : 'flex'}
+              style={{flexDirection: 'row'}}>
+              <View style={{flex: 1}}>
+                <ResultLineComponent
+                  leftText={translate('result.birthday') + ': '}
+                  rightText={
+                    birthday + ', ' + age + ' ' + translate('result.years')
+                  }
+                  icon={calendarIcon}
+                />
+              </View>
+              <View
+                style={{position: 'absolute', right: 10}}
+                display={grave_flex ? 'flex' : 'none'}>
                 <Image style={styles.graveIconStyle} source={HEADSTONE2} />
               </View>
             </View>
@@ -284,23 +288,19 @@ class ResultPageBody extends Component {
             <ResultLineComponent
               leftText={translate('result.category') + ': '}
               rightText={category}
-              icon= {categoryIcon}
-
+              icon={categoryIcon}
             />
 
             <ResultLineComponent
               leftText={translate('result.nationality') + ': '}
               rightText={nationality}
-              icon= {nationalityIcon}
-
+              icon={nationalityIcon}
             />
 
             <ResultLineComponent
               leftText={translate('result.zodiac_sign') + ': '}
               rightText={star_sign}
-              icon= {zodiacIcon}
-              
-
+              icon={zodiacIcon}
             />
           </View>
 

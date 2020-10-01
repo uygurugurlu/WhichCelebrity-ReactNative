@@ -152,9 +152,8 @@ export const styles = StyleSheet.create({
     color: '#393636',
   },
   graveIconStyle: {
-    height: 30,
-    width: 30,
-    marginLeft: 5,
+    height: DEVICE_HEIGHT * 0.037,
+    width: DEVICE_HEIGHT * 0.037,
   },
 
 });

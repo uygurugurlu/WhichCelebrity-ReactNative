@@ -11,21 +11,24 @@ import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
   shadow,
-  WHICHCELEBRITYBACK,
-  CALCCELEBRITYBACK,
+  HOMECARD1,
+  HOMECARD2,
+  HOMECARD1TR,
+  HOMECARD2TR,
   IMAGEBACK,
 } from '../../common/Constants';
 import {styles} from './DashboardStyles';
 import HomeCard from '../../common/Components/DashboardCard.js';
 import {translate} from '../../I18n';
+import {connect} from 'react-redux';
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   Navigate = (index) => {
     if (index === 1) {
@@ -34,7 +37,20 @@ class Dashboard extends Component {
       return 'Celebrity_Selection_Screen';
     }
   };
-
+  getBackImages(index) {
+    if (index == 1) {
+      if (this.props.language.languageTag == 'tr') {
+        return HOMECARD1TR;
+      }
+      else return HOMECARD1;
+    }
+    if( index == 2) {
+      if (this.props.language.languageTag == 'tr') {
+        return HOMECARD2TR;
+      }
+      else return HOMECARD2;
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -44,7 +60,7 @@ class Dashboard extends Component {
               {translate('dashboard.first_label')}
             </Text>
             <HomeCard
-              image={WHICHCELEBRITYBACK}
+              image={this.getBackImages(1)}
               navigation={this.props.navigation}
               route={this.Navigate(1)}></HomeCard>
           </View>
@@ -54,7 +70,7 @@ class Dashboard extends Component {
             </Text>
 
             <HomeCard
-              image={CALCCELEBRITYBACK}
+              image={this.getBackImages(2)}
               navigation={this.props.navigation}
               route={this.Navigate(2)}></HomeCard>
           </View>
@@ -91,5 +107,9 @@ class Dashboard extends Component {
     );
   }
 }
-
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    language: state.mainReducer.language,
+  };
+};
+export default connect(mapStateToProps, null)(Dashboard);

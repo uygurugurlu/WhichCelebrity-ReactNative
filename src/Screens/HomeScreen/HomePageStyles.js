@@ -4,6 +4,7 @@ import {
   buttons_height,
   button_colors,
   page_body_background_color,
+  blue_text_color,
 } from '../../common/ColorIndex';
 
 const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.4;
@@ -114,7 +115,7 @@ export const styles = StyleSheet.create({
     width: DEVICE_WIDTH - 60,
     alignSelf: 'center',
     borderRadius: 20,
-    backgroundColor: '#284077',
+    backgroundColor: blue_text_color,
   },
   buttonText: {
     color: 'white',

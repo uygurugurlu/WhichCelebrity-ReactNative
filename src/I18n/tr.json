@@ -13,18 +13,18 @@
     "share_result": "Sonucu Paylaş"
   },
   "famous_compare": {
-    "compare_header": "Bir ünlü seç ve ne kadar benzediğini öğren yada ",
+    "compare_header": "Bir ünlü seç ve ne kadar benzediğini öğren yada Rastgele Karşılaştır' butonuna bas",
     "press_random": "'Rastgele Karşılaştır' butonuna bas",
     "tooltip_text": "'Rastgele Karşılaştır' butonuna basarak yaklaşık 200B ünlü arasından rastgele bir ünlüye ne kadar benzediğini öğrenebilirsin.",
     "result_label": "Seni en çok benzettiğimiz ünlü: ",
     "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
   },
   "home": {
-    "get_result": "Sonucu Gör veya Rastgele Karşılaştır",
+    "get_result": "Sonucu Gör",
     "random_compare": "Rastgele Karşılaştır",
     "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz.",
     "selected_celebrity": "Seçtiğiniz ünlü",
-    "select_celebrity": "Ünlülerde ara ... ",
+    "search_celebrity": "Ünlülerde ara ... ",
     "select_another_celebrity": "Başka bir ünlü seç ... ",
     "select_warning": "Lütfen ismini yazarak bir ünlü seçiniz.",
     "avatar_warning": "Lütfen fotoğraf eklediğinizden emin olun!",
@@ -34,6 +34,7 @@
     "cancel": "Vazgeç",
     "select_photo": "Fotoğraf seçiniz",
     "search_gender": "Cinsiyet seçenği",
+    
     "search_for_all": "Kadın ve Erkek ünlülerde ara",
     "search_male_celebrities": "Erkek ünlülerde ara",
     "search_female_celebrities": "Kadın ünlülerde ara",
@@ -84,7 +85,8 @@
   },
   "dashboard": {
     "first_label": "Hangi ünlüye benzediğini öğren",
-    "second_label": "Bir ünlü seç ve sana ne kadar benzediğini öğren"
+    "second_label": "Bir ünlü seç ve sana ne kadar benzediğini öğren",
+    "click_here": "Buraya Tıklayın!",
   },
   "update": {
     "update": "Güncelle",

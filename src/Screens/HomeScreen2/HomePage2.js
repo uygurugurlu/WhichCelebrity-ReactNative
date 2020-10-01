@@ -106,7 +106,6 @@ class HomePage2 extends Component {
 
   componentWillMount() {
     this.props.navigation.setOptions({
-      title: translate('app_name'),
       headerRight: () => (
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('SavingsPage')}>
@@ -440,6 +439,7 @@ class HomePage2 extends Component {
     this.getInitialCelebrities();
   }
   render() {
+    var x,y,width,height;
     const {userAvatarSource} = this.props;
     const {
       search,
@@ -496,8 +496,11 @@ class HomePage2 extends Component {
                 </View>
               </TouchableHighlight>
               <View style={styles.celebritySelectedRow}>
-              <View style={styles.celebritySelectedImageContainer}>
-                <Image source={{uri:this.state.celebrity_photo}} style={styles.celebritySelectedImage}/>
+              <View style={styles.celebritySelectedImageContainer} onLayout={(e) => {width= e.nativeEvent.layout.width; height= e.nativeEvent.layout.height}}>
+              <View style={styles.celebritySelectedImageWrapper}>
+              <Image source={{uri:this.state.celebrity_photo}} style={[styles.celebritySelectedImage, {width:width, height:height}]}/>
+
+              </View>
               </View>
               <View style={styles.celebritySelectedName}>
                 <Text style={styles.celebritySelectedNameText}>{this.state.celebrity_name}</Text>
@@ -556,7 +559,7 @@ class HomePage2 extends Component {
               <View style={styles.modalContainer}>
                 <View style={styles.modalHeader}>
                   <View style={styles.headerContainer}>
-                    <Text style={styles.modalHeaderTitle}>Ünlü Seçin</Text>
+                    <Text style={styles.modalHeaderTitle}>{translate('home.select_celebrity')}</Text>
                     <TouchableOpacity
                       style={styles.ModalCloseButton}
                       onPress={() =>
@@ -571,7 +574,7 @@ class HomePage2 extends Component {
                   <SearchBar
                     onChangeText={(e) => this.updateSearch(e)}
                     value={this.state.search}
-                    placeholder="Ünlü adı..."
+                    placeholder={translate("home.search_celebrity")}
                     lightTheme
                     round
                   />
@@ -604,10 +607,12 @@ class HomePage2 extends Component {
                               marginBottom: 7,
                             }}>
                             <View style={styles.modalItemContainer}>
+                              <View style={styles.modalImageContainer}>
                               <Image
                                 source={{uri: item.photo}}
                                 style={styles.modalImage}
                               />
+                              </View>
                               <Text style={styles.categoriesListText}>
                                 {item.name}
                               </Text>

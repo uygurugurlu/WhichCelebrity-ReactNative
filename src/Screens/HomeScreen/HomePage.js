@@ -37,7 +37,6 @@ import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
 import {GetCategories} from '../../common/Functions/Endpoints/GetCategories';
 import {Icon} from 'react-native-elements';
 import RNFS from 'react-native-fs';
-
 import {
   DEVICE_HEIGHT,
   DOWN_ICON,
@@ -86,6 +85,7 @@ class HomePage extends Component {
       result_loading: false,
       categories_visibility: false,
       genders_visibility: false,
+      genderText: '',
       categories: [],
       selected_category_name: '',
       selected_category_id: -1,
@@ -120,7 +120,6 @@ class HomePage extends Component {
     }
 
     this.props.navigation.setOptions({
-      title: translate('app_name'),
       headerRight: () => (
         <TouchableOpacity style={{justifyContent:'center'}} onPress={this.NavigateToSavingsPage}>
           <Icon
@@ -365,15 +364,15 @@ class HomePage extends Component {
     this.FilterItems(value);
   };
 
-  SelectGender = (gender) => {
-    this.setState({gender: gender});
+  SelectGender = (gender, genderText) => {
+    this.setState({gender: gender, genderText: genderText});
   };
 
   render() {
     let genders = [
-      {name: translate('home.search_for_all'), id: 1},
-      {name: translate('home.search_male_celebrities'), id: 2},
-      {name: translate('home.search_female_celebrities'), id: 3},
+      {label: translate('home.search_for_all'), id: 1, type:null},
+      {label: translate('home.search_male_celebrities'), id: 2, type:'male'} ,
+      {label: translate('home.search_female_celebrities'), id: 3, type:'female'},
     ];
     const {userAvatarSource} = this.props;
     const {
@@ -412,9 +411,9 @@ class HomePage extends Component {
               onPress={() => this.setState({genders_visibility: true})}>
               <View style={styles.selectCategoryWrapper}>
                 <Text style={styles.selectCategoryText}>
-                  {!this.state.gender
+                  {!this.state.genderText
                     ? translate('home.search_for_all')
-                    : this.state.gender}
+                    : this.state.genderText}
                 </Text>
                 <Icon
                   name="keyboard-arrow-right"
@@ -462,7 +461,7 @@ class HomePage extends Component {
                     )
                   }
                   style={styles.settingsMainButtons}>
-                  <Text style={styles.settingsButton}>Kamerayı aç</Text>
+                  <Text style={styles.settingsButton}>{translate('image_picker.use_camera')}</Text>
                   <Icon
                     name="camera-alt"
                     color="#1a84f4"
@@ -476,7 +475,7 @@ class HomePage extends Component {
                     )
                   }
                   style={styles.settingsMainButtons}>
-                  <Text style={styles.settingsButton}>Galeriden seç</Text>
+                  <Text style={styles.settingsButton}>{translate('image_picker.photo_library')}</Text>
                   <Icon
                     name="photo-library"
                     color="#1a84f4"
@@ -487,7 +486,7 @@ class HomePage extends Component {
               <TouchableOpacity
                 onPress={() => this.setState({optionsModalVisible: false})}
                 style={styles.cancelButtonContainer}>
-                <Text style={styles.cancelButton}>İptal Et</Text>
+                <Text style={styles.cancelButton}>{translate('image_picker.cancel')}</Text>
               </TouchableOpacity>
             </View>
           </Modal>
@@ -651,7 +650,7 @@ class HomePage extends Component {
                         <TouchableOpacity
                           style={{
                             backgroundColor:
-                              this.state.gender == item.name
+                              this.state.gender == item.type
                                 ? '#4598e6'
                                 : '#fff',
                           }}
@@ -659,11 +658,11 @@ class HomePage extends Component {
                             this.setState({
                               genders_visibility: false,
                             });
-                            this.SelectGender(item.name);
+                            this.SelectGender(item.type, item.label);
                           }}>
                           <View style={styles.modalItem}>
                             <Text style={styles.categoriesListText}>
-                              {item.name}
+                              {item.label}
                             </Text>
                           </View>
                         </TouchableOpacity>
@@ -677,7 +676,6 @@ class HomePage extends Component {
           {
             //Gender Modal End
           }
-          {this.GetActionSheet()}
           {<LoadingAnimationModal isModalVisible={this.state.result_loading} />}
         </ImageBackground>
       </View>

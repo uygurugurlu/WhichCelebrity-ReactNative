@@ -80,24 +80,33 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomWidth:1,
-    borderBottomColor: 'rgb(180,180,180)'
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgb(180,180,180)',
   },
   celebritySelectedRow: {
-    flexDirection:'row',
+    flexDirection: 'row',
     height: 60,
   },
   celebritySelectedImageContainer: {
     flex: 0.3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  celebritySelectedImageWrapper: {
+    margin: 3,
+    flex: 1,
+    overflow: 'hidden',
+    aspectRatio: 1,
+    borderRadius: 100,
   },
   celebritySelectedImage: {
-    flex:1,
-    resizeMode:'contain',
+    flex: 1,
+    resizeMode:"cover",
     marginVertical: 5,
   },
   celebritySelectedName: {
     flex: 0.5,
-    justifyContent:'center',
+    justifyContent: 'center',
   },
   celebritySelectedNameText: {
     color: '#284077',
@@ -105,8 +114,8 @@ export const styles = StyleSheet.create({
   },
   selectedCelebrityCancel: {
     flex: 0.2,
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   labelsContainerStyle: {
     flexDirection: 'column',
@@ -351,6 +360,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  modalImageContainer: {
+    height: 50,
+    width: 50,
+    borderRadius: 100,
+    overflow: 'hidden',
+    marginLeft: 10,
+  },
   modalImage: {
     height: 50,
     width: 50,
@@ -366,16 +382,15 @@ export const styles = StyleSheet.create({
 
   cropButtonContainer: {
     flex: 0.5,
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cropWrapper: {
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   cropButtons: {
     height: 70,
     width: 70,
   },
-
 });

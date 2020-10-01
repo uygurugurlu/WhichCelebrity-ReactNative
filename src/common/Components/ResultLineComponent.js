@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
 import {blue_text_color} from '../../../src/common/ColorIndex.js';
+import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../Constants';
+
 class ResultLineComponent extends Component {
   render() {
     const {leftText, rightText, icon} = this.props;
@@ -8,11 +10,10 @@ class ResultLineComponent extends Component {
       typeof rightText === 'undefined' ||
       rightText === null ||
       rightText === '';
-
     return (
       <View style={styles.containerStyle} display={!hide ? 'flex' : 'none'}>
         <View style={styles.iconContainer}>
-          <Image source={icon} style={styles.iconStyle}/>
+          <Image source={icon} style={styles.iconStyle} />
         </View>
         <View style={styles.titleContainer}>
           <Text style={styles.resultLeftTextStyle}>{leftText}</Text>
@@ -33,13 +34,13 @@ const styles = StyleSheet.create({
     marginVertical: 2.5,
   },
   iconStyle: {
-    height: 30,
-    width: 30,
+    height: DEVICE_HEIGHT * 0.037,
+    width: DEVICE_HEIGHT * 0.037,
   },
   iconContainer: {
     flex: 0.15,
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleContainer: {
     flex: 0.25,

@@ -24,7 +24,7 @@
     "random_compare": "Random",
     "validity_alert": "Please select an image for mother, father and the child.",
     "selected_celebrity": "The celebrity you choose",
-    "select_celebrity": "Search a celebrity ...",
+    "search_celebrity": "Search a celebrity ...",
     "select_another_celebrity": "Select another celebrity ... ",
     "select_warning": "Please select a celebrity by typing its name.",
     "avatar_warning": "Please be sure you select an image.!",
@@ -83,7 +83,9 @@
   },
   "dashboard": {
     "first_label": "Find out which celebrity do you look like",
-    "second_label": "Pick a celebrity and find out how similar you are"
+    "second_label": "Pick a celebrity and find out how similar you are",
+    "click_here": "Click Here!",
+
   },
   "update": {
     "update": "Update",

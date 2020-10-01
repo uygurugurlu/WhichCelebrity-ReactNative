@@ -5,24 +5,34 @@ import {
   page_body_background_color,
 } from '../../common/ColorIndex';
 
-const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.9;
-const USER_ICON_SIZE = DEVICE_WIDTH * 0.4;
+const ICON_CONTAINER_SIZE = DEVICE_WIDTH * 0.95;
+const USER_ICON_SIZE = DEVICE_WIDTH * 0.45;
 
 export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  imageBack: {
+    flex: 1,
+    resizeMode: 'contain',
+  },
   mainContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: page_body_background_color,
   },
-  scrollViewStyle: {
-    backgroundColor: page_body_background_color,
-  },
+  scrollViewStyle: {},
   viewShotImageStyle: {
     width: '100%',
     height: '100%',
-    backgroundColor: page_body_background_color,
+  },
+  swiperContainer: {
+    flex: 0.9,
+  },
+  bottomContainer: {
+    flex: 0.1,
+    justifyContent: 'center',
   },
   iconContainerStyle: {
     flexDirection: 'row',
@@ -46,8 +56,9 @@ export const styles = StyleSheet.create({
   },
   celebrityTextStyle: {
     fontSize: 18,
-    fontWeight: '700',
-    color: '#123456',
+    fontWeight: '600',
+    color: 'orange',
+    marginTop: 5,
   },
   iconStyle: {
     width: USER_ICON_SIZE,
@@ -95,5 +106,55 @@ export const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginLeft: 5,
+  },
+  // Category Modal Styles
+  modalBack: {
+    backgroundColor: '#00000080',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  bottomModal: {
+    justifyContent: 'flex-end',
+    flex: 1,
+  },
+  settingsModalContainer: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    backgroundColor: 'rgb(240,240,240)',
+    borderRadius: 15,
+  },
+  settingsMainButtons: {
+    alignItems: 'center',
+    height: 50,
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgb(100,100,100)',
+    flexDirection: 'row',
+  },
+  settingsButton: {
+    textAlign: 'center',
+    color: '#1a84f4',
+    fontSize: 19,
+  },
+  cancelButtonContainer: {
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    height: 50,
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    borderRadius: 15,
+    backgroundColor: 'rgb(240,240,240)',
+  },
+  cancelButton: {
+    textAlign: 'center',
+    color: 'red',
+    fontSize: 19,
   },
 });
