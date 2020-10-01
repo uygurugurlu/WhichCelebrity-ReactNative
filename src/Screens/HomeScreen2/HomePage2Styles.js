@@ -62,6 +62,52 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  celebritySelectedContainer: {
+    height: 100,
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 60,
+    alignSelf: 'center',
+    borderRadius: 20,
+    backgroundColor: 'rgb(240,240,240)',
+  },
+  celebritySelectedPressContainer: {
+    height: 40,
+    width: DEVICE_WIDTH - 60,
+    alignSelf: 'center',
+  },
+  celebritySelectedPress: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth:1,
+    borderBottomColor: 'rgb(180,180,180)'
+  },
+  celebritySelectedRow: {
+    flexDirection:'row',
+    height: 60,
+  },
+  celebritySelectedImageContainer: {
+    flex: 0.3,
+  },
+  celebritySelectedImage: {
+    flex:1,
+    resizeMode:'contain',
+    marginVertical: 5,
+  },
+  celebritySelectedName: {
+    flex: 0.5,
+    justifyContent:'center',
+  },
+  celebritySelectedNameText: {
+    color: '#284077',
+    fontWeight: '700',
+  },
+  selectedCelebrityCancel: {
+    flex: 0.2,
+    justifyContent:'center',
+    alignItems:'center',
+  },
   labelsContainerStyle: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -330,5 +376,6 @@ export const styles = StyleSheet.create({
   cropButtons: {
     height: 70,
     width: 70,
-  }
+  },
+
 });

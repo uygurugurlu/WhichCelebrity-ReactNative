@@ -13,7 +13,7 @@
     "share_result": "Share Result"
   },
   "famous_compare": {
-    "compare_header": "Select a celebrity and find out how you look alike or ",
+    "compare_header": "Select a celebrity and find out how you look alike or press the 'Random' button",
     "press_random": "press the 'Random' button",
     "tooltip_text": "You can find out how similar you are to a random celebrity out of about 200K by pressing the 'Random' button.",
     "result_label": "You look very similar to ",

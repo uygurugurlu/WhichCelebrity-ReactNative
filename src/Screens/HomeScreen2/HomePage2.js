@@ -33,6 +33,8 @@ import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
 import AvatarComponent from '../../common/Components/AvatarComponent';
 import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
 import SearchBarComponent from '../../common/Components/SearchBarComponent';
+import SelectCelebrityComponent from '../../common/Components/SelectCelebrityComponent';
+
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
@@ -43,6 +45,7 @@ import {
 } from '../../common/Constants';
 import {SearchCelebrities} from '../../common/Functions/Endpoints/SearchCelebrities';
 import {GetCelebrity} from '../../common/Functions/Endpoints/GetCelebrity';
+import {GetCelebrities} from '../../common/Functions/Endpoints/GetCelebrities';
 import SelectedCelebrityLine from '../../common/Components/SelectedCelebrityLine';
 import {UserPhotoAnalyze2} from '../../common/Functions/Endpoints/UserPhotoAnalyze2';
 import CacheImageComponent from '../../common/Components/CacheImagecomponent';
@@ -51,6 +54,7 @@ import {ShowSnackBar} from '../../common/Components/ShowSnackBar';
 import {DetectFace} from '../../common/Functions/DetectFace';
 import LoadingAnimationModal from '../../common/Components/LoadingAnimationModal/LoadingAnimationModal';
 import {PerformTimeConsumingTask} from '../../common/Functions/PerformTimeConsumingTask';
+import {blue_text_color} from '../../common/ColorIndex.js'
 import {
   SetCelebritySelectionScreenEvent,
   RandomResultEvent,
@@ -61,7 +65,6 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import {CropView} from 'react-native-image-crop-tools';
 import ImagePicker from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
-
 const options = {
   storageOptions: {
     skipBackup: true,
@@ -95,10 +98,10 @@ class HomePage2 extends Component {
       celebrities_visibility: false,
       optionsModalVisible: false,
       imageUri: '',
-      crop_visibility: 'false',
+      crop_visibility: false,
+      isCelebritySelected: false,
     };
     this.cropViewRef = React.createRef();
-
   }
 
   componentWillMount() {
@@ -108,10 +111,15 @@ class HomePage2 extends Component {
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('SavingsPage')}>
           <Icon
-            name={'photo-library'} 
+            name={'photo-library'}
             color={'white'}
-            style={{height: 35, width: 35, marginRight: 15, alignSelf:'center'}}
-            />
+            style={{
+              height: 35,
+              width: 35,
+              marginRight: 15,
+              alignSelf: 'center',
+            }}
+          />
         </TouchableOpacity>
       ),
     });
@@ -120,6 +128,7 @@ class HomePage2 extends Component {
   componentDidMount = () => {
     SetCelebritySelectionScreenEvent();
     interstitial.load();
+    this.getInitialCelebrities();
   };
 
   updateSearch = (search) =>
@@ -141,7 +150,6 @@ class HomePage2 extends Component {
     console.log('faces:', faces, faces.length); */
 
     ImagePicker.launchCamera(options, (response) => {
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -155,7 +163,6 @@ class HomePage2 extends Component {
   }
   LaunchImageLibrary = async () => {
     ImagePicker.launchImageLibrary(options, (response) => {
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -168,16 +175,16 @@ class HomePage2 extends Component {
     });
   };
   handleCroppedImage = async (res) => {
-    var data = await RNFS.readFile(res.uri, 'base64')
-    console.log('base64Image: ',data);
+    var data = await RNFS.readFile(res.uri, 'base64');
+    console.log('base64Image: ', data);
     this.props.get_user_avatar_source({uri: res.uri}, data);
-    const faces = await DetectFace(res.uri);  
+    const faces = await DetectFace(res.uri);
     this.setState({crop_visibility: false});
     this.props.get_detected_face_count(faces.length);
     console.log('faces:', faces, faces.length);
-  }
+  };
 
-  SelectAvatar = () => this.setState({optionsModalVisible:true});
+  SelectAvatar = () => this.setState({optionsModalVisible: true});
 
   shouldComponentUpdate = async (nextProps, nextState) => {
     const {userAvatarSource, language} = this.props;
@@ -371,12 +378,18 @@ class HomePage2 extends Component {
     }
   };
 
+  getInitialCelebrities = (async) => {
+    GetCelebrities(this.props.user_agent).then((res) => {
+      console.log('Initial Celebrities : ', res.data);
+      this.setState({scroll_items: res.data});
+    });
+  };
   fillScroll = async (search) => {
     if (search.length > 1) {
       SearchCelebrities(this.props.user_agent, search).then((res) => {
         console.log('Celebrities after search: ', res.data);
 
-       /* const items = res.data.map((item) => {
+        /* const items = res.data.map((item) => {
           return (
             <TouchableOpacity
               style={styles.scrollItemContainer}
@@ -393,7 +406,7 @@ class HomePage2 extends Component {
         this.setState({scroll_items: res.data});
       });
     } else {
-      this.setState({scroll_items: []});
+      this.getInitialCelebrities();
     }
   };
 
@@ -401,9 +414,9 @@ class HomePage2 extends Component {
     const {user_agent} = this.props;
     this.setState({
       search: celebrity.name,
-      scroll_items: [],
       celebrity_name: celebrity.name,
       celebrity_id: celebrity.id,
+      celebrity_photo: celebrity.photo,
       search_visible: false,
     });
 
@@ -416,7 +429,16 @@ class HomePage2 extends Component {
   HideProfile = () => {
     this.setState({search_visible: true, celebrity_name: ''});
   };
-
+  cancelCelebrity = () => {
+    this.setState({
+      isCelebritySelected:false,
+      celebrity_name: '',
+      celebrity_id: '',
+      celebrity_photo:'',
+      search:'',
+    });
+    this.getInitialCelebrities();
+  }
   render() {
     const {userAvatarSource} = this.props;
     const {
@@ -429,7 +451,7 @@ class HomePage2 extends Component {
       random_result_loading,
       result_loading,
     } = this.state;
-
+    console.log('isCEleb: ',this.state.isCelebritySelected);
     return (
       <View style={styles.mainContainer}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
@@ -437,25 +459,57 @@ class HomePage2 extends Component {
             <Text style={styles.topLabelStyle}>
               {translate('famous_compare.compare_header')}
             </Text>
-            <Text style={styles.topLabelStyle}>
-              {translate('famous_compare.press_random')}
-            </Text>
-            <TouchableHighlight
-              style={styles.selectCategoryContainer}
-              onPress={() => this.setState({celebrities_visibility: true})}>
-              <View style={styles.selectCategoryWrapper}>
-                <Text style={styles.selectCategoryText}>
-                  {this.state.celebrity_name == ''
-                    ? translate('home.select_celebrity')
-                    : this.state.celebrity_name}
-                </Text>
-                <Icon
-                  name="keyboard-arrow-right"
-                  color="#284077"
-                  style={styles.selectCategoryIcon}
-                />
+
+            {!this.state.isCelebritySelected  ? (
+              <TouchableHighlight
+                style={styles.selectCategoryContainer}
+                onPress={() => this.setState({celebrities_visibility: true})}>
+                <View style={styles.selectCategoryWrapper}>
+                  <Text style={styles.selectCategoryText}>
+                    {this.state.celebrity_name == ''
+                      ? translate('home.select_celebrity')
+                      : this.state.celebrity_name}
+                  </Text>
+                  <Icon
+                    name="keyboard-arrow-right"
+                    color="#284077"
+                    style={styles.selectCategoryIcon}
+                  />
+                </View>
+              </TouchableHighlight>
+            ) : (
+              <View style={styles.celebritySelectedContainer}>
+              <TouchableHighlight
+                style={styles.celebritySelectedPressContainer}
+                onPress={() => this.setState({celebrities_visibility: true})}>
+                <View style={styles.celebritySelectedPress}>
+                  <Text style={styles.selectCategoryText}>
+                    {this.state.celebrity_name == ''
+                      ? translate('home.select_celebrity')
+                      : translate('home.select_another_celebrity')}
+                  </Text>
+                  <Icon
+                    name="keyboard-arrow-down"
+                    color="#284077"
+                    style={styles.selectCategoryIcon}
+                  />
+                </View>
+              </TouchableHighlight>
+              <View style={styles.celebritySelectedRow}>
+              <View style={styles.celebritySelectedImageContainer}>
+                <Image source={{uri:this.state.celebrity_photo}} style={styles.celebritySelectedImage}/>
               </View>
-            </TouchableHighlight>
+              <View style={styles.celebritySelectedName}>
+                <Text style={styles.celebritySelectedNameText}>{this.state.celebrity_name}</Text>
+              </View>
+              <View style={styles.selectedCelebrityCancel}>
+                <TouchableOpacity onPress={() => this.cancelCelebrity()}>
+                  <Icon name={'cancel'} color= {blue_text_color}/>
+                </TouchableOpacity>
+              </View>
+              </View>
+              </View>
+            ) }
           </View>
 
           <View style={styles.cameraContainer}>
@@ -465,8 +519,7 @@ class HomePage2 extends Component {
             />
           </View>
 
-          <View
-            style={styles.buttonContainer}>
+          <View style={styles.buttonContainer}>
             <Button
               title={translate('home.random_compare')}
               buttonStyle={styles.randomButtonStyle}
@@ -536,14 +589,13 @@ class HomePage2 extends Component {
                                 ? '#4598e6'
                                 : '#fff',
                           }}
-                          onPress={() =>
-                          {
+                          onPress={() => {
                             this.CelebritySelected(item);
                             this.setState({
                               celebrities_visibility: false,
-                            });
-                          }
-                          }>
+                              isCelebritySelected: true,
+                            });console.log('yes');
+                          } }>
                           <View
                             style={{
                               borderBottomWidth: 0.5,
@@ -626,41 +678,36 @@ class HomePage2 extends Component {
             //Crop Modal Start
           }
           <Modal visible={this.state.crop_visibility} transparent={false}>
-          <View style={styles.mainContainer}>
-
-          <CropView
-              sourceUrl={
-                this.state.imageUri == ''
-                  ? '../assets/icons/CameraFrame.png'
-                  : this.state.imageUri
-              }
-              style={styles.cropView}
-              ref={this.cropViewRef}
-              onImageCrop={(res) => this.handleCroppedImage(res)}
-
-            />
-            <View style={styles.cropButtonsContainer}>
-            <View style={styles.cropButtonContainer}>
-            <TouchableOpacity
-              style={styles.cropWrapper}
-              onPress={() => this.setState({crop_visibility: false})}>
-              <Icon color={'white'} name={'close'}/>
-            </TouchableOpacity>
+            <View style={styles.mainContainer}>
+              <CropView
+                sourceUrl={
+                  this.state.imageUri == ''
+                    ? '../assets/icons/CameraFrame.png'
+                    : this.state.imageUri
+                }
+                style={styles.cropView}
+                ref={this.cropViewRef}
+                onImageCrop={(res) => this.handleCroppedImage(res)}
+              />
+              <View style={styles.cropButtonsContainer}>
+                <View style={styles.cropButtonContainer}>
+                  <TouchableOpacity
+                    style={styles.cropWrapper}
+                    onPress={() => this.setState({crop_visibility: false})}>
+                    <Icon color={'white'} name={'close'} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.cropButtonContainer}>
+                  <TouchableOpacity
+                    style={styles.cropWrapper}
+                    onPress={() =>
+                      this.cropViewRef.current.saveImage(true, 30)
+                    }>
+                    <Icon color={'white'} name={'check'} />
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
-            <View style={styles.cropButtonContainer}>
-            <TouchableOpacity
-              style={styles.cropWrapper}
-              onPress={() => this.cropViewRef.current.saveImage(true,30)}>
-              <Icon color={'white'} name={'check'}/>
-            </TouchableOpacity>
-            </View>
-
-           
-            </View>
-             
-          </View>
-            
-           
           </Modal>
           {
             //Crop Modal End
