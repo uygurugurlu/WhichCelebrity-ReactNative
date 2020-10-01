@@ -54,7 +54,7 @@ import {ShowSnackBar} from '../../common/Components/ShowSnackBar';
 import {DetectFace} from '../../common/Functions/DetectFace';
 import LoadingAnimationModal from '../../common/Components/LoadingAnimationModal/LoadingAnimationModal';
 import {PerformTimeConsumingTask} from '../../common/Functions/PerformTimeConsumingTask';
-import {blue_text_color} from '../../common/ColorIndex.js'
+import {blue_text_color} from '../../common/ColorIndex.js';
 import {
   SetCelebritySelectionScreenEvent,
   RandomResultEvent,
@@ -302,6 +302,7 @@ class HomePage2 extends Component {
           if (data_xx !== null) {
             await this.ShowAD();
           }
+          await this.setState({isCelebritySelected: false});
           this.NavigateToResultPage2(JSON.parse(data).data[0]);
           this.HideProfile();
         }
@@ -430,16 +431,16 @@ class HomePage2 extends Component {
   };
   cancelCelebrity = () => {
     this.setState({
-      isCelebritySelected:false,
+      isCelebritySelected: false,
       celebrity_name: '',
       celebrity_id: '',
-      celebrity_photo:'',
-      search:'',
+      celebrity_photo: '',
+      search: '',
     });
     this.getInitialCelebrities();
-  }
+  };
   render() {
-    var x,y,width,height;
+    var x, y, width, height;
     const {userAvatarSource} = this.props;
     const {
       search,
@@ -451,7 +452,7 @@ class HomePage2 extends Component {
       random_result_loading,
       result_loading,
     } = this.state;
-    console.log('isCEleb: ',this.state.isCelebritySelected);
+    console.log('isCEleb: ', this.state.isCelebritySelected);
     return (
       <View style={styles.mainContainer}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
@@ -460,7 +461,7 @@ class HomePage2 extends Component {
               {translate('famous_compare.compare_header')}
             </Text>
 
-            {!this.state.isCelebritySelected  ? (
+            {!this.state.isCelebritySelected ? (
               <TouchableHighlight
                 style={styles.selectCategoryContainer}
                 onPress={() => this.setState({celebrities_visibility: true})}>
@@ -479,40 +480,52 @@ class HomePage2 extends Component {
               </TouchableHighlight>
             ) : (
               <View style={styles.celebritySelectedContainer}>
-              <TouchableHighlight
-                style={styles.celebritySelectedPressContainer}
-                onPress={() => this.setState({celebrities_visibility: true})}>
-                <View style={styles.celebritySelectedPress}>
-                  <Text style={styles.selectCategoryText}>
-                    {this.state.celebrity_name == ''
-                      ? translate('home.select_celebrity')
-                      : translate('home.select_another_celebrity')}
-                  </Text>
-                  <Icon
-                    name="keyboard-arrow-down"
-                    color="#284077"
-                    style={styles.selectCategoryIcon}
-                  />
+                <TouchableHighlight
+                  style={styles.celebritySelectedPressContainer}
+                  onPress={() => this.setState({celebrities_visibility: true})}>
+                  <View style={styles.celebritySelectedPress}>
+                    <Text style={styles.selectCategoryText}>
+                      {this.state.celebrity_name == ''
+                        ? translate('home.select_celebrity')
+                        : translate('home.select_another_celebrity')}
+                    </Text>
+                    <Icon
+                      name="keyboard-arrow-down"
+                      color="#284077"
+                      style={styles.selectCategoryIcon}
+                    />
+                  </View>
+                </TouchableHighlight>
+                <View style={styles.celebritySelectedRow}>
+                  <View
+                    style={styles.celebritySelectedImageContainer}
+                    onLayout={(e) => {
+                      width = e.nativeEvent.layout.width;
+                      height = e.nativeEvent.layout.height;
+                    }}>
+                    <View style={styles.celebritySelectedImageWrapper}>
+                      <Image
+                        source={{uri: this.state.celebrity_photo}}
+                        style={[
+                          styles.celebritySelectedImage,
+                          {width: width, height: height},
+                        ]}
+                      />
+                    </View>
+                  </View>
+                  <View style={styles.celebritySelectedName}>
+                    <Text style={styles.celebritySelectedNameText}>
+                      {this.state.celebrity_name}
+                    </Text>
+                  </View>
+                  <View style={styles.selectedCelebrityCancel}>
+                    <TouchableOpacity onPress={() => this.cancelCelebrity()}>
+                      <Icon name={'cancel'} color={blue_text_color} />
+                    </TouchableOpacity>
+                  </View>
                 </View>
-              </TouchableHighlight>
-              <View style={styles.celebritySelectedRow}>
-              <View style={styles.celebritySelectedImageContainer} onLayout={(e) => {width= e.nativeEvent.layout.width; height= e.nativeEvent.layout.height}}>
-              <View style={styles.celebritySelectedImageWrapper}>
-              <Image source={{uri:this.state.celebrity_photo}} style={[styles.celebritySelectedImage, {width:width, height:height}]}/>
-
               </View>
-              </View>
-              <View style={styles.celebritySelectedName}>
-                <Text style={styles.celebritySelectedNameText}>{this.state.celebrity_name}</Text>
-              </View>
-              <View style={styles.selectedCelebrityCancel}>
-                <TouchableOpacity onPress={() => this.cancelCelebrity()}>
-                  <Icon name={'cancel'} color= {blue_text_color}/>
-                </TouchableOpacity>
-              </View>
-              </View>
-              </View>
-            ) }
+            )}
           </View>
 
           <View style={styles.cameraContainer}>
@@ -559,7 +572,9 @@ class HomePage2 extends Component {
               <View style={styles.modalContainer}>
                 <View style={styles.modalHeader}>
                   <View style={styles.headerContainer}>
-                    <Text style={styles.modalHeaderTitle}>{translate('home.select_celebrity')}</Text>
+                    <Text style={styles.modalHeaderTitle}>
+                      {translate('home.select_celebrity')}
+                    </Text>
                     <TouchableOpacity
                       style={styles.ModalCloseButton}
                       onPress={() =>
@@ -574,7 +589,7 @@ class HomePage2 extends Component {
                   <SearchBar
                     onChangeText={(e) => this.updateSearch(e)}
                     value={this.state.search}
-                    placeholder={translate("home.search_celebrity")}
+                    placeholder={translate('home.search_celebrity')}
                     lightTheme
                     round
                   />
@@ -597,8 +612,9 @@ class HomePage2 extends Component {
                             this.setState({
                               celebrities_visibility: false,
                               isCelebritySelected: true,
-                            });console.log('yes');
-                          } }>
+                            });
+                            console.log('yes');
+                          }}>
                           <View
                             style={{
                               borderBottomWidth: 0.5,
@@ -608,10 +624,10 @@ class HomePage2 extends Component {
                             }}>
                             <View style={styles.modalItemContainer}>
                               <View style={styles.modalImageContainer}>
-                              <Image
-                                source={{uri: item.photo}}
-                                style={styles.modalImage}
-                              />
+                                <Image
+                                  source={{uri: item.photo}}
+                                  style={styles.modalImage}
+                                />
                               </View>
                               <Text style={styles.categoriesListText}>
                                 {item.name}

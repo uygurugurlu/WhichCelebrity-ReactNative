@@ -233,7 +233,7 @@ class ResultPage2 extends Component {
   render() {
     const {userAvatarSource} = this.props;
     const {share_active, data} = this.state;
-
+    console.log(data);
     return (
       <View style={styles.container}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
