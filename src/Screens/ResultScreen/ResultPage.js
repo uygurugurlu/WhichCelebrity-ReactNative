@@ -63,11 +63,15 @@ class ResultPage extends Component {
             this.props.navigation.navigate('SavingsPage', {tab_index: 0})
           }>
           <Icon
-            name={'photo-library'} 
+            name={'photo-library'}
             color={'white'}
-            style={{height: 35, width: 35, marginRight: 15, alignSelf:'center'}}
-            />
-
+            style={{
+              height: 35,
+              width: 35,
+              marginRight: 15,
+              alignSelf: 'center',
+            }}
+          />
         </TouchableOpacity>
       ),
     });
@@ -208,7 +212,7 @@ class ResultPage extends Component {
 
   WhenTheLanguageChanged = () => this.forceUpdate();
 
-  showActionSheet = () => this.setState({optionsModalVisible:true});
+  showActionSheet = () => this.setState({optionsModalVisible: true});
 
   getActionSheetRef = (ref) => (this.actionSheet = ref);
 
@@ -323,7 +327,7 @@ class ResultPage extends Component {
                   <TouchableOpacity
                     onPress={() =>
                       this.setState({optionsModalVisible: false}, () =>
-                      this.ActionHandler(0),
+                        this.ActionHandler(0),
                       )
                     }
                     style={styles.settingsMainButtons}>
@@ -339,7 +343,7 @@ class ResultPage extends Component {
                   <TouchableOpacity
                     onPress={() =>
                       this.setState({optionsModalVisible: false}, () =>
-                      this.ActionHandler(1),
+                        this.ActionHandler(1),
                       )
                     }
                     style={styles.settingsMainButtons}>
@@ -355,7 +359,7 @@ class ResultPage extends Component {
                   <TouchableOpacity
                     onPress={() =>
                       this.setState({optionsModalVisible: false}, () =>
-                      this.ActionHandler(2),
+                        this.ActionHandler(2),
                       )
                     }
                     style={styles.settingsMainButtons}>

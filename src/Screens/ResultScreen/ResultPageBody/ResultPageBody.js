@@ -69,6 +69,7 @@ class ResultPageBody extends Component {
       similarity = '',
       title = '';
     const celebrity = data.celebrity;
+    console.log('dededed: ', celebrity.dead);
 
     hide_age =
       celebrity.birthday === null ||
@@ -78,6 +79,7 @@ class ResultPageBody extends Component {
       typeof celebrity.dead !== 'undefined' &&
       celebrity.dead !== null &&
       celebrity.dead;
+    console.log('graave: ', grave_flex);
     age = typeof (celebrity.age !== 'undefined' && celebrity.age !== null)
       ? celebrity.age
       : '';
@@ -149,7 +151,7 @@ class ResultPageBody extends Component {
         title = translate('result.third_similar');
         break;
       case 3:
-        title = translate('result.third_similar');
+        title = celebrity.name +  translate('result.similarity_rate');
         break;
     }
 
@@ -278,11 +280,13 @@ class ResultPageBody extends Component {
                   icon={calendarIcon}
                 />
               </View>
-              <View
-                style={{position: 'absolute', right: 10}}
-                display={grave_flex ? 'flex' : 'none'}>
-                <Image style={styles.graveIconStyle} source={HEADSTONE2} />
-              </View>
+              {grave_flex && (
+                <View
+                  style={{position: 'absolute', right: 10}}
+                  display={true ? 'flex' : 'none'}>
+                  <Image style={styles.graveIconStyle} source={HEADSTONE2} />
+                </View>
+              )}
             </View>
 
             <ResultLineComponent

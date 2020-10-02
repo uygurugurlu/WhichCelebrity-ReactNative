@@ -247,7 +247,7 @@ class ResultPage2 extends Component {
               <View style={styles.swiperContainer}>
                 <ResultPageBody
                   userAvatarSource={userAvatarSource}
-                  titleIndex={0}
+                  titleIndex={3}
                   data={data}
                 />
               </View>

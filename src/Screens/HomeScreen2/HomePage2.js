@@ -175,7 +175,6 @@ class HomePage2 extends Component {
   };
   handleCroppedImage = async (res) => {
     var data = await RNFS.readFile(res.uri, 'base64');
-    console.log('base64Image: ', data);
     this.props.get_user_avatar_source({uri: res.uri}, data);
     const faces = await DetectFace(res.uri);
     this.setState({crop_visibility: false});
@@ -452,7 +451,6 @@ class HomePage2 extends Component {
       random_result_loading,
       result_loading,
     } = this.state;
-    console.log('isCEleb: ', this.state.isCelebritySelected);
     return (
       <View style={styles.mainContainer}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
@@ -614,7 +612,6 @@ class HomePage2 extends Component {
                               celebrities_visibility: false,
                               isCelebritySelected: true,
                             });
-                            console.log('yes');
                           }}>
                           <View
                             style={{
