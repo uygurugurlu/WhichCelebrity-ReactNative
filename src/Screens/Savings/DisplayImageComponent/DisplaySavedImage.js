@@ -7,7 +7,7 @@ import {styles} from './DisplaySavedImageStyles';
 import Share from 'react-native-share';
 import {connect} from 'react-redux';
 import ImageZoom from 'react-native-image-pan-zoom';
-import crashlytics from "@react-native-firebase/crashlytics";
+import crashlytics from '@react-native-firebase/crashlytics';
 
 class DisplaySavedImage extends Component {
   constructor(props) {

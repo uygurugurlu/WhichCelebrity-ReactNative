@@ -90,6 +90,7 @@ target 'AwesomeProject' do
   end
 
    use_native_modules!
+   pod 'react-native-image-crop-tools', :path => '../node_modules/react-native-image-crop-tools'
 
   # Enables Flipper.
   #
