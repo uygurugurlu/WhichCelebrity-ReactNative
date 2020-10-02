@@ -34,7 +34,7 @@ export const UserPhotoAnalyze2 = (
 
   return RNFetchBlob.fetch(
     'POST',
-    `${API_HOST}/api/v2/analyze`,
+    `${API_HOST}/api/v3/analyze`,
     {
       'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${AUTH_TOKEN}`,
