@@ -27,7 +27,7 @@
     "search_celebrity": "Search a celebrity ...",
     "select_another_celebrity": "Select another celebrity ... ",
     "select_warning": "Please select a celebrity by typing its name.",
-    "avatar_warning": "Please be sure you select an image.!",
+    "avatar_warning": "Please be sure you select an image!",
     "select_category": "Select Category (Optional)",
     "search_category": "Search a category ...",
     "clear_category": "Clear Category",
@@ -37,12 +37,14 @@
     "search_for_all": "Search in all genders",
     "search_male_celebrities": "Search in male celebrities",
     "search_female_celebrities": "Search in female celebrities",
-    "top_label": "Find out which celebrity you are",
+    "top_label": "Find out which celebrity you are.",
     "select_celebrity": "Select a celebrity",
     "result_not_found": "Result not found",
-    "face_not_found": "No face found in the photo you selected",
-    "more_than_one_face_found": "Please make sure there is only one face in the photo you chose",
+    "face_not_found": "No face found in the photo you selected.",
+    "more_than_one_face_found": "Please make sure there is only one face in the photo you chose.",
     "loading_text": "Our artificial intelligence algorithm is looking for the celebrity who looks most like you.",
+    "loading_text_2": "Our artificial intelligence algorithm is calculating the similarity rate between you and the selected celebrity.",
+
     "none": "None"
   },
   "result": {
@@ -67,7 +69,7 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "select": "Select the photos you want to delete",
-    "not_found": "There is no any photo saved"
+    "not_found": "There is no any photo saved."
   },
   "starter": {
     "label1": "Find out which celebrity you look like with artificial intelligence algorithms.",
@@ -90,6 +92,6 @@
   "update": {
     "update": "Update",
     "not_up_to_date": "The application is out of date",
-    "update_the_app": "Please update the 'Which Celebrity' app before continuing"
+    "update_the_app": "Please update the 'Which Celebrity' app before continuing."
   }
 }

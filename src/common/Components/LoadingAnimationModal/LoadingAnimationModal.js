@@ -24,7 +24,7 @@ class LoadingAnimationModal extends Component {
   }
 
   render() {
-    const {isModalVisible} = this.props;
+    const {isModalVisible, text} = this.props;
     const rand = Math.floor(Math.random() * 8); // returns a random integer from 0 to 7
 
     return (
@@ -50,9 +50,7 @@ class LoadingAnimationModal extends Component {
             iterationCount={5}
             duration={5000}
             easing={'linear'}>
-            <Text style={styles.textStyle}>
-              {translate('home.loading_text')}
-            </Text>
+            <Text style={styles.textStyle}>{text}</Text>
           </Animatable.View>
         </View>
       </Modal>

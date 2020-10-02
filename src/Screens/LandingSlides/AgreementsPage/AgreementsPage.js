@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, View, Text, SafeAreaView, Alert} from 'react-native';
+import {Image, View, Text, SafeAreaView, Alert, ImageBackground} from 'react-native';
 import {styles} from './AgreementsPageStyles';
 import {Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -13,6 +13,7 @@ import {
   KVKK_LINK_TR,
   PRIVACY_POLICY_LINK_EN,
   PRIVACY_POLICY_LINK_TR,
+  IMAGEBACK,
 } from '../../../common/Constants';
 
 const BANNER = require('../../../assets/icons/banner.png');
@@ -89,8 +90,8 @@ class AgreementsPage extends Component {
     const {checked, checked2, languageTag} = this.state;
 
     return (
-      <SafeAreaView style={styles.mainContainerStyle}>
-        <View style={styles.containerStyle}>
+      <View style={styles.mainContainerStyle}>
+        <ImageBackground style={styles.containerStyle} source={IMAGEBACK}>
           <Image source={BANNER} style={styles.imageStyle} />
 
           <View
@@ -139,6 +140,7 @@ class AgreementsPage extends Component {
                 style={styles.checkBoxStyle}
                 value={checked}
                 onValueChange={() => this.Check()}
+                tintColors={'white'}
               />
             </View>
 
@@ -173,6 +175,8 @@ class AgreementsPage extends Component {
                 style={styles.checkBoxStyle}
                 value={checked2}
                 onValueChange={() => this.Check2()}
+                tintColors={'white'}
+
               />
             </View>
           </View>
@@ -182,8 +186,8 @@ class AgreementsPage extends Component {
             buttonStyle={styles.getPermissionButtonStyle}
             titleStyle={styles.getPermissionButtonTittleStyle}
           />
-        </View>
-      </SafeAreaView>
+        </ImageBackground>
+      </View>
     );
   }
 }

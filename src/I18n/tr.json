@@ -1,7 +1,7 @@
 {
   "continue": "Devam Et",
   "app_name": "Which Celebrity",
-  "header_label": "Hangi Ünlüye Benziyorsun",
+  "header_label": "Hangi Ünlüye Benziyorsun?",
   "image_picker": {
     "title": "Fotoğraf Seç",
     "cancel": "Vazgeç",
@@ -13,37 +13,38 @@
     "share_result": "Sonucu Paylaş"
   },
   "famous_compare": {
-    "compare_header": "Bir ünlü seç ve ne kadar benzediğini öğren yada Rastgele Karşılaştır' butonuna bas",
+    "compare_header": "Bir ünlü seç ve ne kadar benzediğini öğren ya da Rastgele Karşılaştır' butonuna bas.",
     "press_random": "'Rastgele Karşılaştır' butonuna bas",
     "tooltip_text": "'Rastgele Karşılaştır' butonuna basarak yaklaşık 200B ünlü arasından rastgele bir ünlüye ne kadar benzediğini öğrenebilirsin.",
     "result_label": "Seni en çok benzettiğimiz ünlü: ",
-    "validity_alert": "Lütfen fotoğraf seçtiğiniğinizden emin olunuz."
+    "validity_alert": "Lütfen fotoğraf seçtiğinden emin ol."
   },
   "home": {
     "get_result": "Sonucu Gör",
     "random_compare": "Rastgele Karşılaştır",
-    "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçiniz.",
-    "selected_celebrity": "Seçtiğiniz ünlü",
+    "validity_alert": "Lütfen tüm kişiler için birer fotoğraf seçin.",
+    "selected_celebrity": "Seçtiğin ünlü",
     "search_celebrity": "Ünlülerde ara ... ",
     "select_another_celebrity": "Başka bir ünlü seç ... ",
-    "select_warning": "Lütfen ismini yazarak bir ünlü seçiniz.",
-    "avatar_warning": "Lütfen fotoğraf eklediğinizden emin olun!",
+    "select_warning": "Lütfen ismini yazarak bir ünlü seçin.",
+    "avatar_warning": "Lütfen fotoğraf eklediğinden emin ol!",
     "select_category": "Kategori Seç (İsteğe bağlı)",
     "search_category": "Kategori ara ...",
     "clear_category": "Kategoriyi kaldır",
     "cancel": "Vazgeç",
-    "select_photo": "Fotoğraf seçiniz",
-    "search_gender": "Cinsiyet seçenği",
+    "select_photo": "Fotoğraf seçin",
+    "search_gender": "Cinsiyet seçeneği",
     
     "search_for_all": "Kadın ve Erkek ünlülerde ara",
     "search_male_celebrities": "Erkek ünlülerde ara",
     "search_female_celebrities": "Kadın ünlülerde ara",
     "top_label": "Hangi ünlüye benzediğini öğren",
-    "select_celebrity": "Bir ünlü seçin",
-    "result_not_found": "Sonuç bulunamadı",
-    "face_not_found": "Seçtiğin fotoğrafta yüz bulunamadı",
-    "more_than_one_face_found": "Lütfen seçtiğin fotoğrafta sadece tek bir yüz olduğundan emin ol",
-    "loading_text": "Yapay zeka algoritmamız sana en çok benzeyen ünlüyü aramaktadır",
+    "select_celebrity": "Bir ünlü seç",
+    "result_not_found": "Sonuç bulunamadı.",
+    "face_not_found": "Seçtiğin fotoğrafta yüz bulunamadı.",
+    "more_than_one_face_found": "Lütfen seçtiğin fotoğrafta tek bir yüz olduğundan emin olun.",
+    "loading_text": "Yapay zeka algoritmamız sana en çok benzeyen ünlüyü aramaktadır.",
+    "loading_text_2": "Yapay zeka algoritmamız seçtiğin ünlüyle benzerliğinizi hesaplamaktadır.",
     "none": "Hiçbiri"
 
   },
@@ -77,7 +78,7 @@
     "kvkk_text": "Kişisel Verilerin Korunması Aydınlatma Metni",
     "privacy_policy_text": "Gizlilik Sözleşmesi Metni",
     "read_and_accept": " 'ni okudum, kabul ediyorum.",
-    "web_view_alert_text": "Kişisel Verilerin Korunması Aydınlatma Metni'ni ve Gizlilik Politikamızı okuyup, kabul ettiğinizden emin olunuz."
+    "web_view_alert_text": "Kişisel Verilerin Korunması Aydınlatma Metni'ni ve Gizlilik Politikamızı okuyup, kabul ettiğinden emin ol!"
   },
   "display": {
     "cancel": "Vazgeç",
@@ -91,6 +92,6 @@
   "update": {
     "update": "Güncelle",
     "not_up_to_date": "Uygulama güncel değil",
-    "update_the_app": "Lütfen devam etmeden önce 'Which Celebrity' uygulamasını güncelleyiniz."
+    "update_the_app": "Lütfen devam etmeden önce 'Which Celebrity' uygulamasını güncelleyin."
   }
 }

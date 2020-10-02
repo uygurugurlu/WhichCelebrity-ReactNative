@@ -676,7 +676,7 @@ class HomePage extends Component {
           {
             //Gender Modal End
           }
-          {<LoadingAnimationModal isModalVisible={this.state.result_loading} />}
+          {<LoadingAnimationModal text = {translate('home.loading_text')} isModalVisible={this.state.result_loading} />}
         </ImageBackground>
       </View>
     );

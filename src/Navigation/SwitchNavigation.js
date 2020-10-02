@@ -33,7 +33,7 @@ class SwitchNavigation extends React.Component {
         console.log('value previously stored: ', key);
         switch (key) {
           case 'LOGGED_IN_FIRST_TIME':
-            this.props.first_time_login(false);
+            this.props.first_time_login(false); 
             break;
         }
       } else {

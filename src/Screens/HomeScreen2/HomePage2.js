@@ -555,6 +555,7 @@ class HomePage2 extends Component {
           </View>
 
           <LoadingAnimationModal
+            text = {translate('home.loading_text_2')} 
             isModalVisible={result_loading || random_result_loading}
           />
           {

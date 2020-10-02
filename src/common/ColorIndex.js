@@ -1,6 +1,6 @@
 import {DEVICE_HEIGHT} from './Constants';
 
-export const button_colors = '#123456';
+export const button_colors = '#102773';
 
 export const blue_text_color = '#102773';
 

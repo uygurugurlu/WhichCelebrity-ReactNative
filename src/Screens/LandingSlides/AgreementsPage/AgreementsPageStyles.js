@@ -1,28 +1,23 @@
 import {StyleSheet} from 'react-native';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../../common/Constants';
 import {buttons_height} from '../../../common/ColorIndex';
+import {blue_text_color} from '../../../common/ColorIndex';
 
 export const styles = StyleSheet.create({
   mainContainerStyle: {
-    height: '85%',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    flex: 1,
   },
   containerStyle: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
     alignItems: 'center',
-    width: DEVICE_WIDTH,
-    backgroundColor: '#fff',
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent:'center',
   },
   titleRowContainerStyle: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.9,
-    backgroundColor: '#fff',
     marginVertical: 15,
   },
   rowContainerStyle: {
@@ -30,7 +25,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: DEVICE_WIDTH * 0.7,
-    backgroundColor: '#fff',
     marginVertical: 15,
     marginHorizontal: DEVICE_WIDTH * 0.05,
   },
@@ -38,18 +32,16 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#fff',
     marginVertical: 5,
     width: DEVICE_WIDTH * 0.85,
   },
   kvkkColumnContainerStyle: {
-    backgroundColor: '#fff',
     marginVertical: 10,
   },
   kvkkTextStyle: {
     fontSize: 15,
     fontWeight: '400',
-    color: 'rgba(0,0,0,0.85)',
+    color: '#fff',
   },
   bottomContainerStyle: {
     flexDirection: 'column',
@@ -75,13 +67,13 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     alignSelf: 'center',
-    color: '#1b1b1b',
+    color: 'white',
   },
   textStyle: {
     fontSize: 19,
     fontWeight: '600',
     textAlign: 'center',
-    color: 'rgba(0,0,0,0.60)',
+    color: 'white',
     marginLeft: DEVICE_WIDTH * 0.05,
     width: DEVICE_WIDTH * 0.85,
     marginVertical: DEVICE_HEIGHT * 0.025,
@@ -89,19 +81,19 @@ export const styles = StyleSheet.create({
   linkTextStyle: {
     fontSize: 14,
     fontWeight: '500',
-    color: 'rgba(5,76,147,0.87)',
+    color: '#63d8f2',
   },
   acceptTextStyle: {
     fontSize: 13,
     fontWeight: '500',
     width: DEVICE_WIDTH * 0.75,
-    color: '#000',
+    color: 'white',
   },
   getPermissionButtonStyle: {
     width: DEVICE_WIDTH * 0.9,
     borderRadius: 7.5,
     height: buttons_height,
-    backgroundColor: '#0177C9',
+    backgroundColor: blue_text_color,
     marginVertical: 15,
   },
   getPermissionButtonTittleStyle: {
@@ -111,6 +103,6 @@ export const styles = StyleSheet.create({
   laterTextStyle: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#0177C9',
+    color: blue_text_color,
   },
 });

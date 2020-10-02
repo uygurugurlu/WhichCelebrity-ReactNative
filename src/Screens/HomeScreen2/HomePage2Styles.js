@@ -102,7 +102,6 @@ export const styles = StyleSheet.create({
   celebritySelectedImage: {
     flex: 1,
     resizeMode:"cover",
-    marginVertical: 5,
   },
   celebritySelectedName: {
     flex: 0.5,
