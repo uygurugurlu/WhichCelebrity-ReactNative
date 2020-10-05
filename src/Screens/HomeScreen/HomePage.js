@@ -145,13 +145,13 @@ class HomePage extends Component {
 
   WhenTheLanguageChanged = () => this.forceUpdate();
 
-  LaunchCamera() {
+  LaunchCamera = async () => {
     /* const {path, data} = await GetUserPhotoFromCamera();
     this.props.get_user_avatar_source({uri: path}, data);
     const faces = await DetectFace(path);
     this.props.get_detected_face_count(faces.length);
     console.log('faces:', faces, faces.length); */
-
+    await this.setState({optionsModalVisible:false})
     ImagePicker.launchCamera(options, (response) => {
 
       if (response.didCancel) {
@@ -164,8 +164,9 @@ class HomePage extends Component {
         this.setState({crop_visibility: true, imageUri: response.uri});
       }
     });
-  }
+  };
   LaunchImageLibrary = async () => {
+    await this.setState({optionsModalVisible:false});
     ImagePicker.launchImageLibrary(options, (response) => {
 
       if (response.didCancel) {
@@ -214,16 +215,6 @@ class HomePage extends Component {
     }
   };
 
-  GetActionSheet = () => {
-    return (
-      <ActionSheetComponent
-        launchImageLibrary={this.LaunchImageLibrary}
-        launchCamera={this.LaunchCamera}
-        handlePress={this.handlePress}
-        getActionSheetRef={this.getActionSheetRef}
-      />
-    );
-  };
   CheckValidity = () => {
     const {userAvatarSource, detected_face_count} = this.props;
     console.log('CheckValidity detected_faces: ', detected_face_count);
@@ -456,9 +447,7 @@ class HomePage extends Component {
               <View style={styles.settingsModalContainer}>
                 <TouchableOpacity
                   onPress={() =>
-                    this.setState({optionsModalVisible: false}, () =>
-                      this.LaunchCamera(),
-                    )
+                    this.LaunchCamera()
                   }
                   style={styles.settingsMainButtons}>
                   <Text style={styles.settingsButton}>{translate('image_picker.use_camera')}</Text>
@@ -470,9 +459,7 @@ class HomePage extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() =>
-                    this.setState({optionsModalVisible: false}, () =>
-                      this.LaunchImageLibrary(),
-                    )
+                  this.LaunchImageLibrary()
                   }
                   style={styles.settingsMainButtons}>
                   <Text style={styles.settingsButton}>{translate('image_picker.photo_library')}</Text>

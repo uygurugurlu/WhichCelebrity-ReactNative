@@ -9,11 +9,22 @@ import admob, {MaxAdContentRating} from '@react-native-firebase/admob';
 import {configureFontAwesomePro} from 'react-native-fontawesome-pro';
 import axios from 'axios';
 import {header_background_color} from './src/common/ColorIndex';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-community/google-signin';
+
+const configureGoogleSignin = (async) => {
+  GoogleSignin.configure();
+};
+
 configureFontAwesomePro();
 const store = configureStore();
 
 function App() {
   let init = async () => {
+    await configureGoogleSignin();
     await requestUserPermission();
     await AdMobConfigure();
     await setI18nConfig();
