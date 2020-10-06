@@ -11,6 +11,8 @@ import {
   CHANGE_SELECTED_TO_DELETE_COUNT,
   CLEAR_SELECTED_TO_DELETE_COUNT,
   GET_DETECTED_FACE_COUNT,
+  AUTHENTICATE_USER,
+  UNAUTHENTICATE_USER
 } from './ActionTypes';
 
 export const get_detected_face_count = (count) => {
@@ -92,5 +94,17 @@ export const get_captured_image_uri = (image_uri) => {
   return {
     type: GET_CAPTURED_IMAGE_URI,
     image_uri: image_uri,
+  };
+};
+
+export const authenticate_user = () => {
+  return {
+    type: AUTHENTICATE_USER,
+  };
+};
+
+export const unauthenticate_user = () => {
+  return {
+    type: UNAUTHENTICATE_USER,
   };
 };

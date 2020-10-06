@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "93591380261-gt9cs323ka99oph1pf10fnojvn7f2qvo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.looklikecelebrity",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "93591380261-a20nvqklijrcv84isdr16d40m0lclape.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -48,7 +56,8 @@
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-9113500705436853~3862104290"
     }
   ],
   "configuration_version": "1"

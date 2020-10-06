@@ -1,5 +1,11 @@
 import React from 'react';
-import {ActivityIndicator, StyleSheet, View, Platform} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  View,
+  Platform,
+  ImageBackground,
+} from 'react-native';
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
@@ -9,13 +15,36 @@ import StarterPagesStack from './Starter/StarterPagesStack';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../common/Constants';
 import DeviceInfo from 'react-native-device-info';
 import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
+import SignIn from '../Screens/SignIn/SignIn';
+
 import {page_body_background_color} from '../common/ColorIndex';
 import MainPagesStack from './MainStack';
 import UserAgent from 'react-native-user-agent';
 import {GetAppVersion} from '../common/Functions/Endpoints/GetAppVersion';
 import {PerformTimeConsumingTask} from '../common/Functions/PerformTimeConsumingTask';
-import crashlytics from "@react-native-firebase/crashlytics";
+import crashlytics from '@react-native-firebase/crashlytics';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {IMAGEBACK} from '../common/Constants';
+import {CustomDrawerContent} from '../common/Components/DrawerContent';
+import {CustomDrawerContentLoggedIn} from '../common/Components/DrawerContentLoggedIn';
+import {signInFunction} from '../common/Functions/GoogleSignInFunctions';
+const Drawer = createDrawerNavigator();
 
+const MyDrawer = (isLoggedIn) => {
+  return (
+    <Drawer.Navigator
+      drawerContent={() =>
+        isLoggedIn ? (
+          <CustomDrawerContent signIn={signInFunction} />
+        ) : (
+          <CustomDrawerContentLoggedIn />
+        )
+      }>
+      <Drawer.Screen name="MainPagesStack" component={MainPagesStack} />
+      <Drawer.Screen name="SignIn" component={SignIn} />
+    </Drawer.Navigator>
+  );
+};
 class SwitchNavigation extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +62,7 @@ class SwitchNavigation extends React.Component {
         console.log('value previously stored: ', key);
         switch (key) {
           case 'LOGGED_IN_FIRST_TIME':
-            this.props.first_time_login(false); 
+            this.props.first_time_login(false);
             break;
         }
       } else {
@@ -59,7 +88,7 @@ class SwitchNavigation extends React.Component {
     await UserAgent.getWebViewUserAgent() //asynchronous
       .then((ua) => {
         this.props.get_user_agent(ua);
-        console.log("Agent: ", ua);
+        console.log('Agent: ', ua);
       })
       .catch((e) => {
         crashlytics().recordError(e);
@@ -95,7 +124,7 @@ class SwitchNavigation extends React.Component {
   };
 
   GetVersion = async () => {
-    console.log("user_agent: ", this.props.user_agent);
+    console.log('user_agent: ', this.props.user_agent);
     const {data} = await GetAppVersion(this.props.user_agent);
     console.log('GetVersion Api doğru çalıştı ...', data);
 
@@ -157,6 +186,7 @@ class SwitchNavigation extends React.Component {
   };
 
   render() {
+    console.log('isloggedin: ', this.props.isLoggedIn);
     const {is_the_login_first_time} = this.props;
     const {update_needed} = this.state;
     if (update_needed) {
@@ -164,14 +194,19 @@ class SwitchNavigation extends React.Component {
     } else if (is_the_login_first_time === null) {
       return (
         <View style={styles.indicatorContainer}>
-          <ActivityIndicator size="large" color={'#000'} />
+          <ImageBackground source={IMAGEBACK} style={styles.imageBack}>
+            <ActivityIndicator size="large" color={'white'} />
+          </ImageBackground>
         </View>
       );
     } else {
-
       return (
         <NavigationContainer>
-          {is_the_login_first_time ? <StarterPagesStack /> : <MainPagesStack />}
+          {is_the_login_first_time ? (
+            <StarterPagesStack />
+          ) : (
+            <MyDrawer isLoggedIn={this.props.isLoggedIn} />
+          )}
         </NavigationContainer>
       );
     }
@@ -182,11 +217,12 @@ export const styles = StyleSheet.create({
   indicatorContainer: {
     flex: 1,
     flexDirection: 'column',
-    height: DEVICE_HEIGHT,
-    width: DEVICE_WIDTH,
+  },
+  imageBack: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: page_body_background_color,
+    resizeMode: 'contain',
   },
 });
 
@@ -194,6 +230,7 @@ const mapStateToProps = (state) => {
   return {
     is_the_login_first_time: state.mainReducer.is_the_login_first_time,
     language: state.mainReducer.language,
+    isLoggedIn: state.mainReducer.isLoggedIn,
   };
 };
 
