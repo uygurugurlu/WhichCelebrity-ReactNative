@@ -12,7 +12,8 @@ import {
   CLEAR_SELECTED_TO_DELETE_COUNT,
   GET_DETECTED_FACE_COUNT,
   AUTHENTICATE_USER,
-  UNAUTHENTICATE_USER
+  UNAUTHENTICATE_USER,
+  GET_USER_DATA,
 } from './ActionTypes';
 
 export const get_detected_face_count = (count) => {
@@ -106,5 +107,12 @@ export const authenticate_user = () => {
 export const unauthenticate_user = () => {
   return {
     type: UNAUTHENTICATE_USER,
+  };
+};
+
+export const get_user_data = (user_data) => {
+  return {
+    type: GET_USER_DATA,
+    user_data: user_data,
   };
 };

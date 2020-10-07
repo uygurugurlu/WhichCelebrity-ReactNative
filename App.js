@@ -15,16 +15,15 @@ import {
   statusCodes,
 } from '@react-native-community/google-signin';
 
-const configureGoogleSignin = (async) => {
-  GoogleSignin.configure();
-};
-
 configureFontAwesomePro();
 const store = configureStore();
 
 function App() {
+  GoogleSignin.configure({
+    webClientId:
+      '93591380261-076oe651jsdnrr01kol349k11s8eh0hq.apps.googleusercontent.com',
+  });
   let init = async () => {
-    await configureGoogleSignin();
     await requestUserPermission();
     await AdMobConfigure();
     await setI18nConfig();

@@ -27,6 +27,7 @@ import {
 import {
   get_detected_face_count,
   get_user_avatar_source,
+  unauthenticate_user,
 } from '../../Store/Actions';
 import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoFromImageLibrary';
 import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
@@ -195,8 +196,9 @@ class HomePage extends Component {
   NavigateToResultPage = (data) =>
     this.props.navigation.navigate('ResultPage', {data: data});
 
-  NavigateToSavingsPage = () =>
+  NavigateToSavingsPage = () => {
     this.props.navigation.navigate('SavingsPage', {tab_index: 0});
+  }
 
   HandleCategoriesVisibility = () =>
     this.setState({categories_visibility: !this.state.categories_visibility});
@@ -365,7 +367,7 @@ class HomePage extends Component {
       {label: translate('home.search_male_celebrities'), id: 2, type:'male'} ,
       {label: translate('home.search_female_celebrities'), id: 3, type:'female'},
     ];
-    const {userAvatarSource} = this.props;
+    const {userAvatarSource, unauthenticate_user} = this.props;
     const {
       categories_visibility,
       scroll_items,
@@ -376,6 +378,7 @@ class HomePage extends Component {
     return (
       <View style={styles.mainContainer}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
+        <TouchableHighlight onPress={() => unauthenticate_user}><Text>Kapat</Text></TouchableHighlight>
           <View style={styles.topLabelContainerStyle}>
             <Text style={styles.topLabelStyle}>
               {translate('home.top_label')}
@@ -782,6 +785,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(get_user_avatar_source(source, base64_data)),
     get_detected_face_count: (count) =>
       dispatch(get_detected_face_count(count)),
+      unauthenticate_user: () => dispatch(unauthenticate_user()),
   };
 };
 

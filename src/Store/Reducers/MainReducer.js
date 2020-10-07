@@ -12,7 +12,8 @@ import {
   CLEAR_SELECTED_TO_DELETE_COUNT,
   GET_DETECTED_FACE_COUNT,
   AUTHENTICATE_USER,
-  UNAUTHENTICATE_USER
+  UNAUTHENTICATE_USER,
+  GET_USER_DATA,
 } from '../Actions/ActionTypes';
 
 import update from 'react-addons-update';
@@ -41,6 +42,8 @@ const initialState = {
   delete_list: [],
 
   detected_face_count: 0,
+
+  user_data: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,17 +52,20 @@ const reducer = (state = initialState, action) => {
       return (state = update(state, {
         is_the_login_first_time: {$set: action.is_first},
       }));
+    case GET_USER_DATA:
+      return (state = update(state, {
+        user_data: {$set: action.user_data},
+      }));
 
-      case AUTHENTICATE_USER:
-        return (state = update(state, {
-          isLoggedIn: {$set: true},
-        }));
+    case AUTHENTICATE_USER:
+      return (state = update(state, {
+        isLoggedIn: {$set: true},
+      }));
 
-        case UNAUTHENTICATE_USER:
-        return (state = update(state, {
-          isLoggedIn: {$set: false},
-        }));
-
+    case UNAUTHENTICATE_USER:
+      return (state = update(state, {
+        isLoggedIn: {$set: false},
+      }));
 
     case SET_LANGUAGE:
       return (state = update(state, {
