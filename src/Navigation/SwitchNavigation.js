@@ -7,7 +7,6 @@ import {
   ImageBackground,
   Alert,
   Image,
-  Button,
   Text,
   TouchableHighlight,
 } from 'react-native';
@@ -37,8 +36,6 @@ import {PerformTimeConsumingTask} from '../common/Functions/PerformTimeConsuming
 import crashlytics from '@react-native-firebase/crashlytics';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {IMAGEBACK} from '../common/Constants';
-import {CustomDrawerContent} from '../common/Components/DrawerContent';
-import {CustomDrawerContentLoggedIn} from '../common/Components/DrawerContentLoggedIn';
 import {PostIdToken} from '../common/Functions/Endpoints/PostIdToken';
 import {
   signInFunction,
@@ -49,6 +46,7 @@ import {
 import {storeData, getData} from '../common/Functions/ManageAsyncData';
 import {Drawer} from './Drawer';
 import {GoogleSigninButton} from '@react-native-community/google-signin';
+import auth from '@react-native-firebase/auth';
 
 const MyDrawer = createDrawerNavigator();
 
@@ -67,7 +65,7 @@ class SwitchNavigation extends React.Component {
 
   handleSignIn = () => {
     signInFunction().then((signInInfo) => {
-      console.log(signInInfo);
+      console.log('signInInfo', signInInfo);
       if (signInInfo == -1) {
         Alert.alert('User Canceled Sign In');
       } else if (signInInfo == -2) {
@@ -77,31 +75,38 @@ class SwitchNavigation extends React.Component {
       } else if (signInInfo == -3) {
         Alert.alert('Error');
       } else {
+        auth()
+          .currentUser.getIdToken()
+          .then((res) => {
+            this.setState({idToken: res});
+          });
+
         storeData('@UserInfo', signInInfo);
         this.props.authenticate_user();
         this.props.get_user_data(signInInfo);
-        var parsed_value = JSON.parse(signInInfo);
         this.setState({
-          name: parsed_value.user.name,
-          mail: parsed_value.user.email,
-          photo: parsed_value.user.photo,
-          idToken: GoogleSignin.signInSilently(),
+          name: signInInfo.user.displayName,
+          mail: signInInfo.user.email,
+          photo: signInInfo.user.photoURL,
         });
       }
     });
   };
   handleIsSignedIn = async () => {
-    var info = await AsyncStorage.getItem('@UserInfo');
-    if (info !== null && isSignedIn()) {
+    var signInInfo = JSON.parse(await AsyncStorage.getItem('@UserInfo'));
+    if (signInInfo !== null && isSignedIn()) {
       this.props.authenticate_user();
-      console.log('handleissignedin data: ', info);
-      this.props.get_user_data(info);
-      var parsed_value = JSON.parse(info);
+      console.log('handleissignedin data: ', signInInfo.user);
+      this.props.get_user_data(signInInfo);
+      auth()
+        .currentUser.getIdToken()
+        .then((res) => {
+          this.setState({idToken: res});
+        });
       this.setState({
-        name: parsed_value.user.name,
-        mail: parsed_value.user.email,
-        photo: parsed_value.user.photo,
-        idToken: getCurrentUserInfo,
+        name: signInInfo.user.displayName,
+        mail: signInInfo.user.email,
+        photo: signInInfo.user.photoURL,
       });
     } else {
       this.props.unauthenticate_user();
@@ -111,7 +116,9 @@ class SwitchNavigation extends React.Component {
   };
   handleSignOut = async () => {
     try {
-      signOut();
+      auth()
+        .signOut()
+        .then(() => console.log('User signed out!'));
       this.props.unauthenticate_user();
       this.props.get_user_data(null);
     } catch (error) {

@@ -1,11 +1,17 @@
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
+import auth from '@react-native-firebase/auth';
 
-export const signInFunction =  async () => {
+export const signInFunction = async () => {
   try {
     await GoogleSignin.hasPlayServices();
+
     const userInfo = await GoogleSignin.signIn();
     console.log('Log in succesful, userInfo: ', userInfo);
-    return userInfo;
+    const googleCredential = auth.GoogleAuthProvider.credential(
+      userInfo.idToken,
+    );
+
+    return auth().signInWithCredential(googleCredential);
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       console.log('Google signin error: ', error);

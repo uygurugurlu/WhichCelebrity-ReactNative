@@ -1,15 +1,7 @@
-
 //   22|NEVPKycSrniJH6N3kqpGBWPTjF6dF2tRW0jQFRV8
 //   http://192.168.1.113:8000
 //    https://api.myface.io
 //    1657|VXWE09dkbvKbAagr3DOz36NdZCUZxOQCkcTb0DhS
-
-
-
-
-
-
-
 
 import React, {useEffect} from 'react';
 import configureStore from './src/Store/ConfigureStore';
@@ -35,6 +27,7 @@ function App() {
   GoogleSignin.configure({
     webClientId:
       '93591380261-076oe651jsdnrr01kol349k11s8eh0hq.apps.googleusercontent.com',
+    offlineAccess: true,
   });
   let init = async () => {
     await requestUserPermission();
