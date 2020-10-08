@@ -378,7 +378,6 @@ class HomePage extends Component {
     return (
       <View style={styles.mainContainer}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
-        <TouchableHighlight onPress={() => unauthenticate_user}><Text>Kapat</Text></TouchableHighlight>
           <View style={styles.topLabelContainerStyle}>
             <Text style={styles.topLabelStyle}>
               {translate('home.top_label')}

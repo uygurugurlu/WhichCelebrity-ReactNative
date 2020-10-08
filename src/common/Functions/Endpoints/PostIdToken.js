@@ -7,10 +7,5 @@ export const PostIdToken = async (id_token) => {
     token: id_token,
   };
 
-  return axios.post(`${API_HOST}/api/firebase/login`, body, {
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
-    },
-  });
+  return axios.post(`${API_HOST}/api/firebase/login`, body);
 };

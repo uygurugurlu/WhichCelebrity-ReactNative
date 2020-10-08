@@ -29,7 +29,7 @@ import DeviceInfo from 'react-native-device-info';
 import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
 import SignIn from '../Screens/SignIn/SignIn';
 
-import {page_body_background_color} from '../common/ColorIndex';
+import {page_body_background_color, button_colors} from '../common/ColorIndex';
 import MainPagesStack from './MainStack';
 import UserAgent from 'react-native-user-agent';
 import {GetAppVersion} from '../common/Functions/Endpoints/GetAppVersion';
@@ -44,6 +44,7 @@ import {
   signInFunction,
   isSignedIn,
   signOut,
+  getCurrentUserInfo,
 } from '../common/Functions/GoogleSignInFunctions';
 import {storeData, getData} from '../common/Functions/ManageAsyncData';
 import {Drawer} from './Drawer';
@@ -84,7 +85,7 @@ class SwitchNavigation extends React.Component {
           name: parsed_value.user.name,
           mail: parsed_value.user.email,
           photo: parsed_value.user.photo,
-          idToken: parsed_value.idToken,
+          idToken: GoogleSignin.signInSilently(),
         });
       }
     });
@@ -100,7 +101,7 @@ class SwitchNavigation extends React.Component {
         name: parsed_value.user.name,
         mail: parsed_value.user.email,
         photo: parsed_value.user.photo,
-        idToken: parsed_value.idToken,
+        idToken: getCurrentUserInfo,
       });
     } else {
       this.props.unauthenticate_user();
@@ -284,15 +285,17 @@ class SwitchNavigation extends React.Component {
                     <View style={styles.contentContainer}>
                       <View style={styles.signInButtonContainer}>
                         <Text style={styles.title}>{this.state.name}</Text>
-                        <TouchableHighlight
-                          onPress={() => this.handleSignOut()}>
-                          <Text>Çıkış Yap</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
+
+                        {/* <TouchableHighlight
                           onPress={() => PostIdToken(this.state.idToken)}>
                           <Text>Gönder</Text>
-                        </TouchableHighlight>
+                        </TouchableHighlight> */}
                       </View>
+                      <TouchableHighlight
+                        style={styles.signout}
+                        onPress={() => this.handleSignOut()}>
+                        <Text style={styles.button}>Çıkış Yap</Text>
+                      </TouchableHighlight>
                     </View>
                   </View>
                 ) : (
@@ -366,11 +369,26 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 0.6,
+    justifyContent: 'space-between',
   },
   signInButtonContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  signout: {
+    height: 50,
+    backgroundColor: button_colors,
+    borderRadius: 30,
+    justifyContent: 'center',
+    marginVertical: 30,
+    marginHorizontal: 30,
+  },
+  button: {
+    marginHorizontal: 20,
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
   },
 });
 

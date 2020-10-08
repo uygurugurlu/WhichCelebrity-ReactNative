@@ -1,3 +1,16 @@
+
+//   22|NEVPKycSrniJH6N3kqpGBWPTjF6dF2tRW0jQFRV8
+//   http://192.168.1.113:8000
+//    https://api.myface.io
+//    1657|VXWE09dkbvKbAagr3DOz36NdZCUZxOQCkcTb0DhS
+
+
+
+
+
+
+
+
 import React, {useEffect} from 'react';
 import configureStore from './src/Store/ConfigureStore';
 import {Provider} from 'react-redux';
