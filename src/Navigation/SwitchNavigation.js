@@ -47,9 +47,10 @@ import {storeData, getData} from '../common/Functions/ManageAsyncData';
 import {Drawer} from './Drawer';
 import {GoogleSigninButton} from '@react-native-community/google-signin';
 import auth from '@react-native-firebase/auth';
+import { AppleButton } from '@invertase/react-native-apple-authentication';
+import {onAppleButtonPress } from '../common/Functions/AppleSignInFunctions';
 
 const MyDrawer = createDrawerNavigator();
-
 class SwitchNavigation extends React.Component {
   constructor(props) {
     super(props);
@@ -63,7 +64,7 @@ class SwitchNavigation extends React.Component {
     };
   }
 
-  handleSignIn = () => {
+  handleGoogleSignIn = () => {
     signInFunction().then((signInInfo) => {
       console.log('signInInfo', signInInfo);
       if (signInInfo == -1) {
@@ -73,6 +74,7 @@ class SwitchNavigation extends React.Component {
       } else if (signInInfo == -3) {
         Alert.alert('Play services not available');
       } else if (signInInfo == -3) {
+
         Alert.alert('Error');
       } else {
         auth()
@@ -92,6 +94,11 @@ class SwitchNavigation extends React.Component {
       }
     });
   };
+  handleAppleSignIn = () => {
+    console.log('ye');
+    console.log(onAppleButtonPress());
+
+  }
   handleIsSignedIn = async () => {
     var signInInfo = JSON.parse(await AsyncStorage.getItem('@UserInfo'));
     if (signInInfo !== null && isSignedIn()) {
@@ -257,6 +264,7 @@ class SwitchNavigation extends React.Component {
     }
   };
 
+
   render() {
     console.log('token ', this.state.idToken);
     const {is_the_login_first_time, isLoggedIn} = this.props;
@@ -314,12 +322,25 @@ class SwitchNavigation extends React.Component {
                     </View>
                     <View style={styles.contentContainer}>
                       <View style={styles.signInButtonContainer}>
-                        <GoogleSigninButton
-                          style={{width: 192, height: 48}}
-                          size={GoogleSigninButton.Size.Wide}
-                          color={GoogleSigninButton.Color.Dark}
-                          onPress={() => this.handleSignIn()}
-                        />
+                        { Platform.OS == 'ios' ?
+                            (<AppleButton
+                                buttonStyle={AppleButton.Style.WHITE}
+                                buttonType={AppleButton.Type.SIGN_IN}
+                                style={{
+                                  width: 160, // You must specify a width
+                                  height: 45, // You must specify a height
+                                }}
+                                onPress={() => this.handleAppleSignIn()}
+                            />)
+                            :
+                            (<GoogleSigninButton
+                                style={{width: 192, height: 48}}
+                                size={GoogleSigninButton.Size.Wide}
+                                color={GoogleSigninButton.Color.Dark}
+                                onPress={() => this.handleGoogleSignIn()}
+                            />)
+                        }
+
                       </View>
                     </View>
                   </View>
@@ -358,17 +379,18 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   avatarWrapper: {
-    flex: 0.8,
+    flex: 0.6,
     borderRadius: 100,
     aspectRatio: 1,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:'red',
   },
   avatarImage: {
     resizeMode: 'cover',
-    height: DEVICE_HEIGHT * 0.35,
-    width: DEVICE_HEIGHT * 0.35,
+    height: DEVICE_WIDTH * 0.6,
+    width: DEVICE_WIDTH * 0.6,
   },
   title: {
     color: 'white',
