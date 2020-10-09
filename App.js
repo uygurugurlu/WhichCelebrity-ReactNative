@@ -1,3 +1,8 @@
+//   22|NEVPKycSrniJH6N3kqpGBWPTjF6dF2tRW0jQFRV8
+//   http://192.168.1.113:8000
+//    https://api.myface.io
+//    1657|VXWE09dkbvKbAagr3DOz36NdZCUZxOQCkcTb0DhS
+
 import React, {useEffect} from 'react';
 import configureStore from './src/Store/ConfigureStore';
 import {Provider} from 'react-redux';
@@ -9,10 +14,21 @@ import admob, {MaxAdContentRating} from '@react-native-firebase/admob';
 import {configureFontAwesomePro} from 'react-native-fontawesome-pro';
 import axios from 'axios';
 import {header_background_color} from './src/common/ColorIndex';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-community/google-signin';
+
 configureFontAwesomePro();
 const store = configureStore();
 
 function App() {
+  GoogleSignin.configure({
+    webClientId:
+      '93591380261-076oe651jsdnrr01kol349k11s8eh0hq.apps.googleusercontent.com',
+    offlineAccess: true,
+  });
   let init = async () => {
     await requestUserPermission();
     await AdMobConfigure();

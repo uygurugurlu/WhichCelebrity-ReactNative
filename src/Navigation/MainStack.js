@@ -13,6 +13,7 @@ import SavingsPage from '../Screens/Savings/SavingsPage';
 import Dashboard from '../Screens/Dashboard/Dashboard';
 import ResultPage2 from '../Screens/ResultScreen2/ResultPage2';
 import HomePage2 from '../Screens/HomeScreen2/HomePage2';
+import SignIn from '../Screens/SignIn/SignIn';
 
 const MainStack = createStackNavigator();
 
@@ -106,6 +107,18 @@ export default function MainPagesStack() {
       <MainStack.Screen
         name="SavingsPage"
         component={SavingsPage}
+        options={({navigation, route}) => ({
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor: header_background_color,
+          },
+          headerTintColor: header_label_color,
+
+        })}
+      />
+      <MainStack.Screen
+        name="SignInPage"
+        component={SignIn}
         options={({navigation, route}) => ({
           headerBackTitleVisible: false,
           headerStyle: {

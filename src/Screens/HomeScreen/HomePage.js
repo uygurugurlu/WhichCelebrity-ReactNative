@@ -27,6 +27,7 @@ import {
 import {
   get_detected_face_count,
   get_user_avatar_source,
+  unauthenticate_user,
 } from '../../Store/Actions';
 import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoFromImageLibrary';
 import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
@@ -145,13 +146,13 @@ class HomePage extends Component {
 
   WhenTheLanguageChanged = () => this.forceUpdate();
 
-  LaunchCamera() {
+  LaunchCamera = async () => {
     /* const {path, data} = await GetUserPhotoFromCamera();
     this.props.get_user_avatar_source({uri: path}, data);
     const faces = await DetectFace(path);
     this.props.get_detected_face_count(faces.length);
     console.log('faces:', faces, faces.length); */
-
+    await this.setState({optionsModalVisible:false})
     ImagePicker.launchCamera(options, (response) => {
 
       if (response.didCancel) {
@@ -164,8 +165,9 @@ class HomePage extends Component {
         this.setState({crop_visibility: true, imageUri: response.uri});
       }
     });
-  }
+  };
   LaunchImageLibrary = async () => {
+    await this.setState({optionsModalVisible:false});
     ImagePicker.launchImageLibrary(options, (response) => {
 
       if (response.didCancel) {
@@ -194,8 +196,9 @@ class HomePage extends Component {
   NavigateToResultPage = (data) =>
     this.props.navigation.navigate('ResultPage', {data: data});
 
-  NavigateToSavingsPage = () =>
+  NavigateToSavingsPage = () => {
     this.props.navigation.navigate('SavingsPage', {tab_index: 0});
+  }
 
   HandleCategoriesVisibility = () =>
     this.setState({categories_visibility: !this.state.categories_visibility});
@@ -214,16 +217,6 @@ class HomePage extends Component {
     }
   };
 
-  GetActionSheet = () => {
-    return (
-      <ActionSheetComponent
-        launchImageLibrary={this.LaunchImageLibrary}
-        launchCamera={this.LaunchCamera}
-        handlePress={this.handlePress}
-        getActionSheetRef={this.getActionSheetRef}
-      />
-    );
-  };
   CheckValidity = () => {
     const {userAvatarSource, detected_face_count} = this.props;
     console.log('CheckValidity detected_faces: ', detected_face_count);
@@ -374,7 +367,7 @@ class HomePage extends Component {
       {label: translate('home.search_male_celebrities'), id: 2, type:'male'} ,
       {label: translate('home.search_female_celebrities'), id: 3, type:'female'},
     ];
-    const {userAvatarSource} = this.props;
+    const {userAvatarSource, unauthenticate_user} = this.props;
     const {
       categories_visibility,
       scroll_items,
@@ -456,9 +449,7 @@ class HomePage extends Component {
               <View style={styles.settingsModalContainer}>
                 <TouchableOpacity
                   onPress={() =>
-                    this.setState({optionsModalVisible: false}, () =>
-                      this.LaunchCamera(),
-                    )
+                    this.LaunchCamera()
                   }
                   style={styles.settingsMainButtons}>
                   <Text style={styles.settingsButton}>{translate('image_picker.use_camera')}</Text>
@@ -470,9 +461,7 @@ class HomePage extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() =>
-                    this.setState({optionsModalVisible: false}, () =>
-                      this.LaunchImageLibrary(),
-                    )
+                  this.LaunchImageLibrary()
                   }
                   style={styles.settingsMainButtons}>
                   <Text style={styles.settingsButton}>{translate('image_picker.photo_library')}</Text>
@@ -795,6 +784,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(get_user_avatar_source(source, base64_data)),
     get_detected_face_count: (count) =>
       dispatch(get_detected_face_count(count)),
+      unauthenticate_user: () => dispatch(unauthenticate_user()),
   };
 };
 

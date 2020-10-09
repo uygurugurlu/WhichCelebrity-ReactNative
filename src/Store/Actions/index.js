@@ -11,4 +11,7 @@ export {
   remove_from_delete_list,
   clear_delete_list,
   get_detected_face_count,
+  unauthenticate_user,
+  authenticate_user,
+  get_user_data,
 } from './MainActions';

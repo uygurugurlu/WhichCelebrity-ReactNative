@@ -6,6 +6,7 @@ import {
   Image,
   View,
   ImageBackground,
+  Button,
 } from 'react-native';
 import {
   DEVICE_HEIGHT,

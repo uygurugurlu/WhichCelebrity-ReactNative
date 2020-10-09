@@ -1,30 +1,137 @@
 import React from 'react';
-import {ActivityIndicator, StyleSheet, View, Platform} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  View,
+  Platform,
+  ImageBackground,
+  Alert,
+  Image,
+  Text,
+  TouchableHighlight,
+} from 'react-native';
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {setI18nConfig} from '../I18n';
-import {first_time_login, get_user_agent, set_language} from '../Store/Actions';
+import {
+  authenticate_user,
+  unauthenticate_user,
+  get_user_data,
+  first_time_login,
+  get_user_agent,
+  set_language,
+} from '../Store/Actions';
 import StarterPagesStack from './Starter/StarterPagesStack';
-import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../common/Constants';
+import {DEVICE_HEIGHT, DEVICE_WIDTH, CAMERAICON} from '../common/Constants';
 import DeviceInfo from 'react-native-device-info';
 import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
-import {page_body_background_color} from '../common/ColorIndex';
+import SignIn from '../Screens/SignIn/SignIn';
+
+import {page_body_background_color, button_colors} from '../common/ColorIndex';
 import MainPagesStack from './MainStack';
 import UserAgent from 'react-native-user-agent';
 import {GetAppVersion} from '../common/Functions/Endpoints/GetAppVersion';
 import {PerformTimeConsumingTask} from '../common/Functions/PerformTimeConsumingTask';
-import crashlytics from "@react-native-firebase/crashlytics";
+import crashlytics from '@react-native-firebase/crashlytics';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {IMAGEBACK} from '../common/Constants';
+import {PostIdToken} from '../common/Functions/Endpoints/PostIdToken';
+import {
+  signInFunction,
+  isSignedIn,
+  signOut,
+  getCurrentUserInfo,
+} from '../common/Functions/GoogleSignInFunctions';
+import {storeData, getData} from '../common/Functions/ManageAsyncData';
+import {Drawer} from './Drawer';
+import {GoogleSigninButton} from '@react-native-community/google-signin';
+import auth from '@react-native-firebase/auth';
+import { AppleButton } from '@invertase/react-native-apple-authentication';
+import {onAppleButtonPress } from '../common/Functions/AppleSignInFunctions';
 
+const MyDrawer = createDrawerNavigator();
 class SwitchNavigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
       update_needed: false,
+      name: '',
+      mail: '',
+      photo: '',
+      idToken: '',
     };
   }
 
+  handleGoogleSignIn = () => {
+    signInFunction().then((signInInfo) => {
+      console.log('signInInfo', signInInfo);
+      if (signInInfo == -1) {
+        Alert.alert('User Canceled Sign In');
+      } else if (signInInfo == -2) {
+        Alert.alert('In progress error');
+      } else if (signInInfo == -3) {
+        Alert.alert('Play services not available');
+      } else if (signInInfo == -3) {
+
+        Alert.alert('Error');
+      } else {
+        auth()
+          .currentUser.getIdToken()
+          .then((res) => {
+            this.setState({idToken: res});
+          });
+
+        storeData('@UserInfo', signInInfo);
+        this.props.authenticate_user();
+        this.props.get_user_data(signInInfo);
+        this.setState({
+          name: signInInfo.user.displayName,
+          mail: signInInfo.user.email,
+          photo: signInInfo.user.photoURL,
+        });
+      }
+    });
+  };
+  handleAppleSignIn = () => {
+    console.log('ye');
+    console.log(onAppleButtonPress());
+
+  }
+  handleIsSignedIn = async () => {
+    var signInInfo = JSON.parse(await AsyncStorage.getItem('@UserInfo'));
+    if (signInInfo !== null && isSignedIn()) {
+      this.props.authenticate_user();
+      console.log('handleissignedin data: ', signInInfo.user);
+      this.props.get_user_data(signInInfo);
+      auth()
+        .currentUser.getIdToken()
+        .then((res) => {
+          this.setState({idToken: res});
+        });
+      this.setState({
+        name: signInInfo.user.displayName,
+        mail: signInInfo.user.email,
+        photo: signInInfo.user.photoURL,
+      });
+    } else {
+      this.props.unauthenticate_user();
+      storeData('@UserInfo', null);
+      this.props.get_user_data(null);
+    }
+  };
+  handleSignOut = async () => {
+    try {
+      auth()
+        .signOut()
+        .then(() => console.log('User signed out!'));
+      this.props.unauthenticate_user();
+      this.props.get_user_data(null);
+    } catch (error) {
+      console.log('error signing out: ', error);
+    }
+  };
   getData = async (key) => {
     try {
       const value = await AsyncStorage.getItem(key);
@@ -33,7 +140,7 @@ class SwitchNavigation extends React.Component {
         console.log('value previously stored: ', key);
         switch (key) {
           case 'LOGGED_IN_FIRST_TIME':
-            this.props.first_time_login(false); 
+            this.props.first_time_login(false);
             break;
         }
       } else {
@@ -59,7 +166,7 @@ class SwitchNavigation extends React.Component {
     await UserAgent.getWebViewUserAgent() //asynchronous
       .then((ua) => {
         this.props.get_user_agent(ua);
-        console.log("Agent: ", ua);
+        console.log('Agent: ', ua);
       })
       .catch((e) => {
         crashlytics().recordError(e);
@@ -73,6 +180,7 @@ class SwitchNavigation extends React.Component {
 
   componentDidMount = async () => {
     await this.SetI18nConfig();
+    await this.handleIsSignedIn();
   };
 
   SetI18nConfig = async () => {
@@ -95,7 +203,7 @@ class SwitchNavigation extends React.Component {
   };
 
   GetVersion = async () => {
-    console.log("user_agent: ", this.props.user_agent);
+    console.log('user_agent: ', this.props.user_agent);
     const {data} = await GetAppVersion(this.props.user_agent);
     console.log('GetVersion Api doğru çalıştı ...', data);
 
@@ -156,22 +264,94 @@ class SwitchNavigation extends React.Component {
     }
   };
 
+
   render() {
-    const {is_the_login_first_time} = this.props;
+    console.log('token ', this.state.idToken);
+    const {is_the_login_first_time, isLoggedIn} = this.props;
     const {update_needed} = this.state;
     if (update_needed) {
       return <UpdateApp />;
     } else if (is_the_login_first_time === null) {
       return (
         <View style={styles.indicatorContainer}>
-          <ActivityIndicator size="large" color={'#000'} />
+          <ImageBackground source={IMAGEBACK} style={styles.imageBack}>
+            <ActivityIndicator size="large" color={'white'} />
+          </ImageBackground>
         </View>
       );
     } else {
-
       return (
         <NavigationContainer>
-          {is_the_login_first_time ? <StarterPagesStack /> : <MainPagesStack />}
+          {is_the_login_first_time ? (
+            <StarterPagesStack />
+          ) : (
+            <MyDrawer.Navigator
+              drawerContent={() => {
+                return isLoggedIn ? (
+                  <View style={styles.container}>
+                    <View style={styles.avatarContainer}>
+                      <View style={styles.avatarWrapper}>
+                        <Image
+                          source={{uri: this.state.photo}}
+                          style={styles.avatarImage}
+                        />
+                      </View>
+                    </View>
+                    <View style={styles.contentContainer}>
+                      <View style={styles.signInButtonContainer}>
+                        <Text style={styles.title}>{this.state.name}</Text>
+
+                        {/* <TouchableHighlight
+                          onPress={() => PostIdToken(this.state.idToken)}>
+                          <Text>Gönder</Text>
+                        </TouchableHighlight> */}
+                      </View>
+                      <TouchableHighlight
+                        style={styles.signout}
+                        onPress={() => this.handleSignOut()}>
+                        <Text style={styles.button}>Çıkış Yap</Text>
+                      </TouchableHighlight>
+                    </View>
+                  </View>
+                ) : (
+                  <View style={styles.container}>
+                    <View style={styles.avatarContainer}>
+                      <View style={styles.avatarWrapper}>
+                        <Image source={CAMERAICON} style={styles.avatarImage} />
+                      </View>
+                    </View>
+                    <View style={styles.contentContainer}>
+                      <View style={styles.signInButtonContainer}>
+                        { Platform.OS == 'ios' ?
+                            (<AppleButton
+                                buttonStyle={AppleButton.Style.WHITE}
+                                buttonType={AppleButton.Type.SIGN_IN}
+                                style={{
+                                  width: 160, // You must specify a width
+                                  height: 45, // You must specify a height
+                                }}
+                                onPress={() => this.handleAppleSignIn()}
+                            />)
+                            :
+                            (<GoogleSigninButton
+                                style={{width: 192, height: 48}}
+                                size={GoogleSigninButton.Size.Wide}
+                                color={GoogleSigninButton.Color.Dark}
+                                onPress={() => this.handleGoogleSignIn()}
+                            />)
+                        }
+
+                      </View>
+                    </View>
+                  </View>
+                );
+              }}>
+              <MyDrawer.Screen
+                name="MainPagesStack"
+                component={MainPagesStack}
+              />
+            </MyDrawer.Navigator>
+          )}
         </NavigationContainer>
       );
     }
@@ -182,11 +362,62 @@ export const styles = StyleSheet.create({
   indicatorContainer: {
     flex: 1,
     flexDirection: 'column',
-    height: DEVICE_HEIGHT,
-    width: DEVICE_WIDTH,
+  },
+  imageBack: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: page_body_background_color,
+    resizeMode: 'contain',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'rgb(70,70,70)',
+  },
+  avatarContainer: {
+    flex: 0.4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatarWrapper: {
+    flex: 0.6,
+    borderRadius: 100,
+    aspectRatio: 1,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'red',
+  },
+  avatarImage: {
+    resizeMode: 'cover',
+    height: DEVICE_WIDTH * 0.6,
+    width: DEVICE_WIDTH * 0.6,
+  },
+  title: {
+    color: 'white',
+    fontSize: 20,
+  },
+  contentContainer: {
+    flex: 0.6,
+    justifyContent: 'space-between',
+  },
+  signInButtonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  signout: {
+    height: 50,
+    backgroundColor: button_colors,
+    borderRadius: 30,
+    justifyContent: 'center',
+    marginVertical: 30,
+    marginHorizontal: 30,
+  },
+  button: {
+    marginHorizontal: 20,
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
   },
 });
 
@@ -194,6 +425,8 @@ const mapStateToProps = (state) => {
   return {
     is_the_login_first_time: state.mainReducer.is_the_login_first_time,
     language: state.mainReducer.language,
+    isLoggedIn: state.mainReducer.isLoggedIn,
+    user_data: state.mainReducer.user_data,
   };
 };
 
@@ -202,6 +435,9 @@ const mapDispatchToProps = (dispatch) => {
     first_time_login: (is_first) => dispatch(first_time_login(is_first)),
     get_user_agent: (agent) => dispatch(get_user_agent(agent)),
     set_language: (language) => dispatch(set_language(language)),
+    authenticate_user: () => dispatch(authenticate_user()),
+    unauthenticate_user: () => dispatch(unauthenticate_user()),
+    get_user_data: (data) => dispatch(get_user_data(data)),
   };
 };
 

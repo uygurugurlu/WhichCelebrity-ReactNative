@@ -141,13 +141,13 @@ class HomePage2 extends Component {
 
   WhenTheLanguageChanged = () => this.forceUpdate();
 
-  LaunchCamera() {
+  LaunchCamera = async () => {
     /* const {path, data} = await GetUserPhotoFromCamera();
     this.props.get_user_avatar_source({uri: path}, data);
     const faces = await DetectFace(path);
     this.props.get_detected_face_count(faces.length);
     console.log('faces:', faces, faces.length); */
-
+    await this.setState({optionsModalVisible: false});
     ImagePicker.launchCamera(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -159,7 +159,7 @@ class HomePage2 extends Component {
         this.setState({crop_visibility: true, imageUri: response.uri});
       }
     });
-  }
+  };
   LaunchImageLibrary = async () => {
     ImagePicker.launchImageLibrary(options, (response) => {
       if (response.didCancel) {
@@ -199,17 +199,6 @@ class HomePage2 extends Component {
     if (search !== nextState.search) {
       await this.fillScroll(nextState.search);
     }
-  };
-
-  GetActionSheet = () => {
-    return (
-      <ActionSheetComponent
-        launchImageLibrary={this.LaunchImageLibrary}
-        launchCamera={this.LaunchCamera}
-        handlePress={this.handlePress}
-        getActionSheetRef={this.getActionSheetRef}
-      />
-    );
   };
 
   CheckValidity = (random) => {
@@ -553,7 +542,7 @@ class HomePage2 extends Component {
           </View>
 
           <LoadingAnimationModal
-            text = {translate('home.loading_text_2')} 
+            text={translate('home.loading_text_2')}
             isModalVisible={result_loading || random_result_loading}
           />
           {
@@ -655,11 +644,7 @@ class HomePage2 extends Component {
             <View style={styles.bottomModal}>
               <View style={styles.settingsModalContainer}>
                 <TouchableOpacity
-                  onPress={() =>
-                    this.setState({optionsModalVisible: false}, () =>
-                      this.LaunchCamera(),
-                    )
-                  }
+                  onPress={() => this.LaunchCamera()}
                   style={styles.settingsMainButtons}>
                   <Text style={styles.settingsButton}>Kamerayı aç</Text>
                   <Icon
@@ -669,11 +654,7 @@ class HomePage2 extends Component {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() =>
-                    this.setState({optionsModalVisible: false}, () =>
-                      this.LaunchImageLibrary(),
-                    )
-                  }
+                  onPress={() => this.LaunchImageLibrary()}
                   style={styles.settingsMainButtons}>
                   <Text style={styles.settingsButton}>Galeriden seç</Text>
                   <Icon
