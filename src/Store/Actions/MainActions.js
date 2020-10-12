@@ -14,6 +14,7 @@ import {
   AUTHENTICATE_USER,
   UNAUTHENTICATE_USER,
   GET_USER_DATA,
+  SET_AUTH_TOKEN,
 } from './ActionTypes';
 
 export const get_detected_face_count = (count) => {
@@ -114,5 +115,11 @@ export const get_user_data = (user_data) => {
   return {
     type: GET_USER_DATA,
     user_data: user_data,
+  };
+};
+export const set_auth_token = (auth_token) => {
+  return {
+    type: SET_AUTH_TOKEN,
+    auth_token: auth_token,
   };
 };

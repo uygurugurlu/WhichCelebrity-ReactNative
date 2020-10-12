@@ -21,8 +21,10 @@ import {
   first_time_login,
   get_user_agent,
   set_language,
+  set_auth_token,
 } from '../Store/Actions';
 import StarterPagesStack from './Starter/StarterPagesStack';
+import {AUTH_TOKEN} from  '../../src/config/index';
 import {DEVICE_HEIGHT, DEVICE_WIDTH, CAMERAICON} from '../common/Constants';
 import DeviceInfo from 'react-native-device-info';
 import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
@@ -37,6 +39,8 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {IMAGEBACK} from '../common/Constants';
 import {PostIdToken} from '../common/Functions/Endpoints/PostIdToken';
+import {ConfirmUser} from '../common/Functions/Endpoints/ConfirmUser';
+
 import {
   signInFunction,
   isSignedIn,
@@ -47,9 +51,8 @@ import {storeData, getData} from '../common/Functions/ManageAsyncData';
 import {Drawer} from './Drawer';
 import {GoogleSigninButton} from '@react-native-community/google-signin';
 import auth from '@react-native-firebase/auth';
-import { AppleButton } from '@invertase/react-native-apple-authentication';
-import {onAppleButtonPress } from '../common/Functions/AppleSignInFunctions';
-
+import {AppleButton} from '@invertase/react-native-apple-authentication';
+import {onAppleButtonPress} from '../common/Functions/AppleSignInFunctions';
 const MyDrawer = createDrawerNavigator();
 class SwitchNavigation extends React.Component {
   constructor(props) {
@@ -60,74 +63,108 @@ class SwitchNavigation extends React.Component {
       name: '',
       mail: '',
       photo: '',
-      idToken: '',
     };
   }
+  handlePostIdToken = async (idToken) => {
+    try {
+      var IdTokenResponse = await PostIdToken(idToken);
+      this.props.set_auth_token(
+        IdTokenResponse.data.access_token,
+      );
+      storeData('@auth_token', IdTokenResponse.data.access_token);
 
-  handleGoogleSignIn = () => {
-    signInFunction().then((signInInfo) => {
-      console.log('signInInfo', signInInfo);
-      if (signInInfo == -1) {
-        Alert.alert('User Canceled Sign In');
-      } else if (signInInfo == -2) {
-        Alert.alert('In progress error');
-      } else if (signInInfo == -3) {
-        Alert.alert('Play services not available');
-      } else if (signInInfo == -3) {
+      return true;
+    } catch (error) {
+      console.error('error post id token', error);
+      this.props.set_auth_token(
+        AUTH_TOKEN,
+      );
+      storeData('@auth_token', AUTH_TOKEN);
 
-        Alert.alert('Error');
-      } else {
-        auth()
-          .currentUser.getIdToken()
-          .then((res) => {
-            this.setState({idToken: res});
-          });
+      return false;
+    }
 
-        storeData('@UserInfo', signInInfo);
-        this.props.authenticate_user();
-        this.props.get_user_data(signInInfo);
-        this.setState({
-          name: signInInfo.user.displayName,
-          mail: signInInfo.user.email,
-          photo: signInInfo.user.photoURL,
-        });
-      }
-    });
   };
-  handleAppleSignIn = () => {
-    console.log('ye');
-    console.log(onAppleButtonPress());
+  handleGoogleSignIn = async () => {
+    var signInInfo = await signInFunction();
+    console.log('signInInfo', signInInfo);
+    if (signInInfo == -1) {
+      Alert.alert('User Canceled Sign In');
+    } else if (signInInfo == -2) {
+      Alert.alert('In progress error');
+    } else if (signInInfo == -3) {
+      Alert.alert('Play services not available');
+    } else if (signInInfo == -4) {
+      Alert.alert('Error');
+    } else {
+      var currentUserIdToken = await auth().currentUser.getIdToken();
+      this.handlePostIdToken(currentUserIdToken);
+      console.log('current user id token: ', currentUserIdToken);
 
-  }
-  handleIsSignedIn = async () => {
-    var signInInfo = JSON.parse(await AsyncStorage.getItem('@UserInfo'));
-    if (signInInfo !== null && isSignedIn()) {
+      storeData('@UserInfo', signInInfo);
+
       this.props.authenticate_user();
-      console.log('handleissignedin data: ', signInInfo.user);
-      this.props.get_user_data(signInInfo);
-      auth()
-        .currentUser.getIdToken()
-        .then((res) => {
-          this.setState({idToken: res});
-        });
+      this.props.get_user_data(currentUserIdToken);
       this.setState({
         name: signInInfo.user.displayName,
         mail: signInInfo.user.email,
         photo: signInInfo.user.photoURL,
       });
-    } else {
-      this.props.unauthenticate_user();
-      storeData('@UserInfo', null);
-      this.props.get_user_data(null);
     }
+  };
+  handleAppleSignIn = () => {
+    console.log(onAppleButtonPress());
+  };
+  handleIsSignedIn = async () => {
+    try {
+      var signInInfo = JSON.parse(await AsyncStorage.getItem('@UserInfo'));
+      var IsGoogleSignedIn = await isSignedIn()
+    
+        var res = await AsyncStorage.getItem('@auth_token');
+            if(res !== null){
+              var serviceUserData = await ConfirmUser(JSON.parse(res));
+
+              //BUNLAR EŞİT Mİ DİYE KONTROL ET
+              console.log("serviceUser: ",serviceUserData.data.data.id);
+              console.log("current user: ",auth().currentUser );
+
+
+              if (signInInfo !== null && IsGoogleSignedIn) {
+               
+              this.props.set_auth_token(JSON.parse(res));
+              var currentUserIdToken = await auth().currentUser.getIdToken();
+              this.props.authenticate_user();
+              this.props.get_user_data(currentUserIdToken);
+              this.setState({
+                name: signInInfo.user.displayName,
+                mail: signInInfo.user.email,
+                photo: signInInfo.user.photoURL,
+              });
+  
+            }
+            else {
+              this.handleSignOut();
+            }
+        }
+        else {
+          this.handleSignOut();
+        }
+    } catch (error) {
+      console.warn("Error handling sign in, ",error)
+      this.handleSignOut();
+    }
+
   };
   handleSignOut = async () => {
     try {
       auth()
         .signOut()
         .then(() => console.log('User signed out!'));
-      this.props.unauthenticate_user();
-      this.props.get_user_data(null);
+        this.props.unauthenticate_user();
+        AsyncStorage.removeItem('@UserInfo');
+        storeData('@auth_token', AUTH_TOKEN);
+       this.props.get_user_data(null);
+       this.props.set_auth_token(AUTH_TOKEN);
     } catch (error) {
       console.log('error signing out: ', error);
     }
@@ -160,6 +197,8 @@ class SwitchNavigation extends React.Component {
   };
 
   componentWillMount = async () => {
+    await this.handleIsSignedIn();
+
     const data = await PerformTimeConsumingTask(1000);
     await this.GetVersion();
 
@@ -176,11 +215,12 @@ class SwitchNavigation extends React.Component {
     if (data !== null) {
       await this.getData('LOGGED_IN_FIRST_TIME');
     }
+
+   
   };
 
   componentDidMount = async () => {
     await this.SetI18nConfig();
-    await this.handleIsSignedIn();
   };
 
   SetI18nConfig = async () => {
@@ -264,9 +304,7 @@ class SwitchNavigation extends React.Component {
     }
   };
 
-
   render() {
-    console.log('token ', this.state.idToken);
     const {is_the_login_first_time, isLoggedIn} = this.props;
     const {update_needed} = this.state;
     if (update_needed) {
@@ -300,11 +338,6 @@ class SwitchNavigation extends React.Component {
                     <View style={styles.contentContainer}>
                       <View style={styles.signInButtonContainer}>
                         <Text style={styles.title}>{this.state.name}</Text>
-
-                        {/* <TouchableHighlight
-                          onPress={() => PostIdToken(this.state.idToken)}>
-                          <Text>Gönder</Text>
-                        </TouchableHighlight> */}
                       </View>
                       <TouchableHighlight
                         style={styles.signout}
@@ -322,25 +355,24 @@ class SwitchNavigation extends React.Component {
                     </View>
                     <View style={styles.contentContainer}>
                       <View style={styles.signInButtonContainer}>
-                        { Platform.OS == 'ios' ?
-                            (<AppleButton
-                                buttonStyle={AppleButton.Style.WHITE}
-                                buttonType={AppleButton.Type.SIGN_IN}
-                                style={{
-                                  width: 160, // You must specify a width
-                                  height: 45, // You must specify a height
-                                }}
-                                onPress={() => this.handleAppleSignIn()}
-                            />)
-                            :
-                            (<GoogleSigninButton
-                                style={{width: 192, height: 48}}
-                                size={GoogleSigninButton.Size.Wide}
-                                color={GoogleSigninButton.Color.Dark}
-                                onPress={() => this.handleGoogleSignIn()}
-                            />)
-                        }
-
+                        {Platform.OS == 'ios' ? (
+                          <AppleButton
+                            buttonStyle={AppleButton.Style.WHITE}
+                            buttonType={AppleButton.Type.SIGN_IN}
+                            style={{
+                              width: 160, // You must specify a width
+                              height: 45, // You must specify a height
+                            }}
+                            onPress={() => this.handleAppleSignIn()}
+                          />
+                        ) : (
+                          <GoogleSigninButton
+                            style={{width: 192, height: 48}}
+                            size={GoogleSigninButton.Size.Wide}
+                            color={GoogleSigninButton.Color.Dark}
+                            onPress={() => this.handleGoogleSignIn()}
+                          />
+                        )}
                       </View>
                     </View>
                   </View>
@@ -385,7 +417,7 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'red',
+    backgroundColor: 'red',
   },
   avatarImage: {
     resizeMode: 'cover',
@@ -427,6 +459,9 @@ const mapStateToProps = (state) => {
     language: state.mainReducer.language,
     isLoggedIn: state.mainReducer.isLoggedIn,
     user_data: state.mainReducer.user_data,
+    auth_token: state.mainReducer.auth_token,
+    user_agent: state.mainReducer.user_agent,
+
   };
 };
 
@@ -438,6 +473,7 @@ const mapDispatchToProps = (dispatch) => {
     authenticate_user: () => dispatch(authenticate_user()),
     unauthenticate_user: () => dispatch(unauthenticate_user()),
     get_user_data: (data) => dispatch(get_user_data(data)),
+    set_auth_token: (data) => dispatch(set_auth_token(data)),
   };
 };
 

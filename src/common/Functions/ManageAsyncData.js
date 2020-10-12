@@ -13,7 +13,9 @@ export const getData = (key) => {
   try {
     const value = AsyncStorage.getItem(key);
     return value;
+
   } catch (e) {
+
     console.log('Error get data: ', e);
   }
 }

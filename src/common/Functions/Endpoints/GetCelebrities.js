@@ -2,11 +2,11 @@ import {ResponseHandler} from '../ResponseHandler';
 import {AUTH_TOKEN, API_HOST} from '../../../config';
 import {api} from '../AxiosCacheAdapter';
 
-export const GetCelebrities = async (user_agent) => {
+export const GetCelebrities = async (user_agent, auth_token) => {
   try {
     const {data} = await api.get(`${API_HOST}/api/celebrities`, {
       headers: {
-        Authorization: `Bearer ${AUTH_TOKEN}`,
+        Authorization: `Bearer ${auth_token}`,
         'User-Agent': user_agent,
       },
     });

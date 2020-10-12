@@ -7,6 +7,7 @@ export const UserPhotoAnalyze = async (
   category,
   locale,
   gender,
+  auth_token,
 ) => {
   console.log('category: ', category);
   console.log('gender: ', gender);
@@ -72,7 +73,7 @@ export const UserPhotoAnalyze = async (
     `${API_HOST}/api/v3/analyze`,
     {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${AUTH_TOKEN}`,
+      Authorization: `Bearer ${auth_token}`,
       'User-Agent': user_agent,
     },
     body,

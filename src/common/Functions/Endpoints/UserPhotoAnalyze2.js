@@ -7,6 +7,7 @@ export const UserPhotoAnalyze2 = (
   celebrity_id,
   locale,
   random,
+  auth_token,
 ) => {
   const body =
     random === 'true'
@@ -37,7 +38,7 @@ export const UserPhotoAnalyze2 = (
     `${API_HOST}/api/v3/analyze`,
     {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${AUTH_TOKEN}`,
+      Authorization: `Bearer ${auth_token}`,
       'User-Agent': user_agent,
     },
     body,

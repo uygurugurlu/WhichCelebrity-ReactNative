@@ -271,6 +271,7 @@ class HomePage2 extends Component {
           celebrity_id,
           language.languageTag,
           'false',
+          this.props.auth_token,
         );
         console.log('UserPhotoAnalyze res: ', JSON.parse(data).data[0]);
 
@@ -367,14 +368,14 @@ class HomePage2 extends Component {
   };
 
   getInitialCelebrities = (async) => {
-    GetCelebrities(this.props.user_agent).then((res) => {
+    GetCelebrities(this.props.user_agent, this.props.auth_token).then((res) => {
       console.log('Initial Celebrities : ', res.data);
       this.setState({scroll_items: res.data});
     });
   };
   fillScroll = async (search) => {
     if (search.length > 1) {
-      SearchCelebrities(this.props.user_agent, search).then((res) => {
+      SearchCelebrities(this.props.user_agent, search, this.props.auth_token).then((res) => {
         console.log('Celebrities after search: ', res.data);
 
         /* const items = res.data.map((item) => {
@@ -408,7 +409,7 @@ class HomePage2 extends Component {
       search_visible: false,
     });
 
-    GetCelebrity(user_agent, celebrity.id).then((res) => {
+    GetCelebrity(user_agent, celebrity.id, this.props.auth_token).then((res) => {
       console.log('GetCelebrity res: ', res);
       this.setState({celebrity_photo: res.data.photo});
     });
@@ -804,6 +805,7 @@ const mapStateToProps = (state) => {
     userAvatarB64: state.mainReducer.userAvatarB64,
     user_agent: state.mainReducer.user_agent,
     detected_face_count: state.mainReducer.detected_face_count,
+    auth_token: state.mainReducer.auth_token
   };
 };
 

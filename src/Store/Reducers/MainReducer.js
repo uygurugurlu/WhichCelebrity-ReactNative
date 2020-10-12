@@ -14,12 +14,15 @@ import {
   AUTHENTICATE_USER,
   UNAUTHENTICATE_USER,
   GET_USER_DATA,
+  SET_AUTH_TOKEN,
 } from '../Actions/ActionTypes';
 
 import update from 'react-addons-update';
 
 const initialState = {
   isLoggedIn: false,
+
+  auth_token: '',
 
   is_the_login_first_time: null,
 
@@ -56,7 +59,10 @@ const reducer = (state = initialState, action) => {
       return (state = update(state, {
         user_data: {$set: action.user_data},
       }));
-
+    case SET_AUTH_TOKEN:
+      return (state = update(state, {
+        auth_token: {$set: action.auth_token},
+      }));
     case AUTHENTICATE_USER:
       return (state = update(state, {
         isLoggedIn: {$set: true},

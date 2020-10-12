@@ -103,13 +103,10 @@ class HomePage extends Component {
   }
 
   componentWillMount = async () => {
-    const {user_agent, language} = this.props;
-
-    const token = await GetToken(user_agent);
-    console.log('GetToken: ', token);
+    const {user_agent, language, auth_token} = this.props;
 
     try {
-      const {data} = await GetCategories(user_agent, language.languageTag);
+      const {data} = await GetCategories(user_agent, language.languageTag, auth_token);
       //console.log('Categories: ', data.data);
       data.data.unshift({id: -1, name: translate('home.none')});
       this.setState({categories: data.data});
@@ -260,7 +257,7 @@ class HomePage extends Component {
   };
 
   GetResult = async () => {
-    const {userAvatarB64, user_agent, language} = this.props;
+    const {userAvatarB64, user_agent, language, auth_token} = this.props;
     const {selected_category_id, gender, selected_category_name} = this.state;
     await this.LoadAD();
     console.log('getResultBase64: ', userAvatarB64);
@@ -274,6 +271,7 @@ class HomePage extends Component {
           selected_category_id,
           language.languageTag,
           gender,
+          auth_token,
         );
         CelebrityFinderResultEvent(selected_category_name, gender);
 
@@ -671,103 +669,6 @@ class HomePage extends Component {
     );
   }
 }
-
-{
-  /* <View
-style={styles.mainContainer}>
-<ImageBackground style={styles.imageBack} source={IMAGEBACK}>
-  <View style={styles.labelsContainerStyle}>
-    <View>
-      <Text style={styles.topLabelStyle}>
-        {translate('home.top_label')}
-      </Text>
-
-      <View display={'flex'} style={styles.topLabel2ContainerStyle}>
-        <TouchableOpacity
-          style={styles.categoryContainerStyle}
-          onPress={this.HandleCategoriesVisibility}>
-          <TextInput
-            style={styles.topLabel2Style}
-            onChangeText={(value) =>
-              this.onChangeText('selected_category_name', value)
-            }
-            autoFocus={false}
-            placeholder={translate('home.select_category')}
-            placeholderTextColor={'#959595'}
-            value={selected_category_name}
-          />
-
-          <View
-            display={selected_category_name === '' ? 'flex' : 'none'}>
-            <Image
-              source={categories_visibility ? DOWN_ICON : FORWARD_ICON}
-              style={{height: 25, width: 25}}
-            />
-          </View>
-
-          <View
-            display={selected_category_name !== '' ? 'flex' : 'none'}
-            style={{marginRight: 5}}>
-            <TouchableOpacity onPress={this.CancelCategory}>
-              <Icon
-                name={'times'}
-                size={25}
-                type={'light'}
-                color={'white'}
-                containerStyle={styles.cancelIconContainerStyle}
-              />
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
-      </View>
-    </View>
-    <GenderSelection
-      SelectGender={this.SelectGender}
-      visibility={genders_visibility}
-      categoriesVisibility={categories_visibility}
-      handleVisibilitty={this.HandleGendersVisibility}
-    />
-
-    <View
-      display={categories_visibility ? 'flex' : 'none'}
-      style={{alignItems: 'center'}}>
-      <ScrollView style={{maxHeight: DEVICE_HEIGHT * 0.55}}>
-        <View style={styles.scrollViewStyle}>{scroll_items}</View>
-      </ScrollView>
-    </View>
-  </View>
-
-  <View
-    display={
-      !categories_visibility && !genders_visibility ? 'flex' : 'none'
-    }
-    style={styles.iconsMainContainerStyle}>
-    <AvatarComponent
-      ImageSource={userAvatarSource}
-      SelectAvatar={this.SelectAvatar}
-      showEditButton={true}
-    />
-  </View>
-
-  <View
-    display={
-      !categories_visibility && !genders_visibility ? 'flex' : 'none'
-    }>
-    <Button
-      title={translate('home.get_result')}
-      buttonStyle={styles.resultButtonStyle}
-      titleStyle={{fontSize: 18, fontWeight: '600'}}
-      onPress={this.GetResult}
-      loading={this.state.result_loading}
-    />
-  </View>
-
-  {this.GetActionSheet()}
-  {<LoadingAnimationModal isModalVisible={this.state.result_loading}/>}
-</ImageBackground>
-  </View> */
-}
-
 const mapStateToProps = (state) => {
   return {
     language: state.mainReducer.language,
@@ -775,6 +676,7 @@ const mapStateToProps = (state) => {
     userAvatarB64: state.mainReducer.userAvatarB64,
     user_agent: state.mainReducer.user_agent,
     detected_face_count: state.mainReducer.detected_face_count,
+    auth_token: state.mainReducer.auth_token,
   };
 };
 

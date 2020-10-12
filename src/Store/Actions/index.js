@@ -14,4 +14,5 @@ export {
   unauthenticate_user,
   authenticate_user,
   get_user_data,
+  set_auth_token,
 } from './MainActions';
