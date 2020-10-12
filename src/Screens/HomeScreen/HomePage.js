@@ -1,64 +1,32 @@
 import React, {Component} from 'react';
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
   Alert,
-  ScrollView,
-  TextInput,
-  TouchableWithoutFeedback,
-  Platform,
-  ImageBackground,
-  TouchableHighlight,
-  Modal,
   FlatList,
+  ImageBackground,
+  Modal,
+  Platform,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {translate} from '../../I18n';
-import {Button, SearchBar} from 'react-native-elements';
+import {Button, Icon, SearchBar} from 'react-native-elements';
 import {styles} from './HomePageStyles';
-import {
-  InterstitialAd,
-  AdEventType,
-  TestIds,
-} from '@react-native-firebase/admob';
-import {
-  get_detected_face_count,
-  get_user_avatar_source,
-  unauthenticate_user,
-} from '../../Store/Actions';
-import {GetUserPhotoFromImageLibrary} from '../../common/Functions/GetUserPhotoFromImageLibrary';
-import {GetUserPhotoFromCamera} from '../../common/Functions/GetUserPhotoFromCamera';
-import {ConvertImageBase64} from '../../common/Functions/ConvertImageBase64';
-import {RIGHT_HEADER_ICON} from '../../common/IconIndex';
+import {AdEventType, InterstitialAd, TestIds,} from '@react-native-firebase/admob';
+import {get_detected_face_count, get_user_avatar_source, unauthenticate_user,} from '../../Store/Actions';
 import AvatarComponent from '../../common/Components/AvatarComponent';
-import ActionSheetComponent from '../../common/Components/ActionSheetComponent';
 import {GetCategories} from '../../common/Functions/Endpoints/GetCategories';
-import {Icon} from 'react-native-elements';
 import RNFS from 'react-native-fs';
-import {
-  DEVICE_HEIGHT,
-  DOWN_ICON,
-  FORWARD_ICON,
-  WAIT_BEFORE_AD_MILLISECONDS,
-  WAIT_LOADING_ANIMATION_MILLISECONDS,
-  IMAGEBACK,
-  CAMERAFRAME,
-  CAMERAICON,
-} from '../../common/Constants';
+import {IMAGEBACK, WAIT_BEFORE_AD_MILLISECONDS, WAIT_LOADING_ANIMATION_MILLISECONDS,} from '../../common/Constants';
 import {UserPhotoAnalyze} from '../../common/Functions/Endpoints/UserPhotoAnalyze';
-import GenderSelection from '../../common/Components/GenderSelection';
 import {GetToken} from '../../common/Functions/Endpoints/GetToken';
 import {ShowSnackBar} from '../../common/Components/ShowSnackBar';
 import {DetectFace} from '../../common/Functions/DetectFace';
 import LoadingAnimationModal from '../../common/Components/LoadingAnimationModal/LoadingAnimationModal';
 import {PerformTimeConsumingTask} from '../../common/Functions/PerformTimeConsumingTask';
-import {
-  CelebrityFinderResultEvent,
-  SetCelebrityFinderScreenEvent,
-} from '../../common/Functions/AnalyticEvents/Events';
+import {CelebrityFinderResultEvent, SetCelebrityFinderScreenEvent,} from '../../common/Functions/AnalyticEvents/Events';
 import crashlytics from '@react-native-firebase/crashlytics';
 import ImagePicker from 'react-native-image-picker';
 import {CropView} from 'react-native-image-crop-tools';
@@ -76,6 +44,7 @@ const unit_id =
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : unit_id;
 const interstitial = InterstitialAd.createForAdRequest(adUnitId);
 var OriginalCategories;
+
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -119,12 +88,12 @@ class HomePage extends Component {
 
     this.props.navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity style={{justifyContent:'center'}} onPress={this.NavigateToSavingsPage}>
+        <TouchableOpacity style={{justifyContent: 'center'}} onPress={this.NavigateToSavingsPage}>
           <Icon
-            name={'photo-library'} 
+            name={'photo-library'}
             color={'white'}
-            style={{height: 35, width: 35, marginRight: 15, alignSelf:'center'}}
-            />
+            style={{height: 35, width: 35, marginRight: 15, alignSelf: 'center'}}
+          />
         </TouchableOpacity>
       ),
     });
@@ -149,7 +118,7 @@ class HomePage extends Component {
     const faces = await DetectFace(path);
     this.props.get_detected_face_count(faces.length);
     console.log('faces:', faces, faces.length); */
-    await this.setState({optionsModalVisible:false})
+    await this.setState({optionsModalVisible: false})
     ImagePicker.launchCamera(options, (response) => {
 
       if (response.didCancel) {
@@ -164,7 +133,7 @@ class HomePage extends Component {
     });
   };
   LaunchImageLibrary = async () => {
-    await this.setState({optionsModalVisible:false});
+    await this.setState({optionsModalVisible: false});
     ImagePicker.launchImageLibrary(options, (response) => {
 
       if (response.didCancel) {
@@ -180,9 +149,9 @@ class HomePage extends Component {
   };
   handleCroppedImage = async (res) => {
     var data = await RNFS.readFile(res.uri, 'base64')
-    console.log('base64Image: ',data);
+    console.log('base64Image: ', data);
     this.props.get_user_avatar_source({uri: res.uri}, data);
-    const faces = await DetectFace(res.uri);  
+    const faces = await DetectFace(res.uri);
     this.setState({crop_visibility: false});
     this.props.get_detected_face_count(faces.length);
     console.log('faces:', faces, faces.length);
@@ -361,9 +330,9 @@ class HomePage extends Component {
 
   render() {
     let genders = [
-      {label: translate('home.search_for_all'), id: 1, type:null},
-      {label: translate('home.search_male_celebrities'), id: 2, type:'male'} ,
-      {label: translate('home.search_female_celebrities'), id: 3, type:'female'},
+      {label: translate('home.search_for_all'), id: 1, type: null},
+      {label: translate('home.search_male_celebrities'), id: 2, type: 'male'},
+      {label: translate('home.search_female_celebrities'), id: 3, type: 'female'},
     ];
     const {userAvatarSource, unauthenticate_user} = this.props;
     const {
@@ -459,7 +428,7 @@ class HomePage extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() =>
-                  this.LaunchImageLibrary()
+                    this.LaunchImageLibrary()
                   }
                   style={styles.settingsMainButtons}>
                   <Text style={styles.settingsButton}>{translate('image_picker.photo_library')}</Text>
@@ -484,41 +453,41 @@ class HomePage extends Component {
             //Crop Modal Start
           }
           <Modal visible={this.state.crop_visibility} transparent={false}>
-          <View style={styles.mainContainer}>
+            <View style={styles.mainContainer}>
 
-          <CropView
-              sourceUrl={
-                this.state.imageUri == ''
-                  ? '../assets/icons/CameraFrame.png'
-                  : this.state.imageUri
-              }
-              style={styles.cropView}
-              ref={this.cropViewRef}
-              onImageCrop={(res) => this.handleCroppedImage(res)}
+              <CropView
+                sourceUrl={
+                  this.state.imageUri == ''
+                    ? '../assets/icons/CameraFrame.png'
+                    : this.state.imageUri
+                }
+                style={styles.cropView}
+                ref={this.cropViewRef}
+                onImageCrop={(res) => this.handleCroppedImage(res)}
 
-            />
-            <View style={styles.cropButtonsContainer}>
-            <View style={styles.cropButtonContainer}>
-            <TouchableOpacity
-              style={styles.cropWrapper}
-              onPress={() => this.setState({crop_visibility: false})}>
-              <Icon color={'white'} name={'close'}/>
-            </TouchableOpacity>
-            </View>
-            <View style={styles.cropButtonContainer}>
-            <TouchableOpacity
-              style={styles.cropWrapper}
-              onPress={() => this.cropViewRef.current.saveImage(true,30)}>
-              <Icon color={'white'} name={'check'}/>
-            </TouchableOpacity>
+              />
+              <View style={styles.cropButtonsContainer}>
+                <View style={styles.cropButtonContainer}>
+                  <TouchableOpacity
+                    style={styles.cropWrapper}
+                    onPress={() => this.setState({crop_visibility: false})}>
+                    <Icon color={'white'} name={'close'}/>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.cropButtonContainer}>
+                  <TouchableOpacity
+                    style={styles.cropWrapper}
+                    onPress={() => this.cropViewRef.current.saveImage(true, 30)}>
+                    <Icon color={'white'} name={'check'}/>
+                  </TouchableOpacity>
+                </View>
+
+
+              </View>
+
             </View>
 
-           
-            </View>
-             
-          </View>
-            
-           
+
           </Modal>
           {
             //Crop Modal End
@@ -547,7 +516,7 @@ class HomePage extends Component {
                       onPress={() =>
                         this.setState({categories_visibility: false})
                       }>
-                      <Icon name="close" color="#517fa4" />
+                      <Icon name="close" color="#517fa4"/>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -622,7 +591,7 @@ class HomePage extends Component {
                       onPress={() =>
                         this.setState({genders_visibility: false})
                       }>
-                      <Icon name="close" color="#517fa4" />
+                      <Icon name="close" color="#517fa4"/>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -663,7 +632,7 @@ class HomePage extends Component {
           {
             //Gender Modal End
           }
-          {<LoadingAnimationModal text = {translate('home.loading_text')} isModalVisible={this.state.result_loading} />}
+          {<LoadingAnimationModal text={translate('home.loading_text')} isModalVisible={this.state.result_loading}/>}
         </ImageBackground>
       </View>
     );
@@ -686,7 +655,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(get_user_avatar_source(source, base64_data)),
     get_detected_face_count: (count) =>
       dispatch(get_detected_face_count(count)),
-      unauthenticate_user: () => dispatch(unauthenticate_user()),
+    unauthenticate_user: () => dispatch(unauthenticate_user()),
   };
 };
 

@@ -7,5 +7,5 @@ export const PostIdToken = async (id_token) => {
     token: id_token,
   };
 
-  return axios.post(`${API_HOST}/api/firebase/login`, body);
+  return await axios.post(`${API_HOST}/api/firebase/login`, body);
 };
