@@ -1,5 +1,5 @@
-import {AUTH_TOKEN, API_HOST} from '../../../config';
 import RNFetchBlob from 'rn-fetch-blob';
+import { AUTH_TOKEN, API_HOST } from '../../../config';
 
 export const UserPhotoAnalyze = async (
   user_agent,
@@ -24,7 +24,7 @@ export const UserPhotoAnalyze = async (
           type: 'image/jpg/jpeg/png',
           data: image_data,
         },
-        {name: 'locale', data: locale},
+        { name: 'locale', data: locale },
       ];
     } else {
       body = [
@@ -35,37 +35,35 @@ export const UserPhotoAnalyze = async (
           type: 'image/jpg/jpeg/png',
           data: image_data,
         },
-        {name: 'locale', data: locale},
-        {name: 'gender', data: gender},
+        { name: 'locale', data: locale },
+        { name: 'gender', data: gender },
       ];
     }
+  } else if (gender === null) {
+    body = [
+      // element with property `filename` will be transformed into `file` in form data
+      {
+        name: 'image',
+        filename: 'photo.png',
+        type: 'image/jpg/jpeg/png',
+        data: image_data,
+      },
+      { name: 'category', data: category },
+      { name: 'locale', data: locale },
+    ];
   } else {
-    if (gender === null) {
-      body = [
-        // element with property `filename` will be transformed into `file` in form data
-        {
-          name: 'image',
-          filename: 'photo.png',
-          type: 'image/jpg/jpeg/png',
-          data: image_data,
-        },
-        {name: 'category', data: category},
-        {name: 'locale', data: locale},
-      ];
-    } else {
-      body = [
-        // element with property `filename` will be transformed into `file` in form data
-        {
-          name: 'image',
-          filename: 'photo.png',
-          type: 'image/jpg/jpeg/png',
-          data: image_data,
-        },
-        {name: 'category', data: category},
-        {name: 'locale', data: locale},
-        {name: 'gender', data: gender},
-      ];
-    }
+    body = [
+      // element with property `filename` will be transformed into `file` in form data
+      {
+        name: 'image',
+        filename: 'photo.png',
+        type: 'image/jpg/jpeg/png',
+        data: image_data,
+      },
+      { name: 'category', data: category },
+      { name: 'locale', data: locale },
+      { name: 'gender', data: gender },
+    ];
   }
 
   return RNFetchBlob.fetch(

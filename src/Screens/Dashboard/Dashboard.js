@@ -1,27 +1,21 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
-  SafeAreaView,
   Text,
-  TouchableOpacity,
-  Image,
   View,
   ImageBackground,
-  Button,
 } from 'react-native';
+import { connect } from 'react-redux';
 import {
-  DEVICE_HEIGHT,
-  DEVICE_WIDTH,
-  shadow,
+
   HOMECARD1,
   HOMECARD2,
   HOMECARD1TR,
   HOMECARD2TR,
   IMAGEBACK,
 } from '../../common/Constants';
-import {styles} from './DashboardStyles';
+import { styles } from './DashboardStyles';
 import HomeCard from '../../common/Components/DashboardCard.js';
-import {translate} from '../../I18n';
-import {connect} from 'react-redux';
+import { translate } from '../../I18n';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -34,38 +28,42 @@ class Dashboard extends Component {
   Navigate = (index) => {
     if (index === 1) {
       return 'Celebrity_Finder_Screen';
-    } else {
-      return 'Celebrity_Selection_Screen';
     }
+    return 'Celebrity_Selection_Screen';
   };
+
   getBackImages(index) {
-    if (index == 1) {
+    if (index != 1) {
+      if (index === 2) {
+        if (this.props.language.languageTag === 'tr') {
+          return HOMECARD2TR;
+        }
+        const homecard2 = HOMECARD2;
+        return homecard2;
+      }
+    } else {
       if (this.props.language.languageTag == 'tr') {
         return HOMECARD1TR;
       }
-      else return HOMECARD1;
-    }
-    if( index == 2) {
-      if (this.props.language.languageTag == 'tr') {
-        return HOMECARD2TR;
-      }
-      else return HOMECARD2;
+      return HOMECARD1;
     }
   }
+
   render() {
     return (
       <View style={styles.container}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <Text style={styles.title}>
               {translate('dashboard.first_label')}
             </Text>
             <HomeCard
               image={this.getBackImages(1)}
               navigation={this.props.navigation}
-              route={this.Navigate(1)}></HomeCard>
+              route={this.Navigate(1)}
+            />
           </View>
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <Text style={styles.title}>
               {translate('dashboard.second_label')}
             </Text>
@@ -73,12 +71,13 @@ class Dashboard extends Component {
             <HomeCard
               image={this.getBackImages(2)}
               navigation={this.props.navigation}
-              route={this.Navigate(2)}></HomeCard>
+              route={this.Navigate(2)}
+            />
           </View>
         </ImageBackground>
       </View>
 
-      /* <SafeAreaView style={styles.mainContainer}>
+    /* <SafeAreaView style={styles.mainContainer}>
         <TouchableOpacity
           style={[styles.topContainer, shadow]}
           onPress={() => this.Navigate(1)}>
@@ -108,9 +107,7 @@ class Dashboard extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    language: state.mainReducer.language,
-  };
-};
+const mapStateToProps = (state) => ({
+  language: state.mainReducer.language,
+});
 export default connect(mapStateToProps, null)(Dashboard);

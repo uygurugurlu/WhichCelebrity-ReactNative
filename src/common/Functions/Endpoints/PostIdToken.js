@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {API_HOST, AUTH_TOKEN} from '../../../config';
+import { API_HOST, AUTH_TOKEN } from '../../../config';
 
 export const PostIdToken = async (id_token) => {
   let body = '';
@@ -7,5 +7,5 @@ export const PostIdToken = async (id_token) => {
     token: id_token,
   };
 
-  return await axios.post(`${API_HOST}/api/firebase/login`, body);
+  return axios.post(`${API_HOST}/api/firebase/login`, body);
 };

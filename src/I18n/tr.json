@@ -34,7 +34,7 @@
     "cancel": "Vazgeç",
     "select_photo": "Fotoğraf seçin",
     "search_gender": "Cinsiyet seçeneği",
-    
+
     "search_for_all": "Kadın ve Erkek ünlülerde ara",
     "search_male_celebrities": "Erkek ünlülerde ara",
     "search_female_celebrities": "Kadın ünlülerde ara",
@@ -93,5 +93,12 @@
     "update": "Güncelle",
     "not_up_to_date": "Uygulama güncel değil",
     "update_the_app": "Lütfen devam etmeden önce 'Which Celebrity' uygulamasını güncelleyin."
-  }
+  },
+  "error": {
+    "canceled": "Giriş yapmak iptal edildi.",
+    "in_progress": "Giriş yapılırken bir hata oluştu, lütfen tekrar deneyin.",
+    "not_available": "Play servisleri şu anda aktif değil. Lütfen daha sonra tekrar deneyin.",
+    "error": "Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.",
+    "time_out": "Oturumunuz sonlanmıştır. Tekrar giriş yapabilirsiniz.",
+  },
 }

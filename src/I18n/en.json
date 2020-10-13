@@ -93,5 +93,12 @@
     "update": "Update",
     "not_up_to_date": "The application is out of date",
     "update_the_app": "Please update the 'Which Celebrity' app before continuing."
+  },
+  "error": {
+    "canceled": "User Canceled Sign In",
+    "in_progress": "Signing in progress error, please try again",
+    "not_available": "Play services not available at the moment",
+    "error": "An error occurred while signing in. Please try again.",
+    "time_out": "Your session has ended. You can sign in again.",
   }
 }
