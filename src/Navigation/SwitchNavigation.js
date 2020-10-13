@@ -53,10 +53,6 @@ import {GoogleSigninButton} from '@react-native-community/google-signin';
 import auth from '@react-native-firebase/auth';
 import {AppleButton} from '@invertase/react-native-apple-authentication';
 import {onAppleButtonPress} from '../common/Functions/AppleSignInFunctions';
-<<<<<<< HEAD
-=======
-
->>>>>>> 32d62cbc1ac0389582b044096d52ca11ba5b8c24
 const MyDrawer = createDrawerNavigator();
 class SwitchNavigation extends React.Component {
   constructor(props) {
@@ -347,11 +343,6 @@ class SwitchNavigation extends React.Component {
                         style={styles.signout}
                         onPress={() => this.handleSignOut()}>
                         <Text style={styles.button}>Çıkış Yap</Text>
-                      </TouchableHighlight>
-                      <TouchableHighlight
-                          style={styles.signout}
-                          onPress={() => console.log(PostIdToken(this.state.idToken))}>
-                        <Text style={styles.button}>Send</Text>
                       </TouchableHighlight>
                     </View>
                   </View>
