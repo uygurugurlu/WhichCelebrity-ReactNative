@@ -8,7 +8,7 @@ import ScoreBoardComponent from '../../common/Components/ScoreBoardComponent';
 
 const data = [
   {
-    id: 1,
+    rank: 1,
     userName: 'ali veli',
     userPhoto: 'https://cdn.faceplusplus.com/mc-official/images/comparing/left_pic_three.jpg',
     celebrityName: 'Brad Pitt',
@@ -16,7 +16,7 @@ const data = [
     percentage: 81,
   },
   {
-    id: 2,
+    rank: 2,
     userName: 'ali veli',
     userPhoto: 'https://cdn.faceplusplus.com/mc-official/images/comparing/left_pic_three.jpg',
     celebrityName: 'Brad Pitt',
@@ -24,7 +24,7 @@ const data = [
     percentage: 81,
   },
   {
-    id: 3,
+    rank: 3,
     userName: 'ali veli',
     userPhoto: 'https://cdn.faceplusplus.com/mc-official/images/comparing/left_pic_three.jpg',
     celebrityName: 'Brad Pitt',
@@ -32,7 +32,7 @@ const data = [
     percentage: 81,
   },
   {
-    id: 4,
+    rank: 4,
     userName: 'ali veli',
     userPhoto: 'https://cdn.faceplusplus.com/mc-official/images/comparing/left_pic_three.jpg',
     celebrityName: 'Brad Pitt',
@@ -40,7 +40,7 @@ const data = [
     percentage: 81,
   },
   {
-    id: 5,
+    rank: 5,
     userName: 'ali veli',
     userPhoto: 'https://cdn.faceplusplus.com/mc-official/images/comparing/left_pic_three.jpg',
     celebrityName: 'Brad Pitt',
@@ -60,10 +60,11 @@ export default class ScoreBoard extends Component {
           <View style={styles.boardContainer}>
             <View style={styles.topRanksContainer}>
               <FlatList
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.rank.toString()}
                 data={data}
                 renderItem={({ item }) => (
                   <ScoreBoardComponent
+                    rank={item.rank}
                     userName={item.userName}
                     userPhoto={item.userPhoto}
                     celebrityName={item.celebrityName}
