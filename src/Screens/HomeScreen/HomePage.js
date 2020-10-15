@@ -6,7 +6,6 @@ import {
   Modal,
   Platform,
   Text,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -79,6 +78,8 @@ class HomePage extends Component {
 
   handleSignOut = async () => {
     try {
+      Alert.alert(translate('error.time_out'));
+
       auth()
         .signOut()
         .then(() => console.log('User signed out!'));
@@ -88,8 +89,14 @@ class HomePage extends Component {
       AsyncStorage.removeItem('@UserInfo');
       storeData('@auth_token', AUTH_TOKEN);
       this.props.set_auth_token(AUTH_TOKEN);
+      this.props.navigation.goBack();
     } catch (error) {
+      Alert.alert(translate('error.time_out'));
       console.log('error signing out: ', error);
+      this.props.unauthenticate_user();
+      AsyncStorage.removeItem('@UserInfo');
+      AsyncStorage.removeItem('@auth_token');
+      this.props.set_auth_token(AUTH_TOKEN);
     }
   };
 
@@ -109,6 +116,7 @@ class HomePage extends Component {
       if (e.status == 401) {
         this.handleSignOut();
         Alert.alert(translate('error.time_out'));
+        this.props.navigation.goBack();
       }
     }
 
@@ -296,7 +304,6 @@ class HomePage extends Component {
       } catch (e) {
         if (e.response.status == 401) {
           this.handleSignOut();
-          Alert.alert(translate('error.time_out'));
         }
         console.log('error on response: ', e);
         crashlytics().recordError(e);
@@ -382,7 +389,7 @@ class HomePage extends Component {
               {translate('home.top_label')}
             </Text>
 
-            <TouchableHighlight
+            <TouchableOpacity
               style={styles.selectCategoryContainer}
               onPress={() => this.setState({ categories_visibility: true })}
             >
@@ -398,8 +405,8 @@ class HomePage extends Component {
                   style={styles.selectCategoryIcon}
                 />
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight
+            </TouchableOpacity>
+            <TouchableOpacity
               style={styles.selectCategoryContainer}
               onPress={() => this.setState({ genders_visibility: true })}
             >
@@ -415,7 +422,7 @@ class HomePage extends Component {
                   style={styles.selectCategoryIcon}
                 />
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.cameraContainer}>

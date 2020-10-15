@@ -1,14 +1,13 @@
 import React from 'react';
 import {
   ActivityIndicator,
-  StyleSheet,
   View,
   Platform,
   ImageBackground,
   Alert,
   Image,
   Text,
-  TouchableHighlight,
+  TouchableHighlight, Switch,
 } from 'react-native';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -20,6 +19,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { GoogleSigninButton } from '@react-native-community/google-signin';
 import auth from '@react-native-firebase/auth';
 import { AppleButton } from '@invertase/react-native-apple-authentication';
+import Tooltip from 'rn-tooltip';
+import { Icon } from 'react-native-elements';
+import { styles } from './SwitchNavigationStyles';
 import { setI18nConfig, translate } from '../I18n';
 import {
   authenticate_user,
@@ -32,12 +34,10 @@ import {
 import StarterPagesStack from './Starter/StarterPagesStack';
 import { AUTH_TOKEN } from '../config/index';
 import {
-  DEVICE_HEIGHT, DEVICE_WIDTH, CAMERAICON, IMAGEBACK
+  CAMERAICON, IMAGEBACK
 } from '../common/Constants';
 import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
-import SignIn from '../Screens/SignIn/SignIn';
 
-import { page_body_background_color, button_colors } from '../common/ColorIndex';
 import MainPagesStack from './MainStack';
 import { GetAppVersion } from '../common/Functions/Endpoints/GetAppVersion';
 import { PerformTimeConsumingTask } from '../common/Functions/PerformTimeConsumingTask';
@@ -48,13 +48,14 @@ import { ConfirmUser } from '../common/Functions/Endpoints/ConfirmUser';
 import {
   signInFunction,
   isSignedIn,
-  signOut,
-  getCurrentUserInfo,
 } from '../common/Functions/GoogleSignInFunctions';
-import { storeData, getData } from '../common/Functions/ManageAsyncData';
+import { storeData } from '../common/Functions/ManageAsyncData';
 import { Drawer } from './Drawer';
 import { onAppleButtonPress } from '../common/Functions/AppleSignInFunctions';
 import { LogoutUser } from '../common/Functions/Endpoints/LogoutUser';
+import { GrantPermission } from '../common/Functions/Endpoints/GrantPermission';
+import { UngrantPermission } from '../common/Functions/Endpoints/UngrantPermission';
+import { header_background_color } from '../common/ColorIndex';
 
 const MyDrawer = createDrawerNavigator();
 class SwitchNavigation extends React.Component {
@@ -64,29 +65,25 @@ class SwitchNavigation extends React.Component {
       update_needed: false,
       name: '',
       photo: '',
+      isSwitchEnabled: false,
+      faceInfoText: '',
     };
   }
 
-  handlePostIdToken = async (idToken) => {
-    try {
-      const IdTokenResponse = await PostIdToken(idToken);
-      console.log('Id token response: ', IdTokenResponse);
-      this.props.set_auth_token(
-        IdTokenResponse.data.access_token,
-      );
-      storeData('@auth_token', IdTokenResponse.data.access_token);
+  setSignIn = async (idToken, signInInfo) => {
+    this.props.set_auth_token(
+      idToken,
+    );
+    storeData('@auth_token', idToken);
+    storeData('@UserInfo', signInInfo);
 
-      return true;
-    } catch (error) {
-      console.warn('error post id token', error);
-      this.props.set_auth_token(
-        AUTH_TOKEN,
-      );
-      storeData('@auth_token', AUTH_TOKEN);
-
-      return false;
-    }
-  };
+    this.props.authenticate_user();
+    this.setState({
+      name: signInInfo.user.displayName,
+      photo: signInInfo.user.photoURL,
+      faceInfoText: translate('drawer.face_info') + translate('drawer.passive'),
+    });
+  }
 
   handleGoogleSignIn = async () => {
     const signInInfo = await signInFunction();
@@ -101,15 +98,23 @@ class SwitchNavigation extends React.Component {
       Alert.alert(translate('error.error'));
     } else {
       const currentUserIdToken = await auth().currentUser.getIdToken();
-      await this.handlePostIdToken(currentUserIdToken);
       console.log('current user id token: ', currentUserIdToken);
-      storeData('@UserInfo', signInInfo);
+      const IdTokenResponse = await PostIdToken(currentUserIdToken, this.props.user_agent);
 
-      this.props.authenticate_user();
-      this.setState({
-        name: signInInfo.user.displayName,
-        photo: signInInfo.user.photoURL,
-      });
+      try {
+        console.log('Id token response: ', IdTokenResponse.data.original.access_token);
+        this.setSignIn(IdTokenResponse.data.original.access_token, signInInfo);
+        this.handleSwitchChange(true);
+      } catch (error) {
+        if (error instanceof TypeError) {
+          const idToken = JSON.parse(`${IdTokenResponse.data}}`).original.access_token;
+          this.setSignIn(idToken, signInInfo);
+          console.log('new id token: ', idToken);
+        } else {
+          console.warn('error post id token', error);
+          await this.handleSignOut();
+        }
+      }
     }
   };
 
@@ -125,17 +130,16 @@ class SwitchNavigation extends React.Component {
       const res = await AsyncStorage.getItem('@auth_token');
       console.log('Current auth token: ', res);
       if (res !== null) {
-        const serviceUserData = await ConfirmUser(JSON.parse(res));
-        console.log('serviceUser: ', serviceUserData);
         console.log('current user: ', auth().currentUser);
-
         if (signInInfo !== null && IsGoogleSignedIn) {
           this.props.set_auth_token(JSON.parse(res));
-          const currentUserIdToken = await auth().currentUser.getIdToken();
-          const userStatus = await ConfirmUser(currentUserIdToken);
-          if (userStatus.status != 200) {
-            throw 'User not authenticated';
+          // const currentUserIdToken = await auth().currentUser.getIdToken();
+          const userStatus = await ConfirmUser(JSON.parse(res));
+          if (userStatus.status !== 200) {
+            throw 'user not authanticated';
           }
+          console.log('userStatus: ', userStatus);
+          this.handleSwitchChange(userStatus.data.data.is_opt_in);
           this.props.authenticate_user();
           this.setState({
             name: signInInfo.user.displayName,
@@ -155,20 +159,22 @@ class SwitchNavigation extends React.Component {
 
   handleSignOut = async () => {
     try {
+      this.props.unauthenticate_user();
       auth()
         .signOut()
         .then(() => console.log('User signed out!'));
-      const loggedOut = await LogoutUser(this.props.auth_token);
-      if (loggedOut.status !== 200) throw 'Server error signing out';
-      this.props.unauthenticate_user();
+      if (this.props.auth_token !== AUTH_TOKEN) {
+        const loggedOut = await LogoutUser(this.props.auth_token);
+        if (loggedOut.status !== 200) throw 'Server error signing out';
+      }
       AsyncStorage.removeItem('@UserInfo');
-      storeData('@auth_token', AUTH_TOKEN);
+      AsyncStorage.removeItem('@auth_token');
       this.props.set_auth_token(AUTH_TOKEN);
     } catch (error) {
       console.log('error signing out: ', error);
       this.props.unauthenticate_user();
       AsyncStorage.removeItem('@UserInfo');
-      storeData('@auth_token', AUTH_TOKEN);
+      AsyncStorage.removeItem('@auth_token');
       this.props.set_auth_token(AUTH_TOKEN);
     }
   };
@@ -302,6 +308,30 @@ class SwitchNavigation extends React.Component {
     }
   };
 
+  handleSwitchChange = async (res) => {
+    let permissionGranted;
+    try {
+      if (res) {
+        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.active'), isSwitchEnabled: true });
+        permissionGranted = await GrantPermission(this.props.auth_token, this.props.user_agent);
+        if (permissionGranted.status !== 200) {
+          Alert.alert(translate('error.switch'));
+          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
+        }
+        console.log(permissionGranted);
+      } else {
+        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
+        permissionGranted = await UngrantPermission(this.props.auth_token, this.props.user_agent);
+        if (permissionGranted.status !== 200) {
+          Alert.alert(translate('error.switch'));
+          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
+        }
+      }
+    } catch (e) {
+      console.warn('error switch change: ', e);
+    }
+  }
+
   render() {
     const { is_the_login_first_time, isLoggedIn } = this.props;
     const { update_needed } = this.state;
@@ -336,12 +366,30 @@ class SwitchNavigation extends React.Component {
                   <View style={styles.signInButtonContainer}>
                     <Text style={styles.title}>{this.state.name}</Text>
                   </View>
-                  <TouchableHighlight
-                    style={styles.signout}
-                    onPress={() => this.handleSignOut()}
-                  >
-                    <Text style={styles.button}>Çıkış Yap</Text>
-                  </TouchableHighlight>
+                  <View style={styles.switchContainer}>
+                    <Tooltip height={300} containerStyle={styles.tooltipContainerStyle} popover={<Text style={styles.tooltipText}>{translate('drawer.tooltip')}</Text>}>
+                      <View style={styles.tooltipContent}>
+                        <Text style={styles.switchText}>{this.state.faceInfoText}</Text>
+                        <Icon name="info" style={styles.iconStyle} color="white" />
+                      </View>
+                    </Tooltip>
+                    <Switch
+                      trackColor={{ false: '#767577', true: header_background_color }}
+                      thumbColor={this.state.isSwitchEnabled ? 'white' : '#f4f3f4'}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={(res) => this.handleSwitchChange(res)}
+                      value={this.state.isSwitchEnabled}
+                    />
+                  </View>
+                  <View style={styles.signOutContainer}>
+                    <TouchableHighlight
+                      style={styles.signout}
+                      onPress={() => this.handleSignOut()}
+                    >
+                      <Text style={styles.button}>Çıkış Yap</Text>
+                    </TouchableHighlight>
+                  </View>
+
                 </View>
               </View>
             ) : (
@@ -386,69 +434,6 @@ class SwitchNavigation extends React.Component {
     );
   }
 }
-
-export const styles = StyleSheet.create({
-  indicatorContainer: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  imageBack: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    resizeMode: 'contain',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'rgb(70,70,70)',
-  },
-  avatarContainer: {
-    flex: 0.4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarWrapper: {
-    flex: 0.6,
-    borderRadius: 100,
-    aspectRatio: 1,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
-  },
-  avatarImage: {
-    resizeMode: 'cover',
-    height: DEVICE_WIDTH * 0.6,
-    width: DEVICE_WIDTH * 0.6,
-  },
-  title: {
-    color: 'white',
-    fontSize: 20,
-  },
-  contentContainer: {
-    flex: 0.6,
-    justifyContent: 'space-between',
-  },
-  signInButtonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  signout: {
-    height: 50,
-    backgroundColor: button_colors,
-    borderRadius: 30,
-    justifyContent: 'center',
-    marginVertical: 30,
-    marginHorizontal: 30,
-  },
-  button: {
-    marginHorizontal: 20,
-    color: 'white',
-    fontSize: 18,
-    textAlign: 'center',
-  },
-});
 
 const mapStateToProps = (state) => ({
   is_the_login_first_time: state.mainReducer.is_the_login_first_time,

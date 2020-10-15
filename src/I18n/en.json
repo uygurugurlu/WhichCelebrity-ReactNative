@@ -100,5 +100,15 @@
     "not_available": "Play services not available at the moment",
     "error": "An error occurred while signing in. Please try again.",
     "time_out": "Your session has ended. You can sign in again.",
+    "permission": "There was an error opening the face ",
+    "switch": "There was an error while switching your face sharing option."
+
+  },
+  "drawer" : {
+    "face_info": "Sharing your face info is ",
+    "active": "active",
+    "passive": "passive",
+    "tooltip": "If the face sharing option is enabled, we can find your long lost lookalike twin :)\n\nAlso you can be displayed in the scoreboard of the users that look like celebrities the most.\n\nYour face will not be shared with any organization or institution."
+
   }
 }

@@ -87,7 +87,7 @@
   "dashboard": {
     "first_label": "Hangi ünlüye benzediğini öğren",
     "second_label": "Bir ünlü seç ve sana ne kadar benzediğini öğren",
-    "click_here": "Buraya Tıklayın!",
+    "click_here": "Buraya Tıklayın!"
   },
   "update": {
     "update": "Güncelle",
@@ -100,5 +100,12 @@
     "not_available": "Play servisleri şu anda aktif değil. Lütfen daha sonra tekrar deneyin.",
     "error": "Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.",
     "time_out": "Oturumunuz sonlanmıştır. Tekrar giriş yapabilirsiniz.",
+    "switch": "Yüz verinizin paylaşım durumu değiştirilirken hata meydana geldi."
   },
+  "drawer" : {
+    "face_info": "Yüz bilgisi paylaşma ",
+    "active": "aktif",
+    "passive": "aktif değil",
+    "tooltip": "Yüz bilgisi paylaşma aktif olduğu durumda, uygulamayı kullanan diğer kullanıcılar içinden kayıp ikizinizi bulabiliriz :)\n\nAyrıca ünlülere en çok benzeyen kullanıcılar listesinde sizi listeleyebiliriz.\n\nYüz verileriniz herhangi bir firma ya da kuruluş ile asla paylaşılmaz."
+  }
 }
