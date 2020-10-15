@@ -379,6 +379,8 @@ class HomePage extends Component {
       scroll_items,
       selected_category_name,
       genders_visibility,
+      genderText,
+      result_loading,
     } = this.state;
 
     return (
@@ -395,9 +397,9 @@ class HomePage extends Component {
             >
               <View style={styles.selectCategoryWrapper}>
                 <Text style={styles.selectCategoryText}>
-                  {this.state.selected_category_name == ''
+                  {selected_category_name == ''
                     ? translate('home.select_category')
-                    : this.state.selected_category_name}
+                    : selected_category_name}
                 </Text>
                 <Icon
                   name="keyboard-arrow-right"
@@ -412,9 +414,9 @@ class HomePage extends Component {
             >
               <View style={styles.selectCategoryWrapper}>
                 <Text style={styles.selectCategoryText}>
-                  {!this.state.genderText
+                  {!genderText
                     ? translate('home.search_for_all')
-                    : this.state.genderText}
+                    : genderText}
                 </Text>
                 <Icon
                   name="keyboard-arrow-right"
@@ -438,7 +440,7 @@ class HomePage extends Component {
               title={translate('home.get_result')}
               buttonStyle={styles.button}
               onPress={this.GetResult}
-              loading={this.state.result_loading}
+              loading={result_loading}
             />
           </View>
           {
@@ -670,7 +672,7 @@ class HomePage extends Component {
           {
             // Gender Modal End
           }
-          {<LoadingAnimationModal text={translate('home.loading_text')} isModalVisible={this.state.result_loading} />}
+          {<LoadingAnimationModal text={translate('home.loading_text')} isModalVisible={result_loading} />}
         </ImageBackground>
       </View>
     );

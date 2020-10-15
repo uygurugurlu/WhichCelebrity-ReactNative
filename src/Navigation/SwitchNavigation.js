@@ -4,7 +4,6 @@ import {
   View,
   Platform,
   ImageBackground,
-  Alert,
   StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -14,11 +13,6 @@ import DeviceInfo from 'react-native-device-info';
 import UserAgent from 'react-native-user-agent';
 import crashlytics from '@react-native-firebase/crashlytics';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { GoogleSigninButton } from '@react-native-community/google-signin';
-import auth from '@react-native-firebase/auth';
-import { AppleButton } from '@invertase/react-native-apple-authentication';
-import Tooltip from 'rn-tooltip';
-import { Icon } from 'react-native-elements';
 import { setI18nConfig, translate } from '../I18n';
 import {
   authenticate_user,
@@ -29,30 +23,14 @@ import {
   set_auth_token,
 } from '../Store/Actions';
 import StarterPagesStack from './Starter/StarterPagesStack';
-import { AUTH_TOKEN } from '../config/index';
 import {
-  CAMERAICON, IMAGEBACK
+  IMAGEBACK
 } from '../common/Constants';
 import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
-
 import MainPagesStack from './MainStack';
 import { GetAppVersion } from '../common/Functions/Endpoints/GetAppVersion';
 import { PerformTimeConsumingTask } from '../common/Functions/PerformTimeConsumingTask';
-
-import { PostIdToken } from '../common/Functions/Endpoints/PostIdToken';
-import { ConfirmUser } from '../common/Functions/Endpoints/ConfirmUser';
-
-import {
-  signInFunction,
-  isSignedIn,
-} from '../common/Functions/GoogleSignInFunctions';
-import { storeData } from '../common/Functions/ManageAsyncData';
 import CustomDrawer from './Drawer';
-import { onAppleButtonPress } from '../common/Functions/AppleSignInFunctions';
-import { LogoutUser } from '../common/Functions/Endpoints/LogoutUser';
-import { GrantPermission } from '../common/Functions/Endpoints/GrantPermission';
-import { UngrantPermission } from '../common/Functions/Endpoints/UngrantPermission';
-import { header_background_color } from '../common/ColorIndex';
 
 const MyDrawer = createDrawerNavigator();
 class SwitchNavigation extends React.Component {

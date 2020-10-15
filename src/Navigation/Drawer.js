@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import { styles } from './DrawerStyles';
-import { CAMERAICON, DEVICE_HEIGHT } from '../common/Constants';
+import { CAMERAICON } from '../common/Constants';
 import { translate } from '../I18n';
 import { header_background_color } from '../common/ColorIndex';
 import {
@@ -186,7 +186,7 @@ class CustomDrawer extends Component {
           <View style={styles.avatarContainer}>
             <View style={styles.avatarWrapper}>
               <Image
-                source={{ uri: this.state.photo }}
+                source={this.state.photo ? { uri: this.state.photo } : CAMERAICON}
                 style={styles.avatarImage}
               />
             </View>
