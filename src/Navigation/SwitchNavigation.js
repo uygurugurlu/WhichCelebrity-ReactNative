@@ -5,9 +5,7 @@ import {
   Platform,
   ImageBackground,
   Alert,
-  Image,
-  Text,
-  TouchableHighlight, Switch,
+  StyleSheet,
 } from 'react-native';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -21,7 +19,6 @@ import auth from '@react-native-firebase/auth';
 import { AppleButton } from '@invertase/react-native-apple-authentication';
 import Tooltip from 'rn-tooltip';
 import { Icon } from 'react-native-elements';
-import { styles } from './SwitchNavigationStyles';
 import { setI18nConfig, translate } from '../I18n';
 import {
   authenticate_user,
@@ -50,7 +47,7 @@ import {
   isSignedIn,
 } from '../common/Functions/GoogleSignInFunctions';
 import { storeData } from '../common/Functions/ManageAsyncData';
-import { Drawer } from './Drawer';
+import CustomDrawer from './Drawer';
 import { onAppleButtonPress } from '../common/Functions/AppleSignInFunctions';
 import { LogoutUser } from '../common/Functions/Endpoints/LogoutUser';
 import { GrantPermission } from '../common/Functions/Endpoints/GrantPermission';
@@ -63,121 +60,8 @@ class SwitchNavigation extends React.Component {
     super(props);
     this.state = {
       update_needed: false,
-      name: '',
-      photo: '',
-      isSwitchEnabled: false,
-      faceInfoText: '',
     };
   }
-
-  setSignIn = async (idToken, signInInfo) => {
-    this.props.set_auth_token(
-      idToken,
-    );
-    storeData('@auth_token', idToken);
-    storeData('@UserInfo', signInInfo);
-
-    this.props.authenticate_user();
-    this.setState({
-      name: signInInfo.user.displayName,
-      photo: signInInfo.user.photoURL,
-      faceInfoText: translate('drawer.face_info') + translate('drawer.passive'),
-    });
-  }
-
-  handleGoogleSignIn = async () => {
-    const signInInfo = await signInFunction();
-    console.log('signInInfo', signInInfo);
-    if (signInInfo == -1) {
-      Alert.alert(translate('error.canceled'));
-    } else if (signInInfo == -2) {
-      Alert.alert(translate('error.in_progress'));
-    } else if (signInInfo == -3) {
-      Alert.alert(translate('error.not_available'));
-    } else if (signInInfo == -4) {
-      Alert.alert(translate('error.error'));
-    } else {
-      const currentUserIdToken = await auth().currentUser.getIdToken();
-      console.log('current user id token: ', currentUserIdToken);
-      const IdTokenResponse = await PostIdToken(currentUserIdToken, this.props.user_agent);
-
-      try {
-        console.log('Id token response: ', IdTokenResponse.data.original.access_token);
-        this.setSignIn(IdTokenResponse.data.original.access_token, signInInfo);
-        this.handleSwitchChange(true);
-      } catch (error) {
-        if (error instanceof TypeError) {
-          const idToken = JSON.parse(`${IdTokenResponse.data}}`).original.access_token;
-          this.setSignIn(idToken, signInInfo);
-          console.log('new id token: ', idToken);
-        } else {
-          console.warn('error post id token', error);
-          await this.handleSignOut();
-        }
-      }
-    }
-  };
-
-  handleAppleSignIn = () => {
-    console.log(onAppleButtonPress());
-  };
-
-  handleIsSignedIn = async () => {
-    try {
-      const signInInfo = JSON.parse(await AsyncStorage.getItem('@UserInfo'));
-      const IsGoogleSignedIn = await isSignedIn();
-
-      const res = await AsyncStorage.getItem('@auth_token');
-      console.log('Current auth token: ', res);
-      if (res !== null) {
-        console.log('current user: ', auth().currentUser);
-        if (signInInfo !== null && IsGoogleSignedIn) {
-          this.props.set_auth_token(JSON.parse(res));
-          // const currentUserIdToken = await auth().currentUser.getIdToken();
-          const userStatus = await ConfirmUser(JSON.parse(res));
-          if (userStatus.status !== 200) {
-            throw 'user not authanticated';
-          }
-          console.log('userStatus: ', userStatus);
-          this.handleSwitchChange(userStatus.data.data.is_opt_in);
-          this.props.authenticate_user();
-          this.setState({
-            name: signInInfo.user.displayName,
-            photo: signInInfo.user.photoURL,
-          });
-        } else {
-          this.handleSignOut();
-        }
-      } else {
-        this.handleSignOut();
-      }
-    } catch (error) {
-      console.warn('Error handling is signed in, ', error);
-      this.handleSignOut();
-    }
-  };
-
-  handleSignOut = async () => {
-    try {
-      this.props.unauthenticate_user();
-      auth()
-        .signOut()
-        .then(() => console.log('User signed out!'));
-      if (this.props.auth_token !== AUTH_TOKEN) {
-        const loggedOut = await LogoutUser(this.props.auth_token);
-        if (loggedOut.status !== 200) throw 'Server error signing out';
-      }
-      AsyncStorage.removeItem('@UserInfo');
-      AsyncStorage.removeItem('@auth_token');
-      this.props.set_auth_token(AUTH_TOKEN);
-    } catch (error) {
-      console.log('error signing out: ', error);
-      this.props.unauthenticate_user();
-      AsyncStorage.removeItem('@UserInfo');
-      AsyncStorage.removeItem('@auth_token');
-      this.props.set_auth_token(AUTH_TOKEN);
-    }
-  };
 
   getData = async (key) => {
     try {
@@ -207,8 +91,6 @@ class SwitchNavigation extends React.Component {
   };
 
   componentWillMount = async () => {
-    await this.handleIsSignedIn();
-
     const data = await PerformTimeConsumingTask(1000);
     await this.GetVersion();
 
@@ -308,30 +190,6 @@ class SwitchNavigation extends React.Component {
     }
   };
 
-  handleSwitchChange = async (res) => {
-    let permissionGranted;
-    try {
-      if (res) {
-        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.active'), isSwitchEnabled: true });
-        permissionGranted = await GrantPermission(this.props.auth_token, this.props.user_agent);
-        if (permissionGranted.status !== 200) {
-          Alert.alert(translate('error.switch'));
-          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
-        }
-        console.log(permissionGranted);
-      } else {
-        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
-        permissionGranted = await UngrantPermission(this.props.auth_token, this.props.user_agent);
-        if (permissionGranted.status !== 200) {
-          Alert.alert(translate('error.switch'));
-          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
-        }
-      }
-    } catch (e) {
-      console.warn('error switch change: ', e);
-    }
-  }
-
   render() {
     const { is_the_login_first_time, isLoggedIn } = this.props;
     const { update_needed } = this.state;
@@ -352,77 +210,9 @@ class SwitchNavigation extends React.Component {
           <StarterPagesStack />
         ) : (
           <MyDrawer.Navigator
-            drawerContent={() => (isLoggedIn ? (
-              <View style={styles.container}>
-                <View style={styles.avatarContainer}>
-                  <View style={styles.avatarWrapper}>
-                    <Image
-                      source={{ uri: this.state.photo }}
-                      style={styles.avatarImage}
-                    />
-                  </View>
-                </View>
-                <View style={styles.contentContainer}>
-                  <View style={styles.signInButtonContainer}>
-                    <Text style={styles.title}>{this.state.name}</Text>
-                  </View>
-                  <View style={styles.switchContainer}>
-                    <Tooltip height={300} containerStyle={styles.tooltipContainerStyle} popover={<Text style={styles.tooltipText}>{translate('drawer.tooltip')}</Text>}>
-                      <View style={styles.tooltipContent}>
-                        <Text style={styles.switchText}>{this.state.faceInfoText}</Text>
-                        <Icon name="info" style={styles.iconStyle} color="white" />
-                      </View>
-                    </Tooltip>
-                    <Switch
-                      trackColor={{ false: '#767577', true: header_background_color }}
-                      thumbColor={this.state.isSwitchEnabled ? 'white' : '#f4f3f4'}
-                      ios_backgroundColor="#3e3e3e"
-                      onValueChange={(res) => this.handleSwitchChange(res)}
-                      value={this.state.isSwitchEnabled}
-                    />
-                  </View>
-                  <View style={styles.signOutContainer}>
-                    <TouchableHighlight
-                      style={styles.signout}
-                      onPress={() => this.handleSignOut()}
-                    >
-                      <Text style={styles.button}>Çıkış Yap</Text>
-                    </TouchableHighlight>
-                  </View>
-
-                </View>
-              </View>
-            ) : (
-              <View style={styles.container}>
-                <View style={styles.avatarContainer}>
-                  <View style={styles.avatarWrapper}>
-                    <Image source={CAMERAICON} style={styles.avatarImage} />
-                  </View>
-                </View>
-                <View style={styles.contentContainer}>
-                  <View style={styles.signInButtonContainer}>
-                    {Platform.OS == 'ios' ? (
-                      <AppleButton
-                        buttonStyle={AppleButton.Style.WHITE}
-                        buttonType={AppleButton.Type.SIGN_IN}
-                        style={{
-                          width: 160, // You must specify a width
-                          height: 45, // You must specify a height
-                        }}
-                        onPress={() => this.handleAppleSignIn()}
-                      />
-                    ) : (
-                      <GoogleSigninButton
-                        style={{ width: 192, height: 48 }}
-                        size={GoogleSigninButton.Size.Wide}
-                        color={GoogleSigninButton.Color.Dark}
-                        onPress={() => this.handleGoogleSignIn()}
-                      />
-                    )}
-                  </View>
-                </View>
-              </View>
-            ))}
+            drawerContent={() => (
+              <CustomDrawer />
+            )}
           >
             <MyDrawer.Screen
               name="MainPagesStack"
@@ -434,7 +224,19 @@ class SwitchNavigation extends React.Component {
     );
   }
 }
+const styles = StyleSheet.create({
+  indicatorContainer: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  imageBack: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    resizeMode: 'contain',
+  },
 
+});
 const mapStateToProps = (state) => ({
   is_the_login_first_time: state.mainReducer.is_the_login_first_time,
   language: state.mainReducer.language,

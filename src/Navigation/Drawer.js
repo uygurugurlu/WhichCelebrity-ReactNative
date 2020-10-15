@@ -1,84 +1,274 @@
-import React, {Component} from 'react';
-import {View, Image, Text, StyleSheet} from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {GoogleSigninButton} from '@react-native-community/google-signin';
-import {CAMERAICON, DEVICE_HEIGHT} from '../common/Constants';
-import {translate} from '../I18n';
+import React, { Component } from 'react';
+import {
+  View, Image, Text, Switch, TouchableHighlight, Platform, Alert,
+} from 'react-native';
+import { GoogleSigninButton } from '@react-native-community/google-signin';
+import Tooltip from 'rn-tooltip';
+import { Icon } from 'react-native-elements';
+import { AppleButton } from '@invertase/react-native-apple-authentication';
+import { connect } from 'react-redux';
+import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-community/async-storage';
+import { styles } from './DrawerStyles';
+import { CAMERAICON, DEVICE_HEIGHT } from '../common/Constants';
+import { translate } from '../I18n';
+import { header_background_color } from '../common/ColorIndex';
+import {
+  authenticate_user,
+  first_time_login,
+  get_user_agent, set_auth_token,
+  unauthenticate_user,
+} from '../Store/Actions';
+import { GrantPermission } from '../common/Functions/Endpoints/GrantPermission';
+import { UngrantPermission } from '../common/Functions/Endpoints/UngrantPermission';
+import { storeData } from '../common/Functions/ManageAsyncData';
+import { isSignedIn, signInFunction } from '../common/Functions/GoogleSignInFunctions';
+import { PostIdToken } from '../common/Functions/Endpoints/PostIdToken';
+import { onAppleButtonPress } from '../common/Functions/AppleSignInFunctions';
+import { ConfirmUser } from '../common/Functions/Endpoints/ConfirmUser';
+import { AUTH_TOKEN } from '../config';
+import { LogoutUser } from '../common/Functions/Endpoints/LogoutUser';
 
-export default class Drawer extends Component {
+class CustomDrawer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      photo: '',
+      name: '',
+      isSwitchEnabled: false,
+      faceInfoText: '',
+
+    };
+  }
+
+  componentWillMount = async () => {
+    await this.handleIsSignedIn();
+  }
+
+  handleSwitchChange = async (res) => {
+    let permissionGranted;
+    try {
+      if (res) {
+        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.active'), isSwitchEnabled: true });
+        permissionGranted = await GrantPermission(this.props.auth_token, this.props.user_agent);
+        if (permissionGranted.status !== 200) {
+          Alert.alert(translate('error.switch'));
+          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
+        }
+        console.log(permissionGranted);
+      } else {
+        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
+        permissionGranted = await UngrantPermission(this.props.auth_token, this.props.user_agent);
+        if (permissionGranted.status !== 200) {
+          Alert.alert(translate('error.switch'));
+          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
+        }
+      }
+    } catch (e) {
+      console.warn('error switch change: ', e);
+    }
+  }
+
+  setSignIn = async (idToken, signInInfo) => {
+    this.props.set_auth_token(
+      idToken,
+    );
+    storeData('@auth_token', idToken);
+    storeData('@UserInfo', signInInfo);
+
+    this.props.authenticate_user();
+    this.setState({
+      name: signInInfo.user.displayName,
+      photo: signInInfo.user.photoURL,
+      faceInfoText: translate('drawer.face_info') + translate('drawer.passive'),
+    });
+  }
+
+  handleGoogleSignIn = async () => {
+    const signInInfo = await signInFunction();
+    console.log('signInInfo', signInInfo);
+    if (signInInfo == -1) {
+      Alert.alert(translate('error.canceled'));
+    } else if (signInInfo == -2) {
+      Alert.alert(translate('error.in_progress'));
+    } else if (signInInfo == -3) {
+      Alert.alert(translate('error.not_available'));
+    } else if (signInInfo == -4) {
+      Alert.alert(translate('error.error'));
+    } else {
+      const currentUserIdToken = await auth().currentUser.getIdToken();
+      console.log('current user id token: ', currentUserIdToken);
+      const IdTokenResponse = await PostIdToken(currentUserIdToken, this.props.user_agent);
+
+      try {
+        console.log('Id token response: ', IdTokenResponse.data.original.access_token);
+        this.setSignIn(IdTokenResponse.data.original.access_token, signInInfo);
+        this.handleSwitchChange(true);
+      } catch (error) {
+        if (error instanceof TypeError) {
+          const idToken = JSON.parse(`${IdTokenResponse.data}}`).original.access_token;
+          this.setSignIn(idToken, signInInfo);
+          console.log('new id token: ', idToken);
+        } else {
+          console.warn('error post id token', error);
+          await this.handleSignOut();
+        }
+      }
+    }
+  };
+
+  handleAppleSignIn = () => {
+    console.log(onAppleButtonPress());
+  };
+
+  handleIsSignedIn = async () => {
+    try {
+      const signInInfo = JSON.parse(await AsyncStorage.getItem('@UserInfo'));
+      const IsGoogleSignedIn = await isSignedIn();
+
+      const res = await AsyncStorage.getItem('@auth_token');
+      console.log('Current auth token: ', res);
+      if (res !== null) {
+        console.log('current user: ', auth().currentUser);
+        if (signInInfo !== null && IsGoogleSignedIn) {
+          this.props.set_auth_token(JSON.parse(res));
+          // const currentUserIdToken = await auth().currentUser.getIdToken();
+          const userStatus = await ConfirmUser(JSON.parse(res));
+          if (userStatus.status !== 200) {
+            throw 'user not authenticated';
+          }
+          console.log('userStatus: ', userStatus);
+          this.handleSwitchChange(userStatus.data.data.is_opt_in);
+          this.props.authenticate_user();
+          this.setState({
+            name: signInInfo.user.displayName,
+            photo: signInInfo.user.photoURL,
+          });
+        } else {
+          this.handleSignOut();
+        }
+      } else {
+        this.handleSignOut();
+      }
+    } catch (error) {
+      console.warn('Error handling is signed in, ', error);
+      this.handleSignOut();
+    }
+  };
+
+  handleSignOut = async () => {
+    try {
+      this.props.unauthenticate_user();
+      auth()
+        .signOut()
+        .then(() => console.log('User signed out!'));
+      if (this.props.auth_token !== AUTH_TOKEN) {
+        const loggedOut = await LogoutUser(this.props.auth_token);
+        if (loggedOut.status !== 200) throw 'Server error signing out';
+      }
+      AsyncStorage.removeItem('@UserInfo');
+      AsyncStorage.removeItem('@auth_token');
+      this.props.set_auth_token(AUTH_TOKEN);
+    } catch (error) {
+      console.log('error signing out: ', error);
+      this.props.unauthenticate_user();
+      AsyncStorage.removeItem('@UserInfo');
+      AsyncStorage.removeItem('@auth_token');
+      this.props.set_auth_token(AUTH_TOKEN);
+    }
+  };
+
   render() {
-    var {isLoggedIn} = this.props;
+    const { isLoggedIn } = this.props;
     return (
-      <View style={styles.container}>
-        {isLoggedIn ? (
-          <View>
-            <View style={styles.avatarContainer}>
-              <View style={styles.avatarWrapper}>
-                <Image source={CAMERAICON} style={styles.avatarImage} />
-              </View>
-            </View>
-            <View style={styles.contentContainer}>
-              <View style={styles.signInButtonContainer}>
-                <Text style={styles.title}>Selam</Text>
-              </View>
+      (isLoggedIn ? (
+        <View style={styles.container}>
+          <View style={styles.avatarContainer}>
+            <View style={styles.avatarWrapper}>
+              <Image
+                source={{ uri: this.state.photo }}
+                style={styles.avatarImage}
+              />
             </View>
           </View>
-        ) : (
-          <View>
-            <View style={styles.avatarContainer}>
-              <View style={styles.avatarWrapper}>
-                <Image source={CAMERAICON} style={styles.avatarImage} />
-              </View>
+          <View style={styles.contentContainer}>
+            <View style={styles.signInButtonContainer}>
+              <Text style={styles.title}>{this.state.name}</Text>
             </View>
-            <View style={styles.contentContainer}>
-              <View style={styles.signInButtonContainer}>
+            <View style={styles.switchContainer}>
+              <Tooltip height={300} containerStyle={styles.tooltipContainerStyle} popover={<Text style={styles.tooltipText}>{translate('drawer.tooltip')}</Text>}>
+                <View style={styles.tooltipContent}>
+                  <Text style={styles.switchText}>{this.state.faceInfoText}</Text>
+                  <Icon name="info" style={styles.iconStyle} color="white" />
+                </View>
+              </Tooltip>
+              <Switch
+                trackColor={{ false: '#767577', true: header_background_color }}
+                thumbColor={this.state.isSwitchEnabled ? 'white' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={(res) => this.handleSwitchChange(res)}
+                value={this.state.isSwitchEnabled}
+              />
+            </View>
+            <View style={styles.signOutContainer}>
+              <TouchableHighlight
+                style={styles.signout}
+                onPress={() => this.handleSignOut()}
+              >
+                <Text style={styles.button}>Çıkış Yap</Text>
+              </TouchableHighlight>
+            </View>
+
+          </View>
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <View style={styles.avatarContainer}>
+            <View style={styles.avatarWrapper}>
+              <Image source={CAMERAICON} style={styles.avatarImage} />
+            </View>
+          </View>
+          <View style={styles.contentContainer}>
+            <View style={styles.signInButtonContainer}>
+              {Platform.OS == 'ios' ? (
+                <AppleButton
+                  buttonStyle={AppleButton.Style.WHITE}
+                  buttonType={AppleButton.Type.SIGN_IN}
+                  style={{
+                    width: 160, // You must specify a width
+                    height: 45, // You must specify a height
+                  }}
+                  onPress={() => this.handleAppleSignIn()}
+                />
+              ) : (
                 <GoogleSigninButton
-                  style={{width: 192, height: 48}}
+                  style={{ width: 192, height: 48 }}
                   size={GoogleSigninButton.Size.Wide}
                   color={GoogleSigninButton.Color.Dark}
-                  onPress={signIn}
+                  onPress={() => this.handleGoogleSignIn()}
                 />
-              </View>
+              )}
             </View>
           </View>
-        )}
-      </View>
-    );
+        </View>
+      )
+      ));
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'rgb(70,70,70)',
-  },
-  avatarContainer: {
-    flex: 0.4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarWrapper: {
-    flex: 0.8,
-    borderRadius: 100,
-    aspectRatio: 1,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarImage: {
-    resizeMode: 'cover',
-    height: DEVICE_HEIGHT * 0.35,
-    width: DEVICE_HEIGHT * 0.35,
-  },
-  title: {
-    color: 'white',
-    fontSize: 20,
-  },
-  contentContainer: {
-    flex: 0.6,
-  },
-  signInButtonContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.mainReducer.isLoggedIn,
+  auth_token: state.mainReducer.auth_token,
+  user_agent: state.mainReducer.user_agent,
+
 });
+
+const mapDispatchToProps = (dispatch) => ({
+  first_time_login: (is_first) => dispatch(first_time_login(is_first)),
+  get_user_agent: (agent) => dispatch(get_user_agent(agent)),
+  authenticate_user: () => dispatch(authenticate_user()),
+  unauthenticate_user: () => dispatch(unauthenticate_user()),
+  set_auth_token: (data) => dispatch(set_auth_token(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomDrawer);

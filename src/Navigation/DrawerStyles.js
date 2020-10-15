@@ -3,16 +3,7 @@ import { DEVICE_WIDTH } from '../common/Constants';
 import { button_colors, header_background_color } from '../common/ColorIndex';
 
 export const styles = StyleSheet.create({
-  indicatorContainer: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  imageBack: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    resizeMode: 'contain',
-  },
+
   container: {
     flex: 1,
     backgroundColor: 'rgb(70,70,70)',

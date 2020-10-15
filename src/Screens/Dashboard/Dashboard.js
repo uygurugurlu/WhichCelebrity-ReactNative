@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  ImageBackground,
+  ImageBackground, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -53,6 +53,9 @@ class Dashboard extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('ScoreBoard')}>
+            <Text>To ScoreBoard</Text>
+          </TouchableOpacity>
           <View style={{ flex: 1 }}>
             <Text style={styles.title}>
               {translate('dashboard.first_label')}
@@ -77,33 +80,6 @@ class Dashboard extends Component {
         </ImageBackground>
       </View>
 
-    /* <SafeAreaView style={styles.mainContainer}>
-        <TouchableOpacity
-          style={[styles.topContainer, shadow]}
-          onPress={() => this.Navigate(1)}>
-          <View
-            style={{width: DEVICE_WIDTH * 0.8, height: DEVICE_HEIGHT * 0.325}}>
-            <Image source={WHICHCELEBRITYBACK} style={styles.imageStyle}/>
-          </View>
-
-          <Text style={styles.textStyle}>
-            {translate('dashboard.first_label')}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.bottomContainer, shadow]}
-          onPress={() => this.Navigate(2)}>
-          <View
-            style={{width: DEVICE_WIDTH * 0.8, height: DEVICE_HEIGHT * 0.325}}>
-            <Image source={CALCCELEBRITYBACK} style={styles.imageStyle}/>
-          </View>
-
-          <Text style={styles.textStyle}>
-            {translate('dashboard.second_label')}
-          </Text>
-        </TouchableOpacity>
-    </SafeAreaView> */
     );
   }
 }
