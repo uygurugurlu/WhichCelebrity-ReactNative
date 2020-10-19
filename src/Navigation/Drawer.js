@@ -18,6 +18,8 @@ import {
   first_time_login,
   get_user_agent, set_auth_token,
   unauthenticate_user,
+  set_face_sharing_active,
+  set_face_sharing_inactive
 } from '../Store/Actions';
 import { GrantPermission } from '../common/Functions/Endpoints/GrantPermission';
 import { UngrantPermission } from '../common/Functions/Endpoints/UngrantPermission';
@@ -35,9 +37,7 @@ class CustomDrawer extends Component {
     this.state = {
       photo: '',
       name: '',
-      isSwitchEnabled: false,
       faceInfoText: '',
-
     };
   }
 
@@ -49,19 +49,23 @@ class CustomDrawer extends Component {
     let permissionGranted;
     try {
       if (res) {
-        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.active'), isSwitchEnabled: true });
+        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.active') });
+        this.props.set_face_sharing_active();
         permissionGranted = await GrantPermission(this.props.auth_token, this.props.user_agent);
         if (permissionGranted.status !== 200) {
           Alert.alert(translate('error.switch'));
-          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
+          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive') });
+          this.props.set_face_sharing_inactive();
         }
         console.log(permissionGranted);
       } else {
-        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
+        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive') });
+        this.props.set_face_sharing_inactive();
         permissionGranted = await UngrantPermission(this.props.auth_token, this.props.user_agent);
         if (permissionGranted.status !== 200) {
           Alert.alert(translate('error.switch'));
-          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive'), isSwitchEnabled: false });
+          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive') });
+          this.props.set_face_sharing_inactive();
         }
       }
     } catch (e) {
@@ -80,7 +84,6 @@ class CustomDrawer extends Component {
     this.setState({
       name: signInInfo.user.displayName,
       photo: signInInfo.user.photoURL,
-      faceInfoText: translate('drawer.face_info') + translate('drawer.passive'),
     });
   }
 
@@ -103,11 +106,12 @@ class CustomDrawer extends Component {
       try {
         console.log('Id token response: ', IdTokenResponse.data.original.access_token);
         this.setSignIn(IdTokenResponse.data.original.access_token, signInInfo);
-        this.handleSwitchChange(true);
+        this.handleSwitchChange(false);
       } catch (error) {
         if (error instanceof TypeError) {
           const idToken = JSON.parse(`${IdTokenResponse.data}}`).original.access_token;
           this.setSignIn(idToken, signInInfo);
+          this.handleSwitchChange(false);
           console.log('new id token: ', idToken);
         } else {
           console.warn('error post id token', error);
@@ -204,10 +208,10 @@ class CustomDrawer extends Component {
               </Tooltip>
               <Switch
                 trackColor={{ false: '#767577', true: header_background_color }}
-                thumbColor={this.state.isSwitchEnabled ? 'white' : '#f4f3f4'}
+                thumbColor={this.props.face_sharing ? 'white' : '#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={(res) => this.handleSwitchChange(res)}
-                value={this.state.isSwitchEnabled}
+                value={this.props.face_sharing}
               />
             </View>
             <View style={styles.signOutContainer}>
@@ -260,6 +264,7 @@ const mapStateToProps = (state) => ({
   isLoggedIn: state.mainReducer.isLoggedIn,
   auth_token: state.mainReducer.auth_token,
   user_agent: state.mainReducer.user_agent,
+  face_sharing: state.mainReducer.face_sharing
 
 });
 
@@ -269,6 +274,8 @@ const mapDispatchToProps = (dispatch) => ({
   authenticate_user: () => dispatch(authenticate_user()),
   unauthenticate_user: () => dispatch(unauthenticate_user()),
   set_auth_token: (data) => dispatch(set_auth_token(data)),
+  set_face_sharing_active: () => dispatch(set_face_sharing_active()),
+  set_face_sharing_inactive: () => dispatch(set_face_sharing_inactive()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomDrawer);

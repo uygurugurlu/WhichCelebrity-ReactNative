@@ -15,4 +15,6 @@ export {
   authenticate_user,
   get_user_data,
   set_auth_token,
+  set_face_sharing_active,
+  set_face_sharing_inactive,
 } from './MainActions';

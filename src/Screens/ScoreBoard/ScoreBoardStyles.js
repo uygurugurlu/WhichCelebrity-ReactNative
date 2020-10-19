@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-
   },
   imageBack: {
     flex: 1,
@@ -24,18 +23,21 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   boardContainer: {
-    flex: 0.8,
-    marginHorizontal: 30,
-    borderRadius: 30,
-    backgroundColor: 'white',
+    flex: 0.9,
+    marginHorizontal: 10,
     overflow: 'hidden',
+
   },
   topRanksContainer: {
-    flex: 0.8,
+    flex: 0.75,
     borderBottomWidth: 1,
     borderBottomColor: 'rgb(100,100,100)'
   },
   myRankContainer: {
-    flex: 0.2,
+    flex: 0.25,
+  },
+  myRankWrapper: {
+    height: DEVICE_HEIGHT * 0.12 + 10,
+
   }
 });

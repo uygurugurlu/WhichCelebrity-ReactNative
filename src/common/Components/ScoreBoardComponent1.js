@@ -5,13 +5,13 @@ import {
 import { CAMERAICON, DEVICE_HEIGHT, DEVICE_WIDTH } from '../Constants';
 import { translate } from '../../I18n';
 import { blue_text_color } from '../ColorIndex';
+import { PercentageColor } from '../Functions/PercentageColor';
 
-class ScoreBoardComponent extends Component {
+class ScoreBoardComponent1 extends Component {
   render() {
     const {
       rank, userName, userPhoto, celebrityName, celebrityPhoto, percentage
     } = this.props;
-    console.log(this.props.userName);
     return (
       <View style={styles.container}>
         <View style={styles.rankingContainer}>
@@ -26,26 +26,18 @@ class ScoreBoardComponent extends Component {
               />
             </View>
           </View>
-          <View style={styles.avatarContainer2}>
-            <View style={styles.avatarWrapper}>
-              <Image
-                source={{ uri: celebrityPhoto }}
-                style={styles.avatarImage}
-              />
-            </View>
-          </View>
         </View>
 
         <View style={styles.namesContainer}>
           <View style={styles.userNameContainer}>
-            <Text style={styles.userName}>{userName}</Text>
+            <Text style={styles.userNameLabel}>Kullanıcı Adı:</Text>
           </View>
           <View style={styles.userNameContainer}>
-            <Text style={styles.userName}>{celebrityName}</Text>
+            <Text style={styles.userName}>{userName}</Text>
           </View>
         </View>
         <View style={styles.percentageContainer}>
-          <Text style={styles.percentageText}>{`${percentage}%`}</Text>
+          <Text style={[styles.percentageText, { color: PercentageColor(percentage) }]}>{`${percentage}%`}</Text>
         </View>
       </View>
     );
@@ -56,21 +48,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    borderBottomWidth: 1,
-    height: DEVICE_HEIGHT * 0.15,
+    height: DEVICE_HEIGHT * 0.12,
     flexDirection: 'row',
+    backgroundColor: '#184e83',
+    borderRadius: 30,
+    marginVertical: 5,
   },
   rankingContainer: {
-    flex: 0.07,
+    flex: 0.13,
     justifyContent: 'center',
     alignItems: 'center',
   },
   rankStyle: {
-    color: blue_text_color,
+    color: '#fff',
     fontSize: 17,
   },
   photosContainer: {
-    flex: 0.4,
+    flex: 0.2,
     flexDirection: 'row',
   },
   avatarContainer: {
@@ -103,17 +97,22 @@ const styles = StyleSheet.create({
     flex: 0.4,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
   },
   userNameContainer: {
     flex: 0.3,
-    justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
+    marginHorizontal: 10,
+  },
+  userNameLabel: {
+    color: '#c8bf3f',
+    fontSize: 15,
+    textAlign: 'left',
   },
   userName: {
-    color: blue_text_color,
-    fontSize: 18,
-    textAlign: 'center',
+    color: '#fff',
+    fontSize: 15,
+    textAlign: 'left',
   },
   percentageContainer: {
     flex: 0.2,
@@ -127,4 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScoreBoardComponent;
+export default ScoreBoardComponent1;

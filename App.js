@@ -3,22 +3,22 @@
 //    https://api.myface.io
 //    1657|VXWE09dkbvKbAagr3DOz36NdZCUZxOQCkcTb0DhS
 
-import React, {useEffect} from 'react';
-import configureStore from './src/Store/ConfigureStore';
-import {Provider} from 'react-redux';
-import SwitchNavigation from './src/Navigation/SwitchNavigation';
-import {setI18nConfig} from './src/I18n';
+import React, { useEffect } from 'react';
+import { Provider } from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
-import {Alert, StatusBar} from 'react-native';
-import admob, {MaxAdContentRating} from '@react-native-firebase/admob';
-import {configureFontAwesomePro} from 'react-native-fontawesome-pro';
+import { Alert, StatusBar } from 'react-native';
+import admob, { MaxAdContentRating } from '@react-native-firebase/admob';
+import { configureFontAwesomePro } from 'react-native-fontawesome-pro';
 import axios from 'axios';
-import {header_background_color} from './src/common/ColorIndex';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
+import { header_background_color } from './src/common/ColorIndex';
+import { setI18nConfig } from './src/I18n';
+import SwitchNavigation from './src/Navigation/SwitchNavigation';
+import configureStore from './src/Store/ConfigureStore';
 
 configureFontAwesomePro();
 const store = configureStore();
@@ -29,19 +29,20 @@ function App() {
       '93591380261-076oe651jsdnrr01kol349k11s8eh0hq.apps.googleusercontent.com',
     offlineAccess: true,
   });
-  let init = async () => {
+  const init = async () => {
     await requestUserPermission();
     await AdMobConfigure();
     await setI18nConfig();
   };
 
   const AxiosInterceptors = () => {
-    /** Print Every Response to the Console*/
+    /** Print Every Response to the Console */
     axios.interceptors.response.use(
       (res) => {
-        console.group('interceptor response', res);
-        //console.log('status is:' + status);
-        //console.table(data);
+        console.group('interceptor response');
+        console.log(res);
+        // console.log('status is:' + status);
+        // console.table(data);
         console.groupEnd();
         return res;
       },
@@ -58,15 +59,13 @@ function App() {
     /** Add default query parameter to axios. */
     axios.interceptors.request.use(
       (config) => {
-        config.params = {...config.params, locale: 'tr'};
+        config.params = { ...config.params, locale: 'tr' };
         console.group('interceptor request');
         console.table(config);
         console.groupEnd();
         return config;
       },
-      function (error) {
-        return Promise.reject(error);
-      },
+      (error) => Promise.reject(error),
     );
   };
 
@@ -88,7 +87,7 @@ function App() {
       });
   };
 
-  /** FCM Token*/
+  /** FCM Token */
   useEffect(() => {
     init().finally(() => {
       AxiosInterceptors();
@@ -112,9 +111,8 @@ function App() {
 
   async function requestUserPermission() {
     const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    const enabled = authStatus === messaging.AuthorizationStatus.AUTHORIZED
+      || authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
       console.log('Authorization status:', authStatus);

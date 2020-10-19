@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API_HOST, AUTH_TOKEN } from '../../../config';
+import { API_HOST } from '../../../config';
+import { api } from '../AxiosCacheAdapter';
 
 export const PostIdToken = async (id_token, user_agent) => {
   let body = '';
@@ -7,7 +7,7 @@ export const PostIdToken = async (id_token, user_agent) => {
     token: id_token,
   };
 
-  return axios.post(`${API_HOST}/api/firebase/login`, body, {
+  return api.post(`${API_HOST}/api/firebase/login`, body, {
     headers: {
       'X-Requested-With': 'XMLHttpRequest',
       'Content-Type': 'application/json',

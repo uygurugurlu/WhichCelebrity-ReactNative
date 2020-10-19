@@ -266,7 +266,6 @@ class HomePage extends Component {
     } = this.props;
     const { selected_category_id, gender, selected_category_name } = this.state;
     await this.LoadAD();
-    console.log('getResultBase64: ', userAvatarB64);
     if (this.CheckValidity()) {
       await this.setState({ result_loading: true });
 
@@ -279,6 +278,7 @@ class HomePage extends Component {
           gender,
           auth_token,
         );
+        console.log('photo analyze result: ', data);
         CelebrityFinderResultEvent(selected_category_name, gender);
 
         const wait = await PerformTimeConsumingTask(

@@ -1,3 +1,4 @@
+import update from 'react-addons-update';
 import {
   FIRST_TIME_LOGIN,
   SET_LANGUAGE,
@@ -15,9 +16,9 @@ import {
   UNAUTHENTICATE_USER,
   GET_USER_DATA,
   SET_AUTH_TOKEN,
+  SET_FACE_SHARING_ACTIVE,
+  SET_FACE_SHARING_INACTIVE,
 } from '../Actions/ActionTypes';
-
-import update from 'react-addons-update';
 
 const initialState = {
   isLoggedIn: false,
@@ -47,45 +48,47 @@ const initialState = {
   detected_face_count: 0,
 
   user_data: [],
+
+  face_sharing: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FIRST_TIME_LOGIN:
       return (state = update(state, {
-        is_the_login_first_time: {$set: action.is_first},
+        is_the_login_first_time: { $set: action.is_first },
       }));
     case GET_USER_DATA:
       return (state = update(state, {
-        user_data: {$set: action.user_data},
+        user_data: { $set: action.user_data },
       }));
     case SET_AUTH_TOKEN:
       return (state = update(state, {
-        auth_token: {$set: action.auth_token},
+        auth_token: { $set: action.auth_token },
       }));
     case AUTHENTICATE_USER:
       return (state = update(state, {
-        isLoggedIn: {$set: true},
+        isLoggedIn: { $set: true },
       }));
 
     case UNAUTHENTICATE_USER:
       return (state = update(state, {
-        isLoggedIn: {$set: false},
+        isLoggedIn: { $set: false },
       }));
 
     case SET_LANGUAGE:
       return (state = update(state, {
-        language: {$set: action.language},
+        language: { $set: action.language },
       }));
 
     case GET_DETECTED_FACE_COUNT:
       return (state = update(state, {
-        detected_face_count: {$set: action.count},
+        detected_face_count: { $set: action.count },
       }));
 
     case GET_USER_AGENT:
       return (state = update(state, {
-        user_agent: {$set: action.agent},
+        user_agent: { $set: action.agent },
       }));
 
     case TRIGGER_SAVINGS_PAGE:
@@ -97,50 +100,55 @@ const reducer = (state = initialState, action) => {
 
     case GET_USER_AVATAR_SOURCE:
       return (state = update(state, {
-        userAvatarSource: {$set: action.source},
-        userAvatarB64: {$set: action.base64_data},
+        userAvatarSource: { $set: action.source },
+        userAvatarB64: { $set: action.base64_data },
       }));
 
     case GET_CAPTURED_IMAGE_URI:
       return (state = update(state, {
-        captured_image_uri: {$set: action.image_uri},
+        captured_image_uri: { $set: action.image_uri },
       }));
 
     case ADD_TO_DELETE_LIST:
       return (state = update(state, {
-        delete_list: {$push: [action.uri]},
+        delete_list: { $push: [action.uri] },
       }));
 
     case REMOVE_FROM_DELETE_LIST:
-      const newList = state.delete_list.filter((item) => {
-        return item !== action.uri;
-      });
+      const newList = state.delete_list.filter((item) => item !== action.uri);
       return (state = update(state, {
-        delete_list: {$set: newList},
+        delete_list: { $set: newList },
       }));
 
     case CLEAR_DELETE_LIST:
       return (state = update(state, {
-        delete_list: {$set: []},
+        delete_list: { $set: [] },
       }));
 
     case CHANGE_SELECTED_TO_DELETE_COUNT:
       if (action.bool) {
         state = update(state, {
-          selected_to_delete_count: {$set: state.selected_to_delete_count + 1},
+          selected_to_delete_count: { $set: state.selected_to_delete_count + 1 },
         });
       } else {
         state = update(state, {
-          selected_to_delete_count: {$set: state.selected_to_delete_count - 1},
+          selected_to_delete_count: { $set: state.selected_to_delete_count - 1 },
         });
       }
       return state;
 
     case CLEAR_SELECTED_TO_DELETE_COUNT:
       return (state = update(state, {
-        selected_to_delete_count: {$set: 0},
+        selected_to_delete_count: { $set: 0 },
       }));
-
+    case SET_FACE_SHARING_ACTIVE:
+      return (state = update(state, {
+        face_sharing: { $set: true },
+      }));
+    case SET_FACE_SHARING_INACTIVE:
+      return (state = update(state, {
+        face_sharing: { $set: false },
+      }));
     default:
       return state;
   }

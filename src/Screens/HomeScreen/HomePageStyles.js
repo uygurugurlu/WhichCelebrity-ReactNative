@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
+import { StyleSheet } from 'react-native';
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../../common/Constants';
 import {
   buttons_height,
   button_colors,
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     flex: 2.5,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-  
+
   },
   selectCategoryContainer: {
     height: 40,
@@ -115,7 +115,7 @@ export const styles = StyleSheet.create({
     width: DEVICE_WIDTH - 60,
     alignSelf: 'center',
     borderRadius: 20,
-    backgroundColor: blue_text_color,
+    backgroundColor: button_colors,
   },
   buttonText: {
     color: 'white',
@@ -123,7 +123,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '800',
   },
-  //Options Modal Styles
+  // Options Modal Styles
   settingsModalContainer: {
     alignSelf: 'center',
     alignItems: 'center',
@@ -228,19 +228,19 @@ export const styles = StyleSheet.create({
 
   cropButtonContainer: {
     flex: 0.5,
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cropWrapper: {
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   cropButtons: {
     height: 70,
     width: 70,
   }
 
-  ////////////////////////////
+  /// /////////////////////////
   /*
   topLabel2ContainerStyle: {
     flexDirection: 'row',
