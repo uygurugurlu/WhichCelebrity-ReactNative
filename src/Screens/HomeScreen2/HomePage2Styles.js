@@ -1,5 +1,5 @@
-import {StyleSheet, Dimensions} from 'react-native';
-import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
+import { StyleSheet, Dimensions } from 'react-native';
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../../common/Constants';
 import {
   buttons_height,
   button_colors,
@@ -101,7 +101,7 @@ export const styles = StyleSheet.create({
   },
   celebritySelectedImage: {
     flex: 1,
-    resizeMode:"cover",
+    resizeMode: 'cover',
   },
   celebritySelectedName: {
     flex: 0.5,
@@ -260,7 +260,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 
-  //Options Modal Styles
+  // Options Modal Styles
   settingsModalContainer: {
     alignSelf: 'center',
     alignItems: 'center',
@@ -298,7 +298,7 @@ export const styles = StyleSheet.create({
     color: 'red',
     fontSize: 19,
   },
-  //celebrities style
+  // celebrities style
   modalBack: {
     backgroundColor: '#00000080',
     position: 'absolute',

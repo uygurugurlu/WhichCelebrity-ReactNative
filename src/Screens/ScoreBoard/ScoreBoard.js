@@ -5,6 +5,7 @@ import {
 import { styles } from './ScoreBoardStyles';
 import { IMAGEBACK } from '../../common/Constants';
 import ScoreBoardComponent1 from '../../common/Components/ScoreBoardComponent1';
+import SelectedCelebrityLine from '../../common/Components/SelectedCelebrityLine';
 
 const data = [
   {
@@ -56,6 +57,9 @@ export default class ScoreBoard extends Component {
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
           <View style={styles.topLabelContainerStyle}>
             <Text style={styles.topLabelStyle}>Ünlülere en çok benzeyen kullanıcılar</Text>
+          </View>
+          <View style={styles.selectCelebrityContainer}>
+            <SelectCelebrityComponent />
           </View>
           <View style={styles.boardContainer}>
             <View style={styles.topRanksContainer}>

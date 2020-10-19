@@ -22,8 +22,11 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
   },
+  selectCelebrityContainer: {
+    flex: 0.2
+  },
   boardContainer: {
-    flex: 0.9,
+    flex: 0.7,
     marginHorizontal: 10,
     overflow: 'hidden',
 
