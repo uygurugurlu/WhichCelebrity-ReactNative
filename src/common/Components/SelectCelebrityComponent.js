@@ -34,16 +34,14 @@ class SelectCelebrityComponent extends Component {
     this.getInitialCelebrities();
   }
 
+  WhenTheLanguageChanged = () => this.forceUpdate();
+
   shouldComponentUpdate = async (nextProps, nextState) => {
     const { userAvatarSource, language } = this.props;
     const { search } = this.state;
 
     if (nextProps.language.languageTag !== language.languageTag) {
       await this.WhenTheLanguageChanged();
-    }
-
-    if (userAvatarSource !== nextProps.userAvatarSource) {
-      this.actionSheet.hide();
     }
 
     if (search !== nextState.search) {
@@ -66,7 +64,7 @@ class SelectCelebrityComponent extends Component {
   updateSearch = (search) => this.setState({ search });
 
   CelebritySelected = (celebrity) => {
-    const { user_agent, setCelebrityId } = this.props;
+    const { user_agent, setCelebrityId, getScoreBoardByCelebrity } = this.props;
     setCelebrityId(celebrity.id);
     this.setState({
       search: celebrity.name,
@@ -77,6 +75,7 @@ class SelectCelebrityComponent extends Component {
     GetCelebrity(user_agent, celebrity.id, this.props.auth_token).then((res) => {
       console.log('GetCelebrity res: ', res);
       this.setState({ celebrityPhoto: res.data.photo });
+      getScoreBoardByCelebrity(celebrity.id);
     });
   };
 
@@ -88,7 +87,7 @@ class SelectCelebrityComponent extends Component {
   };
 
   cancelCelebrity = () => {
-    this.props.setCelebrityId('');
+    this.props.setCelebrityId(0);
     this.setState({
       isCelebritySelected: false,
       celebrityName: '',
@@ -109,7 +108,7 @@ class SelectCelebrityComponent extends Component {
           >
             <View style={styles.selectCategoryWrapper}>
               <Text style={styles.selectCategoryText}>
-                {this.state.celebrityName == ''
+                {this.state.celebrityName === ''
                   ? translate('home.select_celebrity')
                   : this.state.celebrityName}
               </Text>
@@ -127,7 +126,7 @@ class SelectCelebrityComponent extends Component {
             >
               <View style={styles.celebritySelectedPress}>
                 <Text style={styles.selectCategoryText}>
-                  {this.state.celebrityName == ''
+                  {this.state.celebrityName === ''
                     ? translate('home.select_celebrity')
                     : translate('home.select_another_celebrity')}
                 </Text>

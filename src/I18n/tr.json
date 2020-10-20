@@ -107,5 +107,11 @@
     "active": "aktif",
     "passive": "aktif değil",
     "tooltip": "Yüz bilgisi paylaşma aktif olduğu durumda, uygulamayı kullanan diğer kullanıcılar içinden kayıp ikizinizi bulabiliriz :)\n\nAyrıca ünlülere en çok benzeyen kullanıcılar listesinde sizi listeleyebiliriz.\n\nYüz verileriniz herhangi bir firma ya da kuruluş ile asla paylaşılmaz."
+  },
+  "scoreboard": {
+    "scoreboard": "Skor Tablosu",
+    "username": "Kullanıcı Adı: ",
+    "most_similar": "Ünlülere en çok benzeyen kullanıcılar",
+    "most_similar_selected": "Seçtiğiniz ünlüye en çok benzeyen 10 kullanıcı",
   }
 }

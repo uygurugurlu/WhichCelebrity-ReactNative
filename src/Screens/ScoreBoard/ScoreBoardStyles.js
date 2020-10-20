@@ -23,16 +23,18 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   selectCelebrityContainer: {
-    flex: 0.2
+    flex: 0.2,
+    justifyContent: 'center',
+
   },
   boardContainer: {
-    flex: 0.7,
+    flex: 0.8,
     marginHorizontal: 10,
     overflow: 'hidden',
 
   },
   topRanksContainer: {
-    flex: 0.75,
+    flex: 1,
     borderBottomWidth: 1,
     borderBottomColor: 'rgb(100,100,100)'
   },

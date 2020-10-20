@@ -1,28 +1,44 @@
-import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../common/Constants';
-import {StyleSheet} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../../common/Constants';
 
 export const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'white',
   },
-  topContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-around',
+  scoreBoardContainer: {
+    flex: 0.2,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: DEVICE_HEIGHT * 0.04,
-    backgroundColor: 'white',
+    marginVertical: 5,
+    marginHorizontal: 30,
   },
-  bottomContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-around',
+  scoreBoardWrapper: {
+    backgroundColor: '#febf32',
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: DEVICE_HEIGHT * 0.025,
-    backgroundColor: '#fff',
+  },
+  scoreBoardFullWidth: {
+    flex: 1,
+    marginVertical: 6,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  scoreBoard: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+    marginHorizontal: 10,
+  },
+  scoreBoardIcon: {
+  },
+  cardContainer: {
+    flex: 1,
   },
   imageStyle: {
     flex: 1,
@@ -48,10 +64,10 @@ export const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   title: {
-    textAlign:'center',
+    textAlign: 'center',
     color: 'white',
     marginHorizontal: 10,
-    marginTop: 20,
+    marginTop: 5,
     fontSize: 15,
     fontWeight: '800',
   },

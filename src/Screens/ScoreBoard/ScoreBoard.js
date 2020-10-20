@@ -2,83 +2,90 @@ import React, { Component } from 'react';
 import {
   FlatList, ImageBackground, Text, View
 } from 'react-native';
+import { connect } from 'react-redux';
 import { styles } from './ScoreBoardStyles';
 import { IMAGEBACK } from '../../common/Constants';
 import ScoreBoardComponent1 from '../../common/Components/ScoreBoardComponent1';
 import SelectedCelebrityLine from '../../common/Components/SelectedCelebrityLine';
+import SelectCelebrityComponent from '../../common/Components/SelectCelebrityComponent';
+import ScoreBoardComponent2 from '../../common/Components/ScoreBoardComponent2';
+import { translate } from '../../I18n';
+import { GetScoreBoard } from '../../common/Functions/Endpoints/GetScoreBoard';
+import { GetScoreBoardByCelebrity } from '../../common/Functions/Endpoints/GetScoreBoardByCelebrity';
 
-const data = [
-  {
-    rank: 1,
-    userName: 'ali veli',
-    userPhoto: 'https://cdn.faceplusplus.com/mc-official/images/comparing/left_pic_three.jpg',
-    celebrityName: 'Morgan freeman',
-    celebrityPhoto: 'https://static3.tribun24.com/servev2/218LDAGsoGCA/XQ4b2qIL11M,/brad-pitt-attends-the-premiere-of-20th-century-foxs.jpg',
-    percentage: 81,
-  },
-  {
-    rank: 2,
-    userName: 'ali veli',
-    userPhoto: 'https://cdn.faceplusplus.com/mc-official/images/comparing/left_pic_three.jpg',
-    celebrityName: 'Brad Pitt',
-    celebrityPhoto: 'https://static3.tribun24.com/servev2/218LDAGsoGCA/XQ4b2qIL11M,/brad-pitt-attends-the-premiere-of-20th-century-foxs.jpg',
-    percentage: 76,
-  },
-  {
-    rank: 3,
-    userName: 'ali veli',
-    userPhoto: 'https://cdn.faceplusplus.com/mc-official/images/comparing/left_pic_three.jpg',
-    celebrityName: 'Brad Pitt',
-    celebrityPhoto: 'https://static3.tribun24.com/servev2/218LDAGsoGCA/XQ4b2qIL11M,/brad-pitt-attends-the-premiere-of-20th-century-foxs.jpg',
-    percentage: 70,
-  },
-  {
-    rank: 4,
-    userName: 'ali veli',
-    userPhoto: 'https://cdn.faceplusplus.com/mc-official/images/comparing/left_pic_three.jpg',
-    celebrityName: 'Brad Pitt',
-    celebrityPhoto: 'https://static3.tribun24.com/servev2/218LDAGsoGCA/XQ4b2qIL11M,/brad-pitt-attends-the-premiere-of-20th-century-foxs.jpg',
-    percentage: 63,
-  },
-  {
-    rank: 5,
-    userName: 'ali veli',
-    userPhoto: 'https://cdn.faceplusplus.com/mc-official/images/comparing/left_pic_three.jpg',
-    celebrityName: 'Brad Pitt',
-    celebrityPhoto: 'https://static3.tribun24.com/servev2/218LDAGsoGCA/XQ4b2qIL11M,/brad-pitt-attends-the-premiere-of-20th-century-foxs.jpg',
-    percentage: 51,
-  },
-];
+class ScoreBoard extends Component {
+  constructor() {
+    super();
+    this.state = {
+      celebrityId: 0,
+      topRanksData: [],
+      celebrityRanksData: [],
+    };
+  }
 
-export default class ScoreBoard extends Component {
+  setCelebrityId = (id) => {
+    this.setState({ celebrityId: id });
+  }
+
+  componentDidMount = async () => {
+    const { user_agent, auth_token } = this.props;
+    const scoreBoardData = await GetScoreBoard(user_agent, auth_token);
+    this.setState({ topRanksData: scoreBoardData });
+  }
+
+  getScoreBoardByCelebrity = async (id) => {
+    const { user_agent, auth_token } = this.props;
+    const scoreBoardData = await GetScoreBoardByCelebrity(user_agent, id, auth_token);
+    this.setState({ celebrityRanksData: scoreBoardData });
+  }
+
   render() {
+    const { celebrityId, topRanksData, celebrityRanksData } = this.state;
     return (
       <View style={styles.container}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
-          <View style={styles.topLabelContainerStyle}>
-            <Text style={styles.topLabelStyle}>Ünlülere en çok benzeyen kullanıcılar</Text>
+          <View style={[styles.selectCelebrityContainer, { flex: celebrityId === 0 ? 0.2 : 0.3 }]}>
+            <SelectCelebrityComponent setCelebrityId={this.setCelebrityId} getScoreBoardByCelebrity={this.getScoreBoardByCelebrity} />
           </View>
-          <View style={styles.selectCelebrityContainer}>
-            <SelectCelebrityComponent />
+          <View style={styles.topLabelContainerStyle}>
+            <Text style={styles.topLabelStyle}>{celebrityId === 0 ? translate('scoreboard.most_similar') : translate('scoreboard.most_similar_selected')}</Text>
           </View>
           <View style={styles.boardContainer}>
             <View style={styles.topRanksContainer}>
-              <FlatList
-                keyExtractor={(item) => item.rank.toString()}
-                data={data}
-                renderItem={({ item }) => (
-                  <ScoreBoardComponent1
-                    rank={item.rank}
-                    userName={item.userName}
-                    userPhoto={item.userPhoto}
-                    celebrityName={item.celebrityName}
-                    celebrityPhoto={item.celebrityPhoto}
-                    percentage={item.percentage}
-                  />
-                )}
-              />
+              {this.state.celebrityId === 0 ? (
+                <FlatList
+                  keyExtractor={(item) => topRanksData.data.indexOf(item).toString()}
+                  data={topRanksData.data}
+                  renderItem={({ item }) => (
+                    <ScoreBoardComponent2
+                      rank={1}
+                      userName={item.user.name}
+                      userPhoto={item.user_photo.url}
+                      celebrityName={item.celebrity.name}
+                      celebrityPhoto={item.celebrity.photo}
+                      percentage={item.similartiy}
+                    />
+                  )}
+                />
+              ) : (
+                <FlatList
+                  keyExtractor={(item) => celebrityRanksData.data.indexOf(item).toString()}
+                  data={celebrityRanksData.data.similar_users}
+                  renderItem={({ item }) => (
+                    <ScoreBoardComponent1
+                      rank={1}
+                      userName={item.name}
+                      userPhoto={item.profile_photo}
+                      celebrityName={item.celebrityName}
+                      celebrityPhoto={item.celebrityPhoto}
+                      percentage={item.similarity}
+                    />
+                  )}
+                />
+              )}
+
             </View>
-            <View style={styles.myRankContainer}>
+            {/* <View style={styles.myRankContainer}>
               <Text style={styles.topLabelStyle}>Sizin sıralamanız</Text>
               <View style={styles.myRankWrapper}>
                 <ScoreBoardComponent1
@@ -90,8 +97,9 @@ export default class ScoreBoard extends Component {
                   percentage={data[0].percentage}
                 />
               </View>
-
             </View>
+            */}
+
           </View>
 
         </ImageBackground>
@@ -99,3 +107,9 @@ export default class ScoreBoard extends Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  language: state.mainReducer.language,
+  user_agent: state.mainReducer.user_agent,
+  auth_token: state.mainReducer.auth_token,
+});
+export default connect(mapStateToProps, null)(ScoreBoard);

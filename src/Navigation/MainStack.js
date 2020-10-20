@@ -133,6 +133,7 @@ export default function MainPagesStack() {
         name="ScoreBoard"
         component={ScoreBoard}
         options={({ navigation, route }) => ({
+          title: translate('scoreboard.scoreboard'),
           headerBackTitleVisible: false,
           headerStyle: {
             backgroundColor: header_background_color,

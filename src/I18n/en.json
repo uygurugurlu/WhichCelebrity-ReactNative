@@ -110,5 +110,11 @@
     "passive": "passive",
     "tooltip": "If the face sharing option is enabled, we can find your long lost lookalike twin :)\n\nAlso you can be displayed in the scoreboard of the users that look like celebrities the most.\n\nYour face will not be shared with any organization or institution."
 
-  }
+  },
+  "scoreboard": {
+      "scoreboard": "Scoreboard",
+      "username": "Username: ",
+      "most_similar": "Users that are most similar to celebrities",
+    "most_similar_selected": "Top 10 users that are most similar to selected celebrity",
+  },
 }

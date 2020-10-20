@@ -64,7 +64,7 @@ class HomePage2 extends Component {
       loaded: false,
       result_loading: false,
       random_result_loading: false,
-      celebrity_id: '',
+      celebrity_id: 0,
       search_visible: true,
       tooltipVisible: false,
       detected_faces: false,
@@ -153,12 +153,12 @@ class HomePage2 extends Component {
 
   CheckValidity = (random) => {
     const { userAvatarSource, detected_face_count } = this.props;
-    const { celebrity_name } = this.state;
+    const { celebrity_id } = this.state;
 
     if (userAvatarSource === '') {
       Alert.alert('', translate('home.avatar_warning'));
       return false;
-    } if (celebrity_name === '' && !random) {
+    } if (celebrity_id === 0 && !random) {
       Alert.alert('', translate('home.select_warning'));
       return false;
     } if (detected_face_count === 0) {
@@ -349,7 +349,7 @@ class HomePage2 extends Component {
               buttonStyle={styles.randomButtonStyle}
               titleStyle={{ fontSize: 17, fontWeight: '600' }}
               onPress={() => this.GetRandomResult()}
-              disabled={celebrity_id !== ''}
+              disabled={celebrity_id !== 0}
               loading={random_result_loading}
             />
 

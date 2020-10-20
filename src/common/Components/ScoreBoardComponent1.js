@@ -10,7 +10,7 @@ import { PercentageColor } from '../Functions/PercentageColor';
 class ScoreBoardComponent1 extends Component {
   render() {
     const {
-      rank, userName, userPhoto, celebrityName, celebrityPhoto, percentage
+      rank, userName, userPhoto, percentage
     } = this.props;
     return (
       <View style={styles.container}>
@@ -30,7 +30,7 @@ class ScoreBoardComponent1 extends Component {
 
         <View style={styles.namesContainer}>
           <View style={styles.userNameContainer}>
-            <Text style={styles.userNameLabel}>Kullanıcı Adı:</Text>
+            <Text style={styles.userNameLabel}>{translate('scoreboard.username')}</Text>
           </View>
           <View style={styles.userNameContainer}>
             <Text style={styles.userName}>{userName}</Text>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    height: DEVICE_HEIGHT * 0.12,
+    height: DEVICE_HEIGHT * 0.108,
     flexDirection: 'row',
     backgroundColor: '#184e83',
     borderRadius: 30,

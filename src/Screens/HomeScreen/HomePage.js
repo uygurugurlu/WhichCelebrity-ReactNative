@@ -147,8 +147,6 @@ class HomePage extends Component {
 
   handlePress = (index) => this.setState({ selected: index });
 
-  WhenTheLanguageChanged = () => this.forceUpdate();
-
   LaunchCamera = async () => {
     /* const {path, data} = await GetUserPhotoFromCamera();
     this.props.get_user_avatar_source({uri: path}, data);

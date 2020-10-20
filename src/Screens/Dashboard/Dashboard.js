@@ -5,6 +5,7 @@ import {
   ImageBackground, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { Icon } from 'react-native-elements';
 import {
 
   HOMECARD1,
@@ -53,10 +54,16 @@ class Dashboard extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('ScoreBoard')}>
-            <Text>To ScoreBoard</Text>
-          </TouchableOpacity>
-          <View style={{ flex: 1 }}>
+          <View style={styles.scoreBoardContainer}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('ScoreBoard')} style={styles.scoreBoardWrapper}>
+              <View style={styles.scoreBoardFullWidth}>
+
+                <Icon style={styles.scoreBoardIcon} name="leaderboard" color="#fff" />
+                <Text style={styles.scoreBoard}>{translate('scoreboard.scoreboard')}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.cardContainer}>
             <Text style={styles.title}>
               {translate('dashboard.first_label')}
             </Text>
@@ -66,7 +73,7 @@ class Dashboard extends Component {
               route={this.Navigate(1)}
             />
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={styles.cardContainer}>
             <Text style={styles.title}>
               {translate('dashboard.second_label')}
             </Text>
@@ -77,6 +84,7 @@ class Dashboard extends Component {
               route={this.Navigate(2)}
             />
           </View>
+
         </ImageBackground>
       </View>
 
