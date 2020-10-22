@@ -22,7 +22,6 @@ import configureStore from './src/Store/ConfigureStore';
 
 configureFontAwesomePro();
 const store = configureStore();
-
 function App() {
   GoogleSignin.configure({
     webClientId:
@@ -39,11 +38,9 @@ function App() {
     /** Print Every Response to the Console */
     axios.interceptors.response.use(
       (res) => {
-        console.group('interceptor response');
-        console.log(res);
+        console.log('interceptor response',res);
         // console.log('status is:' + status);
         // console.table(data);
-        console.groupEnd();
         return res;
       },
       (err) => {
@@ -60,9 +57,9 @@ function App() {
     axios.interceptors.request.use(
       (config) => {
         config.params = { ...config.params, locale: 'tr' };
-        console.group('interceptor request');
-        console.table(config);
-        console.groupEnd();
+        console.log('interceptor request');
+       /* console.table(config);
+        console.groupEnd();*/
         return config;
       },
       (error) => Promise.reject(error),

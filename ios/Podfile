@@ -81,6 +81,11 @@ target 'AwesomeProject' do
 
   pod 'react-native-config', :path => '../node_modules/react-native-config'
 
+  pod 'RNAppTour', :path => '../node_modules/react-native-app-tour/ios'
+
+  use_frameworks!
+
+  pod 'MaterialShowcase', :git => 'https://github.com/aromajoin/material-showcase-ios', :tag => '0.7.1'
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 

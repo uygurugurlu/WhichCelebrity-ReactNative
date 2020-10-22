@@ -113,5 +113,6 @@
     "username": "Kullanıcı Adı: ",
     "most_similar": "Ünlülere en çok benzeyen kullanıcılar",
     "most_similar_selected": "Seçtiğiniz ünlüye en çok benzeyen 10 kullanıcı",
+    "user_not_found": "Kullanıcı bilgisi bulunamadı.",
   }
 }

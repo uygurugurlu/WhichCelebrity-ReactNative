@@ -116,5 +116,6 @@
       "username": "Username: ",
       "most_similar": "Users that are most similar to celebrities",
     "most_similar_selected": "Top 10 users that are most similar to selected celebrity",
+    "user_not_found": "User data not found",
   },
 }

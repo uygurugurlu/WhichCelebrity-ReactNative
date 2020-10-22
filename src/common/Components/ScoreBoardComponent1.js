@@ -1,19 +1,46 @@
 import React, { Component } from 'react';
 import {
-  View, StyleSheet, Text, Image
+  View, StyleSheet, Text, Image, Animated,
 } from 'react-native';
 import { CAMERAICON, DEVICE_HEIGHT, DEVICE_WIDTH } from '../Constants';
 import { translate } from '../../I18n';
 import { blue_text_color } from '../ColorIndex';
 import { PercentageColor } from '../Functions/PercentageColor';
 
+const ANIMATION_DURATION = 250;
+
 class ScoreBoardComponent1 extends Component {
+  constructor() {
+    super();
+    this._animated = new Animated.Value(0);
+  }
+
+  componentDidMount() {
+    Animated.timing(this._animated, {
+      toValue: 1,
+      duration: ANIMATION_DURATION,
+    }).start();
+  }
+
   render() {
     const {
       rank, userName, userPhoto, percentage
     } = this.props;
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, { opacity: this._animated },
+        {
+          transform: [
+            { scale: this._animated },
+            {
+              rotate: this._animated.interpolate({
+                inputRange: [0, 1],
+                outputRange: ['35deg', '0deg'],
+                extrapolate: 'clamp',
+              })
+            }
+          ],
+        }]}
+      >
         <View style={styles.rankingContainer}>
           <Text style={styles.rankStyle}>{`${rank}.`}</Text>
         </View>
@@ -39,7 +66,7 @@ class ScoreBoardComponent1 extends Component {
         <View style={styles.percentageContainer}>
           <Text style={[styles.percentageText, { color: PercentageColor(percentage) }]}>{`${percentage}%`}</Text>
         </View>
-      </View>
+      </Animated.View>
     );
   }
 }

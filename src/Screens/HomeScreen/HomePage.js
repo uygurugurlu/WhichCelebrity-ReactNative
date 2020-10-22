@@ -276,6 +276,7 @@ class HomePage extends Component {
           gender,
           auth_token,
         );
+
         console.log('photo analyze result: ', data);
         CelebrityFinderResultEvent(selected_category_name, gender);
 
@@ -288,6 +289,8 @@ class HomePage extends Component {
 
         if (JSON.parse(data).status === 'error') {
           ShowSnackBar(JSON.parse(data).message, 'SHORT', 'TOP', 'ERROR');
+
+
         } else {
           const data_xx = await PerformTimeConsumingTask(
             WAIT_BEFORE_AD_MILLISECONDS,

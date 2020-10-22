@@ -12,6 +12,8 @@ import ScoreBoardComponent2 from '../../common/Components/ScoreBoardComponent2';
 import { translate } from '../../I18n';
 import { GetScoreBoard } from '../../common/Functions/Endpoints/GetScoreBoard';
 import { GetScoreBoardByCelebrity } from '../../common/Functions/Endpoints/GetScoreBoardByCelebrity';
+import CelebritySelectedComponent from './CelebritySelectedComponent';
+import TopRanksComponent from './TopRanksComponent';
 
 class ScoreBoard extends Component {
   constructor() {
@@ -41,6 +43,7 @@ class ScoreBoard extends Component {
 
   render() {
     const { celebrityId, topRanksData, celebrityRanksData } = this.state;
+
     return (
       <View style={styles.container}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
@@ -53,35 +56,9 @@ class ScoreBoard extends Component {
           <View style={styles.boardContainer}>
             <View style={styles.topRanksContainer}>
               {this.state.celebrityId === 0 ? (
-                <FlatList
-                  keyExtractor={(item) => topRanksData.data.indexOf(item).toString()}
-                  data={topRanksData.data}
-                  renderItem={({ item }) => (
-                    <ScoreBoardComponent2
-                      rank={1}
-                      userName={item.user.name}
-                      userPhoto={item.user_photo.url}
-                      celebrityName={item.celebrity.name}
-                      celebrityPhoto={item.celebrity.photo}
-                      percentage={item.similartiy}
-                    />
-                  )}
-                />
+                <TopRanksComponent data={topRanksData} />
               ) : (
-                <FlatList
-                  keyExtractor={(item) => celebrityRanksData.data.indexOf(item).toString()}
-                  data={celebrityRanksData.data.similar_users}
-                  renderItem={({ item }) => (
-                    <ScoreBoardComponent1
-                      rank={1}
-                      userName={item.name}
-                      userPhoto={item.profile_photo}
-                      celebrityName={item.celebrityName}
-                      celebrityPhoto={item.celebrityPhoto}
-                      percentage={item.similarity}
-                    />
-                  )}
-                />
+                <CelebritySelectedComponent data={celebrityRanksData} />
               )}
 
             </View>

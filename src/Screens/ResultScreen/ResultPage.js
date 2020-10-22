@@ -9,7 +9,8 @@ import {
   ImageBackground,
   Modal,
   Text,
-} from 'react-native';
+  Button, TouchableHighlight,
+} from 'react-native'
 import {Icon} from 'react-native-elements';
 import {styles} from './ResultPageStyles';
 import {connect} from 'react-redux';
@@ -36,6 +37,8 @@ import {
   ShareAppEvent,
 } from '../../common/Functions/AnalyticEvents/Events';
 import crashlytics from '@react-native-firebase/crashlytics';
+import { AppTour, AppTourView } from 'react-native-app-tour'
+import AnimatedLoader from 'react-native-animated-loader'
 
 const ANIMATION_DURATION = 1000;
 
@@ -52,6 +55,7 @@ class ResultPage extends Component {
       captured_image: '',
       optionsModalVisible: false,
     };
+    this.showCaseRef = React.createRef();
   }
 
   componentWillMount = async () => {
@@ -75,7 +79,19 @@ class ResultPage extends Component {
         </TouchableOpacity>
       ),
     });
+
   };
+  componentDidMount () {
+
+    let props = {
+      order: 32,
+      title: 'This is a target button 6',
+      description: 'We have the best targets, believe me',
+      outerCircleColor: '#3f52ae'
+    }
+    let targetView = AppTourView.for(this.showCaseRef.current, {...props});
+     setTimeout(() => AppTour.ShowFor(targetView), 2000)
+  }
 
   takeScreenShot = async (index) => {
     const data = await PerformTimeConsumingTask(50);
@@ -218,17 +234,6 @@ class ResultPage extends Component {
 
   GoBack = async () => await this.props.navigation.pop();
 
-  GetActionSheet = () => {
-    return (
-      <ActionSheetComponent2
-        launchImageLibrary={this.LaunchImageLibrary}
-        launchCamera={this.LaunchCamera}
-        handlePress={this.handlePress}
-        Share={(index) => this.ActionHandler(index)}
-        getActionSheetRef={this.getActionSheetRef}
-      />
-    );
-  };
 
   render() {
     const {userAvatarSource} = this.props;
@@ -237,6 +242,23 @@ class ResultPage extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
+          <TouchableHighlight
+            key={"1"}
+            ref={this.showCaseRef}
+            style={styles.invisibleView}
+           >
+            <View>
+              <AnimatedLoader
+                visible={true}
+                overlayColor="rgba(0,0,0,0.01)"
+                source={require("../../common/Components/swipeRightAnimation.json")}
+                animationStyle={{height:100, width: 100, position: 'absolute', left: 0}}
+                speed={1}
+                opacity={1}
+              />
+            </View>
+          </TouchableHighlight>
+
           <Animatable.View
             ref={(ref) => (this.ref4 = ref)}
             style={styles.scrollViewStyle}>

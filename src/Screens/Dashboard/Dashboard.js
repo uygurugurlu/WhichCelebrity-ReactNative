@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  ImageBackground, TouchableOpacity,
-} from 'react-native';
+  ImageBackground, TouchableOpacity, Button,
+} from 'react-native'
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import {
@@ -17,11 +17,13 @@ import {
 import { styles } from './DashboardStyles';
 import HomeCard from '../../common/Components/DashboardCard.js';
 import { translate } from '../../I18n';
+import { AppTour, AppTourSequence, AppTourView } from 'react-native-app-tour'
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.button1 = React.createRef();
   }
 
   componentWillMount() {}
@@ -54,6 +56,7 @@ class Dashboard extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
+
           <View style={styles.scoreBoardContainer}>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('ScoreBoard')} style={styles.scoreBoardWrapper}>
               <View style={styles.scoreBoardFullWidth}>
