@@ -39,6 +39,7 @@ import {
 import crashlytics from '@react-native-firebase/crashlytics';
 import { AppTour, AppTourView } from 'react-native-app-tour'
 import AnimatedLoader from 'react-native-animated-loader'
+import SwipeRight from '../../common/Components/SwipeRightModal/SwipeRight'
 
 const ANIMATION_DURATION = 1000;
 
@@ -54,8 +55,9 @@ class ResultPage extends Component {
       swiper_index: 0,
       captured_image: '',
       optionsModalVisible: false,
+      swipeRightVisible: false,
     };
-    this.showCaseRef = React.createRef();
+    this.swiperRef = React.createRef();
   }
 
   componentWillMount = async () => {
@@ -81,16 +83,11 @@ class ResultPage extends Component {
     });
 
   };
-  componentDidMount () {
-
-    let props = {
-      order: 32,
-      title: 'This is a target button 6',
-      description: 'We have the best targets, believe me',
-      outerCircleColor: '#3f52ae'
-    }
-    let targetView = AppTourView.for(this.showCaseRef.current, {...props});
-     setTimeout(() => AppTour.ShowFor(targetView), 2000)
+  componentDidMount = async () => {
+    setTimeout(() => this.setState({ swipeRightVisible: true }), 2000);
+  }
+  changeSwipeRightVisible = (isVisible) => {
+   this.setState({swipeRightVisible : isVisible});
   }
 
   takeScreenShot = async (index) => {
@@ -242,23 +239,6 @@ class ResultPage extends Component {
     return (
       <View style={styles.container}>
         <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
-          <TouchableHighlight
-            key={"1"}
-            ref={this.showCaseRef}
-            style={styles.invisibleView}
-           >
-            <View>
-              <AnimatedLoader
-                visible={true}
-                overlayColor="rgba(0,0,0,0.01)"
-                source={require("../../common/Components/swipeRightAnimation.json")}
-                animationStyle={{height:100, width: 100, position: 'absolute', left: 0}}
-                speed={1}
-                opacity={1}
-              />
-            </View>
-          </TouchableHighlight>
-
           <Animatable.View
             ref={(ref) => (this.ref4 = ref)}
             style={styles.scrollViewStyle}>
@@ -268,6 +248,7 @@ class ResultPage extends Component {
               style={styles.viewShotImageStyle}>
               <View style={styles.swiperContainer}>
                 <Swiper
+                  ref={this.swiperRef}
                   autoplay={false}
                   index={this.state.swiper_index}
                   showsButtons={true}
@@ -407,6 +388,7 @@ class ResultPage extends Component {
             }
           </Animatable.View>
         </ImageBackground>
+        <SwipeRight isVisible={this.state.swipeRightVisible} changeVisible={this.changeSwipeRightVisible} navigation={this.props.navigation} swiperRef={this.swiperRef}/>
       </View>
     );
   }
@@ -414,6 +396,7 @@ class ResultPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    isLoggedIn: state.mainReducer.isLoggedIn,
     language: state.mainReducer.language,
     userAvatarSource: state.mainReducer.userAvatarSource,
     userAvatarSourceB64: state.mainReducer.userAvatarSourceB64,

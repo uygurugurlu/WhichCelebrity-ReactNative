@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
-  View, Image, Text, Switch, TouchableHighlight, Platform, Alert,
-} from 'react-native';
+  View, Image, Text, Switch, TouchableHighlight, Platform, Alert, TouchableOpacity,
+} from 'react-native'
 import { GoogleSigninButton } from '@react-native-community/google-signin';
 import Tooltip from 'rn-tooltip';
 import { Icon } from 'react-native-elements';
@@ -235,22 +235,33 @@ class CustomDrawer extends Component {
           <View style={styles.contentContainer}>
             <View style={styles.signInButtonContainer}>
               {Platform.OS == 'ios' ? (
-                <AppleButton
-                  buttonStyle={AppleButton.Style.WHITE}
-                  buttonType={AppleButton.Type.SIGN_IN}
-                  style={{
-                    width: 160, // You must specify a width
-                    height: 45, // You must specify a height
-                  }}
-                  onPress={() => this.handleAppleSignIn()}
-                />
+                  <TouchableOpacity ref = {ref => {global.signInButton = ref}}
+                        key={"1"}>
+                    <AppleButton
+
+                      buttonStyle={AppleButton.Style.WHITE}
+                      buttonType={AppleButton.Type.SIGN_IN}
+                      style={{
+                        width: 160, // You must specify a width
+                        height: 45, // You must specify a height
+                      }}
+                      onPress={() => this.handleAppleSignIn()}
+                    />
+                  </TouchableOpacity>
+
               ) : (
+                <TouchableOpacity ref = {ref => {global.signInButton = ref}}
+                      key={"2"}>
                 <GoogleSigninButton
+                  key={"2"}
+                  ref = {ref => {global.signInButton = ref}}
                   style={{ width: 192, height: 48 }}
                   size={GoogleSigninButton.Size.Wide}
                   color={GoogleSigninButton.Color.Dark}
                   onPress={() => this.handleGoogleSignIn()}
                 />
+                </TouchableOpacity>
+
               )}
             </View>
           </View>

@@ -87,7 +87,9 @@
   "dashboard": {
     "first_label": "Hangi ünlüye benzediğini öğren",
     "second_label": "Bir ünlü seç ve sana ne kadar benzediğini öğren",
-    "click_here": "Buraya Tıklayın!"
+    "click_here": "Buraya Tıklayın!",
+    "showcase_title": "Giriş yaparak kendinizi skor tablosunda görün!",
+    "showcase_meta_title": "Giriş yaparak ve yüz paylaşmayı açarak kayıp ikizinizi bulabilirsiniz!"
   },
   "update": {
     "update": "Güncelle",

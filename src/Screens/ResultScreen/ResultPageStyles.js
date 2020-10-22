@@ -22,13 +22,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  invisibleView: {
-    height: DEVICE_HEIGHT,
-    width: 5,
-    position: 'absolute',
-    left: 0,
-    alignSelf: 'center',
-  },
+
   scrollViewStyle: {},
   viewShotImageStyle: {
     width: '100%',

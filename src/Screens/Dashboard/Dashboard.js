@@ -18,6 +18,7 @@ import { styles } from './DashboardStyles';
 import HomeCard from '../../common/Components/DashboardCard.js';
 import { translate } from '../../I18n';
 import { AppTour, AppTourSequence, AppTourView } from 'react-native-app-tour'
+import { header_background_color } from '../../common/ColorIndex'
 
 class Dashboard extends Component {
   constructor(props) {
@@ -26,7 +27,28 @@ class Dashboard extends Component {
     this.button1 = React.createRef();
   }
 
-  componentWillMount() {}
+  componentDidMount = async () => {
+    const {isLoggedIn, navigation} = this.props;
+    let props = {
+      order: 32,
+      title: translate("dashboard.showcase_title"),
+      description: translate('dashboard.showcase_meta_title'),
+      outerCircleColor: header_background_color,
+    }
+
+    if(!isLoggedIn){
+      setTimeout(async () =>
+      {
+        await navigation.openDrawer();
+        setTimeout(() => {
+          let targetView = AppTourView.for(global.signInButton, {...props});
+
+          AppTour.ShowFor(targetView);
+        }, 300)
+      }
+      , 300)
+    }
+  }
 
   Navigate = (index) => {
     if (index === 1) {
@@ -95,6 +117,7 @@ class Dashboard extends Component {
   }
 }
 const mapStateToProps = (state) => ({
+  isLoggedIn: state.mainReducer.isLoggedIn,
   language: state.mainReducer.language,
 });
 export default connect(mapStateToProps, null)(Dashboard);

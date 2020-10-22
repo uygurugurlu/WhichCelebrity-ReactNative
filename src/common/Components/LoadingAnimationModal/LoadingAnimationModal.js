@@ -43,6 +43,7 @@ class LoadingAnimationModal extends Component {
             animationStyle={styles.lottie}
             speed={1}
             opacity={1}
+            containerStyle={{right: 0}}
           />
 
           <Animatable.View

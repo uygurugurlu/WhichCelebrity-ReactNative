@@ -87,7 +87,8 @@
     "first_label": "Find out which celebrity do you look like",
     "second_label": "Pick a celebrity and find out how similar you are",
     "click_here": "Click Here!",
-
+    "showcase_title": "See yourself on the leaderboard by signing in!",
+    "showcase_meta_title": "You can find your long-lost lookalike twin by signing in and enabling face sharing"
   },
   "update": {
     "update": "Update",
