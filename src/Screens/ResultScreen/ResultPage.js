@@ -388,7 +388,7 @@ class ResultPage extends Component {
             }
           </Animatable.View>
         </ImageBackground>
-        <SwipeRight isVisible={this.state.swipeRightVisible} changeVisible={this.changeSwipeRightVisible} navigation={this.props.navigation} swiperRef={this.swiperRef}/>
+        <SwipeRight isVisible={this.state.swipeRightVisible} changeVisible={this.changeSwipeRightVisible} swiperRef={this.swiperRef}/>
       </View>
     );
   }

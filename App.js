@@ -19,10 +19,11 @@ import { header_background_color } from './src/common/ColorIndex';
 import { setI18nConfig } from './src/I18n';
 import SwitchNavigation from './src/Navigation/SwitchNavigation';
 import configureStore from './src/Store/ConfigureStore';
-
+import { getUniqueId } from 'react-native-device-info';
 configureFontAwesomePro();
 const store = configureStore();
 function App() {
+  console.log("unique id: ",getUniqueId());
   GoogleSignin.configure({
     webClientId:
       '93591380261-076oe651jsdnrr01kol349k11s8eh0hq.apps.googleusercontent.com',

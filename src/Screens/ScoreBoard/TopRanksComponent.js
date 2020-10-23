@@ -8,6 +8,7 @@ export default class TopRanksComponent extends Component {
     const { data } = this.props;
     try {
       console.log(data);
+
       if (data.data.length > 0) {
         return (
           <FlatList

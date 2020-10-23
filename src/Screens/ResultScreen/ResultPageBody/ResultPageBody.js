@@ -220,19 +220,24 @@ class ResultPageBody extends Component {
               <TouchableOpacity onPress={() => this.handleModalVisibility(0)}>
                 <View
                   style={[
-                    styles.imageWrap,
+                    styles.imageContainer,
                     {height: this.state.size - 10, width: this.state.size - 10},
                   ]}>
-                  <Image source={userAvatarSource} style={styles.cameraImage} />
+                  <View style={styles.imageWrapper}>
+                    <Image source={userAvatarSource} style={styles.cameraImage} />
+                  </View>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => this.handleModalVisibility(1)}>
                 <View
                   style={[
-                    styles.imageWrap,
+                    styles.imageContainer,
                     {height: this.state.size - 10, width: this.state.size - 10},
                   ]}>
-                  <Image source={{uri: photo}} style={styles.cameraImage} />
+                  <View style={styles.imageWrapper}>
+                    <Image source={{uri: photo}} style={styles.cameraImage} />
+                  </View>
+
                 </View>
               </TouchableOpacity>
             </View>

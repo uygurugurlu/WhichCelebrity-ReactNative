@@ -43,20 +43,22 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
-  imageWrap: {
-    backgroundColor: 'white',
-    borderRadius: 100,
+  imageContainer: {
+    justifyContent:'center',
+    alignItems: 'center',
+  },
+  imageWrapper: {
+    margin: 3,
+    flex: 1,
     overflow: 'hidden',
+    aspectRatio: 1,
+    borderRadius: 100,
     borderWidth: 1,
-    borderColor: 'rgb(150,150,150)',
+    borderColor: 'rgb(70,70,70)'
   },
   cameraImage: {
-    resizeMode: 'contain',
-    position: 'absolute',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    height: 200,
-    width: 200,
+    resizeMode: 'cover',
+    flex: 1,
   },
   similarityContainer: {
     flex: 0.22,
@@ -66,7 +68,7 @@ export const styles = StyleSheet.create({
   textContainer: {
     justifyContent:'center',
     flex: 1,
-  },  
+  },
   animatedSimilarityContainer: {
     justifyContent:'center',
     flex: 1,
