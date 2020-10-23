@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { DEVICE_WIDTH } from '../common/Constants';
-import { button_colors, header_background_color } from '../common/ColorIndex';
+import { button_colors, header_background_color, yellow_text_color } from '../common/ColorIndex'
 
 export const styles = StyleSheet.create({
 
@@ -73,6 +73,16 @@ export const styles = StyleSheet.create({
   tooltipContainerStyle: {
     backgroundColor: header_background_color,
     width: DEVICE_WIDTH * 0.5,
+  },
+  faceShareButton: {
+    borderRadius: 20,
+    fontSize: 16,
+
+  },
+  faceShareText: {
+    marginHorizontal: 15,
+    marginVertical: 5,
+    color: '#fff'
   },
   tooltipContent: {
     flexDirection: 'row',

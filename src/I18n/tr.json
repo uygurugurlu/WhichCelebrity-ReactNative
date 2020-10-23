@@ -108,7 +108,12 @@
     "face_info": "Yüz bilgisi paylaşma ",
     "active": "aktif",
     "passive": "aktif değil",
-    "tooltip": "Yüz bilgisi paylaşma aktif olduğu durumda, uygulamayı kullanan diğer kullanıcılar içinden kayıp ikizinizi bulabiliriz :)\n\nAyrıca ünlülere en çok benzeyen kullanıcılar listesinde sizi listeleyebiliriz.\n\nYüz verileriniz herhangi bir firma ya da kuruluş ile asla paylaşılmaz."
+    "tooltip": "Yüz bilgisi paylaşma aktif olduğu durumda, uygulamayı kullanan diğer kullanıcılar içinden kayıp ikizinizi bulabiliriz :)\n\nAyrıca ünlülere en çok benzeyen kullanıcılar listesinde sizi listeleyebiliriz.\n\nYüz verileriniz herhangi bir firma ya da kuruluş ile asla paylaşılmaz.",
+    "faceShare": "Paylaş",
+    "alert_title": "Yüz paylaşma aktif hale getiriliyor",
+    "alert_desc": "Yüzünüz diğer kullanıcılar tarafından görülebilecek.",
+    "cancel": "İptal",
+    "ok": "Tamam"
   },
   "scoreboard": {
     "scoreboard": "Skor Tablosu",

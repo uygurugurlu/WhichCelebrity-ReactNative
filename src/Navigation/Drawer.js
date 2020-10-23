@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import {
-  View, Image, Text, Switch, TouchableHighlight, Platform, Alert, TouchableOpacity,
+  View, Image, Text, TouchableHighlight, Platform, Alert, TouchableOpacity,
 } from 'react-native'
 import { GoogleSigninButton } from '@react-native-community/google-signin';
 import Tooltip from 'rn-tooltip';
-import { Icon } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements'
 import { AppleButton } from '@invertase/react-native-apple-authentication';
 import { connect } from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import { styles } from './DrawerStyles';
-import { CAMERAICON } from '../common/Constants';
+import { AVATARICON } from '../common/Constants'
 import { translate } from '../I18n';
-import { header_background_color } from '../common/ColorIndex';
+import { header_background_color, yellow_text_color } from '../common/ColorIndex'
 import {
   authenticate_user,
   first_time_login,
@@ -44,33 +44,37 @@ class CustomDrawer extends Component {
   componentWillMount = async () => {
     await this.handleIsSignedIn();
   }
-
-  handleSwitchChange = async (res) => {
+  faceShare = async () => {
     let permissionGranted;
     try {
-      if (res) {
-        this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.active') });
-        this.props.set_face_sharing_active();
-        permissionGranted = await GrantPermission(this.props.auth_token, this.props.user_agent);
-        if (permissionGranted.status !== 200) {
-          Alert.alert(translate('error.switch'));
-          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive') });
-          this.props.set_face_sharing_inactive();
-        }
-        console.log(permissionGranted);
-      } else {
+      this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.active') });
+      this.props.set_face_sharing_active();
+      permissionGranted = await GrantPermission(this.props.auth_token, this.props.user_agent);
+      if (permissionGranted.status !== 200) {
+        Alert.alert(translate('error.switch'));
         this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive') });
         this.props.set_face_sharing_inactive();
-        permissionGranted = await UngrantPermission(this.props.auth_token, this.props.user_agent);
-        if (permissionGranted.status !== 200) {
-          Alert.alert(translate('error.switch'));
-          this.setState({ faceInfoText: translate('drawer.face_info') + translate('drawer.passive') });
-          this.props.set_face_sharing_inactive();
-        }
       }
+      console.log(permissionGranted);
     } catch (e) {
       console.warn('error switch change: ', e);
     }
+  }
+  handleFaceShare = async () => {
+    Alert.alert(
+      translate('drawer.alert_title'),
+      translate('drawer.alert_desc'),
+      [
+        {
+          text: translate("drawer.cancel"),
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: translate("drawer.ok"), onPress: () => this.faceShare() }
+      ],
+      { cancelable: false }
+    );
+
   }
 
   setSignIn = async (idToken, signInInfo) => {
@@ -104,15 +108,33 @@ class CustomDrawer extends Component {
       const IdTokenResponse = await PostIdToken(currentUserIdToken, this.props.user_agent);
 
       try {
+
         console.log('Id token response: ', IdTokenResponse.data.original.access_token);
-        this.setSignIn(IdTokenResponse.data.original.access_token, signInInfo);
-        this.handleSwitchChange(false);
+        await this.setSignIn(IdTokenResponse.data.original.access_token, signInInfo);
+
+        const userStatus = await ConfirmUser(IdTokenResponse.data.original.access_token);
+
+        console.log('userStatus: ', userStatus);
+        if(userStatus.data.data.is_opt_in) {
+          this.props.set_face_sharing_active();
+        }
+        else {
+          this.props.set_face_sharing_inactive();
+        }
       } catch (error) {
         if (error instanceof TypeError) {
           const idToken = JSON.parse(`${IdTokenResponse.data}}`).original.access_token;
-          this.setSignIn(idToken, signInInfo);
-          this.handleSwitchChange(false);
+          await this.setSignIn(idToken, signInInfo);
           console.log('new id token: ', idToken);
+          const userStatus = await ConfirmUser(IdTokenResponse.data.original.access_token);
+
+          console.log('userStatus: ', userStatus);
+          if(userStatus.data.data.is_opt_in) {
+            this.props.set_face_sharing_active();
+          }
+          else {
+            this.props.set_face_sharing_inactive();
+          }
         } else {
           console.warn('error post id token', error);
           await this.handleSignOut();
@@ -142,7 +164,12 @@ class CustomDrawer extends Component {
             throw 'user not authenticated';
           }
           console.log('userStatus: ', userStatus);
-          this.handleSwitchChange(userStatus.data.data.is_opt_in);
+          if(userStatus.data.data.is_opt_in) {
+            this.props.set_face_sharing_active();
+          }
+          else {
+            this.props.set_face_sharing_inactive();
+          }
           this.props.authenticate_user();
           this.setState({
             name: signInInfo.user.displayName,
@@ -190,7 +217,7 @@ class CustomDrawer extends Component {
           <View style={styles.avatarContainer}>
             <View style={styles.avatarWrapper}>
               <Image
-                source={this.state.photo ? { uri: this.state.photo } : CAMERAICON}
+                source={this.state.photo ? { uri: this.state.photo } : AVATARICON}
                 style={styles.avatarImage}
               />
             </View>
@@ -199,21 +226,27 @@ class CustomDrawer extends Component {
             <View style={styles.signInButtonContainer}>
               <Text style={styles.title}>{this.state.name}</Text>
             </View>
+            {
+              !this.props.face_sharing ? (
             <View style={styles.switchContainer}>
               <Tooltip height={300} containerStyle={styles.tooltipContainerStyle} popover={<Text style={styles.tooltipText}>{translate('drawer.tooltip')}</Text>}>
                 <View style={styles.tooltipContent}>
-                  <Text style={styles.switchText}>{this.state.faceInfoText}</Text>
+                  <Text style={styles.switchText}>{translate('drawer.face_info') + translate('drawer.passive')}</Text>
                   <Icon name="info" style={styles.iconStyle} color="white" />
                 </View>
               </Tooltip>
-              <Switch
-                trackColor={{ false: '#767577', true: header_background_color }}
-                thumbColor={this.props.face_sharing ? 'white' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={(res) => this.handleSwitchChange(res)}
-                value={this.props.face_sharing}
-              />
+
+                  <Button
+                    icon={<Icon name={'share'} color={'#fff'} /> }
+                    iconRight
+                    title={translate("drawer.faceShare")}
+                    containerStyle={styles.faceShareButton}
+                    buttonStyle={{backgroundColor:yellow_text_color}}
+                    onPress={() => this.handleFaceShare()}
+                  />
             </View>
+                ): (null)
+            }
             <View style={styles.signOutContainer}>
               <TouchableHighlight
                 style={styles.signout}
@@ -229,7 +262,7 @@ class CustomDrawer extends Component {
         <View style={styles.container}>
           <View style={styles.avatarContainer}>
             <View style={styles.avatarWrapper}>
-              <Image source={CAMERAICON} style={styles.avatarImage} />
+              <Image source={AVATARICON} style={styles.avatarImage} />
             </View>
           </View>
           <View style={styles.contentContainer}>

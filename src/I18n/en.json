@@ -109,8 +109,12 @@
     "face_info": "Sharing your face info is ",
     "active": "active",
     "passive": "passive",
-    "tooltip": "If the face sharing option is enabled, we can find your long lost lookalike twin :)\n\nAlso you can be displayed in the scoreboard of the users that look like celebrities the most.\n\nYour face will not be shared with any organization or institution."
-
+    "tooltip": "If the face sharing option is enabled, we can find your long lost lookalike twin :)\n\nAlso you can be displayed in the scoreboard of the users that look like celebrities the most.\n\nYour face will not be shared with any organization or institution.",
+    "faceShare": "Share",
+    "alert_title": "You are enabling the face sharing",
+    "alert_desc": "Your face will be visible to other users",
+    "cancel": "Cancel",
+    "ok": "Ok",
   },
   "scoreboard": {
       "scoreboard": "Scoreboard",

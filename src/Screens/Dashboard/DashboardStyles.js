@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../../common/Constants';
+import { yellow_text_color } from '../../common/ColorIndex'
 
 export const styles = StyleSheet.create({
   mainContainer: {
@@ -16,7 +17,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   scoreBoardWrapper: {
-    backgroundColor: '#febf32',
+    backgroundColor: yellow_text_color,
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'center',
