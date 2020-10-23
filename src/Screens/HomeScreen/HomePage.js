@@ -460,7 +460,11 @@ class HomePage extends Component {
             <View style={styles.bottomModal}>
               <View style={styles.settingsModalContainer}>
                 <TouchableOpacity
-                  onPress={() => this.LaunchCamera()}
+                  onPress={async () => {
+
+                    await this.setState({optionsModalVisible: false});
+                    await setTimeout(() => {this.LaunchCamera();}, 200);
+                  }}
                   style={styles.settingsMainButtons}
                 >
                   <Text style={styles.settingsButton}>{translate('image_picker.use_camera')}</Text>
@@ -471,7 +475,10 @@ class HomePage extends Component {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => this.LaunchImageLibrary()}
+                  onPress={async () => {
+                    await this.setState({optionsModalVisible: false});
+                    await setTimeout(() => {this.LaunchImageLibrary();}, 200);
+                  }}
                   style={styles.settingsMainButtons}
                 >
                   <Text style={styles.settingsButton}>{translate('image_picker.photo_library')}</Text>
