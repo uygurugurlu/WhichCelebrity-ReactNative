@@ -180,7 +180,7 @@ class SwitchNavigation extends React.Component {
   };
 
   render() {
-    const { is_the_login_first_time, isLoggedIn } = this.props;
+    const { is_the_login_first_time, isLoggedIn, in_app } = this.props;
     const { update_needed } = this.state;
     if (update_needed) {
       return <UpdateApp />;
@@ -232,7 +232,7 @@ const mapStateToProps = (state) => ({
   isLoggedIn: state.mainReducer.isLoggedIn,
   auth_token: state.mainReducer.auth_token,
   user_agent: state.mainReducer.user_agent,
-
+  in_app: state.mainReducer.in_app,
 });
 
 const mapDispatchToProps = (dispatch) => ({

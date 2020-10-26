@@ -19,7 +19,8 @@ import {
   get_user_agent, set_auth_token,
   unauthenticate_user,
   set_face_sharing_active,
-  set_face_sharing_inactive
+  set_face_sharing_inactive,
+  set_in_app,
 } from '../Store/Actions';
 import { GrantPermission } from '../common/Functions/Endpoints/GrantPermission';
 import { UngrantPermission } from '../common/Functions/Endpoints/UngrantPermission';
@@ -30,6 +31,14 @@ import { onAppleButtonPress } from '../common/Functions/AppleSignInFunctions';
 import { ConfirmUser } from '../common/Functions/Endpoints/ConfirmUser';
 import { AUTH_TOKEN } from '../config';
 import { LogoutUser } from '../common/Functions/Endpoints/LogoutUser';
+import {
+  TourGuideZone, // Main wrapper of highlight component
+  TourGuideZoneByPosition, // Component to use mask on overlay (ie, position absolute)
+  useTourGuideController, // hook to start, etc.
+} from 'rn-tourguide'
+import { GoogleSigninButtonComponent } from './GoogleSigninButtonComponent'
+//import { AppleSigninButtonComponent } from './AppleSigninButtonComponent'
+
 
 class CustomDrawer extends Component {
   constructor() {
@@ -44,6 +53,7 @@ class CustomDrawer extends Component {
   componentWillMount = async () => {
     await this.handleIsSignedIn();
   }
+
   faceShare = async () => {
     let permissionGranted;
     try {
@@ -106,7 +116,6 @@ class CustomDrawer extends Component {
       const currentUserIdToken = await auth().currentUser.getIdToken();
       console.log('current user id token: ', currentUserIdToken);
       const IdTokenResponse = await PostIdToken(currentUserIdToken, this.props.user_agent);
-
       try {
 
         console.log('Id token response: ', IdTokenResponse.data.original.access_token);
@@ -268,33 +277,10 @@ class CustomDrawer extends Component {
           <View style={styles.contentContainer}>
             <View style={styles.signInButtonContainer}>
               {Platform.OS == 'ios' ? (
-                  <TouchableOpacity ref = {ref => {global.signInButton = ref}}
-                        key={"1"}>
-                    <AppleButton
-
-                      buttonStyle={AppleButton.Style.WHITE}
-                      buttonType={AppleButton.Type.SIGN_IN}
-                      style={{
-                        width: 160, // You must specify a width
-                        height: 45, // You must specify a height
-                      }}
-                      onPress={() => this.handleAppleSignIn()}
-                    />
-                  </TouchableOpacity>
-
+              /*  <AppleSigninButtonComponent handleAppleSignIn={this.handleAppleSignIn} />*/
+            null
               ) : (
-                <TouchableOpacity ref = {ref => {global.signInButton = ref}}
-                      key={"2"}>
-                <GoogleSigninButton
-                  key={"2"}
-                  ref = {ref => {global.signInButton = ref}}
-                  style={{ width: 192, height: 48 }}
-                  size={GoogleSigninButton.Size.Wide}
-                  color={GoogleSigninButton.Color.Dark}
-                  onPress={() => this.handleGoogleSignIn()}
-                />
-                </TouchableOpacity>
-
+                <GoogleSigninButtonComponent handleGoogleSignIn={this.handleGoogleSignIn} />
               )}
             </View>
           </View>
@@ -320,6 +306,7 @@ const mapDispatchToProps = (dispatch) => ({
   set_auth_token: (data) => dispatch(set_auth_token(data)),
   set_face_sharing_active: () => dispatch(set_face_sharing_active()),
   set_face_sharing_inactive: () => dispatch(set_face_sharing_inactive()),
+  set_in_app: () => dispatch(set_in_app()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomDrawer);

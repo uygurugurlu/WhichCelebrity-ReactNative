@@ -14,8 +14,8 @@ export default class SwipeRight extends Component{
   componentDidMount () {
 
   }
-  handlePress = async (event) => {
-    await this.props.changeVisible(false);
+  handlePress = () => {
+    this.props.changeVisible(false);
     //if you want to scroll on animation press
     /*if(event === 1) {
       swiperRef.current.scrollTo(1);
@@ -24,7 +24,6 @@ export default class SwipeRight extends Component{
   render(){
     const {isVisible} = this.props;
     return(
-      <View style={styles.container}>
           <AnimatedLoader
             visible={isVisible}
             source={require("./swipeRightAnimation.json")}
@@ -33,8 +32,8 @@ export default class SwipeRight extends Component{
             opacity={1}
             pressed={() => this.handlePress()}
             containerStyle={{right:0}}
+            changeVisible={() => this.handlePress()}
           />
-      </View>
 
     )
   }

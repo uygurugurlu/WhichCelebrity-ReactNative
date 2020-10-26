@@ -17,6 +17,7 @@ import {
   SET_AUTH_TOKEN,
   SET_FACE_SHARING_ACTIVE,
   SET_FACE_SHARING_INACTIVE,
+  SET_IN_APP,
 } from './ActionTypes';
 
 export const get_detected_face_count = (count) => ({
@@ -98,4 +99,7 @@ export const set_face_sharing_active = () => ({
 });
 export const set_face_sharing_inactive = () => ({
   type: SET_FACE_SHARING_INACTIVE,
+});
+export const set_in_app = () => ({
+  type: SET_IN_APP,
 });

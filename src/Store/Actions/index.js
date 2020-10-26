@@ -17,4 +17,5 @@ export {
   set_auth_token,
   set_face_sharing_active,
   set_face_sharing_inactive,
+  set_in_app,
 } from './MainActions';

@@ -88,6 +88,7 @@
     "rn-avatar": "^1.0.3",
     "rn-fetch-blob": "^0.12.0",
     "rn-tooltip": "^3.0.0",
+    "rn-tourguide": "^2.6.1",
     "shorthash": "0.0.2"
   },
   "devDependencies": {

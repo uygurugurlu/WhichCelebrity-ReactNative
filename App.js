@@ -20,6 +20,10 @@ import { setI18nConfig } from './src/I18n';
 import SwitchNavigation from './src/Navigation/SwitchNavigation';
 import configureStore from './src/Store/ConfigureStore';
 import { getUniqueId } from 'react-native-device-info';
+import {
+  TourGuideProvider, // Main provider
+
+} from 'rn-tourguide'
 configureFontAwesomePro();
 const store = configureStore();
 function App() {
@@ -118,13 +122,16 @@ function App() {
   }
 
   return (
-    <Provider store={store}>
-      <SwitchNavigation />
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor={header_background_color}
-      />
-    </Provider>
+    <TourGuideProvider {...{ borderRadius: 16 }}>
+      <Provider store={store}>
+        <SwitchNavigation />
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={header_background_color}
+        />
+      </Provider>
+    </TourGuideProvider>
+
   );
 }
 

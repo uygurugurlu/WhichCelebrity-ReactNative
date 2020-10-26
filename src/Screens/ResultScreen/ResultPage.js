@@ -87,6 +87,7 @@ class ResultPage extends Component {
     setTimeout(() => this.setState({ swipeRightVisible: true }), 2000);
   }
   changeSwipeRightVisible = (isVisible) => {
+    console.log("sa");
    this.setState({swipeRightVisible : isVisible});
   }
 

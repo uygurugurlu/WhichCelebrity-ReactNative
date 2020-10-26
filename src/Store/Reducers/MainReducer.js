@@ -18,6 +18,7 @@ import {
   SET_AUTH_TOKEN,
   SET_FACE_SHARING_ACTIVE,
   SET_FACE_SHARING_INACTIVE,
+  SET_IN_APP,
 } from '../Actions/ActionTypes';
 
 const initialState = {
@@ -50,6 +51,8 @@ const initialState = {
   user_data: [],
 
   face_sharing: false,
+
+  in_app: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -148,6 +151,10 @@ const reducer = (state = initialState, action) => {
     case SET_FACE_SHARING_INACTIVE:
       return (state = update(state, {
         face_sharing: { $set: false },
+      }));
+    case SET_IN_APP:
+      return (state = update(state, {
+        in_app: { $set: true },
       }));
     default:
       return state;
