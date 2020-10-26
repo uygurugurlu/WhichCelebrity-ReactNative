@@ -37,7 +37,6 @@ import {
   ShareAppEvent,
 } from '../../common/Functions/AnalyticEvents/Events';
 import crashlytics from '@react-native-firebase/crashlytics';
-import { AppTour, AppTourView } from 'react-native-app-tour'
 import AnimatedLoader from 'react-native-animated-loader'
 import SwipeRight from '../../common/Components/SwipeRightModal/SwipeRight'
 

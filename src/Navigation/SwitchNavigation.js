@@ -31,7 +31,6 @@ import MainPagesStack from './MainStack';
 import { GetAppVersion } from '../common/Functions/Endpoints/GetAppVersion';
 import { PerformTimeConsumingTask } from '../common/Functions/PerformTimeConsumingTask';
 import CustomDrawer from './Drawer';
-import { AppTour, AppTourSequence, AppTourView } from 'react-native-app-tour'
 
 const MyDrawer = createDrawerNavigator();
 
@@ -41,7 +40,6 @@ class SwitchNavigation extends React.Component {
     this.state = {
       update_needed: false,
     };
-    this.appTourTargets = [];
 
   }
 
@@ -93,13 +91,13 @@ class SwitchNavigation extends React.Component {
 
   componentDidMount = async () => {
     await this.SetI18nConfig();
-    setTimeout(() => {
+    /*setTimeout(() => {
       let appTourSequence = new AppTourSequence();
       this.appTourTargets.forEach(appTourTarget => {
         appTourSequence.add(appTourTarget);
       });
       AppTour.ShowSequence(appTourSequence);
-    }, 1000);
+    }, 1000);*/
   };
 
   SetI18nConfig = async () => {

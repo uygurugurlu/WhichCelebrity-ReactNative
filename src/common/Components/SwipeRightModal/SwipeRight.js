@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Modal, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, } from 'react-native'
 import AnimatedLoader from 'react-native-animated-loader'
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../../Constants'
-import { AppTour, AppTourView } from 'react-native-app-tour'
-import { get_captured_image_uri, get_user_avatar_source, trigger_savings_page } from '../../../Store/Actions'
-import { connect } from 'react-redux'
+
 
 export default class SwipeRight extends Component{
   constructor (props) {
