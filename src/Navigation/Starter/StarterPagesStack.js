@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import WebViewPage from '../../Screens/WebViewScreen/WebViewPage';
 import UpdateApp from '../../Screens/UpdateAppScreen/UpdateApp';
 import LandingSlides from '../../Screens/LandingSlides/LandingSlides';
+import RequestPermission from '../../Screens/LandingSlides/RequestPermission'
 
 const NavigationStack = createStackNavigator();
 
@@ -28,6 +29,14 @@ export default function StarterPagesStack() {
       <NavigationStack.Screen
         name="UpdateApp"
         component={UpdateApp}
+        options={({navigation, route}) => ({
+          headerShown: false,
+          headerBackTitleVisible: false,
+        })}
+      />
+      <NavigationStack.Screen
+        name="RequestPermission"
+        component={RequestPermission}
         options={({navigation, route}) => ({
           headerShown: false,
           headerBackTitleVisible: false,

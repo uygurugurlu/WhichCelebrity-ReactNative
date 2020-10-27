@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, View, Text, SafeAreaView, Alert, ImageBackground} from 'react-native';
+import { Image, View, Text, SafeAreaView, Alert, ImageBackground, Platform } from 'react-native'
 import {styles} from './AgreementsPageStyles';
 import {Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -35,12 +35,16 @@ class AgreementsPage extends Component {
 
   Continue = async () => {
     if (this.state.checked && this.state.checked2) {
-      await this.StoreData('LOGGED_IN_FIRST_TIME');
+      if(Platform.OS == 'ios'){
+        this.props.navigation.navigate("RequestPermission");
+      }
+      else{
+        await this.StoreData('LOGGED_IN_FIRST_TIME');
+      }
     } else {
       Alert.alert('', translate('starter.web_view_alert_text'));
     }
   };
-
   StoreData = async (key) => {
     try {
       await AsyncStorage.setItem(key, 'true');

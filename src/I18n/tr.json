@@ -120,6 +120,11 @@
     "username": "Kullanıcı Adı: ",
     "most_similar": "Ünlülere en çok benzeyen kullanıcılar",
     "most_similar_selected": "Seçtiğiniz ünlüye en çok benzeyen 10 kullanıcı",
-    "user_not_found": "Kullanıcı bilgisi bulunamadı.",
+    "user_not_found": "Kullanıcı bilgisi bulunamadı."
+  },
+  "permission": {
+    "label": "Size benzeyen kullanıcıları bulduğumuzda size haber verebilmemiz için lütfen bildirimlere izin verin.",
+    "give_permission": "İzin ver",
+    "deny_permission": "Reddet"
   }
 }

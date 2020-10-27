@@ -114,13 +114,18 @@
     "alert_title": "You are enabling the face sharing",
     "alert_desc": "Your face will be visible to other users",
     "cancel": "Cancel",
-    "ok": "Ok",
+    "ok": "Ok"
   },
   "scoreboard": {
       "scoreboard": "Scoreboard",
       "username": "Username: ",
       "most_similar": "Users that are most similar to celebrities",
     "most_similar_selected": "Top 10 users that are most similar to selected celebrity",
-    "user_not_found": "User data not found",
+    "user_not_found": "User data not found"
   },
+  "permission": {
+    "label": "Allow notifications for us to let you know when we have found users that look like you.\n",
+    "give_permission": "Allow",
+    "deny_permission": "Deny",
+  }
 }
