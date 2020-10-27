@@ -42,6 +42,8 @@ export const AppleSigninButtonComponent = props => {
         zone={2}
         text={translate("dashboard.showcase_title")}
         borderRadius={16}
+        isTourGuide={false}
+
       >
         <AppleButton
           buttonStyle={AppleButton.Style.WHITE}

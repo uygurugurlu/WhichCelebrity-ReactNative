@@ -22,9 +22,9 @@ export const GoogleSigninButtonComponent = props => {
   // Can start at mount 🎉
   // you need to wait until everything is registered 😁
   React.useEffect( () => {
-    if (canStart) {
+    if (canStart ) {
       // 👈 test if you can start otherwise nothing will happen
-      setTimeout(() => start(), 0)
+      setTimeout(() => start(), 2000)
     }
   }, [canStart]) // 👈 don't miss it!
 
@@ -39,16 +39,18 @@ export const GoogleSigninButtonComponent = props => {
     <View style={styles.container}>
 
       <TourGuideZone
-        zone={2}
+        zone={0}
         text={translate("dashboard.showcase_title")}
         borderRadius={16}
       >
-        <GoogleSigninButton
-          style={{ width: 192, height: 48 }}
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Dark}
-          onPress={props.handleGoogleSignIn}
-        />
+        <View style={styles.wrapper}>
+          <GoogleSigninButton
+            style={{ width: 192, height: 48 }}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={props.handleGoogleSignIn}
+          />
+        </View>
+
       </TourGuideZone>
     </View>
   )
@@ -56,5 +58,11 @@ export const GoogleSigninButtonComponent = props => {
 const styles= StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent:'center',
+  },
+  wrapper: {
+    height: 70,
+    width: 200,
+    marginBottom: 30,
   },
 });
