@@ -26,7 +26,13 @@ class Dashboard extends Component {
   }
 
   componentDidMount = async () => {
-    setTimeout(() => this.props.navigation.openDrawer(),0)
+
+      console.log("isLoggedİn: ", this.props.isLoggedIn);
+      setTimeout(() => {
+        if(!this.props.isLoggedIn) {
+          this.props.navigation.openDrawer()
+        }},2000)
+
     /*const {isLoggedIn, navigation} = this.props;
     let props = {
       order: 32,
