@@ -37,7 +37,7 @@ import {
   useTourGuideController, // hook to start, etc.
 } from 'rn-tourguide'
 import { GoogleSigninButtonComponent } from './GoogleSigninButtonComponent'
-//import { AppleSigninButtonComponent } from './AppleSigninButtonComponent'
+import { AppleSigninButtonComponent } from './AppleSigninButtonComponent'
 
 
 class CustomDrawer extends Component {
@@ -152,20 +152,45 @@ class CustomDrawer extends Component {
     }
   };
 
-  handleAppleSignIn = () => {
-    console.log(onAppleButtonPress());
+  handleAppleSignIn = async() => {
+    const signInInfo = await onAppleButtonPress();
+    console.log('signInInfo', signInInfo);
+
+      const currentUserIdToken = await auth().currentUser.getIdToken();
+      console.log('current user id token: ', currentUserIdToken);
+      const IdTokenResponse = await PostIdToken(currentUserIdToken, this.props.user_agent);
+      try {
+
+        console.log('Id token response: ', IdTokenResponse.data.original.access_token);
+        await this.setSignIn(IdTokenResponse.data.original.access_token, signInInfo);
+
+        const userStatus = await ConfirmUser(IdTokenResponse.data.original.access_token);
+
+        console.log('userStatus: ', userStatus);
+        if(userStatus.data.data.is_opt_in) {
+          this.props.set_face_sharing_active();
+        }
+        else {
+          this.props.set_face_sharing_inactive();
+        }
+      } catch (error) {
+
+          console.warn('error post id token', error);
+          await this.handleSignOut();
+
+
+    }
   };
 
   handleIsSignedIn = async () => {
     try {
       const signInInfo = JSON.parse(await AsyncStorage.getItem('@UserInfo'));
-      const IsGoogleSignedIn = await isSignedIn();
 
       const res = await AsyncStorage.getItem('@auth_token');
       console.log('Current auth token: ', res);
       if (res !== null) {
         console.log('current user: ', auth().currentUser);
-        if (signInInfo !== null && IsGoogleSignedIn) {
+        if (signInInfo !== null) {
           this.props.set_auth_token(JSON.parse(res));
           // const currentUserIdToken = await auth().currentUser.getIdToken();
           const userStatus = await ConfirmUser(JSON.parse(res));
@@ -277,8 +302,7 @@ class CustomDrawer extends Component {
           <View style={styles.contentContainer}>
             <View style={styles.signInButtonContainer}>
               {Platform.OS == 'ios' ? (
-              /*  <AppleSigninButtonComponent handleAppleSignIn={this.handleAppleSignIn} />*/
-            null
+                <AppleSigninButtonComponent handleAppleSignIn={this.handleAppleSignIn} />
               ) : (
                 <GoogleSigninButtonComponent handleGoogleSignIn={this.handleGoogleSignIn} />
               )}

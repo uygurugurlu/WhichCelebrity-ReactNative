@@ -22,10 +22,13 @@ export const AppleSigninButtonComponent = props => {
   // Can start at mount 🎉
   // you need to wait until everything is registered 😁
   React.useEffect( () => {
-    if (canStart) {
       // 👈 test if you can start otherwise nothing will happen
-      start()
-    }
+      setTimeout(() => {
+        if (canStart) {
+          start()
+        }
+      }, 2000)
+
   }, [canStart]) // 👈 don't miss it!
 
   React.useEffect(() => {
