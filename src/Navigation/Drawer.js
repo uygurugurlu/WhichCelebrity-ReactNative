@@ -24,7 +24,7 @@ import {
 } from '../Store/Actions';
 import { GrantPermission } from '../common/Functions/Endpoints/GrantPermission';
 import { UngrantPermission } from '../common/Functions/Endpoints/UngrantPermission';
-import { storeData } from '../common/Functions/ManageAsyncData';
+import { storeData, storeStringData } from '../common/Functions/ManageAsyncData'
 import { isSignedIn, signInFunction } from '../common/Functions/GoogleSignInFunctions';
 import { PostIdToken } from '../common/Functions/Endpoints/PostIdToken';
 import { onAppleButtonPress } from '../common/Functions/AppleSignInFunctions';
@@ -38,6 +38,10 @@ import {
 } from 'rn-tourguide'
 import { GoogleSigninButtonComponent } from './GoogleSigninButtonComponent'
 import { AppleSigninButtonComponent } from './AppleSigninButtonComponent'
+import messaging from '@react-native-firebase/messaging'
+import { DeviceToken } from '../common/Functions/Endpoints/DeviceToken'
+import { getUniqueId } from 'react-native-device-info'
+import { DeviceTokenWithBearer } from '../common/Functions/Endpoints/DeviceTokenWithBearer'
 
 
 class CustomDrawer extends Component {
@@ -86,13 +90,36 @@ class CustomDrawer extends Component {
     );
 
   }
+  handleDeviceToken = async (status) =>{
+    const {auth_token} = this.props;
+    if(status === 1) {
+      messaging()
+        .getToken()
+        .then( async (token) => {
+          console.log('Got token: ', token);
+          let deviceTokenRes = await DeviceTokenWithBearer(auth_token, getUniqueId(), token);
+          console.log("Signed in user device Token Response: ",deviceTokenRes);
+          await storeStringData('@FCMToken', token);
+        });
+    }
+    else {
+      messaging()
+        .getToken()
+        .then( async (token) => {
+          console.log('Got token: ', token);
+          let deviceTokenRes = await DeviceToken(getUniqueId(), token);
+          console.log("Signed out user device Token Response: ",deviceTokenRes);
+          await storeStringData('@FCMToken', token);
+        });
+    }
 
+  };
   setSignIn = async (idToken, signInInfo) => {
     this.props.set_auth_token(
       idToken,
     );
-    storeData('@auth_token', idToken);
-    storeData('@UserInfo', signInInfo);
+    await storeData('@auth_token', idToken);
+    await storeData('@UserInfo', signInInfo);
 
     this.props.authenticate_user();
     this.setState({
@@ -100,7 +127,31 @@ class CustomDrawer extends Component {
       photo: signInInfo.user.photoURL,
     });
   }
+  handleSignIn = async (signInInfo) => {
+    const currentUserIdToken = await auth().currentUser.getIdToken();
+    console.log('current user id token: ', currentUserIdToken);
+    const IdTokenResponse = await PostIdToken(currentUserIdToken, this.props.user_agent);
+    try {
 
+      console.log('Id token response: ', IdTokenResponse.data.original.access_token);
+      await this.setSignIn(IdTokenResponse.data.original.access_token, signInInfo);
+
+      const userStatus = await ConfirmUser(IdTokenResponse.data.original.access_token);
+
+      console.log('userStatus: ', userStatus);
+      if(userStatus.data.data.is_opt_in) {
+        this.props.set_face_sharing_active();
+      }
+      else {
+        this.props.set_face_sharing_inactive();
+      }
+      await this.handleDeviceToken(1);
+
+    } catch (error) {
+      console.warn('error post id token', error);
+      await this.handleSignOut();
+    }
+  }
   handleGoogleSignIn = async () => {
     const signInInfo = await signInFunction();
     console.log('signInInfo', signInInfo);
@@ -113,73 +164,14 @@ class CustomDrawer extends Component {
     } else if (signInInfo == -4) {
       Alert.alert(translate('error.error'));
     } else {
-      const currentUserIdToken = await auth().currentUser.getIdToken();
-      console.log('current user id token: ', currentUserIdToken);
-      const IdTokenResponse = await PostIdToken(currentUserIdToken, this.props.user_agent);
-      try {
-
-        console.log('Id token response: ', IdTokenResponse.data.original.access_token);
-        await this.setSignIn(IdTokenResponse.data.original.access_token, signInInfo);
-
-        const userStatus = await ConfirmUser(IdTokenResponse.data.original.access_token);
-
-        console.log('userStatus: ', userStatus);
-        if(userStatus.data.data.is_opt_in) {
-          this.props.set_face_sharing_active();
-        }
-        else {
-          this.props.set_face_sharing_inactive();
-        }
-      } catch (error) {
-        if (error instanceof TypeError) {
-          const idToken = JSON.parse(`${IdTokenResponse.data}}`).original.access_token;
-          await this.setSignIn(idToken, signInInfo);
-          console.log('new id token: ', idToken);
-          const userStatus = await ConfirmUser(IdTokenResponse.data.original.access_token);
-
-          console.log('userStatus: ', userStatus);
-          if(userStatus.data.data.is_opt_in) {
-            this.props.set_face_sharing_active();
-          }
-          else {
-            this.props.set_face_sharing_inactive();
-          }
-        } else {
-          console.warn('error post id token', error);
-          await this.handleSignOut();
-        }
-      }
+      await this.handleSignIn(signInInfo);
     }
   };
 
   handleAppleSignIn = async() => {
     const signInInfo = await onAppleButtonPress();
     console.log('signInInfo', signInInfo);
-
-      const currentUserIdToken = await auth().currentUser.getIdToken();
-      console.log('current user id token: ', currentUserIdToken);
-      const IdTokenResponse = await PostIdToken(currentUserIdToken, this.props.user_agent);
-      try {
-
-        console.log('Id token response: ', IdTokenResponse.data.original.access_token);
-        await this.setSignIn(IdTokenResponse.data.original.access_token, signInInfo);
-
-        const userStatus = await ConfirmUser(IdTokenResponse.data.original.access_token);
-
-        console.log('userStatus: ', userStatus);
-        if(userStatus.data.data.is_opt_in) {
-          this.props.set_face_sharing_active();
-        }
-        else {
-          this.props.set_face_sharing_inactive();
-        }
-      } catch (error) {
-
-          console.warn('error post id token', error);
-          await this.handleSignOut();
-
-
-    }
+    await this.handleSignIn(signInInfo);
   };
 
   handleIsSignedIn = async () => {
@@ -234,6 +226,7 @@ class CustomDrawer extends Component {
       AsyncStorage.removeItem('@UserInfo');
       AsyncStorage.removeItem('@auth_token');
       this.props.set_auth_token(AUTH_TOKEN);
+      await this.handleDeviceToken(0);
     } catch (error) {
       console.log('error signing out: ', error);
       this.props.unauthenticate_user();

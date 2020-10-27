@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack'
 
 import HomePage from '../Screens/HomeScreen/HomePage';
 import UpdateApp from '../Screens/UpdateAppScreen/UpdateApp';
@@ -132,6 +132,7 @@ export default function MainPagesStack() {
       <MainStack.Screen
         name="ScoreBoard"
         component={ScoreBoard}
+
         options={({ navigation, route }) => ({
           title: translate('scoreboard.scoreboard'),
           headerBackTitleVisible: false,
@@ -139,7 +140,6 @@ export default function MainPagesStack() {
             backgroundColor: header_background_color,
           },
           headerTintColor: header_label_color,
-
         })}
       />
     </MainStack.Navigator>

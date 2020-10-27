@@ -8,6 +8,13 @@ export const storeData = async (key, value) => {
     console.log('Async Storage store data error: ', e);
   }
 };
+export const storeStringData = async (key, value) => {
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch (e) {
+    console.log('Async Storage store string data error: ', e);
+  }
+};
 
 export const getData = (key) => {
   try {

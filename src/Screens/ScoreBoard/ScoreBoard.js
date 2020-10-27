@@ -14,7 +14,6 @@ import { GetScoreBoard } from '../../common/Functions/Endpoints/GetScoreBoard';
 import { GetScoreBoardByCelebrity } from '../../common/Functions/Endpoints/GetScoreBoardByCelebrity';
 import CelebritySelectedComponent from './CelebritySelectedComponent';
 import TopRanksComponent from './TopRanksComponent';
-
 class ScoreBoard extends Component {
   constructor() {
     super();

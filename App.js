@@ -24,6 +24,8 @@ import {
   TourGuideProvider, // Main provider
 
 } from 'rn-tourguide'
+import { DeviceToken } from './src/common/Functions/Endpoints/DeviceToken'
+import { getData, storeStringData } from './src/common/Functions/ManageAsyncData'
 configureFontAwesomePro();
 const store = configureStore();
 function App() {
@@ -90,20 +92,31 @@ function App() {
   };
 
   /** FCM Token */
-  useEffect(() => {
+  useEffect( () => {
     init().finally(() => {
       AxiosInterceptors();
     });
-
-    messaging()
-      .getToken()
-      .then((token) => {
-        console.log('Got token: ', token);
-      });
-
+    const handleDeviceToken = async () => {
+      let FcmToken = await getData('@FCMToken')
+      if(FcmToken === null){
+        console.log("Token not found, getting a new one");
+        messaging()
+          .getToken()
+          .then( async (token) => {
+            console.log('Got token: ', token);
+            let deviceTokenRes = await DeviceToken(getUniqueId(), token);
+            console.log("Device Token Response: ",deviceTokenRes);
+            await storeStringData('@FCMToken', token);
+          });
+      }
+    }
+    handleDeviceToken();
     // Listen to whether the token changes
-    messaging().onTokenRefresh((token) => {
+    messaging().onTokenRefresh(async (token) => {
       console.log('Token refreshed: ', token);
+      let deviceTokenRes = await DeviceToken(getUniqueId(), token);
+      console.log("Device Token Response: ",deviceTokenRes);
+      await storeStringData('@FCMToken', token);
     });
 
     return messaging().onMessage(async (remoteMessage) => {
