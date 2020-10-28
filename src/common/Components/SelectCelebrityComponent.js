@@ -170,11 +170,7 @@ class SelectCelebrityComponent extends Component {
           transparent
           animationType="slide"
         >
-          <TouchableOpacity
-            style={styles.modalBack}
-            onPress={() => this.setState({ celebritiesVisibility: false })}
-          />
-          <View style={styles.bottomModal}>
+          <TouchableOpacity onPress={() => this.setState({celebritiesVisibility:false})} style={styles.bottomModal}>
             <View style={styles.modalContainer}>
               <View style={styles.modalHeader}>
                 <View style={styles.headerContainer}>
@@ -244,7 +240,7 @@ class SelectCelebrityComponent extends Component {
                 />
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         </Modal>
 
       </View>
@@ -342,6 +338,8 @@ const styles = StyleSheet.create({
   bottomModal: {
     justifyContent: 'flex-end',
     flex: 1,
+    backgroundColor: '#00000080',
+
   },
 
   modalContainer: {
