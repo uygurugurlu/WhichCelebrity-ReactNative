@@ -232,6 +232,7 @@ class ResultPage extends Component {
   GoBack = async () => await this.props.navigation.pop();
 
 
+
   render() {
     const {userAvatarSource} = this.props;
     const {share_active, data} = this.state;
@@ -264,7 +265,7 @@ class ResultPage extends Component {
                     position: 'relative',
                     bottom: -DEVICE_HEIGHT * 0.03,
                   }}
-                  activeDotColor={'#562068'}
+                  activeDotColor={'#007aff'}
                   dotColor={'white'}
                   loop={false}
                   buttonWrapperStyle={{
@@ -322,7 +323,7 @@ class ResultPage extends Component {
               animationType="slide">
               <TouchableOpacity
                 style={styles.modalBack}
-                onPress={() => this.setState({optionsModalVisible: false})}
+                onPress={() => this.closeOptionModal()}
               />
 
               <View style={styles.bottomModal}>
@@ -391,6 +392,11 @@ class ResultPage extends Component {
         <SwipeRight isVisible={this.state.swipeRightVisible} changeVisible={this.changeSwipeRightVisible} swiperRef={this.swiperRef}/>
       </View>
     );
+  }
+
+  closeOptionModal () {
+    console.log('selam');
+    this.setState({ optionsModalVisible: false })
   }
 }
 

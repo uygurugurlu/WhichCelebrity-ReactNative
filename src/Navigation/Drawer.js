@@ -275,12 +275,12 @@ class CustomDrawer extends Component {
                 ): (null)
             }
             <View style={styles.signOutContainer}>
-              <TouchableHighlight
+              <TouchableOpacity
                 style={styles.signout}
                 onPress={() => this.handleSignOut()}
               >
                 <Text style={styles.button}>Çıkış Yap</Text>
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
 
           </View>

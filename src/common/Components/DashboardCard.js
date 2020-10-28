@@ -5,15 +5,15 @@ import {
   ImageBackground,
   Text,
   Image,
-  TouchableHighlight,
-} from 'react-native';
+  TouchableHighlight, TouchableOpacity,
+} from 'react-native'
 import {translate} from '../../I18n';
 
 export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight
+        <TouchableOpacity
           style={styles.optionsCard}
           onPress={() => this.props.navigation.navigate(this.props.route)}>
           <ImageBackground style={styles.backImage} source={this.props.image}>
@@ -29,7 +29,7 @@ export default class Home extends Component {
               </View>
             </View>
           </ImageBackground>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   }

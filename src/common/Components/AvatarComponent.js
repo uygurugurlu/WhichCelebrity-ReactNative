@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import Avatar from 'rn-avatar';
-import {CAMERA_ICON2} from '../IconIndex';
-import {DEVICE_WIDTH, shadow, CAMERAFRAME, CAMERAICON} from '../Constants';
-import {Image, Text, StyleSheet, View, TouchableHighlight} from 'react-native';
-import {translate} from '../../I18n';
+import {DEVICE_WIDTH, CAMERAFRAME, CAMERAICON} from '../Constants';
+import { Image, StyleSheet, View, TouchableHighlight } from 'react-native'
 
 const size = DEVICE_WIDTH / 2.2;
 
@@ -25,39 +22,6 @@ class AvatarComponent extends Component {
         </TouchableHighlight>
       </View>
     );
-
-    /*return ImageSource === '' ? (
-      <View style={{alignItems: 'center'}}>
-        <TouchableOpacity
-          style={[styles.imageContainerStyle, shadow]}
-          onPress={() => SelectAvatar()}>
-          <Image source={CAMERA_ICON2} style={styles.imageStyle} />
-        </TouchableOpacity>
-
-        <Text style={styles.choosePhotoTextStyle}>
-          {translate('home.select_photo')}
-        </Text>
-      </View>
-    ) : (
-      <Avatar
-        rounded
-        showEditButton={true}
-        size={size}
-        source={ImageSource}
-        title=""
-        containerStyle={[{backgroundColor: '#fff'}, shadow]}
-        onEditPress={() => SelectAvatar()}
-        onPress={() => SelectAvatar()}
-        overlayContainerStyle={{margin: 5, backgroundColor: 'white'}}
-        editButton={{
-          name: 'camera',
-          type: 'font-awesome',
-          size: size / 7.5,
-          style: styles.cameraIconStyle,
-          color: '#576f87',
-        }}
-      />
-    ); */
   }
 }
 

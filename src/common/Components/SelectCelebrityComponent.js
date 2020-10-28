@@ -102,7 +102,7 @@ class SelectCelebrityComponent extends Component {
     return (
       <View style={styles.container}>
         {!this.state.isCelebritySelected ? (
-          <TouchableHighlight
+          <TouchableOpacity
             style={styles.selectCategoryContainer}
             onPress={() => this.setState({ celebritiesVisibility: true })}
           >
@@ -117,10 +117,10 @@ class SelectCelebrityComponent extends Component {
                 color="#284077"
               />
             </View>
-          </TouchableHighlight>
+          </TouchableOpacity>
         ) : (
           <View style={styles.celebritySelectedContainer}>
-            <TouchableHighlight
+            <TouchableOpacity
               style={styles.celebritySelectedPressContainer}
               onPress={() => this.setState({ celebritiesVisibility: true })}
             >
@@ -136,7 +136,7 @@ class SelectCelebrityComponent extends Component {
                   style={styles.selectCategoryIcon}
                 />
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
             <View style={styles.celebritySelectedRow}>
               <View
                 style={styles.celebritySelectedImageContainer}
