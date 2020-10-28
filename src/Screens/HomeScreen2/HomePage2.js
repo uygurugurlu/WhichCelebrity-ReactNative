@@ -375,12 +375,8 @@ class HomePage2 extends Component {
             transparent
             animationType="slide"
           >
-            <TouchableOpacity
-              style={styles.modalBack}
-              onPress={() => this.setState({ optionsModalVisible: false })}
-            />
 
-            <View style={styles.bottomModal}>
+            <TouchableOpacity onPress={() => this.setState({optionsModalVisible: false})} style={styles.bottomModal}>
               <View style={styles.settingsModalContainer}>
                 <TouchableOpacity
                   onPress={async () => {
@@ -418,7 +414,7 @@ class HomePage2 extends Component {
               >
                 <Text style={styles.cancelButton}>İptal Et</Text>
               </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
           </Modal>
           {
             // Options Modal End

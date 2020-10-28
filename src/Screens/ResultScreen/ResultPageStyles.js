@@ -111,15 +111,12 @@ export const styles = StyleSheet.create({
   // Category Modal Styles
   modalBack: {
     backgroundColor: '#00000080',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flex: 1,
   },
   bottomModal: {
     justifyContent: 'flex-end',
     flex: 1,
+    backgroundColor: '#00000080'
   },
   settingsModalContainer: {
     alignSelf: 'center',

@@ -452,12 +452,8 @@ class HomePage extends Component {
             transparent
             animationType="slide"
           >
-            <TouchableOpacity
-              style={styles.modalBack}
-              onPress={() => this.setState({ optionsModalVisible: false })}
-            />
 
-            <View style={styles.bottomModal}>
+            <TouchableOpacity onPress={() => this.setState({optionsModalVisible: false})} style={styles.bottomModal}>
               <View style={styles.settingsModalContainer}>
                 <TouchableOpacity
                   onPress={async () => {
@@ -495,7 +491,7 @@ class HomePage extends Component {
               >
                 <Text style={styles.cancelButton}>{translate('image_picker.cancel')}</Text>
               </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
           </Modal>
           {
             // Options Modal End
@@ -552,11 +548,7 @@ class HomePage extends Component {
             transparent
             animationType="slide"
           >
-            <TouchableOpacity
-              style={styles.modalBack}
-              onPress={() => this.setState({ categories_visibility: false })}
-            />
-            <View style={styles.bottomModal}>
+            <TouchableOpacity onPress={() => this.setState({categories_visibility: false})} style={styles.bottomModal}>
               <View style={styles.modalContainer}>
                 <View style={styles.modalHeader}>
                   <View style={styles.headerContainer}>
@@ -611,7 +603,7 @@ class HomePage extends Component {
                   />
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           </Modal>
           {
             // Categories Modal End
@@ -625,11 +617,8 @@ class HomePage extends Component {
             transparent
             animationType="slide"
           >
-            <TouchableOpacity
-              style={styles.modalBack}
-              onPress={() => this.setState({ genders_visibility: false })}
-            />
-            <View style={styles.bottomModal}>
+
+            <TouchableOpacity onPress={() => this.setState({genders_visibility: false})} style={styles.bottomModal}>
               <View style={styles.modalContainer}>
                 <View style={styles.modalHeader}>
                   <View style={styles.headerContainer}>
@@ -675,7 +664,7 @@ class HomePage extends Component {
                   />
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           </Modal>
           {
             // Gender Modal End

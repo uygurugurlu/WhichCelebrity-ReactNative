@@ -119,6 +119,7 @@ export const styles = StyleSheet.create({
   bottomModal: {
     justifyContent: 'flex-end',
     flex: 1,
+    backgroundColor: '#00000080',
   },
   settingsModalContainer: {
     alignSelf: 'center',

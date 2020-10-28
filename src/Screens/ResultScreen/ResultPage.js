@@ -239,7 +239,6 @@ class ResultPage extends Component {
 
     return (
       <View style={styles.container}>
-        <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
           <Animatable.View
             ref={(ref) => (this.ref4 = ref)}
             style={styles.scrollViewStyle}>
@@ -247,6 +246,8 @@ class ResultPage extends Component {
               ref={(ref) => (this.viewShot = ref)}
               options={{format: 'jpg', quality: 0.9}}
               style={styles.viewShotImageStyle}>
+              <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
+
               <View style={styles.swiperContainer}>
                 <Swiper
                   ref={this.swiperRef}
@@ -313,7 +314,10 @@ class ResultPage extends Component {
                   <SharedImageBottomComponent shareActive={share_active} />
                 </Animatable.View>
               </View>
+              </ImageBackground>
+
             </ViewShot>
+
             {
               //Options Modal Start
             }
@@ -321,12 +325,8 @@ class ResultPage extends Component {
               visible={this.state.optionsModalVisible}
               transparent={true}
               animationType="slide">
-              <TouchableOpacity
-                style={styles.modalBack}
-                onPress={() => this.closeOptionModal()}
-              />
 
-              <View style={styles.bottomModal}>
+              <TouchableOpacity onPress={() =>this.closeOptionModal()}style={styles.bottomModal}>
                 <View style={styles.settingsModalContainer}>
                   <TouchableOpacity
                     onPress={() =>
@@ -382,13 +382,12 @@ class ResultPage extends Component {
                   style={styles.cancelButtonContainer}>
                   <Text style={styles.cancelButton}>İptal Et</Text>
                 </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             </Modal>
             {
               //Options Modal End
             }
           </Animatable.View>
-        </ImageBackground>
         <SwipeRight isVisible={this.state.swipeRightVisible} changeVisible={this.changeSwipeRightVisible} swiperRef={this.swiperRef}/>
       </View>
     );

@@ -237,7 +237,6 @@ class ResultPage2 extends Component {
     console.log(data);
     return (
       <View style={styles.container}>
-        <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
           <Animatable.View
             ref={(ref) => (this.ref4 = ref)}
             style={styles.scrollViewStyle}>
@@ -245,6 +244,8 @@ class ResultPage2 extends Component {
               ref={(ref) => (this.viewShot = ref)}
               options={{format: 'jpg', quality: 0.9}}
               style={styles.viewShotImageStyle}>
+              <ImageBackground style={styles.imageBack} source={IMAGEBACK}>
+
               <View style={styles.swiperContainer}>
                 <ResultPageBody
                   userAvatarSource={userAvatarSource}
@@ -269,7 +270,9 @@ class ResultPage2 extends Component {
                   <SharedImageBottomComponent shareActive={share_active} />
                 </Animatable.View>
               </View>
-            </ViewShot>
+        </ImageBackground>
+
+      </ViewShot>
             {
               //Options Modal Start
             }
@@ -277,12 +280,7 @@ class ResultPage2 extends Component {
               visible={this.state.optionsModalVisible}
               transparent={true}
               animationType="slide">
-              <TouchableOpacity
-                style={styles.modalBack}
-                onPress={() => this.setState({optionsModalVisible: false})}
-              />
-
-              <View style={styles.bottomModal}>
+              <TouchableOpacity onPress={() => this.setState({optionsModalVisible: false})} style={styles.bottomModal}>
                 <View style={styles.settingsModalContainer}>
                   <TouchableOpacity
                     onPress={() =>
@@ -338,13 +336,12 @@ class ResultPage2 extends Component {
                   style={styles.cancelButtonContainer}>
                   <Text style={styles.cancelButton}>İptal Et</Text>
                 </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             </Modal>
             {
               //Options Modal End
             }
           </Animatable.View>
-        </ImageBackground>
         <SwipeRight isVisible={this.state.swipeRightVisible} changeVisible={this.changeSwipeRightVisible} swiperRef={this.swiperRef}/>
       </View>
     );
