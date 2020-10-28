@@ -39,6 +39,13 @@ class ScoreBoard extends Component {
     const scoreBoardData = await GetScoreBoardByCelebrity(user_agent, id, auth_token);
     this.setState({ celebrityRanksData: scoreBoardData });
   }
+  getTopTen = () => {
+    console.log('ok');
+    const { user_agent, auth_token } = this.props;
+    GetScoreBoard(user_agent, auth_token).then( (res) =>
+      this.setState({ topRanksData: res })
+    );
+  }
 
   render() {
     const { celebrityId, topRanksData, celebrityRanksData } = this.state;
@@ -55,7 +62,7 @@ class ScoreBoard extends Component {
           <View style={styles.boardContainer}>
             <View style={styles.topRanksContainer}>
               {this.state.celebrityId === 0 ? (
-                <TopRanksComponent data={topRanksData} />
+                <TopRanksComponent data={topRanksData} getApiData={this.getTopTen}/>
               ) : (
                 <CelebritySelectedComponent data={celebrityRanksData} />
               )}

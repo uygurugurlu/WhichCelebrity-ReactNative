@@ -4,16 +4,26 @@ import { translate } from '../../I18n';
 import ScoreBoardComponent2 from '../../common/Components/ScoreBoardComponent2';
 
 export default class TopRanksComponent extends Component {
+  state = {
+    isFetching: false,
+  }
+  onRefresh  = async () => {
+    this.setState({ isFetching: false });
+    this.props.getApiData();
+  }
+
   render() {
     const { data } = this.props;
     try {
-      console.log(data);
+      console.log('data: ', data);
 
       if (data.data.length > 0) {
         return (
           <FlatList
             keyExtractor={(item) => data.data.indexOf(item).toString()}
             data={data.data}
+            refreshing={this.state.isFetching}
+            onRefresh={this.onRefresh}
             renderItem={({ item }) => (
               <ScoreBoardComponent2
                 rank={data.data.indexOf(item) + 1}
