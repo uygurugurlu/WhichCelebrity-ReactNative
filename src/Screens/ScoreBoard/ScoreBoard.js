@@ -5,10 +5,7 @@ import {
 import { connect } from 'react-redux';
 import { styles } from './ScoreBoardStyles';
 import { IMAGEBACK } from '../../common/Constants';
-import ScoreBoardComponent1 from '../../common/Components/ScoreBoardComponent1';
-import SelectedCelebrityLine from '../../common/Components/SelectedCelebrityLine';
 import SelectCelebrityComponent from '../../common/Components/SelectCelebrityComponent';
-import ScoreBoardComponent2 from '../../common/Components/ScoreBoardComponent2';
 import { translate } from '../../I18n';
 import { GetScoreBoard } from '../../common/Functions/Endpoints/GetScoreBoard';
 import { GetScoreBoardByCelebrity } from '../../common/Functions/Endpoints/GetScoreBoardByCelebrity';

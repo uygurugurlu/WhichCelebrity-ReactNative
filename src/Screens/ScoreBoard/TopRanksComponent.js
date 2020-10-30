@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text } from 'react-native';
 import { translate } from '../../I18n';
 import ScoreBoardComponent2 from '../../common/Components/ScoreBoardComponent2';
+import { shortenUserName } from '../../common/Functions/shortenUserName'
 
 export default class TopRanksComponent extends Component {
   state = {
@@ -16,7 +17,6 @@ export default class TopRanksComponent extends Component {
     const { data } = this.props;
     try {
       console.log('data: ', data);
-
       if (data.data.length > 0) {
         return (
           <FlatList
@@ -27,7 +27,7 @@ export default class TopRanksComponent extends Component {
             renderItem={({ item }) => (
               <ScoreBoardComponent2
                 rank={data.data.indexOf(item) + 1}
-                userName={item.user.name}
+                userName={shortenUserName(item.user.name)}
                 userPhoto={item.user_photo.url}
                 celebrityName={item.celebrity.name}
                 celebrityPhoto={item.celebrity.photo}

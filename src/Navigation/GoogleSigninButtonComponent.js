@@ -5,11 +5,11 @@ import {
   useTourGuideController, // hook to start, etc.
 } from 'rn-tourguide'
 import { GoogleSigninButton } from '@react-native-community/google-signin'
-import React from 'react'
-import { View , StyleSheet} from 'react-native'
+import React, { useState } from 'react'
+import { View, StyleSheet, Modal, TouchableWithoutFeedback } from 'react-native'
 import { translate } from '../I18n'
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../common/Constants'
 export const GoogleSigninButtonComponent = props => {
-  const iconProps = { size: 40, color: '#888' }
 
   // Use Hooks to control!
   const {
@@ -24,7 +24,9 @@ export const GoogleSigninButtonComponent = props => {
   React.useEffect( () => {
     if (canStart ) {
       // 👈 test if you can start otherwise nothing will happen
-      setTimeout(() => start(), 2000)
+      setTimeout(() => {
+        start();
+        }, 2500);
     }
   }, [canStart]) // 👈 don't miss it!
 
@@ -50,8 +52,8 @@ export const GoogleSigninButtonComponent = props => {
             onPress={props.handleGoogleSignIn}
           />
         </View>
-
       </TourGuideZone>
+
     </View>
   )
 }
@@ -65,4 +67,8 @@ const styles= StyleSheet.create({
     width: 200,
     marginBottom: 30,
   },
+  modalStyle: {
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT,
+  }
 });

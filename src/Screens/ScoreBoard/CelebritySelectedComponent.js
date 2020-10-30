@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text } from 'react-native';
 import ScoreBoardComponent1 from '../../common/Components/ScoreBoardComponent1';
 import { translate } from '../../I18n';
+import { shortenUserName } from '../../common/Functions/shortenUserName'
 
 export default class CelebritySelectedComponent extends Component {
   render() {
@@ -15,7 +16,7 @@ export default class CelebritySelectedComponent extends Component {
             renderItem={({ item }) => (
               <ScoreBoardComponent1
                 rank={data.data.similar_users.indexOf(item) + 1}
-                userName={item.name}
+                userName={shortenUserName(item.name)}
                 userPhoto={item.user_photo.url}
                 celebrityName={item.celebrityName}
                 celebrityPhoto={item.celebrityPhoto}

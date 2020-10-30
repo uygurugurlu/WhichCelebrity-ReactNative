@@ -304,7 +304,7 @@ class HomePage extends Component {
         this.CancelCategory();
       } catch (e) {
         if (e.response.status == 401) {
-          this.handleSignOut();
+          await this.handleSignOut();
         }
         console.log('error on response: ', e);
         crashlytics().recordError(e);

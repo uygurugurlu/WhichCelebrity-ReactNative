@@ -31,6 +31,7 @@ import MainPagesStack from './MainStack';
 import { GetAppVersion } from '../common/Functions/Endpoints/GetAppVersion';
 import { PerformTimeConsumingTask } from '../common/Functions/PerformTimeConsumingTask';
 import CustomDrawer from './Drawer';
+import { TourGuideProvider } from 'rn-tourguide'
 
 const MyDrawer = createDrawerNavigator();
 
@@ -192,10 +193,14 @@ class SwitchNavigation extends React.Component {
       );
     }
     return (
+      <TourGuideProvider {...{ borderRadius: 16, labels: {
+          finish: translate('drawer.ok'),
+        }}}>
       <NavigationContainer>
         {is_the_login_first_time ? (
           <StarterPagesStack />
         ) : (
+
           <MyDrawer.Navigator
             drawerContent={() => (
               <CustomDrawer />
@@ -208,6 +213,7 @@ class SwitchNavigation extends React.Component {
           </MyDrawer.Navigator>
         )}
       </NavigationContainer>
+      </TourGuideProvider>
     );
   }
 }

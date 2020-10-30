@@ -133,8 +133,8 @@ android {
         applicationId "com.looklikecelebrity"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.2.2"
+        versionCode 8
+        versionName "1.2.4"
     }
     splits {
         abi {

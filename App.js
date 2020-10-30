@@ -1,9 +1,4 @@
-//   88|4dQ0wDZTc5346tTHGRXKbbtDRUlA7cja3V2FNc5Y
-//   http://192.168.1.113:8000
-//    https://api.myface.io
-//    1657|VXWE09dkbvKbAagr3DOz36NdZCUZxOQCkcTb0DhS
-
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import { Provider } from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
 import { Alert, StatusBar } from 'react-native';
@@ -12,11 +7,9 @@ import { configureFontAwesomePro } from 'react-native-fontawesome-pro';
 import axios from 'axios';
 import {
   GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
 } from '@react-native-community/google-signin';
 import { header_background_color } from './src/common/ColorIndex';
-import { setI18nConfig } from './src/I18n';
+import { setI18nConfig, translate } from './src/I18n'
 import SwitchNavigation from './src/Navigation/SwitchNavigation';
 import configureStore from './src/Store/ConfigureStore';
 import { getUniqueId } from 'react-native-device-info';
@@ -126,7 +119,7 @@ function App() {
 
 
   return (
-    <TourGuideProvider {...{ borderRadius: 16 }}>
+
       <Provider store={store}>
         <SwitchNavigation />
         <StatusBar
@@ -134,7 +127,6 @@ function App() {
           backgroundColor={header_background_color}
         />
       </Provider>
-    </TourGuideProvider>
 
   );
 }

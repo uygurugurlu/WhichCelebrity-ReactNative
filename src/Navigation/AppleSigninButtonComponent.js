@@ -27,7 +27,7 @@ export const AppleSigninButtonComponent = props => {
         if (canStart) {
           start()
         }
-      }, 2000)
+      }, 2500)
 
   }, [canStart]) // 👈 don't miss it!
 
@@ -45,8 +45,6 @@ export const AppleSigninButtonComponent = props => {
         zone={2}
         text={translate("dashboard.showcase_title")}
         borderRadius={16}
-        isTourGuide={false}
-
       >
         <AppleButton
           buttonStyle={AppleButton.Style.WHITE}
