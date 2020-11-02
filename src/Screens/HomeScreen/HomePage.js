@@ -41,6 +41,9 @@ const options = {
   storageOptions: {
     skipBackup: true,
     path: 'images',
+    quality: 0.3,
+    maxWidth: 500,
+    maxHeight: 500,
   },
 };
 const unit_id = Platform.OS === 'ios'
@@ -184,7 +187,6 @@ class HomePage extends Component {
 
   handleCroppedImage = async (res) => {
     const data = await RNFS.readFile(res.uri, 'base64');
-    console.log('base64Image: ', data);
     this.props.get_user_avatar_source({ uri: res.uri }, data);
     const faces = await DetectFace(res.uri);
     this.setState({ crop_visibility: false });
@@ -504,7 +506,7 @@ class HomePage extends Component {
 
               <CropView
                 sourceUrl={
-                  this.state.imageUri == ''
+                  this.state.imageUri === ''
                     ? '../assets/icons/CameraFrame.png'
                     : this.state.imageUri
                 }

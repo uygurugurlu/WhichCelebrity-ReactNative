@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../Constants';
+import { CAMERAFRAME, DEVICE_HEIGHT, DEVICE_WIDTH } from '../Constants'
 import Icon from 'react-native-fontawesome-pro';
 import ImageZoom from 'react-native-image-pan-zoom';
 
@@ -37,7 +37,7 @@ class SwipeableImageModal extends Component {
             cropHeight={DEVICE_HEIGHT * 0.6}
             imageHeight={DEVICE_HEIGHT * 0.6}>
             <Image
-              source={index === 0 ? uri : {uri: uri}}
+              source={ uri ?  (index === 0 ? uri : {uri: uri}) : CAMERAFRAME}
               style={[styles.imageStyle]}
             />
           </ImageZoom>

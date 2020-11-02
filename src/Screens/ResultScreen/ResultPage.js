@@ -39,6 +39,7 @@ import {
 import crashlytics from '@react-native-firebase/crashlytics';
 import AnimatedLoader from 'react-native-animated-loader'
 import SwipeRight from '../../common/Components/SwipeRightModal/SwipeRight'
+import { getData, storeStringData } from '../../common/Functions/ManageAsyncData'
 
 const ANIMATION_DURATION = 1000;
 
@@ -83,7 +84,15 @@ class ResultPage extends Component {
 
   };
   componentDidMount = async () => {
-    setTimeout(() => this.setState({ swipeRightVisible: true }), 2000);
+    if(await getData("@ResultAnimation") === null) {
+      setTimeout(() =>  {
+        if(this.state.optionsModalVisible === false) {
+          this.setState({ swipeRightVisible: true });
+        }
+        storeStringData('@ResultAnimation', "showed");
+        } , 1000);
+
+    }
   }
   changeSwipeRightVisible = (isVisible) => {
     console.log("sa");

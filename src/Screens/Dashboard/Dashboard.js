@@ -17,6 +17,7 @@ import {
 import { styles } from './DashboardStyles';
 import HomeCard from '../../common/Components/DashboardCard.js';
 import { translate } from '../../I18n';
+import { getData } from '../../common/Functions/ManageAsyncData'
 
 class Dashboard extends Component {
   constructor(props) {
@@ -28,8 +29,8 @@ class Dashboard extends Component {
   componentDidMount = async () => {
 
       console.log("isLoggedİn: ", this.props.isLoggedIn);
-      setTimeout(() => {
-        if(!this.props.isLoggedIn) {
+      setTimeout(async() => {
+        if(!this.props.isLoggedIn && await getData('@DrawerAnimation') === null) {
           this.props.navigation.openDrawer()
         }},2000)
 

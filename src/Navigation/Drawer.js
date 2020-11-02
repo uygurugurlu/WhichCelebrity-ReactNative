@@ -21,6 +21,7 @@ import {
   set_face_sharing_active,
   set_face_sharing_inactive,
   set_in_app,
+  show_drawer_animation,
 } from '../Store/Actions';
 import { GrantPermission } from '../common/Functions/Endpoints/GrantPermission';
 import { UngrantPermission } from '../common/Functions/Endpoints/UngrantPermission';
@@ -237,7 +238,7 @@ class CustomDrawer extends Component {
   };
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, drawer_animation } = this.props;
     return (
       (isLoggedIn ? (
         <View style={styles.container}>
@@ -297,7 +298,7 @@ class CustomDrawer extends Component {
               {Platform.OS == 'ios' ? (
                 <AppleSigninButtonComponent handleAppleSignIn={this.handleAppleSignIn} />
               ) : (
-                <GoogleSigninButtonComponent handleGoogleSignIn={this.handleGoogleSignIn} />
+                <GoogleSigninButtonComponent handleGoogleSignIn={this.handleGoogleSignIn}/>
               )}
             </View>
           </View>
@@ -311,8 +312,8 @@ const mapStateToProps = (state) => ({
   isLoggedIn: state.mainReducer.isLoggedIn,
   auth_token: state.mainReducer.auth_token,
   user_agent: state.mainReducer.user_agent,
-  face_sharing: state.mainReducer.face_sharing
-
+  face_sharing: state.mainReducer.face_sharing,
+  drawer_animation: state.mainReducer.drawer_animation,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -324,6 +325,7 @@ const mapDispatchToProps = (dispatch) => ({
   set_face_sharing_active: () => dispatch(set_face_sharing_active()),
   set_face_sharing_inactive: () => dispatch(set_face_sharing_inactive()),
   set_in_app: () => dispatch(set_in_app()),
+  show_drawer_animation : () => dispatch(show_drawer_animation()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomDrawer);

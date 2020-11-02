@@ -1,14 +1,14 @@
 import {
 
   TourGuideZone, // Main wrapper of highlight component
-  TourGuideZoneByPosition, // Component to use mask on overlay (ie, position absolute)
   useTourGuideController, // hook to start, etc.
 } from 'rn-tourguide'
 import { GoogleSigninButton } from '@react-native-community/google-signin'
-import React, { useState } from 'react'
-import { View, StyleSheet, Modal, TouchableWithoutFeedback } from 'react-native'
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
 import { translate } from '../I18n'
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../common/Constants'
+import { getData, storeStringData } from '../common/Functions/ManageAsyncData'
 export const GoogleSigninButtonComponent = props => {
 
   // Use Hooks to control!
@@ -23,10 +23,13 @@ export const GoogleSigninButtonComponent = props => {
   // you need to wait until everything is registered 😁
   React.useEffect( () => {
     if (canStart ) {
+
       // 👈 test if you can start otherwise nothing will happen
-      setTimeout(() => {
-        start();
-        }, 2500);
+      setTimeout(async() => {
+        if(await getData('@DrawerAnimation') === null){
+          start();
+          await storeStringData('@DrawerAnimation',"stored");
+        }}, 2500);
     }
   }, [canStart]) // 👈 don't miss it!
 

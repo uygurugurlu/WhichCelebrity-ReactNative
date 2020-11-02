@@ -13,8 +13,8 @@ import {
   DEVICE_WIDTH,
   HEADSTONE2,
   shadow,
-  RESULTCARDBACK,
-} from '../../../common/Constants';
+  RESULTCARDBACK, CAMERAFRAME,
+} from '../../../common/Constants'
 import {translate} from '../../../I18n';
 import AnimatedProgressBar from '../../../common/Components/AnimatedProgressBar';
 import AnimatedProgressComponent from '../../../common/Components/AnimatedProgressComponent';
@@ -69,7 +69,6 @@ class ResultPageBody extends Component {
       similarity = '',
       title = '';
     const celebrity = data.celebrity;
-    console.log('dededed: ', celebrity.dead);
 
     hide_age =
       celebrity.birthday === null ||
@@ -79,7 +78,6 @@ class ResultPageBody extends Component {
       typeof celebrity.dead !== 'undefined' &&
       celebrity.dead !== null &&
       celebrity.dead;
-    console.log('graave: ', grave_flex);
     age = typeof (celebrity.age !== 'undefined' && celebrity.age !== null)
       ? celebrity.age
       : '';
@@ -224,7 +222,7 @@ class ResultPageBody extends Component {
                     {height: this.state.size - 10, width: this.state.size - 10},
                   ]}>
                   <View style={styles.imageWrapper}>
-                    <Image source={userAvatarSource} style={styles.cameraImage} />
+                    <Image source={userAvatarSource ? userAvatarSource : CAMERAFRAME} style={styles.cameraImage} />
                   </View>
                 </View>
               </TouchableOpacity>
@@ -235,7 +233,7 @@ class ResultPageBody extends Component {
                     {height: this.state.size - 10, width: this.state.size - 10},
                   ]}>
                   <View style={styles.imageWrapper}>
-                    <Image source={{uri: photo}} style={styles.cameraImage} />
+                    <Image source={photo ? {uri: photo} : CAMERAFRAME} style={styles.cameraImage} />
                   </View>
 
                 </View>

@@ -32,6 +32,7 @@ import { GetAppVersion } from '../common/Functions/Endpoints/GetAppVersion';
 import { PerformTimeConsumingTask } from '../common/Functions/PerformTimeConsumingTask';
 import CustomDrawer from './Drawer';
 import { TourGuideProvider } from 'rn-tourguide'
+import { getData, storeStringData } from '../common/Functions/ManageAsyncData'
 
 const MyDrawer = createDrawerNavigator();
 
@@ -74,7 +75,6 @@ class SwitchNavigation extends React.Component {
   componentWillMount = async () => {
     const data = await PerformTimeConsumingTask(1000);
     await this.GetVersion();
-
     await UserAgent.getWebViewUserAgent() // asynchronous
       .then((ua) => {
         this.props.get_user_agent(ua);
@@ -246,6 +246,7 @@ const mapDispatchToProps = (dispatch) => ({
   authenticate_user: () => dispatch(authenticate_user()),
   unauthenticate_user: () => dispatch(unauthenticate_user()),
   set_auth_token: (data) => dispatch(set_auth_token(data)),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SwitchNavigation);

@@ -53,6 +53,7 @@ const initialState = {
   face_sharing: false,
 
   in_app: false,
+
 };
 
 const reducer = (state = initialState, action) => {
@@ -156,6 +157,7 @@ const reducer = (state = initialState, action) => {
       return (state = update(state, {
         in_app: { $set: true },
       }));
+
     default:
       return state;
   }

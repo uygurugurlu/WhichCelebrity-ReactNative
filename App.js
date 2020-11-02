@@ -31,6 +31,7 @@ function App() {
   const init = async () => {
     await AdMobConfigure();
     await setI18nConfig();
+
   };
 
   const AxiosInterceptors = () => {
