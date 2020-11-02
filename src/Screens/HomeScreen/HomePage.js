@@ -38,12 +38,14 @@ import { storeData } from '../../common/Functions/ManageAsyncData';
 import { AUTH_TOKEN } from '../../config';
 
 const options = {
+  quality: 0.8,
+  maxWidth: 1000,
+  maxHeight: 1000,
+  noData: true,
   storageOptions: {
     skipBackup: true,
     path: 'images',
-    quality: 0.3,
-    maxWidth: 500,
-    maxHeight: 500,
+
   },
 };
 const unit_id = Platform.OS === 'ios'

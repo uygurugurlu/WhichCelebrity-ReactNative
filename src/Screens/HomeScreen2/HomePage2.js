@@ -45,9 +45,14 @@ import {
 } from '../../common/Functions/AnalyticEvents/Events';
 
 const options = {
+  quality: 0.8,
+  maxWidth: 1000,
+  maxHeight: 1000,
+  noData: true,
   storageOptions: {
     skipBackup: true,
     path: 'images',
+
   },
 };
 const unit_id = Platform.OS === 'ios'
