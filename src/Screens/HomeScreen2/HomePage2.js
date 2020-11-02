@@ -212,6 +212,7 @@ class HomePage2 extends Component {
 
   GetResult = async () => {
     const { userAvatarB64, user_agent, language } = this.props;
+    console.log("auth token in result: ",this.props.auth_token);
     const { celebrity_id } = this.state;
     this.LoadAD();
     await SelectedCelebrityResultEvent();
@@ -225,7 +226,7 @@ class HomePage2 extends Component {
           userAvatarB64,
           celebrity_id,
           language.languageTag,
-          'false',
+          'true',
           this.props.auth_token,
         );
         console.log('UserPhotoAnalyze res: ', JSON.parse(data).data[0]);
@@ -264,7 +265,7 @@ class HomePage2 extends Component {
   };
 
   GetRandomResult = async () => {
-    const { userAvatarB64, user_agent, language } = this.props;
+    const { userAvatarB64, user_agent, language, auth_token } = this.props;
     this.LoadAD();
     await RandomResultEvent();
 
@@ -282,6 +283,8 @@ class HomePage2 extends Component {
           null,
           language.languageTag,
           'true',
+          auth_token,
+
         );
         console.log('UserPhotoAnalyze res: ', (data));
 
