@@ -8,6 +8,7 @@ import React from 'react'
 import { View , StyleSheet} from 'react-native'
 import { translate } from '../I18n'
 import { AppleButton } from '@invertase/react-native-apple-authentication'
+import {getData, storeStringData} from "../common/Functions/ManageAsyncData";
 export const AppleSigninButtonComponent = props => {
   const iconProps = { size: 40, color: '#888' }
 
@@ -23,11 +24,11 @@ export const AppleSigninButtonComponent = props => {
   // you need to wait until everything is registered 😁
   React.useEffect( () => {
       // 👈 test if you can start otherwise nothing will happen
-      setTimeout(() => {
-        if (canStart) {
-          start()
-        }
-      }, 2500)
+    setTimeout(async() => {
+      if(await getData('@DrawerAnimation') === null){
+        start();
+        await storeStringData('@DrawerAnimation',"stored");
+      }}, 2500);
 
   }, [canStart]) // 👈 don't miss it!
 
