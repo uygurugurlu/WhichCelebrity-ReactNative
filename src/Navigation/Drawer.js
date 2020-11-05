@@ -265,8 +265,6 @@ class CustomDrawer extends Component {
               </Tooltip>
 
                   <Button
-                    icon={<Icon name={'share'} color={'#fff'} /> }
-                    iconRight
                     title={translate("drawer.faceShare")}
                     containerStyle={styles.faceShareButton}
                     buttonStyle={{backgroundColor:yellow_text_color}}

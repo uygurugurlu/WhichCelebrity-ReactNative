@@ -27,7 +27,6 @@ import AvatarComponent from '../../common/Components/AvatarComponent';
 import { GetCategories } from '../../common/Functions/Endpoints/GetCategories';
 import { IMAGEBACK, WAIT_BEFORE_AD_MILLISECONDS, WAIT_LOADING_ANIMATION_MILLISECONDS, } from '../../common/Constants';
 import { UserPhotoAnalyze } from '../../common/Functions/Endpoints/UserPhotoAnalyze';
-import { GetToken } from '../../common/Functions/Endpoints/GetToken';
 import { ShowSnackBar } from '../../common/Components/ShowSnackBar';
 import { DetectFace } from '../../common/Functions/DetectFace';
 import LoadingAnimationModal from '../../common/Components/LoadingAnimationModal/LoadingAnimationModal';

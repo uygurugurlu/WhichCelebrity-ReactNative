@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { ImageBackground, Modal, Text, TouchableOpacity, View } from 'react-native'
-import { styles } from '../../Screens/HomeScreen/HomePageStyles'
+import { Modal, Text, TouchableOpacity, View } from 'react-native'
 import { translate } from '../../I18n'
 import { Icon } from 'react-native-elements'
+import { DEVICE_WIDTH } from '../Constants'
 
 export default class OptionsModal extends Component{
 
   render() {
+    const {options} = this.props;
     return(
       <Modal
         visible={this.state.optionsModalVisible}
@@ -57,3 +58,43 @@ export default class OptionsModal extends Component{
     )
   }
 }
+
+const styles = StyleSheet.create({
+  settingsModalContainer: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    backgroundColor: 'rgb(240,240,240)',
+    borderRadius: 15,
+  },
+  settingsMainButtons: {
+    alignItems: 'center',
+    height: 50,
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgb(100,100,100)',
+    flexDirection: 'row',
+  },
+  settingsButton: {
+    textAlign: 'center',
+    color: '#1a84f4',
+    fontSize: 19,
+  },
+  cancelButtonContainer: {
+    alignSelf: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    height: 50,
+    justifyContent: 'center',
+    width: DEVICE_WIDTH - 20,
+    borderRadius: 15,
+    backgroundColor: 'rgb(240,240,240)',
+  },
+  cancelButton: {
+    textAlign: 'center',
+    color: 'red',
+    fontSize: 19,
+  },
+})
