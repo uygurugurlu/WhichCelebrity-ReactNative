@@ -177,17 +177,20 @@ class ResultPage extends Component {
   };
 
   ActionHandler = async (index) => {
-    setTimeout( async () => await this.setState({optionsModalVisible: false}), 200);
-    try {
-      if (index === 2) {
-        await this.ShareApp();
-      } else {
-        await this.takeScreenShot(index);
+    this.setState({optionsModalVisible: false});
+    setTimeout(async() => {
+      try {
+        if (index === 2) {
+          await this.ShareApp();
+        } else {
+          await this.takeScreenShot(index);
+        }
+      } catch (e) {
+        console.log('Error takeScreenShot: ', e);
+        crashlytics().recordError(e);
       }
-    } catch (e) {
-      console.log('Error takeScreenShot: ', e);
-      crashlytics().recordError(e);
-    }
+    },400)
+
   };
 
   HasAndroidPermission = async () => {
