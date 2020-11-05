@@ -177,6 +177,7 @@ class ResultPage extends Component {
   };
 
   ActionHandler = async (index) => {
+    setTimeout( async () => await this.setState({optionsModalVisible: false}), 200);
     try {
       if (index === 2) {
         await this.ShareApp();
@@ -339,9 +340,8 @@ class ResultPage extends Component {
                 <View style={styles.settingsModalContainer}>
                   <TouchableOpacity
                     onPress={() =>
-                      this.setState({optionsModalVisible: false}, () =>
-                        this.ActionHandler(0),
-                      )
+                        this.ActionHandler(0)
+
                     }
                     style={styles.settingsMainButtons}>
                     <Text style={styles.settingsButton}>
@@ -355,9 +355,8 @@ class ResultPage extends Component {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() =>
-                      this.setState({optionsModalVisible: false}, () =>
-                        this.ActionHandler(1),
-                      )
+                        this.ActionHandler(1)
+
                     }
                     style={styles.settingsMainButtons}>
                     <Text style={styles.settingsButton}>
@@ -371,9 +370,8 @@ class ResultPage extends Component {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() =>
-                      this.setState({optionsModalVisible: false}, () =>
-                        this.ActionHandler(2),
-                      )
+                        this.ActionHandler(2)
+
                     }
                     style={styles.settingsMainButtons}>
                     <Text style={styles.settingsButton}>
