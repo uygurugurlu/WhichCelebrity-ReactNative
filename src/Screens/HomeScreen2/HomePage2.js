@@ -226,7 +226,7 @@ class HomePage2 extends Component {
           userAvatarB64,
           celebrity_id,
           language.languageTag,
-          'true',
+          'false',
           this.props.auth_token,
         );
         console.log('UserPhotoAnalyze res: ', JSON.parse(data).data[0]);
