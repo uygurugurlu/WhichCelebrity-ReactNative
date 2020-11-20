@@ -4,13 +4,14 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { styles } from './ScoreBoardStyles';
-import { IMAGEBACK } from '../../common/Constants';
+import { CAMERAFRAME, IMAGEBACK } from '../../common/Constants'
 import SelectCelebrityComponent from '../../common/Components/SelectCelebrityComponent';
 import { translate } from '../../I18n';
 import { GetScoreBoard } from '../../common/Functions/Endpoints/GetScoreBoard';
 import { GetScoreBoardByCelebrity } from '../../common/Functions/Endpoints/GetScoreBoardByCelebrity';
 import CelebritySelectedComponent from './CelebritySelectedComponent';
 import TopRanksComponent from './TopRanksComponent';
+import SwipeableImageModal from '../../common/Components/SwipeableImageModal'
 class ScoreBoard extends Component {
   constructor() {
     super();
@@ -18,8 +19,13 @@ class ScoreBoard extends Component {
       celebrityId: 0,
       topRanksData: [],
       celebrityRanksData: [],
+      image_uri: CAMERAFRAME,
+      isVisible: false,
     };
   }
+  handleModalVisibility = (photo) => {
+    this.setState({isVisible: !this.state.isVisible, image_uri: photo});
+  };
 
   setCelebrityId = (id) => {
     this.setState({ celebrityId: id });
@@ -43,7 +49,10 @@ class ScoreBoard extends Component {
       this.setState({ topRanksData: res })
     );
   }
-
+  photoClicked = (photo) => {
+    console.log("photo: ", photo);
+    this.handleModalVisibility(photo);
+  }
   render() {
     const { celebrityId, topRanksData, celebrityRanksData } = this.state;
 
@@ -59,7 +68,7 @@ class ScoreBoard extends Component {
           <View style={styles.boardContainer}>
             <View style={styles.topRanksContainer}>
               {this.state.celebrityId === 0 ? (
-                <TopRanksComponent data={topRanksData} getApiData={this.getTopTen}/>
+                <TopRanksComponent data={topRanksData} getApiData={this.getTopTen} photoClicked={this.photoClicked.bind(this)}/>
               ) : (
                 <CelebritySelectedComponent data={celebrityRanksData} />
               )}
@@ -83,6 +92,12 @@ class ScoreBoard extends Component {
           </View>
 
         </ImageBackground>
+        <SwipeableImageModal
+          uri={this.state.image_uri}
+          index={1}
+          isVisible={this.state.isVisible}
+          handleVisibility={() => this.setState({isVisible: false})}
+        />
       </View>
     );
   }

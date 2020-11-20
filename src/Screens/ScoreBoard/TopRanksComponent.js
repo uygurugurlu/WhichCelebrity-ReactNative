@@ -5,18 +5,22 @@ import ScoreBoardComponent2 from '../../common/Components/ScoreBoardComponent2';
 import { shortenUserName } from '../../common/Functions/shortenUserName'
 
 export default class TopRanksComponent extends Component {
+  constructor () {
+    super();
+  }
   state = {
     isFetching: false,
+  }
+  photoClickedInComponent(photo) {
+    this.props.photoClicked(photo);
   }
   onRefresh  = async () => {
     this.setState({ isFetching: false });
     this.props.getApiData();
   }
-
   render() {
     const { data } = this.props;
     try {
-      console.log('data: ', data);
       if (data.data.length > 0) {
         return (
           <FlatList
@@ -32,6 +36,7 @@ export default class TopRanksComponent extends Component {
                 celebrityName={item.celebrity.name}
                 celebrityPhoto={item.celebrity.photo}
                 percentage={item.similartiy}
+                photoClickedInComponent={this.photoClickedInComponent.bind(this)}
               />
             )}
           />

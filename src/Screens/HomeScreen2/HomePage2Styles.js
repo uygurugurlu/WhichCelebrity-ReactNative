@@ -388,6 +388,8 @@ export const styles = StyleSheet.create({
   cropWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
+    height: DEVICE_WIDTH * 0.2,
+    width: DEVICE_WIDTH * 0.2,
   },
   cropButtons: {
     height: 70,

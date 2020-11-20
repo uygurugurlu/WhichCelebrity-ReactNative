@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import {
-  View, StyleSheet, Text, Image
-} from 'react-native';
+  View, StyleSheet, Text, Image, TouchableOpacity,
+} from 'react-native'
 import { CAMERAICON, DEVICE_HEIGHT, DEVICE_WIDTH } from '../Constants';
 import { translate } from '../../I18n';
 import { blue_text_color } from '../ColorIndex';
 import { PercentageColor } from '../Functions/PercentageColor';
 
 class ScoreBoardComponent2 extends Component {
+  onPress(photo) {
+    this.props.photoClickedInComponent(photo)
+  }
   render() {
     const {
       rank, userName, userPhoto, celebrityName, celebrityPhoto, percentage
@@ -21,12 +24,12 @@ class ScoreBoardComponent2 extends Component {
           <View style={styles.infoContainer}>
             <View style={styles.userContainer}>
               <View style={styles.avatarContainer}>
-                <View style={styles.avatarWrapper}>
+                <TouchableOpacity onPress={() => this.onPress(userPhoto)} style={styles.avatarWrapper}>
                   <Image
                     source={{ uri: userPhoto }}
                     style={styles.avatarImage}
                   />
-                </View>
+                </TouchableOpacity>
               </View>
               <View style={styles.userNameContainer}>
                 <Text style={styles.userName}>{userName}</Text>
@@ -34,12 +37,12 @@ class ScoreBoardComponent2 extends Component {
             </View>
             <View style={styles.userContainer}>
               <View style={styles.avatarContainer}>
-                <View style={styles.avatarWrapper}>
+                <TouchableOpacity onPress={() => this.onPress(celebrityPhoto)} style={styles.avatarWrapper}>
                   <Image
                     source={{ uri: celebrityPhoto }}
                     style={styles.avatarImage}
                   />
-                </View>
+                </TouchableOpacity>
               </View>
               <Text style={styles.userName}>{celebrityName}</Text>
 
