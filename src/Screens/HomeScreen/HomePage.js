@@ -35,6 +35,8 @@ import { CelebrityFinderResultEvent, SetCelebrityFinderScreenEvent, } from '../.
 import { LogoutUser } from '../../common/Functions/Endpoints/LogoutUser';
 import { storeData } from '../../common/Functions/ManageAsyncData';
 import { AUTH_TOKEN } from '../../config';
+import ImageResizer from 'react-native-image-resizer'
+import CameraRoll from '@react-native-community/cameraroll'
 
 const options = {
   quality: 0.8,
@@ -145,10 +147,6 @@ class HomePage extends Component {
     interstitial.load();
   };
 
-  showActionSheet = () => this.actionSheet.show();
-
-  getActionSheetRef = (ref) => (this.actionSheet = ref);
-
   handlePress = (index) => this.setState({ selected: index });
 
   LaunchCamera = async () => {
@@ -192,10 +190,9 @@ class HomePage extends Component {
     const faces = await DetectFace(res.uri);
     this.setState({ crop_visibility: false });
     this.props.get_detected_face_count(faces.length);
-    console.log('faces:', faces, faces.length);
+
   }
 
-  -// SelectAvatar = () => this.showActionSheet();
   SelectAvatar = () => this.setState({ optionsModalVisible: true });
 
   NavigateToResultPage = (data) => this.props.navigation.navigate('ResultPage', { data });
@@ -209,13 +206,9 @@ class HomePage extends Component {
   HandleGendersVisibility = () => this.setState({ genders_visibility: !this.state.genders_visibility });
 
   shouldComponentUpdate = async (nextProps, nextState) => {
-    const { userAvatarSource, language } = this.props;
+    const { language } = this.props;
     if (nextProps.language.languageTag !== language.languageTag) {
       await this.WhenTheLanguageChanged();
-    }
-
-    if (userAvatarSource !== nextProps.userAvatarSource) {
-      this.actionSheet.hide();
     }
   };
 
@@ -370,7 +363,9 @@ class HomePage extends Component {
   SelectGender = (gender, genderText) => {
     this.setState({ gender, genderText });
   };
-
+  handleSaveImage = () => {
+    this.cropViewRef.current.saveImage(true, 100);
+  };
   render() {
     const genders = [
       { label: translate('home.search_for_all'), id: 1, type: null },
@@ -528,7 +523,7 @@ class HomePage extends Component {
                 <View style={styles.cropButtonContainer}>
                   <TouchableOpacity
                     style={styles.cropWrapper}
-                    onPress={() => this.cropViewRef.current.saveImage(true, 30)}
+                    onPress={() => this.handleSaveImage()}
                   >
                     <Icon color="white" name="check" />
                   </TouchableOpacity>
