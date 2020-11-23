@@ -43,6 +43,7 @@ import {
   RandomResultEvent,
   SelectedCelebrityResultEvent,
 } from '../../common/Functions/AnalyticEvents/Events';
+import RNFetchBlob from 'rn-fetch-blob'
 
 const options = {
   quality: 0.8,
@@ -112,11 +113,6 @@ class HomePage2 extends Component {
   WhenTheLanguageChanged = () => this.forceUpdate();
 
   LaunchCamera = async () => {
-    /* const {path, data} = await GetUserPhotoFromCamera();
-    this.props.get_user_avatar_source({uri: path}, data);
-    const faces = await DetectFace(path);
-    this.props.get_detected_face_count(faces.length);
-    console.log('faces:', faces, faces.length); */
     await this.setState({ optionsModalVisible: false });
     ImagePicker.launchCamera(options, (response) => {
       if (response.didCancel) {
@@ -146,12 +142,19 @@ class HomePage2 extends Component {
   };
 
   handleCroppedImage = async (res) => {
-    const data = await RNFS.readFile(res.uri, 'base64');
-    this.props.get_user_avatar_source({ uri: res.uri }, data);
-    const faces = await DetectFace(res.uri);
-    this.setState({ crop_visibility: false });
-    this.props.get_detected_face_count(faces.length);
-    console.log('faces:', faces, faces.length);
+    try {
+      const data = await RNFS.readFile(res.uri, 'base64');
+      this.props.get_user_avatar_source({ uri: res.uri }, data);
+      const faces = await DetectFace(res.uri);
+      this.setState({ crop_visibility: false });
+      this.props.get_detected_face_count(faces.length);
+      const path = this.state.imageUri.split('///').pop();
+      RNFetchBlob.fs.unlink(path).then((res) => console.log("image deleted: ",res));
+
+    }
+    catch (e){
+      console.log(e);
+    }
   };
 
   SelectAvatar = () => this.setState({ optionsModalVisible: true });
@@ -446,7 +449,11 @@ class HomePage2 extends Component {
                 <View style={styles.cropButtonContainer}>
                   <TouchableOpacity
                     style={styles.cropWrapper}
-                    onPress={() => this.setState({ crop_visibility: false })}
+                    onPress={() => {
+                      this.setState({ crop_visibility: false });
+                      const path = this.state.imageUri.split('///').pop();
+                      RNFetchBlob.fs.unlink(path).then((res) => console.log("image deleted: ",res));
+                    }}
                   >
                     <Icon color="white" name="close" />
                   </TouchableOpacity>

@@ -30,6 +30,7 @@ class SavingsPage extends Component {
 
   Delete = () => {
     const {delete_list} = this.props;
+    console.log('delete_list: ', delete_list);
     CameraRoll.deletePhotos(delete_list).then((res) => {
       console.log('res: ', res);
       this.ChangeDeleteMode(false);
