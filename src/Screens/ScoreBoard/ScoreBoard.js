@@ -70,7 +70,7 @@ class ScoreBoard extends Component {
               {this.state.celebrityId === 0 ? (
                 <TopRanksComponent data={topRanksData} getApiData={this.getTopTen} photoClicked={this.photoClicked.bind(this)}/>
               ) : (
-                <CelebritySelectedComponent data={celebrityRanksData} />
+                <CelebritySelectedComponent data={celebrityRanksData} photoClicked={this.photoClicked.bind(this)}/>
               )}
 
             </View>

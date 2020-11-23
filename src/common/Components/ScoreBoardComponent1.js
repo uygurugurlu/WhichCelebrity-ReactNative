@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
-  View, StyleSheet, Text, Image, Animated,
-} from 'react-native';
+  View, StyleSheet, Text, Image, Animated, TouchableOpacity,
+} from 'react-native'
 import { CAMERAICON, DEVICE_HEIGHT, DEVICE_WIDTH } from '../Constants';
 import { translate } from '../../I18n';
 import { blue_text_color } from '../ColorIndex';
@@ -15,13 +15,16 @@ class ScoreBoardComponent1 extends Component {
     this._animated = new Animated.Value(0);
   }
 
+
   componentDidMount() {
     Animated.timing(this._animated, {
       toValue: 1,
       duration: ANIMATION_DURATION,
     }).start();
   }
-
+  onPress(photo) {
+    this.props.photoClickedInComponent(photo)
+  }
   render() {
     const {
       rank, userName, userPhoto, percentage
@@ -46,12 +49,12 @@ class ScoreBoardComponent1 extends Component {
         </View>
         <View style={styles.photosContainer}>
           <View style={styles.avatarContainer}>
-            <View style={styles.avatarWrapper}>
+            <TouchableOpacity onPress={() => this.onPress(userPhoto)} style={styles.avatarWrapper}>
               <Image
                 source={{ uri: userPhoto }}
                 style={styles.avatarImage}
               />
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
 

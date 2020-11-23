@@ -3,10 +3,14 @@ import { FlatList, StyleSheet, Text } from 'react-native';
 import ScoreBoardComponent1 from '../../common/Components/ScoreBoardComponent1';
 import { translate } from '../../I18n';
 import { shortenUserName } from '../../common/Functions/shortenUserName'
+import ScoreBoardComponent2 from '../../common/Components/ScoreBoardComponent2'
 
 export default class CelebritySelectedComponent extends Component {
+  photoClickedInComponent(photo) {
+    this.props.photoClicked(photo);
+  }
   render() {
-    const { data } = this.props;
+    const { data , } = this.props;
     try {
       if (data.data.similar_users.length > 0) {
         return (
@@ -21,6 +25,8 @@ export default class CelebritySelectedComponent extends Component {
                 celebrityName={item.celebrityName}
                 celebrityPhoto={item.celebrityPhoto}
                 percentage={item.similarity}
+                photoClickedInComponent={this.photoClickedInComponent.bind(this)}
+
               />
             )}
           />
